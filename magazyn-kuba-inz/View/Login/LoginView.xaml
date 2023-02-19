@@ -1,0 +1,119 @@
+﻿<Window x:Class="magazyn_kuba_inz.View.Login.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:magazyn_kuba_inz.View.Login"
+        xmlns:vm="clr-namespace:magazyn_kuba_inz.Core.ViewModel.Login;assembly=magazyn_kuba_inz.Core"
+        xmlns:res="clr-namespace:magazyn_kuba_inz.Core.Properties;assembly=magazyn_kuba_inz.Core"
+        d:DataContext="{d:DesignData Type=vm:LoginViewModel}"
+        mc:Ignorable="d"
+        Title="Login"
+        Height="550" Width="800"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Name="Window"
+        Foreground="{StaticResource FontColorBrush}"
+        MouseDown="Window_MouseDown"
+        Background="Transparent">
+    <Border CornerRadius="10">
+        <Border.Background>
+            <ImageBrush ImageSource="/Images/warehouse.jpg"
+                        Stretch="UniformToFill"/>
+        </Border.Background>
+        <Border Opacity="0.8">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="{StaticResource Color2}" Offset="0"/>
+                    <GradientStop Color="{StaticResource Color3}" Offset="0.75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="5">
+                    <Button Style="{StaticResource WindowsAppButton}"
+                            Command="{Binding MinimizeCommand}"
+                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            Margin="5,0">
+                        <Path Stretch="UniformToFill"
+                              Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                              Style="{StaticResource Minimize}"/>
+                        
+                    </Button>
+
+                    <Button Style="{StaticResource WindowsAppButton}"
+                            Command="{Binding ExitCommand}"
+                            Margin="5,0">
+                        <Path Stretch="UniformToFill"
+                              Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                              Style="{StaticResource Exit}"/>
+                        
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <StackPanel Height="50"
+                                Margin="0,0,0,30">
+                        <TextBlock Text="{x:Static res:Resources.Log_in}"
+                                   Foreground="{StaticResource FontColorBrush}"
+                                   FontSize="36"
+                                   HorizontalAlignment="Center"
+                                   />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,10">
+                        <StackPanel>
+                            <Label Content="{x:Static res:Resources.Login}"
+                                   Foreground="{StaticResource FontColorBrush}"
+                                   />
+                            <TextBox Foreground="{StaticResource FontColorBrush}"
+                                     Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{DynamicResource InputTextBox}"
+                                     Width="300"
+                                     Tag="{x:Static res:Resources.Login}"/>
+                        </StackPanel>
+
+
+                        <StackPanel Margin="0,10">
+                            <Label Content="{x:Static res:Resources.Password}"
+                                   Foreground="{StaticResource FontColorBrush}"/>
+                            <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"
+                                         Style="{DynamicResource InputPasswordBox}"
+                                         Width="300"
+                                         Tag="{x:Static res:Resources.Password}"/>
+                        </StackPanel>
+
+                        <TextBlock Foreground="{DynamicResource WrongColorBrush}" 
+                                   Text="{Binding Messages}"/>
+
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Left">
+                        <Button Content="{x:Static res:Resources.Log_in}"
+                                IsDefault="True"
+                                Foreground="{StaticResource FontColorBrush}"
+                                Command="{Binding LoginCommand}"
+                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                                Width="150"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+                
+            </Grid>
+            
+        </Border>
+    </Border>
+</Window>

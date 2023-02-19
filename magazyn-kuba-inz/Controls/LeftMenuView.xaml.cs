@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace magazyn_kuba_inz
+namespace magazyn_kuba_inz.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LeftMenuView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LeftMenuView : UserControl
     {
-        public MainWindow()
+        public LeftMenuView()
         {
             InitializeComponent();
         }

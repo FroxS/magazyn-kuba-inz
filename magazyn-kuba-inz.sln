@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn-kuba-inz", "magazyn-kuba-inz\magazyn-kuba-inz.csproj", "{F1800808-2A76-4898-8D49-B7E4BC77800E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "magazyn-kuba-inz", "magazyn-kuba-inz\magazyn-kuba-inz.csproj", "{F1800808-2A76-4898-8D49-B7E4BC77800E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn-kuba-inz.EF", "magazyn-kuba-inz.EF\magazyn-kuba-inz.EF.csproj", "{0D01732A-6506-4B1B-B9B5-8C0B637F7683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn-kuba-inz.Models", "magazyn-kuba-inz.Models\magazyn-kuba-inz.Models.csproj", "{44B0FE71-11D1-4F2A-865A-29FE0910533B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn_kuba_inz.Core", "magazyn_kuba_inz.Core\magazyn_kuba_inz.Core.csproj", "{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn_kuba_inz.Theme", "magazyn_kuba_inz.Theme\magazyn_kuba_inz.Theme.csproj", "{6D9FA4E5-DA23-43E3-904A-89A09D00540C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{F1800808-2A76-4898-8D49-B7E4BC77800E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1800808-2A76-4898-8D49-B7E4BC77800E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1800808-2A76-4898-8D49-B7E4BC77800E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D01732A-6506-4B1B-B9B5-8C0B637F7683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D01732A-6506-4B1B-B9B5-8C0B637F7683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D01732A-6506-4B1B-B9B5-8C0B637F7683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D01732A-6506-4B1B-B9B5-8C0B637F7683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44B0FE71-11D1-4F2A-865A-29FE0910533B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44B0FE71-11D1-4F2A-865A-29FE0910533B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44B0FE71-11D1-4F2A-865A-29FE0910533B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44B0FE71-11D1-4F2A-865A-29FE0910533B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

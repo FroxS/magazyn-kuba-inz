@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Color x:Key="FontColor">#ffffff</Color>
+    <SolidColorBrush x:Key="FontColorBrush" Color="{StaticResource FontColor}"/>
+
+    <Color x:Key="FontDarkColor">#000000</Color>
+    <SolidColorBrush x:Key="FontDarkColorBrush" Color="{StaticResource FontDarkColor}"/>
+
+    <Color x:Key="FontColorGray">#748077</Color>
+    <SolidColorBrush x:Key="FontColorGrayBrush" Color="{StaticResource FontColorGray}"/>
+
+    <Color x:Key="WrongColor">#ff0000</Color>
+    <SolidColorBrush x:Key="WrongColorBrush" Color="{StaticResource WrongColor}"/>
+
+    <Color x:Key="GoodColor">#44c71c</Color>
+    <SolidColorBrush x:Key="GoodColorBrush" Color="{StaticResource GoodColor}"/>
+
+    <Color x:Key="DarkColor">#1b1c1b</Color>
+    <SolidColorBrush x:Key="DarkColorBrush" Color="{StaticResource DarkColor}"/>
+
+    <Color x:Key="Color1">#8ecae6</Color>
+    <SolidColorBrush x:Key="Color1Brush" Color="{StaticResource Color1}"/>
+
+    <Color x:Key="Color2">#219ebc</Color>
+    <SolidColorBrush x:Key="Color2Brush" Color="{StaticResource Color2}"/>
+
+    <Color x:Key="Color3">#023047</Color>
+    <SolidColorBrush x:Key="Color3Brush" Color="{StaticResource Color3}"/>
+
+    <Color x:Key="Color4">#ffb703</Color>
+    <SolidColorBrush x:Key="Color4Brush" Color="{StaticResource Color4}"/>
+
+    <Color x:Key="Color5">#fb8500</Color>
+    <SolidColorBrush x:Key="Color5Brush" Color="{StaticResource Color5}"/>
+
+</ResourceDictionary>
