@@ -6,8 +6,10 @@ using magazyn_kuba_inz.EF;
 using magazyn_kuba_inz.View;
 using magazyn_kuba_inz.View.Login;
 using magazyn_kuba_inz.View.Pages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 using System.Windows;
 
 namespace magazyn_kuba_inz;
@@ -19,6 +21,7 @@ public partial class App : Application
 {
     public static IHost? AppHost { get; private set; }
 
+    public IConfiguration Configuration { get; private set; }
     public App()
     {
         AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
@@ -26,11 +29,9 @@ public partial class App : Application
             PrepareDatabase(services);
             PrepareService(services);
             PreparePages(services);
+            
         }).Build();
-
     }
-
-
 
     protected async override void OnStartup(StartupEventArgs e)
     {
@@ -40,8 +41,6 @@ public partial class App : Application
         app.Run();
         base.OnStartup(e);
     }
-
-
 
     protected override async void OnExit(ExitEventArgs e)
     {
@@ -56,7 +55,7 @@ public partial class App : Application
             return new NavigationViewModel() { AppHost = AppHost };
         });
         services.AddSingleton<IApp, ApplicationViewModel>();
-        services.AddSingleton<IMainWindow,MainWindow>();
+        services.AddTransient<IMainWindow, MainWindow>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<DashBoardViewModel>();
         services.AddSingleton<ILoginWindow,LoginView>();
@@ -67,12 +66,21 @@ public partial class App : Application
     private void PrepareDatabase(IServiceCollection services)
     {
         services.AddDbContext<WarehouseDbContext>();
-
     }
 
     private void PreparePages(IServiceCollection services)
     {
         services.AddTransient<DashBoardPage>();
+    }
+
+    private void AddCOnfiguration(IServiceCollection services)
+    {
+        var builder = new ConfigurationBuilder()
+         .SetBasePath(Directory.GetCurrentDirectory())
+         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+        Configuration = builder.Build();
+        services.AddSingleton(Configuration);
     }
 
 

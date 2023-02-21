@@ -24,6 +24,7 @@ public class DashBoardViewModel : BasePageViewModel
         ExitCommand = new RelayCommand((o) => {
             app.Exit();
         });
+
     }
 
     #endregion

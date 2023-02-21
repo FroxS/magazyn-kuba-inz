@@ -1,8 +1,11 @@
 ﻿using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
+using magazyn_kuba_inz.EF;
 using magazyn_kuba_inz.Models.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Immutable;
 using System.Windows;
 
 namespace magazyn_kuba_inz.Core.ViewModel;

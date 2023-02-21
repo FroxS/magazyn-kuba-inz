@@ -1,7 +1,7 @@
 ﻿using magazyn_kuba_inz.Models.Enums;
 using magazyn_kuba_inz.Models.Interfaces;
 
-namespace magazyn_kuba_inz.Models;
+namespace magazyn_kuba_inz.Models.WareHouse;
 
 public class User : IUser
 {
@@ -11,5 +11,6 @@ public class User : IUser
     public UserType Type { get; set; }
     public byte[] Image { get; set; }
 
+    public List<Order> Orders { get; set; }
 }
 

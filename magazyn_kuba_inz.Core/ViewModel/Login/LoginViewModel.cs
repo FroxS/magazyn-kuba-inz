@@ -3,6 +3,7 @@ using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models;
 using magazyn_kuba_inz.Models.Interfaces;
+using magazyn_kuba_inz.Models.WareHouse;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
