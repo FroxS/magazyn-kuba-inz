@@ -5,8 +5,13 @@ using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel.Pages;
 
-public class DashBoardViewModel : BasePageViewModel
+public class DashBoardPageViewModel : BasePageViewModel
 {
+    #region Private Fields
+
+
+    #endregion
+
     #region Public Properties
 
 
@@ -19,13 +24,20 @@ public class DashBoardViewModel : BasePageViewModel
     #endregion
 
     #region Constructors
-    public DashBoardViewModel(IApp app) : base(app)
+    public DashBoardPageViewModel(IApp app) : base(app)
     {
         ExitCommand = new RelayCommand((o) => {
-            app.Exit();
+            if (app.IsAdmin)
+                System.Windows.MessageBox.Show("Jest admin");
+            else
+                System.Windows.MessageBox.Show("Nie admin");
         });
 
     }
+
+    #endregion
+
+    #region Private Methods
 
     #endregion
 }

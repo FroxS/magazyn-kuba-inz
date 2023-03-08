@@ -4,10 +4,12 @@ namespace magazyn_kuba_inz.Models.Interfaces
 {
     public interface IUser
     {
-        Guid Id { get; }
+        Guid ID { get; }
         string? Login { get; }
         string? Name { get; }
         UserType Type { get; }
-        byte[] Image { get; }
+        string? Image { get; }
+        bool Active { get; }
+        string Email { get; set; }
     }
 }

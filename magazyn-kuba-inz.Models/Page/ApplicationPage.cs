@@ -3,5 +3,8 @@ namespace magazyn_kuba_inz.Models.Page;
 
 public enum ApplicationPage
 {
-    DashBoard
+    DashBoard,
+    Products,
+    Suppliers,
+    ProductGroups
 }

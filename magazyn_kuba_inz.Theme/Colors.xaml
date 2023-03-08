@@ -7,7 +7,7 @@
     <Color x:Key="FontDarkColor">#000000</Color>
     <SolidColorBrush x:Key="FontDarkColorBrush" Color="{StaticResource FontDarkColor}"/>
 
-    <Color x:Key="FontColorGray">#748077</Color>
+    <Color x:Key="FontColorGray">#baccbe</Color>
     <SolidColorBrush x:Key="FontColorGrayBrush" Color="{StaticResource FontColorGray}"/>
 
     <Color x:Key="WrongColor">#ff0000</Color>

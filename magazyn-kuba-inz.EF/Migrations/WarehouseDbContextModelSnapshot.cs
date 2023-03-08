@@ -22,23 +22,45 @@ namespace magazyn_kuba_inz.EF.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Order", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ItemState", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Cost")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 2, 21, 22, 45, 2, 114, DateTimeKind.Local).AddTicks(1854));
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Id_User")
+                    b.HasKey("ID");
+
+                    b.ToTable("ItemState");
+                });
+
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("GroupID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ID_Group")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ID_Status")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ID_Supplier")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -46,258 +68,99 @@ namespace magazyn_kuba_inz.EF.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("RealizationDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_User");
-
-                    b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.OrderElement", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Count")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<Guid>("Id_Order")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id_StorageItem")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_Order");
-
-                    b.HasIndex("Id_StorageItem");
-
-                    b.ToTable("OrderElement");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Count")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L);
-
-                    b.Property<Guid>("Id_Group")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
                     b.Property<double>("Price")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(2)
-                        .HasColumnType("float(2)")
+                        .HasColumnType("float")
                         .HasDefaultValue(0.0);
 
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
+                    b.HasIndex("GroupID");
 
-                    b.HasIndex("Id_Group");
+                    b.HasIndex("ID_Status");
+
+                    b.HasIndex("ID_Supplier");
 
                     b.ToTable("Product");
                 });
 
             modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductGroup", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("ProductGroup");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Rack", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductStatus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Corridor")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Depth")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
-                    b.Property<int>("Direction")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Flors")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Height")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Space_amount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(1L);
-
-                    b.Property<double>("Width")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rack");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.RackPosition", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Flor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L);
-
-                    b.Property<Guid>("Id_Rack")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Position")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_Rack");
-
-                    b.ToTable("RackPosition");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id_RackPosition")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id_StorageUnit")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_RackPosition");
-
-                    b.HasIndex("Id_StorageUnit");
-
-                    b.ToTable("StorageItem");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItemCollection", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id_Product")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id_StorageItem")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id_Product");
-
-                    b.HasIndex("Id_StorageItem");
-
-                    b.ToTable("StorageItemCollection");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageUnit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("MaxDepth")
-                        .HasPrecision(3)
-                        .HasColumnType("float(3)");
-
-                    b.Property<double>("MaxHeight")
-                        .HasPrecision(3)
-                        .HasColumnType("float(3)");
-
-                    b.Property<double>("MaxWeight")
-                        .HasPrecision(3)
-                        .HasColumnType("float(3)");
-
-                    b.Property<double>("MaxWidth")
-                        .HasPrecision(3)
-                        .HasColumnType("float(3)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<double>("RackUnitCapacity")
-                        .HasMaxLength(1)
-                        .HasPrecision(3)
-                        .HasColumnType("float(3)");
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
+                    b.ToTable("ProductStatus");
+                });
 
-                    b.ToTable("StorageUnit");
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Supplier", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Supplier");
                 });
 
             modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Image")
+                    b.Property<bool>("Active")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -307,114 +170,105 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Type")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Order", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.WareHouseItem", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("Id_User")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("User");
-                });
+                    b.Property<int>("Count")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.OrderElement", b =>
-                {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("Id_Order")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.StorageItem", "StorageItem")
-                        .WithMany("OrderElements")
-                        .HasForeignKey("Id_StorageItem")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("ID_Product")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Order");
+                    b.Property<Guid>("ID_State")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("StorageItem");
+                    b.HasKey("ID");
+
+                    b.HasIndex("ID_Product");
+
+                    b.HasIndex("ID_State");
+
+                    b.ToTable("WareHouseItem");
                 });
 
             modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
                 {
                     b.HasOne("magazyn_kuba_inz.Models.WareHouse.ProductGroup", "Group")
                         .WithMany("Products")
-                        .HasForeignKey("Id_Group")
+                        .HasForeignKey("GroupID");
+
+                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.ProductStatus", "Status")
+                        .WithMany("Products")
+                        .HasForeignKey("ID_Status")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("ID_Supplier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.RackPosition", b =>
-                {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Rack", "Rack")
-                        .WithMany("Rack_Positions")
-                        .HasForeignKey("Id_Rack")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rack");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
-                {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.RackPosition", "RackPosition")
-                        .WithMany("StorageItems")
-                        .HasForeignKey("Id_RackPosition")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.StorageUnit", "StorageUnit")
-                        .WithMany("StorageItems")
-                        .HasForeignKey("Id_StorageUnit")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RackPosition");
-
-                    b.Navigation("StorageUnit");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItemCollection", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.WareHouseItem", b =>
                 {
                     b.HasOne("magazyn_kuba_inz.Models.WareHouse.Product", "Product")
-                        .WithMany("StorageItemCollections")
-                        .HasForeignKey("Id_Product")
+                        .WithMany("WareHouseItems")
+                        .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.StorageItem", "StorageItem")
-                        .WithMany("StorageItems")
-                        .HasForeignKey("Id_StorageItem")
+                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.ItemState", "State")
+                        .WithMany("Items")
+                        .HasForeignKey("ID_State")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("StorageItem");
+                    b.Navigation("State");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Order", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ItemState", b =>
                 {
                     b.Navigation("Items");
                 });
 
             modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
                 {
-                    b.Navigation("StorageItemCollections");
+                    b.Navigation("WareHouseItems");
                 });
 
             modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductGroup", b =>
@@ -422,31 +276,14 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Rack", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductStatus", b =>
                 {
-                    b.Navigation("Rack_Positions");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.RackPosition", b =>
+            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Supplier", b =>
                 {
-                    b.Navigation("StorageItems");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
-                {
-                    b.Navigation("OrderElements");
-
-                    b.Navigation("StorageItems");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageUnit", b =>
-                {
-                    b.Navigation("StorageItems");
-                });
-
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.User", b =>
-                {
-                    b.Navigation("Orders");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

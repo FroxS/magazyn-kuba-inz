@@ -1,12 +1,11 @@
-﻿using magazyn_kuba_inz.Core.Helpers;
+﻿using magazyn_kuba_inz.Core.Exeptions;
+using magazyn_kuba_inz.Core.Helpers;
+using magazyn_kuba_inz.Core.Resources;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.Models;
 using magazyn_kuba_inz.Models.Interfaces;
-using magazyn_kuba_inz.Models.WareHouse;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
+using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel.Login;
@@ -16,10 +15,8 @@ public class LoginViewModel : BaseViewModel
     #region Private  Properties
 
     private readonly IApp app;
-
-    private string messages = "";
-
     private string? login;
+    private string? password;
 
     #endregion
 
@@ -27,16 +24,15 @@ public class LoginViewModel : BaseViewModel
 
     public IUser? User { get; private set; }
 
-    public string Messages { get => messages; private set { messages = value; OnPropertyChanged(nameof(Messages)); } }
-
+    [Required(ErrorMessage = "Login is required.")]
     public string? Login { get => login; set { login = value; OnPropertyChanged(nameof(Login)); } }
 
-    public SecureString? SecurePassword { private get; set; }
+    [Required(ErrorMessage = "Password is required.")]
+    public string? Password { get => password; set { password = value; OnPropertyChanged(nameof(Password)); } }
 
     #endregion
 
     #region Public Commands
-
     public ICommand MinimizeCommand { get; private set; }
     public ICommand ExitCommand { get; private set; }
     public ICommand LoginCommand { get; private set; }
@@ -47,7 +43,7 @@ public class LoginViewModel : BaseViewModel
 
     public LoginViewModel(IApp app) : base()
     {
-        LoginCommand = new RelayCommand<IWindow>(submit);
+        LoginCommand = new RelayCommand<IWindow>(LoginUser, o => !IsTaskRunning);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
         ExitCommand = new RelayCommand(o => exit());
         this.app = app;
@@ -57,38 +53,44 @@ public class LoginViewModel : BaseViewModel
 
     #region Commands methods
 
-    private void submit(IWindow window)
+    private async void LoginUser(IWindow window)
     {
         try
         {
-            Messages = "";
-            if (string.IsNullOrEmpty(Login))
-            {
-                Messages = "Podaj login";
+            
+            User = null;
+            _CanValidate = true;
+            NotifyPropChanged(nameof(Login), nameof(Password));
+
+            if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(Password))
                 return;
-            }
 
-            if (SecurePassword == null || SecurePassword.Length <= 0)
+            try
             {
-                Messages = "Podaj hasło";
-                return;
+                IsTaskRunning = true;
+                User = await app.LoginAsync(new LoginResource(Login, Password));
             }
-
-            if (!SecureStringEqual(SecurePassword, getSecureString("admin")))
+            catch (DataException ex)
             {
-                Messages = "Hasło niepoprawne";
-                return;
+                IsTaskRunning = false;
+                if(ex.WrongProp != null)
+                {
+                    CustomMessage.Add(ex.WrongProp, ex.Message);
+                    NotifyPropChanged(nameof(Login), nameof(Password));
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                } 
             }
-
-            User = new User();
-
+            finally { IsTaskRunning = false; }
 
             if (User != null)
                 window.DialogResult = true;
         }
         catch
         {
-            Messages = "Wystąpił błąd";
+            MessageBox.Show("Nie udało się zalogować");
         }
 
     }
@@ -101,79 +103,6 @@ public class LoginViewModel : BaseViewModel
     private void exit()
     {
         app.Exit();
-    }
-
-    #endregion
-
-    #region Private Helper
-
-    private bool SecureStringEqual(SecureString s1, SecureString s2)
-    {
-        if (s1 == null)
-        {
-            throw new ArgumentNullException("s1");
-        }
-        if (s2 == null)
-        {
-            throw new ArgumentNullException("s2");
-        }
-
-        if (s1.Length != s2.Length)
-        {
-            return false;
-        }
-
-        IntPtr bstr1 = IntPtr.Zero;
-        IntPtr bstr2 = IntPtr.Zero;
-
-        RuntimeHelpers.PrepareConstrainedRegions();
-
-        try
-        {
-            bstr1 = Marshal.SecureStringToBSTR(s1);
-            bstr2 = Marshal.SecureStringToBSTR(s2);
-
-            unsafe
-            {
-                for (Char* ptr1 = (Char*)bstr1.ToPointer(), ptr2 = (Char*)bstr2.ToPointer();
-                    *ptr1 != 0 && *ptr2 != 0;
-                     ++ptr1, ++ptr2)
-                {
-                    if (*ptr1 != *ptr2)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-        finally
-        {
-            if (bstr1 != IntPtr.Zero)
-            {
-                Marshal.ZeroFreeBSTR(bstr1);
-            }
-
-            if (bstr2 != IntPtr.Zero)
-            {
-                Marshal.ZeroFreeBSTR(bstr2);
-            }
-        }
-    }
-
-    private SecureString getSecureString(string text)
-    {
-        if (text == null)
-            throw new ArgumentNullException("password");
-
-        var securePassword = new SecureString();
-
-        foreach (char c in text)
-            securePassword.AppendChar(c);
-
-        securePassword.MakeReadOnly();
-        return securePassword;
     }
 
     #endregion

@@ -1,11 +1,10 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
+﻿using magazyn_kuba_inz.Core.Exeptions;
+using magazyn_kuba_inz.Core.Helpers;
+using magazyn_kuba_inz.Core.Resources;
+using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.EF;
 using magazyn_kuba_inz.Models.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Collections.Immutable;
 using System.Windows;
 
 namespace magazyn_kuba_inz.Core.ViewModel;
@@ -20,6 +19,8 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     private readonly IServiceProvider services;
 
+    private readonly IUserService userService;
+
     #endregion
 
 
@@ -27,15 +28,18 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     public IUser? User { get; private set; }
 
+    public bool IsAdmin => User?.Type == magazyn_kuba_inz.Models.Enums.UserType.Admin;
+
     #endregion
 
     #region Constructors
 
-    public ApplicationViewModel(INavigation nav, Application app, IServiceProvider services)
+    public ApplicationViewModel(INavigation nav, Application app, IServiceProvider services, IUserService userService)
     {
         this.nav = nav;
         this.app = app;
         this.services = services;
+        this.userService = userService;
     }
 
     #endregion
@@ -44,26 +48,41 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     public void Run()
     {
-        ILoginWindow login = services.GetRequiredService<ILoginWindow>();
+        //var register = services.GetRequiredService<IRegisterWindow>();
+        //register.ShowDialog();
+        bool? flag = false;
+        if (System.Diagnostics.Debugger.IsAttached)
+        { 
+            flag = true;
+            //var task = Task.Run(async () => await Register(new RegisterResource("admin","admin@wp.pl", "admin")));
+            var task = Task.Run(async () => await LoginAsync(new LoginResource("admin", "admin")));
+            task.GetAwaiter().GetResult();
+        }
+        else
+        {
+            services.GetRequiredService<ILoginWindow>();
 
-        if (login == null)
-            throw new Exception("Brak okna login");
+            ILoginWindow login = services.GetRequiredService<ILoginWindow>();
+
+            if (login == null)
+                throw new Exception("Brak okna login");
+
+
+            flag = login.ShowDialog();
+        }
 
         
-        bool? flag = login.ShowDialog();
         if(flag == false)
         {
             app.Shutdown();
             return;
         }
-        IUser? user = login.GetUser();
-        if (user == null)
+        if (User == null)
         {
-            Run();;
+            Run();
         }
         else
         {
-            Login(user);
             IMainWindow window = services.GetRequiredService<IMainWindow>();
             if (window == null)
                 throw new Exception("Brak okna głównego");
@@ -88,9 +107,29 @@ public class ApplicationViewModel : BaseViewModel, IApp
         throw new NotImplementedException();
     }
 
-    public void Login(IUser user)
+    public async Task<IUser> LoginAsync(LoginResource user)
     {
-        User = user;
+        User = await userService.Login(user);
+        if(!User.Active)
+        {
+            User = null;
+            throw new DataException("This user is not active");
+        }
+        return User;
+    }
+
+    public async Task Register(RegisterResource user)
+    {
+        if (user == null)
+            throw new ArgumentException("User is empty");
+
+        if (user.Login.Length < 5)
+            throw new DataException("Minimalna liczba to 5",user,"Login");
+
+        if (!UserHelper.IsValidEmail(user?.Email ?? ""))
+            throw new DataException("Email jest nieprawidłowy", user, "Email");
+        
+        await userService.Register(user);
     }
 
     #endregion

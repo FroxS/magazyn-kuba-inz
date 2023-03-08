@@ -1,6 +1,4 @@
-﻿
-using magazyn_kuba_inz.Core.ViewModel.Login;
-using magazyn_kuba_inz.Models.Interfaces;
+﻿using magazyn_kuba_inz.Models.Interfaces;
 
 namespace magazyn_kuba_inz.Core.Service.Interface
 {

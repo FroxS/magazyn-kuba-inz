@@ -1,4 +1,7 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
+﻿using magazyn_kuba_inz.Core.Repository;
+using magazyn_kuba_inz.Core.Repository.Interfaces;
+using magazyn_kuba_inz.Core.Service;
+using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel;
 using magazyn_kuba_inz.Core.ViewModel.Login;
 using magazyn_kuba_inz.Core.ViewModel.Pages;
@@ -29,7 +32,11 @@ public partial class App : Application
             PrepareDatabase(services);
             PrepareService(services);
             PreparePages(services);
-            
+            PrepareRepository(services);
+            PrepareViewModels(services);
+            PrepareViews(services);
+            PrepareApplication(services);
+
         }).Build();
     }
 
@@ -50,17 +57,46 @@ public partial class App : Application
 
     private void PrepareService(IServiceCollection services)
     {
-        services.AddSingleton<Application>((o)=> { return this; });
+        services.AddScoped<IUserService,UserService>();
+    }
+
+    private void PrepareApplication(IServiceCollection services)
+    {
+        services.AddSingleton<Application>((o) => { return this; });
         services.AddSingleton<INavigation, NavigationViewModel>((o) => {
             return new NavigationViewModel() { AppHost = AppHost };
         });
         services.AddSingleton<IApp, ApplicationViewModel>();
-        services.AddTransient<IMainWindow, MainWindow>();
-        services.AddSingleton<MainViewModel>();
-        services.AddSingleton<DashBoardViewModel>();
-        services.AddSingleton<ILoginWindow,LoginView>();
-        services.AddSingleton<LoginViewModel>();
+    }
 
+    private void PrepareViews(IServiceCollection services)
+    {
+        services.AddTransient<IMainWindow, MainWindow>();
+        services.AddSingleton<ILoginWindow, LoginView>();
+        services.AddSingleton<IRegisterWindow, RegisterView>();
+    }
+
+    private void PrepareViewModels(IServiceCollection services)
+    {
+        services.AddSingleton<MainViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<RegisterViewModel>();
+
+        services.AddSingleton<DashBoardPageViewModel>();
+        services.AddSingleton<ProductsPageViewModel>();
+        services.AddSingleton<ProductGroupPageViewModel>();
+        services.AddSingleton<SuppliersPageViewModel>();
+    }
+
+    private void PrepareRepository(IServiceCollection services)
+    {
+        services.AddScoped<IUserRepository,UserRepository>();
+        services.AddScoped<IItemStateRepository, ItemStateRepository> ();
+        services.AddScoped<IProductGroupRepository, ProductGroupRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductStatusRepository, ProductStatusRepository>();
+        services.AddScoped<ISupplierRepository, SupplierRepository>();
+        services.AddScoped<IWareHouseItemRepository, WareHouseItemRepository>();
     }
 
     private void PrepareDatabase(IServiceCollection services)
@@ -71,6 +107,7 @@ public partial class App : Application
     private void PreparePages(IServiceCollection services)
     {
         services.AddTransient<DashBoardPage>();
+        services.AddTransient<ProductsPage>();
     }
 
     private void AddCOnfiguration(IServiceCollection services)

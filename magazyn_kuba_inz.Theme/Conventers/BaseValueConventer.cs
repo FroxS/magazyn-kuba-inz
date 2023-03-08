@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace magazyn_kuba_inz.Conventers;
+namespace magazyn_kuba_inz.Theme.Conventers;
 
 /// <summary>
 /// Base value conventer that allows direct XMAL usage

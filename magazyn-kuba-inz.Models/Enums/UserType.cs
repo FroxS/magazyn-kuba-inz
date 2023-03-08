@@ -3,6 +3,6 @@ namespace magazyn_kuba_inz.Models.Enums;
 
 public enum UserType
 {
-    Admin,
-    Employee
+    Admin =1,
+    Employee =2
 }

@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:attat="clr-namespace:magazyn_kuba_inz.Theme.AttachedProperty"
+                    xmlns:conv="clr-namespace:magazyn_kuba_inz.Theme.Conventers">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Fonts.xaml" />
@@ -15,6 +17,23 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{DynamicResource FontColorBrush }"/>
         <Setter Property="Padding" Value="10,5,0,5"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid >
+                        <Path Data="M 95 0 c 15 0 25 10 25 25 c 0 15 -10.31 24.69 -25.31 24.69 c -15 0 -25 -10.62 -25 -25.62 C 70 10 80 0 95 0 L 95 0 L 95 0 L 95 18 L 95 21 L 87 15 C 86 14 84 14 83 15 C 82 16 82 18 83 19 L 91 25 L 83 31 C 82 32 82 34 83 35 C 84 36 86 36 87 35 L 95 29 L 103 35 C 104 36 106 36 107 35 C 108 34 108 32 107 31 L 99 25 L 107 19 C 108 18 108 16 107 15 C 106 14 104 14 103 15 L 95 21 z l -4.94 -5.01 z"
+                              Fill="#ff0000"
+                              ToolTip="{Binding Path=/ErrorContent}"
+                              Height="30"
+                              Width="30"
+                              Stretch="Uniform"
+                              Margin="10,0,10,0"
+                              HorizontalAlignment="Right"/>
+                        <AdornedElementPlaceholder ToolTip="{Binding Path=/ErrorContent}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -31,7 +50,7 @@
                                         Margin="5">
 
                                 <Path Style="{DynamicResource User}"
-                                      Stretch="UniformToFill"
+                                      Stretch="Uniform"
                                       Width="20"
                                       Height="20"/>
 
@@ -39,7 +58,7 @@
                                           HorizontalScrollBarVisibility="Hidden" 
                                           VerticalScrollBarVisibility="Hidden" />
                             </StackPanel>
-                            
+
                         </Border>
 
                         <TextBlock IsHitTestVisible="False"
@@ -68,7 +87,6 @@
         </Setter>
     </Style>
 
-
     <Style TargetType="{x:Type PasswordBox}" x:Key="InputPasswordBox">
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource FontColorBrush}"/>
@@ -78,6 +96,24 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{DynamicResource FontColorBrush }"/>
         <Setter Property="Padding" Value="10,5,0,5"/>
+        <Setter Property="attat:MonitorPasswordProperty.Value" Value="True"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Path Data="M 95 0 c 15 0 25 10 25 25 c 0 15 -10.31 24.69 -25.31 24.69 c -15 0 -25 -10.62 -25 -25.62 C 70 10 80 0 95 0 L 95 0 L 95 0 L 95 18 L 95 21 L 87 15 C 86 14 84 14 83 15 C 82 16 82 18 83 19 L 91 25 L 83 31 C 82 32 82 34 83 35 C 84 36 86 36 87 35 L 95 29 L 103 35 C 104 36 106 36 107 35 C 108 34 108 32 107 31 L 99 25 L 107 19 C 108 18 108 16 107 15 C 106 14 104 14 103 15 L 95 21 z l -4.94 -5.01 z"
+                              Fill="#ff0000"
+                              ToolTip="{Binding Path=/ErrorContent}"
+                              Height="30"
+                              Width="30"
+                              Stretch="Uniform"
+                              Margin="10,0,10,0"
+                              HorizontalAlignment="Right"/>
+                        <AdornedElementPlaceholder ToolTip="{Binding Path=/ErrorContent}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
@@ -94,35 +130,27 @@
                                         Margin="5">
 
                                 <Path Style="{DynamicResource Key}"
-                                      Stretch="UniformToFill"
+                                      Stretch="Uniform"
                                       Width="20"
                                       Height="20"/>
 
-                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" 
-                                          HorizontalScrollBarVisibility="Hidden" 
-                                          VerticalScrollBarVisibility="Hidden" />
+                                <ScrollViewer x:Name="PART_ContentHost" 
+                                    Focusable="False" 
+                                    HorizontalScrollBarVisibility="Hidden" 
+                                    VerticalScrollBarVisibility="Hidden" />
                             </StackPanel>
 
                         </Border>
 
                         <TextBlock IsHitTestVisible="False"
-                                   Text="{TemplateBinding Tag}"
-                                   x:Name="placeholder"
-                                   Padding="40,5,0,5"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                   Foreground="{StaticResource FontColorGrayBrush}"
-                                   >
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Password, RelativeSource={RelativeSource TemplatedParent}}" Value="">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
+                            Text="{TemplateBinding Tag}"
+                            x:Name="placeholder"
+                            Padding="40,5,0,5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            Foreground="{StaticResource FontColorGrayBrush}"
+                            Visibility="{TemplateBinding attat:HasTextProperty.Value, Converter={conv:BoolToVisibleConventer}}"
+                            >
 
                         </TextBlock>
                     </Grid>
@@ -130,4 +158,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
 </ResourceDictionary>

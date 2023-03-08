@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\cancel-icon.svg" />
+    <None Remove="Images\confirm-icon.svg" />
+    <None Remove="Images\warehoudebg.png" />
     <None Remove="Images\warehouse.jpg" />
+    <None Remove="Images\warehouse_BG.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +37,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\cancel-icon.svg" />
+    <Resource Include="Images\confirm-icon.svg" />
+    <Resource Include="Images\warehoudebg.png" />
     <Resource Include="Images\warehouse.jpg" />
+    <Resource Include="Images\warehouse_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\LeftMenuView2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Login\RegisterView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

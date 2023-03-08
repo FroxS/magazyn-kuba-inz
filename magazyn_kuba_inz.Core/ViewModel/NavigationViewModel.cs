@@ -2,7 +2,6 @@
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models.Page;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.ObjectModel;
 

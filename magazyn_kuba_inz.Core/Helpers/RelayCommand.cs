@@ -7,8 +7,8 @@ namespace magazyn_kuba_inz.Core.Helpers
     {
         #region Private Properties
 
-        private readonly Predicate<T> _canExecute;
-        private readonly Action<T> _execute;
+        protected readonly Predicate<T> _canExecute;
+        protected readonly Action<T> _execute;
 
         #endregion
 
@@ -31,9 +31,9 @@ namespace magazyn_kuba_inz.Core.Helpers
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object? parameter) => _canExecute == null || _canExecute((T)parameter);
+        public virtual bool CanExecute(object? parameter) => _canExecute == null || _canExecute((T)parameter);
 
-        public void Execute(object parameter) => _execute((T)parameter);
+        public virtual void Execute(object parameter) => _execute((T)parameter);
 
         public event EventHandler CanExecuteChanged
         {

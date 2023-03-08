@@ -29,7 +29,7 @@
 
             <!--#region  Menu-->
 
-            <controls:LeftMenuView Grid.Column="0" DataContext="{Binding Navigation,
+            <controls:LeftMenuView2 Grid.Column="0" DataContext="{Binding Navigation,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged}"
                                    d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"/>
