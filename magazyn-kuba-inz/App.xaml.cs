@@ -1,12 +1,15 @@
 ﻿using magazyn_kuba_inz.Core.Repository;
 using magazyn_kuba_inz.Core.Repository.Interfaces;
 using magazyn_kuba_inz.Core.Service;
+using magazyn_kuba_inz.Core.Service.Dialog;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel;
+using magazyn_kuba_inz.Core.ViewModel.Dialog;
 using magazyn_kuba_inz.Core.ViewModel.Login;
 using magazyn_kuba_inz.Core.ViewModel.Pages;
 using magazyn_kuba_inz.EF;
 using magazyn_kuba_inz.View;
+using magazyn_kuba_inz.View.Dialog;
 using magazyn_kuba_inz.View.Login;
 using magazyn_kuba_inz.View.Pages;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace magazyn_kuba_inz;
 
@@ -57,7 +61,24 @@ public partial class App : Application
 
     private void PrepareService(IServiceCollection services)
     {
-        services.AddScoped<IUserService,UserService>();
+        services.AddTransient<IUserService,UserService>();
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<IProductGroupService, ProductGroupService>();
+        services.AddTransient<IProductStatusService, ProductStatusService>();
+        services.AddTransient<ISupplierService, SupplierService>();
+        services.AddTransient<IItemStateService, ItemStateService>();
+        services.AddTransient<IWareHouseItemService, WareHouseItemService>();
+        services.AddTransient<IImageService, ImageService>();
+        services.AddTransient<IOrderService, OrderService>();
+        services.AddTransient<IOrderProductService, OrderProductService>();
+        services.AddTransient<IRackService, RackService>();
+        services.AddTransient<IStorageUnitService, StorageUnitService>();
+        services.AddTransient<IStorageItemService, StorageItemService>();
+        services.AddTransient<IStorageItemCollectionService, StorageItemCollectionService>();
+
+        services.AddSingleton<MessageService>();
+        services.AddSingleton<IDialogService, DialogService>();
+        services.AddTransient<Dispatcher>((o) => { return Dispatcher; });
     }
 
     private void PrepareApplication(IServiceCollection services)
@@ -67,6 +88,7 @@ public partial class App : Application
             return new NavigationViewModel() { AppHost = AppHost };
         });
         services.AddSingleton<IApp, ApplicationViewModel>();
+        services.AddSingleton<IInnerDialogService,InnerDialogService>();
     }
 
     private void PrepareViews(IServiceCollection services)
@@ -74,6 +96,11 @@ public partial class App : Application
         services.AddTransient<IMainWindow, MainWindow>();
         services.AddSingleton<ILoginWindow, LoginView>();
         services.AddSingleton<IRegisterWindow, RegisterView>();
+
+        services.AddTransient<IDialogWindow, BaseDialogWindow>();
+
+        services.AddTransient<IYesNoDialogView,YesNoDialogView>();
+        services.AddTransient<IAlertDialogView,AlertDialogView>();
     }
 
     private void PrepareViewModels(IServiceCollection services)
@@ -81,33 +108,49 @@ public partial class App : Application
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<RegisterViewModel>();
-
-        services.AddSingleton<DashBoardPageViewModel>();
-        services.AddSingleton<ProductsPageViewModel>();
-        services.AddSingleton<ProductGroupPageViewModel>();
-        services.AddSingleton<SuppliersPageViewModel>();
+        services.AddTransient<DashBoardPageViewModel>();
+        services.AddTransient<ProductsPageViewModel>();
+        services.AddTransient<ProductGroupsPageViewModel>();
+        services.AddTransient<ProductStatusesPageViewModel>();
+        services.AddTransient<SuppliersPageViewModel>();
+        services.AddTransient<ItemStatesPageViewModel>();
+        services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<WareHouseItemsPageViewModel>();
     }
 
     private void PrepareRepository(IServiceCollection services)
     {
-        services.AddScoped<IUserRepository,UserRepository>();
-        services.AddScoped<IItemStateRepository, ItemStateRepository> ();
-        services.AddScoped<IProductGroupRepository, ProductGroupRepository>();
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<IProductStatusRepository, ProductStatusRepository>();
-        services.AddScoped<ISupplierRepository, SupplierRepository>();
-        services.AddScoped<IWareHouseItemRepository, WareHouseItemRepository>();
+        services.AddTransient<IUserRepository,UserRepository>();
+        services.AddTransient<IItemStateRepository, ItemStateRepository> ();
+        services.AddTransient<IProductGroupRepository, ProductGroupRepository>();
+        services.AddTransient<IProductRepository, ProductRepository>();
+        services.AddTransient<IProductStatusRepository, ProductStatusRepository>();
+        services.AddTransient<ISupplierRepository, SupplierRepository>();
+        services.AddTransient<IImageRepository, ImageRepository>();
+        services.AddTransient<IWareHouseItemRepository, WareHouseItemRepository>();
+        services.AddTransient<IOrderRepository, OrderRepository>();
+        services.AddTransient<IOrderProductRepository, OrderProductRepository>();
+        services.AddTransient<IRackRepository, RackRepository>();
+        services.AddTransient<IStorageUnitRepository, StorageUnitRepository>();
+        services.AddTransient<IStorageItemRepository, StorageItemRepository>();
+        services.AddTransient<IStorageItemCollectionRepository, StorageItemCollectionRepository>();
     }
 
     private void PrepareDatabase(IServiceCollection services)
     {
-        services.AddDbContext<WarehouseDbContext>();
+        services.AddDbContextFactory<WarehouseDbContext>();
     }
 
     private void PreparePages(IServiceCollection services)
     {
         services.AddTransient<DashBoardPage>();
         services.AddTransient<ProductsPage>();
+        services.AddTransient<ProductGroupPage>();
+        services.AddTransient<SuppliersPage>();
+        services.AddTransient<SettingsPage>();
+        services.AddTransient<ProductStatusesPage>();
+        services.AddTransient<ItemStatesPage>();
+        services.AddTransient<WareHouseItemsPage>();
     }
 
     private void AddCOnfiguration(IServiceCollection services)

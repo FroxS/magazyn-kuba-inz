@@ -3,10 +3,11 @@
     <ResourceDictionary.MergedDictionaries>
         <!-- Order is important -->
         <ResourceDictionary Source="Colors.xaml" />
-        
         <ResourceDictionary Source="Paths.xaml" />
         <ResourceDictionary Source="Fonts.xaml" />
         <ResourceDictionary Source="TextStyle.xaml" />
         <ResourceDictionary Source="ButtonStyle.xaml" />
+        <ResourceDictionary Source="Generic.xaml" />
+        <ResourceDictionary Source="DataGrid.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

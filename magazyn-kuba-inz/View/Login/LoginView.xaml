@@ -115,8 +115,39 @@
                         </StackPanel>
 
                         <StackPanel HorizontalAlignment="Left">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Height" Value="40"/>
+                                        <Setter Property="Background" Value="{DynamicResource Color3Brush}"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Setter Property="FontSize" Value="15"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10,10,10,0">
+                                                        <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.8"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Setter Property="Background" Value="{StaticResource Color2Brush}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Resources>
                             <Button Content="{x:Static res:Resources.Log_in}"
                                 IsDefault="True"
+                                    
                                 Foreground="{StaticResource FontColorBrush}"
                                 Command="{Binding LoginCommand, IsAsync=True}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"

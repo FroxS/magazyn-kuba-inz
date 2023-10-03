@@ -43,6 +43,41 @@ public class WarehouseDbContext : DbContext
     /// </summary>
     public DbSet<ItemState> ItemStates { get; set; }
 
+    /// <summary>
+    /// Table of storage item
+    /// </summary>
+    public DbSet<StorageItem> StorageItem { get; set; }
+
+    /// <summary>
+    /// Table of rack
+    /// </summary>
+    public DbSet<Rack> Rack { get; set; }
+
+    /// <summary>
+    /// Table of storage unit
+    /// </summary>
+    public DbSet<StorageUnit> StorageUnit { get; set; }
+
+    /// <summary>
+    /// Table of items in storage item
+    /// </summary>
+    public DbSet<StorageItemCollection> StorageItemCollection { get; set; }
+
+    /// <summary>
+    /// Table of orders
+    /// </summary>
+    public DbSet<Order> Order { get; set; }
+
+    /// <summary>
+    /// Table of orders products
+    /// </summary>
+    public DbSet<OrderProduct> OrderProduts { get; set; }
+
+    /// <summary>
+    /// Table of images
+    /// </summary>
+    public DbSet<WareHouseImage> Images { get; set; }
+
     #endregion
 
     #region Constructors
@@ -52,7 +87,7 @@ public class WarehouseDbContext : DbContext
     /// </summary>
     public WarehouseDbContext() : base()
     {
-
+        
     }
 
     /// <summary>
@@ -68,6 +103,7 @@ public class WarehouseDbContext : DbContext
 
     #region Override methods 
 
+
     /// <summary>
     /// Method to run on model createing
     /// </summary>
@@ -77,37 +113,38 @@ public class WarehouseDbContext : DbContext
         modelBuilder.Entity<Product>(o =>
         {
             o.LoadDefaultEntity();
-            o.Property(x => x.Name).IsRequired();
-            o.Property(x => x.Name).HasMaxLength(100);
+            o.Property(x => x.Name).IsRequired().HasMaxLength(100);
             o.Property(x => x.Price).IsRequired().HasDefaultValue(0);
             o.HasOne(x => x.Status)
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.ID_Status);
-            //o.HasOne(x => x.Group)
-                //.WithMany(x => x.Products)
-                //.HasForeignKey(x => x.ID_Group);
             o.HasOne(x => x.Supplier)
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.ID_Supplier);
+            o.HasOne(x => x.Group)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.ID_Group);
+            o.HasMany(x => x.Images)
+                .WithMany(x => x.Products);
+            o.HasMany(x => x.StorageItemCollection)
+                .WithOne(x => x.Product)
+                .HasForeignKey(x => x.ID_Product);
         });
 
         modelBuilder.Entity<ProductGroup>(o =>
         {
             o.LoadDefaultEntity();
-            o.Property(x => x.Name).IsRequired();
-            o.Property(x => x.Name).HasMaxLength(255);
+            o.Property(x => x.Name).IsRequired().HasMaxLength(255).IsUnicode();
         });
 
         modelBuilder.Entity<ProductStatus>(o => {
             o.LoadDefaultEntity();
-            o.Property(x => x.Name).IsRequired();
-            o.Property(x => x.Name).HasMaxLength(255);
+            o.Property(x => x.Name).IsRequired().HasMaxLength(255);
         });
 
         modelBuilder.Entity<Supplier>(o => {
             o.LoadDefaultEntity();
-            o.Property(x => x.Name).IsRequired();
-            o.Property(x => x.Name).HasMaxLength(255);
+            o.Property(x => x.Name).IsRequired().HasMaxLength(255);
         });
 
         modelBuilder.Entity<WareHouseItem>(o => {
@@ -130,8 +167,92 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.Active).IsRequired().HasDefaultValue(false);
             o.Property(x => x.PasswordSalt).IsRequired();
             o.Property(x => x.PasswordHash).IsRequired();
-            o.Property(x => x.Type).IsRequired().HasDefaultValue(UserType.Employee);
+            o.Property(x => x.Type).IsRequired().HasDefaultValue(EUserType.Employee_WareHouse);
         });
+
+        modelBuilder.Entity<StorageUnit>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.Name);
+            o.Property(x => x.MaxWidth).IsRequired().HasDefaultValue(0);
+            o.Property(x => x.MaxHeight).IsRequired().HasDefaultValue(0);
+            o.Property(x => x.MaxWeight).IsRequired().HasDefaultValue(0);
+            o.Property(x => x.MaxDepth).IsRequired().HasDefaultValue(1);
+        });
+
+        modelBuilder.Entity<Rack>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.Corridor).IsRequired().HasDefaultValue(1);
+            o.Property(x => x.Flors).IsRequired().HasDefaultValue(1);
+            o.Property(x => x.Width).IsRequired().HasDefaultValue(0);
+            o.Property(x => x.Heigth).IsRequired().HasDefaultValue(0);
+            o.Property(x => x.Deepth).IsRequired().HasDefaultValue(1);
+            o.Property(x => x.Direction).IsRequired().HasDefaultValue(EDir.Left);
+            o.Property(x => x.AmountSpace).IsRequired().HasDefaultValue(2);
+        });
+
+        modelBuilder.Entity<StorageItem>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.Position);
+            o.HasOne(x => x.Rack)
+                .WithMany(x => x.StorageItems)
+                .HasForeignKey(x => x.ID_Rack);
+            o.HasOne(x => x.StorageUnit)
+                .WithMany(x => x.StorageItems)
+                .HasForeignKey(x => x.ID_StorageUnit);
+            o.HasMany(x => x.Items)
+                .WithOne(x => x.StorageItem)
+                .HasForeignKey(x => x.ID_StorageItem);
+        });
+
+        modelBuilder.Entity<StorageItemCollection>(o => {
+            o.LoadDefaultEntity();
+            o.HasOne(x => x.Product)
+                .WithMany(x => x.StorageItemCollection)
+                .HasForeignKey(x => x.ID_Product);
+            o.HasOne(x => x.StorageItem)
+                .WithMany(x => x.Items)
+                .HasForeignKey(x => x.ID_StorageItem);
+            o.HasOne(x => x.OrderItem)
+                .WithOne(x => x.StorageItem)
+                .HasForeignKey<StorageItemCollection>(x => x.ID_OrderItem)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Order>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.Name).IsRequired();
+            o.Property(x => x.Cost).HasDefaultValue(0);
+            o.HasOne(x => x.User)
+                .WithMany(x => x.Orders)
+                .HasForeignKey(x => x.ID_User);
+            o.HasMany(x => x.Items)
+                .WithOne(x => x.Order)
+                .HasForeignKey(x => x.ID_Order);
+        });
+
+        modelBuilder.Entity<OrderProduct>(o => {
+            o.LoadDefaultEntity();
+            o.HasOne(x => x.Product)
+                .WithMany(x => x.OrderItems)
+                .HasForeignKey(x => x.ID_Product);
+            o.HasOne(x => x.StorageItem)
+                .WithOne(x => x.OrderItem)
+                .HasForeignKey<StorageItemCollection>(x => x.ID_OrderItem)
+                .OnDelete(DeleteBehavior.Restrict);
+            o.HasOne(x => x.Order)
+                .WithMany(x => x.Items)
+                .HasForeignKey(x => x.ID_Order);
+        });
+
+        modelBuilder.Entity<WareHouseImage>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.Name).IsRequired();
+            o.Property(x => x.Tag);
+        });
+
+        modelBuilder.Entity<WareHouseImage>()
+            .HasMany(w => w.Products)
+            .WithMany(p => p.Images);
 
         //base.OnModelCreating(modelBuilder); 
     }
@@ -142,7 +263,7 @@ public class WarehouseDbContext : DbContext
     /// <param name="optionsBuilder">Option of builder</param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        object value = optionsBuilder.UseSqlServer("Server=.; Database=magazyn; Trusted_Connection=True;TrustServerCertificate=True");
+        object value = optionsBuilder.UseSqlServer("Server=.; Database=magazyn1; Trusted_Connection=True;TrustServerCertificate=True");
         base.OnConfiguring(optionsBuilder);
     }
 

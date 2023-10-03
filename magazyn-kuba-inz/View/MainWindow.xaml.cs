@@ -3,7 +3,9 @@ using magazyn_kuba_inz.Core.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 namespace magazyn_kuba_inz.View;
 
@@ -18,6 +20,7 @@ public partial class MainWindow : Window, IMainWindow
         InitializeComponent();
     }
 
+
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
@@ -28,6 +31,16 @@ public partial class MainWindow : Window, IMainWindow
     private void CloseBtn_Click(object sender, RoutedEventArgs e)
     {
         Close();
+    }
+
+    private void btnModalClose_Click(object sender, RoutedEventArgs e)
+    {
+        Modal.IsOpen = false;
+    }
+
+    private void btnModalOpen_Click(object sender, RoutedEventArgs e)
+    {
+        Modal.IsOpen = true;
     }
 }
 

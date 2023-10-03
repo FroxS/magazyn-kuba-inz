@@ -129,8 +129,14 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="ItemState" xml:space="preserve">
+    <value>Item state</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
@@ -144,10 +150,22 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductStates" xml:space="preserve">
+    <value>Product states</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="WareHouseItems" xml:space="preserve">
+    <value>WareHouse items</value>
   </data>
 </root>

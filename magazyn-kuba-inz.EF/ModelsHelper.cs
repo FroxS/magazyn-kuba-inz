@@ -1,11 +1,10 @@
-﻿using magazyn_kuba_inz.Models.Enums;
-using magazyn_kuba_inz.Models.WareHouse;
-using Microsoft.EntityFrameworkCore;
+﻿using magazyn_kuba_inz.Models.WareHouse;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 
 namespace magazyn_kuba_inz.EF;
 
-internal static class ModelsHelper 
+public static class ModelsHelper 
 {
     #region Public Methods
 

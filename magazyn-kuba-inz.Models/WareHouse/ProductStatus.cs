@@ -13,4 +13,15 @@ public class ProductStatus : BaseEntity
     public string? Name { get; set; }
 
     public List<Product>? Products { get; set; }
+
+    public static ProductStatus Get()
+    {
+        return new ProductStatus()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Name = "",
+            Lp = 1
+        };
+    }
 }

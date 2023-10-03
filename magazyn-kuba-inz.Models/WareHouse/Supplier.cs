@@ -13,4 +13,15 @@ public class Supplier : BaseEntity
     public string? Name { get; set; }
 
     public List<Product>? Products { get; set; }
+
+    public static Supplier Get()
+    {
+        return new Supplier()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Name = "",
+            Lp = 1
+        };
+    }
 }

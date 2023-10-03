@@ -2,13 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:magazyn_kuba_inz"
-             xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers">
+             xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers" >
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <conv:BoolToVisibleConventer x:Key="BoolToVisible"/>
                     <conv:BoolBlurEffectConventer x:Key="BoolBlur"/>
+                    <conv:NullVisibleConventer x:Key="NullToVisible"/>
+                    <conv:InverseBoolConventer x:Key="InverseBool"/>
+                    <conv:MessageTypeToColorConventer x:Key="MessageTypeToColor"/>
+                    <conv:ArrayByteToImageConventer x:Key="ArrayByteToImage"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/magazyn_kuba_inz.Theme;component/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>

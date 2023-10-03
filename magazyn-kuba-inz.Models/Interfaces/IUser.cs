@@ -7,7 +7,7 @@ namespace magazyn_kuba_inz.Models.Interfaces
         Guid ID { get; }
         string? Login { get; }
         string? Name { get; }
-        UserType Type { get; }
+        EUserType Type { get; }
         string? Image { get; }
         bool Active { get; }
         string Email { get; set; }

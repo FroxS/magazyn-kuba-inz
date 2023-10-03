@@ -22,11 +22,6 @@ namespace magazyn_kuba_inz.Core.ViewModel.Design
         /// </summary>
         public DesignNavigationViewModel()
         {
-            NavItems = new ObservableCollection<NavItem>()
-            {
-                new NavItem(NavItemType.Dashboard, Properties.Resources.Dashboard),
-                new NavItem(NavItemType.Settings, Properties.Resources.Settings)
-            };
             Page = ApplicationPage.DashBoard;
         }
 

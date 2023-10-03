@@ -1,4 +1,4 @@
-﻿<service:BasePage x:TypeArguments="pageVM:DashBoardPageViewModel"
+﻿<service:BaseControlPage x:TypeArguments="pageVM:DashBoardPageViewModel"
                   x:Class="magazyn_kuba_inz.View.Pages.DashBoardPage"
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,6 @@
                   xmlns:service="clr-namespace:magazyn_kuba_inz.View.Service"
                   xmlns:pageVM="clr-namespace:magazyn_kuba_inz.Core.ViewModel.Pages;assembly=magazyn_kuba_inz.Core"
                   mc:Ignorable="d" 
-                  Title="DashBoardPage"
                   CanResize="CanResizeWithGrip"
                   d:DataContext="{d:DesignInstance Type=pageVM:DashBoardPageViewModel}"
                   d:DesignHeight="500" d:DesignWidth="1000">
@@ -21,4 +20,4 @@
                    HorizontalAlignment="Center"
                    />
     </Grid>
-</service:BasePage>
+</service:BaseControlPage>

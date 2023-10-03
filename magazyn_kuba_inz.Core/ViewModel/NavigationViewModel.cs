@@ -1,9 +1,9 @@
-﻿using magazyn_kuba_inz.Core.Models;
+﻿using magazyn_kuba_inz.Core.Helpers;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models.Page;
 using Microsoft.Extensions.Hosting;
-using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel;
 
@@ -17,9 +17,15 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public ApplicationPage Page { get; protected set; }
 
+    public BasePageViewModel PageVM { get; set; }
+
     public event PageChanged PageChanged = (page) => { };
 
-    public ObservableCollection<NavItem> NavItems { get; protected set; }
+    #endregion
+
+    #region Public Commands
+
+    public ICommand SetPageCommand { get; private set; }
 
     #endregion
 
@@ -27,8 +33,8 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public NavigationViewModel()
     {
+        SetPageCommand = new RelayCommand<ApplicationPage>((o) => { SetPage(o); });
         SetPage(ApplicationPage.DashBoard);
-        SetNavItems();
     }
 
     #endregion
@@ -37,18 +43,25 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public void SetPage(ApplicationPage page)
     {
-        OnPropertyChanging(nameof(Page));
-        Page = page;
-        PageChanged?.Invoke(Page);
-        OnPropertyChanged(nameof(Page));
+        if(page != Page)
+        {
+            PageVM.OnPageClose();
+            if (PageVM.CanChangePage)
+            {
+                OnPropertyChanging(nameof(Page));
+                Page = page;
+                OnPropertyChanged(nameof(Page));
+                PageVM.OnPageOpen();
+                PageChanged?.Invoke(Page);
+            }
+        }
     }
 
-    public void SetNavItems()
+    public void UpdateViewModel(BasePageViewModel vm)
     {
-        NavItems = new ObservableCollection<NavItem>();
-        NavItems.Add(new NavItem(NavItemType.Dashboard, Properties.Resources.Dashboard));
-        NavItems.Add(new NavItem(NavItemType.Settings, Properties.Resources.Settings));
+        PageVM = vm;
     }
+    
 
     #endregion
 }

@@ -48,7 +48,46 @@
     <Compile Update="Controls\LeftMenuView2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\InnerDialog\AddProductToStateInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddProductStatusInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddProductInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddProductGroupInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddItemStateInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddSupplierInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\YesNoInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Login\RegisterView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\ProductStatus\ProductStatusView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\Product\ProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\ItemStates\ItemStateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\Supplier\SupplierView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\WareHouseItems\ProductWareHouseItemsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\WareHouseItems\WareHouseTabs\WareHouseStatusTabView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

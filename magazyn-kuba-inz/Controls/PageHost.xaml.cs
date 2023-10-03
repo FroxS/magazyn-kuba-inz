@@ -1,5 +1,8 @@
 ﻿using magazyn_kuba_inz.Conventers;
+using magazyn_kuba_inz.Core.Service.Interface;
+using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models.Page;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,6 +39,27 @@ namespace magazyn_kuba_inz.Controls
                 );
 
 
+        /// <summary>
+        /// The current page to show in the page host
+        /// </summary>
+        public BasePageViewModel CurrentPageViewModel
+        {
+            get => (BasePageViewModel)GetValue(CurrentPageViewModelProperty);
+            set => SetValue(CurrentPageViewModelProperty, value);
+        }
+
+        /// <summary>
+        /// Registers <see cref="CurrentPage"/> as a dependency property
+        /// </summary>
+        public static readonly DependencyProperty CurrentPageViewModelProperty =
+            DependencyProperty.Register(
+                nameof(CurrentPageViewModel),
+                typeof(BasePageViewModel),
+                typeof(PageHost),
+                null
+                );
+
+
 
         #endregion
 
@@ -66,7 +90,13 @@ namespace magazyn_kuba_inz.Controls
                 newPageFrame.Content = null;
 
                 if (App.AppHost?.Services != null)
-                    newPageFrame.Content = page.ToBasePage(App.AppHost.Services);
+                {
+                    var pageVIew = page.ToBasePage(App.AppHost.Services);
+                    //(d as PageHost).CurrentPageViewModel = pageVIew.ViewModelObject as BasePageViewModel;
+                    App.AppHost.Services.GetService<INavigation>().UpdateViewModel(pageVIew.ViewModelObject as BasePageViewModel);
+                    newPageFrame.Content = pageVIew;
+                }
+                    
             }
                 
             

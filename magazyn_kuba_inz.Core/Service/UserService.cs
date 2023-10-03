@@ -47,7 +47,7 @@ public class UserService : IUserService
             PasswordSalt = PasswordHelper.GenerateSalt(),
             Active = false,
             Name = resource.Login,
-            Type = magazyn_kuba_inz.Models.Enums.UserType.Employee
+            Type = magazyn_kuba_inz.Models.Enums.EUserType.Employee_WareHouse
         };
         user.PasswordHash = PasswordHelper.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
 

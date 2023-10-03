@@ -13,7 +13,7 @@ public class UserRepository : BaseRepository<User,WarehouseDbContext>, IUserRepo
     /// Default constructro
     /// </summary>
     /// <param name="context">Context of database</param>
-    public UserRepository(WarehouseDbContext context) : base(context)
+    public UserRepository(IDbContextFactory<WarehouseDbContext> factory) : base(factory)
     {
 
     }
@@ -29,7 +29,7 @@ public class UserRepository : BaseRepository<User,WarehouseDbContext>, IUserRepo
     /// <returns></returns>
     public async virtual Task<User> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
     {
-        return await context.Users.FirstOrDefaultAsync(x => x.Name == name);
+        return await _context.Users.FirstOrDefaultAsync(x => x.Name == name);
     }
 
     #endregion

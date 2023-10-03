@@ -29,4 +29,22 @@ public class Product : BaseEntity
     public Supplier? Supplier { get; set; }
 
     public List<WareHouseItem>? WareHouseItems { get; set; }
+
+    public List<WareHouseImage>? Images { get; set; }
+
+    public List<StorageItemCollection>? StorageItemCollection { get; set; }
+
+    public List<OrderProduct>? OrderItems { get; set; }
+
+    public static Product Get()
+    {
+        return new Product()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Name = "",
+            Description = "",
+            Lp = 1
+        };
+    }
 }

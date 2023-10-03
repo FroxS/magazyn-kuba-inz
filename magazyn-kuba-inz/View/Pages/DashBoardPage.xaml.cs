@@ -7,7 +7,7 @@ namespace magazyn_kuba_inz.View.Pages;
 /// <summary>
 /// Logika interakcji dla klasy DashBoardPage.xaml
 /// </summary>
-public partial class DashBoardPage : BasePage<DashBoardPageViewModel>
+public partial class DashBoardPage : BaseControlPage<DashBoardPageViewModel>
 { 
     public DashBoardPage(DashBoardPageViewModel? vm):base(vm)
     {

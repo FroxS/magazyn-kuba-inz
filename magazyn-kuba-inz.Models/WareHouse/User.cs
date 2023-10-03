@@ -15,7 +15,8 @@ public sealed class User : BaseEntity, IUser
     public string? PasswordSalt { get; set; }
     public string? PasswordHash { get; set; }
     public string? Email { get; set; }
-    public UserType Type { get; set; }
+    public EUserType Type { get; set; }
     public string? Image { get; set; }
+    public List<Order>? Orders { get; set; }
 }
 

@@ -57,7 +57,6 @@ public class LoginViewModel : BaseViewModel
     {
         try
         {
-            
             User = null;
             _CanValidate = true;
             NotifyPropChanged(nameof(Login), nameof(Password));

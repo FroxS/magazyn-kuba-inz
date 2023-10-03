@@ -6,4 +6,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DataGrid\" />
+    <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\magazyn-kuba-inz.Models\magazyn-kuba-inz.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace magazyn_kuba_inz.View.Service;
 
-public class BasePage : Page, IBasePage
+public class BaseControlPage : UserControl, IBasePage
 {
     #region Private Properties
 
@@ -48,7 +48,7 @@ public class BasePage : Page, IBasePage
         DependencyProperty.Register(
             nameof(CanResize),
             typeof(ResizeMode),
-            typeof(BasePage),
+            typeof(BaseControlPage),
             new UIPropertyMetadata(
                 default(ResizeMode),
                 null,
@@ -84,7 +84,7 @@ public class BasePage : Page, IBasePage
         DependencyProperty.Register(
             nameof(WinHeight),
             typeof(double),
-            typeof(BasePage),
+            typeof(BaseControlPage),
             new UIPropertyMetadata(
                 default(double),
                 null,
@@ -98,7 +98,7 @@ public class BasePage : Page, IBasePage
         DependencyProperty.Register(
             nameof(WinWidth),
             typeof(double),
-            typeof(BasePage),
+            typeof(BaseControlPage),
             new UIPropertyMetadata(
                 default(double),
                 null,
@@ -111,7 +111,7 @@ public class BasePage : Page, IBasePage
 
     #region Contructors
 
-    public BasePage(object viewModel)
+    public BaseControlPage(object viewModel)
     {
         ViewModelObject = viewModel;
     }
@@ -122,7 +122,7 @@ public class BasePage : Page, IBasePage
 
     private static object WinWidthPropertyChanged(DependencyObject d, object value)
     {
-        if (d is BasePage bp && value is double w)
+        if (d is BaseControlPage bp && value is double w)
         {
             Window window = App.Current.MainWindow;
             window.Width = w;
@@ -137,7 +137,7 @@ public class BasePage : Page, IBasePage
 
     private static object WinHeightPropertyChanged(DependencyObject d, object value)
     {
-        if (d is BasePage bp && value is double w)
+        if (d is BaseControlPage bp && value is double w)
         {
             Window window = App.Current.MainWindow;
             window.Height = w;
@@ -158,7 +158,7 @@ public class BasePage : Page, IBasePage
     /// <param name="value"></param>
     private static object CurrentPagePropertyChanged(DependencyObject d, object value)
     {
-        if(d is BasePage bp && value is ResizeMode resizeMode)
+        if(d is BaseControlPage bp && value is ResizeMode resizeMode)
         {
             App.Current.MainWindow.ResizeMode = resizeMode;
         }
@@ -170,7 +170,7 @@ public class BasePage : Page, IBasePage
 }
 
 
-public class BasePage<VM> : BasePage , IBasePage
+public class BaseControlPage<VM> : BaseControlPage, IBasePage
     where VM : BasePageViewModel
 {
 
@@ -188,10 +188,11 @@ public class BasePage<VM> : BasePage , IBasePage
 
     #region Contructors
 
-    public BasePage(VM viewModel) :base(viewModel)
+    public BaseControlPage(VM viewModel) :base(viewModel)
     {
 
     }
 
     #endregion
 }
+

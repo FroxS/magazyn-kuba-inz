@@ -13,4 +13,15 @@ public class ItemState : BaseEntity
     public string? Name { get; set; }
 
     public List<WareHouseItem>? Items { get; set; }
+
+    public static ItemState Get()
+    {
+        return new ItemState()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Name = "",
+            Lp = 1
+        };
+    }
 }

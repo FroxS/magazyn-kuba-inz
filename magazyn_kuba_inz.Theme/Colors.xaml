@@ -34,4 +34,6 @@
     <Color x:Key="Color5">#fb8500</Color>
     <SolidColorBrush x:Key="Color5Brush" Color="{StaticResource Color5}"/>
 
+    <SolidColorBrush x:Key="WaringColorBrush" Color="{StaticResource Color4}"/>
+
 </ResourceDictionary>

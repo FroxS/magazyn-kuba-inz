@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\magazyn-kuba-inz.EF\magazyn-kuba-inz.EF.csproj" />
+    <ProjectReference Include="..\magazyn-kuba-inz.Models\magazyn-kuba-inz.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
+﻿using magazyn_kuba_inz.Core.Service;
+using magazyn_kuba_inz.Core.Service.Dialog;
+using magazyn_kuba_inz.Core.Service.Interface;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace magazyn_kuba_inz.Helper;
@@ -23,6 +25,16 @@ public class AppHelper
     /// The aplication view model
     /// </summary>
     public static IApp Application => App.AppHost.Services.GetRequiredService<IApp>();
+
+    /// <summary>
+    /// The Inner dialog service
+    /// </summary>
+    public static IInnerDialogService InnerDialog => App.AppHost.Services.GetRequiredService<IInnerDialogService>();
+
+    /// <summary>
+    /// Message service
+    /// </summary>
+    public static MessageService MessageService => App.AppHost.Services.GetRequiredService<MessageService>();
 
     #endregion
 }

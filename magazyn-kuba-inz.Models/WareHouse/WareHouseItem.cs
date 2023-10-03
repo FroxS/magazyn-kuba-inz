@@ -19,4 +19,16 @@ public class WareHouseItem : BaseEntity
     public Guid ID_State { get; set; }
 
     public ItemState? State { get; set; }
+
+    public static WareHouseItem Get()
+    {
+        return new WareHouseItem()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Count = 0,
+            Lp = 1
+        };
+    }
+
 }

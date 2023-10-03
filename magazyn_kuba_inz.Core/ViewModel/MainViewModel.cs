@@ -1,5 +1,4 @@
-﻿
-using magazyn_kuba_inz.Core.Helpers;
+﻿using magazyn_kuba_inz.Core.Helpers;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models.Page;

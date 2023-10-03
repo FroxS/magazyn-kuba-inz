@@ -6,6 +6,8 @@ public class BasePageViewModel : BaseViewModel
 {
     #region Public Properties
 
+    public bool CanChangePage { get; protected set; } = true;
+
     public IApp Application { get; }
 
     #endregion
@@ -17,7 +19,15 @@ public class BasePageViewModel : BaseViewModel
         Application = application;
     }
 
+    #endregion
+
+    #region Public methods
+
+    public virtual void OnPageClose() { }
+
+    public virtual void OnPageOpen() { }
 
     #endregion
+
 }
 

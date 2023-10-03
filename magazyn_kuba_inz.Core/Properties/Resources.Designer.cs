@@ -97,11 +97,29 @@ namespace magazyn_kuba_inz.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item state.
+        /// </summary>
+        public static string ItemState {
+            get {
+                return ResourceManager.GetString("ItemState", resourceCulture);
             }
         }
         
@@ -142,6 +160,24 @@ namespace magazyn_kuba_inz.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product states.
+        /// </summary>
+        public static string ProductStates {
+            get {
+                return ResourceManager.GetString("ProductStates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string Register {
@@ -156,6 +192,24 @@ namespace magazyn_kuba_inz.Core.Properties {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suppliers.
+        /// </summary>
+        public static string Suppliers {
+            get {
+                return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WareHouse items.
+        /// </summary>
+        public static string WareHouseItems {
+            get {
+                return ResourceManager.GetString("WareHouseItems", resourceCulture);
             }
         }
     }
