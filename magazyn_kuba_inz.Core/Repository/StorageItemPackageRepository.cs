@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace magazyn_kuba_inz.Core.Repository;
 
-public class StorageItemCollectionRepository : BaseRepository<StorageItemCollection,WarehouseDbContext>, IStorageItemCollectionRepository
+public class StorageItemPackageRepository : BaseRepository<StorageItemPackage,WarehouseDbContext>, IStorageItemPackageRepository
 {
     #region Constructros
 
@@ -13,7 +13,7 @@ public class StorageItemCollectionRepository : BaseRepository<StorageItemCollect
     /// Default constructro
     /// </summary>
     /// <param name="context">Context of database</param>
-    public StorageItemCollectionRepository(IDbContextFactory<WarehouseDbContext> factory) : base(factory)
+    public StorageItemPackageRepository(IDbContextFactory<WarehouseDbContext> factory) : base(factory)
     {
 
     }

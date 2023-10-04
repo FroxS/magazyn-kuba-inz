@@ -6,11 +6,11 @@ namespace magazyn_kuba_inz.Core.Service.Interface
 {
     public interface INavigation
     {
-        ApplicationPage Page { get; }
+        EApplicationPage Page { get; }
         BasePageViewModel PageVM { get; }
 
         event PageChanged PageChanged;
-        void SetPage(ApplicationPage page);
+        void SetPage(EApplicationPage page);
 
         void UpdateViewModel(BasePageViewModel vm);
     }

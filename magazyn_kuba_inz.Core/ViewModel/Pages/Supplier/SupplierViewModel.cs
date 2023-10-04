@@ -16,11 +16,14 @@ public class SupplierViewModel : BaseEntityViewModel<Supplier>
         get => _entity.Name;
         set
         {
-            if (_entity.Name == value)
-                return;
-            Saved = false;
-            _entity.Name = value;
-            OnPropertyChanged(nameof(Name));
+            SetProperty(() => Name, value, 
+                () =>
+                { 
+                    if(_entity.Name != value)
+                        Saved = false;
+                    _entity.Name = value;
+                }
+            );
         }
     }
 

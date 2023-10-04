@@ -13,8 +13,8 @@ public class TheSamePropParameterConventer : BaseValueConventer<TheSamePropParam
 {
     public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var val1 = (ApplicationPage)value;
-        var val2 = (ApplicationPage)parameter;
+        var val1 = (EApplicationPage)value;
+        var val2 = (EApplicationPage)parameter;
         
         return val1 == val2;
     }

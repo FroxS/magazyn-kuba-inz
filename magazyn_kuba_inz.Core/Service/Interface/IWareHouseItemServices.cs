@@ -107,6 +107,6 @@ public interface IOrderService : IBaseService<Order> { }
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }
 public interface IRackService : IBaseService<Rack> { }
+public interface IStorageItemPackageService : IBaseService<StorageItemPackage> { }
 public interface IStorageItemService : IBaseService<StorageItem> { }
-public interface IStorageItemCollectionService : IBaseService<StorageItemCollection> { }
 

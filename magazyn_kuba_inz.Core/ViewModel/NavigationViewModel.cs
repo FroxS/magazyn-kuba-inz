@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel;
 
-public delegate void PageChanged(ApplicationPage page);
+public delegate void PageChanged(EApplicationPage page);
 
 public class NavigationViewModel : BaseViewModel, INavigation
 {
@@ -15,7 +15,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public IHost? AppHost { get; set; }
 
-    public ApplicationPage Page { get; protected set; }
+    public EApplicationPage Page { get; protected set; }
 
     public BasePageViewModel PageVM { get; set; }
 
@@ -33,15 +33,15 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public NavigationViewModel()
     {
-        SetPageCommand = new RelayCommand<ApplicationPage>((o) => { SetPage(o); });
-        SetPage(ApplicationPage.DashBoard);
+        SetPageCommand = new RelayCommand<EApplicationPage>((o) => { SetPage(o); });
+        SetPage(EApplicationPage.DashBoard);
     }
 
     #endregion
 
     #region Public Methods
 
-    public void SetPage(ApplicationPage page)
+    public void SetPage(EApplicationPage page)
     {
         if(page != Page)
         {

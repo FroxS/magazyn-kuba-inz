@@ -9,10 +9,10 @@ public class StorageItem : BaseEntity
     [Key]
     [Required]
     public override Guid ID { get; set; }
-    public string? Position { get; set; }
-    public Guid ID_StorageUnit { get; set; }
-    public StorageUnit? StorageUnit { get; set; }
-    public Guid ID_Rack { get; set; }
-    public Rack? Rack { get; set; }
-    public List<StorageItemCollection>? Items { get; set; }
+    public Guid ID_StorageItem { get; set; }
+    public StorageItemPackage? Package { get; set; }
+    public Guid ID_Product { get; set; }
+    public Product? Product { get; set; }
+    public Guid ID_OrderItem { get; set; }
+    public OrderProduct? OrderItem { get; set; }
 }

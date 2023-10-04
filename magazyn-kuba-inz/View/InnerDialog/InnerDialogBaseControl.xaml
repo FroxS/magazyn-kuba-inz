@@ -50,6 +50,9 @@
                 <DataTemplate DataType="{x:Type vm:YesNoInnerDialogViewModel}">
                     <local:YesNoInnerDialogView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:AddStorageUnitInnerDialogViewModel}">
+                    <local:AddStorageUnitInnerDialogView/>
+                </DataTemplate>
             </Grid.Resources>
             <ContentControl Margin="5" Content="{Binding}">
                 

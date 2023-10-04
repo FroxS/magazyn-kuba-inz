@@ -12,32 +12,35 @@ namespace magazyn_kuba_inz.Conventers;
 public static class AplicationPageConventer
 {
     /// <summary>
-    /// Takes a <see cref="ApplicationPage"/> and the viem model if any and creates the desired page
+    /// Takes a <see cref="EApplicationPage"/> and the viem model if any and creates the desired page
     /// </summary>
     /// <param name="page"></param>
     /// <param name="viewModel"></param>
     /// <returns></returns>
-    public static IBasePage ToBasePage(this ApplicationPage page, IServiceProvider services) 
+    public static IBasePage ToBasePage(this EApplicationPage page, IServiceProvider services) 
     {
         switch (page)
         {
-            case ApplicationPage.DashBoard:
+            case EApplicationPage.DashBoard:
                 return services.GetRequiredService<DashBoardPage>();
-            case ApplicationPage.Products:
+            case EApplicationPage.Products:
                 return services.GetRequiredService<ProductsPage>();
-            case ApplicationPage.Suppliers:
+            case EApplicationPage.Suppliers:
                 return services.GetRequiredService<SuppliersPage>();
-            case ApplicationPage.ProductGroups:
+            case EApplicationPage.ProductGroups:
                 return services.GetRequiredService<ProductGroupPage>();
-            case ApplicationPage.Settings:
+            case EApplicationPage.Settings:
                 return services.GetRequiredService<SettingsPage>();
-            case ApplicationPage.ProductStatuses:
+            case EApplicationPage.ProductStatuses:
                 return services.GetRequiredService<ProductStatusesPage>();
-            case ApplicationPage.ItemStates:
+            case EApplicationPage.ItemStates:
                 return services.GetRequiredService<ItemStatesPage>();
-            case ApplicationPage.WareHouseItems:
+            case EApplicationPage.WareHouseItems:
                 return services.GetRequiredService<WareHouseItemsPage>();
-
+            case EApplicationPage.StorageUnits:
+                return services.GetRequiredService<StorageUnitsPage>();
+            case EApplicationPage.WareHouseCreator:
+                return services.GetRequiredService<WareHouseCreatorPage>();
             default:
                 Debugger.Break();
                 return null;
@@ -49,27 +52,29 @@ public static class AplicationPageConventer
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>
-    public static ApplicationPage GetPageFromViewModel(this BasePageViewModel vm)
+    public static EApplicationPage GetPageFromViewModel(this BasePageViewModel vm)
     {
 
         if (vm is DashBoardPageViewModel)
-            return ApplicationPage.DashBoard;
+            return EApplicationPage.DashBoard;
         if (vm is ProductsPageViewModel)
-            return ApplicationPage.Products;
+            return EApplicationPage.Products;
         if (vm is SuppliersPageViewModel)
-            return ApplicationPage.Suppliers;
+            return EApplicationPage.Suppliers;
         if (vm is ProductStatusesPageViewModel)
-            return ApplicationPage.ProductGroups;
+            return EApplicationPage.ProductGroups;
         if (vm is SettingsPageViewModel)
-            return ApplicationPage.Settings;
+            return EApplicationPage.Settings;
         if (vm is ProductStatusesPageViewModel)
-            return ApplicationPage.ProductStatuses;
+            return EApplicationPage.ProductStatuses;
         if (vm is ItemStatesPageViewModel)
-            return ApplicationPage.ItemStates;
+            return EApplicationPage.ItemStates;
         if (vm is WareHouseItemsPageViewModel)
-            return ApplicationPage.WareHouseItems;
+            return EApplicationPage.WareHouseItems;
+        if (vm is StorageUnitsPageViewModel)
+            return EApplicationPage.StorageUnits;
 
         Debugger.Break();
-        return default(ApplicationPage);
+        return default(EApplicationPage);
     }
 }

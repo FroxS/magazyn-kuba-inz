@@ -18,9 +18,9 @@ namespace magazyn_kuba_inz.Controls
         /// <summary>
         /// The current page to show in the page host
         /// </summary>
-        public ApplicationPage CurrentPage
+        public EApplicationPage CurrentPage
         {
-            get => (ApplicationPage)GetValue(CurrentPageProperty);
+            get => (EApplicationPage)GetValue(CurrentPageProperty);
             set => SetValue(CurrentPageProperty, value);
         }
 
@@ -30,10 +30,10 @@ namespace magazyn_kuba_inz.Controls
         public static readonly DependencyProperty CurrentPageProperty =
             DependencyProperty.Register(
                 nameof(CurrentPage), 
-                typeof(ApplicationPage), 
+                typeof(EApplicationPage), 
                 typeof(PageHost), 
                 new UIPropertyMetadata(
-                    default(ApplicationPage),
+                    default(EApplicationPage),
                     null, 
                     CurrentPagePropertyChanged)
                 );
@@ -81,7 +81,7 @@ namespace magazyn_kuba_inz.Controls
         /// <param name="e"></param>
         private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
-            if(value is ApplicationPage page)
+            if(value is EApplicationPage page)
             {
                 Frame? newPageFrame = (d as PageHost)?.NewPage;
                 var oldPageContent = newPageFrame.Content;

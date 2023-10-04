@@ -4,14 +4,14 @@ using magazyn_kuba_inz.Models.WareHouse;
 
 namespace magazyn_kuba_inz.Core.Service;
 
-public class StorageItemCollectionService : BaseServiceWithRepository<IStorageItemCollectionRepository,StorageItemCollection>, IStorageItemCollectionService
+public class StorageItemPackageService : BaseServiceWithRepository<IStorageItemPackageRepository, StorageItemPackage>, IStorageItemPackageService
 {
     #region Constructors
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public StorageItemCollectionService(IStorageItemCollectionRepository ripository) :base(ripository)
+    public StorageItemPackageService(IStorageItemPackageRepository ripository) :base(ripository)
     {
     }
 

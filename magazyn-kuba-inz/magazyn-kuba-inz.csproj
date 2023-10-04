@@ -48,6 +48,12 @@
     <Compile Update="Controls\LeftMenuView2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\WareHouseArea.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InnerDialog\AddStorageUnitInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\InnerDialog\AddProductToStateInnerDialogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +76,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Login\RegisterView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\StorageUnit\StorageUnitView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Pages\ProductStatus\ProductStatusView.xaml.cs">

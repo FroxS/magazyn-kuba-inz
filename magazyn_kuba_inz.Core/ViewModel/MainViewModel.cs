@@ -31,7 +31,7 @@ public class MainViewModel: BaseViewModel
     {
         this.nav = nav;
         NextPageCommand = new RelayCommand((o) => {
-            nav.SetPage(ApplicationPage.DashBoard); 
+            nav.SetPage(EApplicationPage.DashBoard); 
         });
     }
 

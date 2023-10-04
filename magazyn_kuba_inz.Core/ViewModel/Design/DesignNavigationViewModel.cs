@@ -22,7 +22,7 @@ namespace magazyn_kuba_inz.Core.ViewModel.Design
         /// </summary>
         public DesignNavigationViewModel()
         {
-            Page = ApplicationPage.DashBoard;
+            Page = EApplicationPage.DashBoard;
         }
 
         #endregion

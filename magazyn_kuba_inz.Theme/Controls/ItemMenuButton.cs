@@ -39,18 +39,6 @@ namespace magazyn_kuba_inz.Theme.Controls
             set { SetValue(IsMenuSelectedProperty, value); }
         }
 
-        public ICommand ClickCommand
-        {
-            get { return (ICommand)GetValue(ClickCommandProperty); }
-            set { SetValue(ClickCommandProperty, value); }
-        }
-
-        public object ClickCommandParameter
-        {
-            get { return (object)GetValue(ClickCommandParameterProperty); }
-            set { SetValue(ClickCommandParameterProperty, value); }
-        }
-
         #endregion
 
         #region Dependency
@@ -64,25 +52,6 @@ namespace magazyn_kuba_inz.Theme.Controls
         public static readonly DependencyProperty IsMenuSelectedProperty =
             DependencyProperty.Register("IsMenuSelected", typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty ClickCommandProperty =
-            DependencyProperty.Register(
-                "ClickCommand", 
-                typeof(ICommand), 
-                typeof(ItemMenuButton), 
-                new PropertyMetadata(
-                    null,
-                    new PropertyChangedCallback(OnClickCommandChanged)
-                ));
-
-        public static readonly DependencyProperty ClickCommandParameterProperty =
-            DependencyProperty.Register(
-                "ClickCommandParameter",
-                typeof(object),
-                typeof(ItemMenuButton),
-                new PropertyMetadata(
-                    null
-                ));
-
         public static readonly DependencyProperty IsMenuOpenProperty =
             DependencyProperty.Register("IsMenuOpen", typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
 
@@ -95,6 +64,7 @@ namespace magazyn_kuba_inz.Theme.Controls
 
         static ItemMenuButton()
         {
+
         }
 
         #endregion
@@ -124,11 +94,11 @@ namespace magazyn_kuba_inz.Theme.Controls
 
         private void Panel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (ClickCommand == null)
+            if (Command == null)
                 return;
 
-            if(ClickCommand.CanExecute(ClickCommandParameter))
-                ClickCommand.Execute(ClickCommandParameter);
+            if (Command.CanExecute(CommandParameter))
+                Command.Execute(CommandParameter);
         }
 
 

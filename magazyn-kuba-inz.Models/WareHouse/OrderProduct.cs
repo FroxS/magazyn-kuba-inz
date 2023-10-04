@@ -16,5 +16,5 @@ public class OrderProduct : BaseEntity
     public Guid ID_Product { get; set; }
     public Product? Product { get; set; }
     public Guid ID_StorageItem { get; set; }
-    public StorageItemCollection? StorageItem { get; set; }
+    public StorageItem? StorageItem { get; set; }
 }

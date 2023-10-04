@@ -1,7 +1,6 @@
-﻿
-namespace magazyn_kuba_inz.Models.Page;
+﻿namespace magazyn_kuba_inz.Models.Page;
 
-public enum ApplicationPage
+public enum EApplicationPage
 {
     DashBoard,
     WareHouseItems,
@@ -10,5 +9,7 @@ public enum ApplicationPage
     ProductGroups,
     ProductStatuses,
     ItemStates,
-    Settings
+    Settings,
+    WareHouseCreator,
+    StorageUnits
 }

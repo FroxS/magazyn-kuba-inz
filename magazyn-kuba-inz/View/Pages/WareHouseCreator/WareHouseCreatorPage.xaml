@@ -1,0 +1,21 @@
+﻿<service:BaseControlPage x:TypeArguments="pageVM:WareHouseCreatorPageViewModel"
+                         x:Class="magazyn_kuba_inz.View.Pages.WareHouseCreatorPage"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                         xmlns:local="clr-namespace:magazyn_kuba_inz.View.Pages"
+                         xmlns:service="clr-namespace:magazyn_kuba_inz.View.Service"
+                         xmlns:controls="clr-namespace:magazyn_kuba_inz.Controls"
+                         xmlns:pageVM="clr-namespace:magazyn_kuba_inz.Core.ViewModel.Pages;assembly=magazyn_kuba_inz.Core"
+                         mc:Ignorable="d" 
+                         CanResize="CanResizeWithGrip"
+                         d:DataContext="{d:DesignInstance Type=pageVM:WareHouseCreatorPageViewModel}"
+                         d:DesignHeight="500" d:DesignWidth="1000"
+                         Background="RosyBrown">
+
+    <Grid Margin="10"
+          >
+        <controls:WareHouseArea Margin="10"/>
+    </Grid>
+</service:BaseControlPage>

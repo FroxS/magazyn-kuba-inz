@@ -79,6 +79,15 @@ namespace magazyn_kuba_inz.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creator.
+        /// </summary>
+        public static string Creator {
+            get {
+                return ResourceManager.GetString("Creator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -196,11 +205,29 @@ namespace magazyn_kuba_inz.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Storage units.
+        /// </summary>
+        public static string StorageUnits {
+            get {
+                return ResourceManager.GetString("StorageUnits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suppliers.
         /// </summary>
         public static string Suppliers {
             get {
                 return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ware house.
+        /// </summary>
+        public static string WareHouse {
+            get {
+                return ResourceManager.GetString("WareHouse", resourceCulture);
             }
         }
         

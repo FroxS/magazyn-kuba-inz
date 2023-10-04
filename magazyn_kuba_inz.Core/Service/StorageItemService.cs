@@ -4,7 +4,7 @@ using magazyn_kuba_inz.Models.WareHouse;
 
 namespace magazyn_kuba_inz.Core.Service;
 
-public class StorageItemService : BaseServiceWithRepository<IStorageItemRepository, StorageItem>, IStorageItemService
+public class StorageItemService : BaseServiceWithRepository<IStorageItemRepository,StorageItem>, IStorageItemService
 {
     #region Constructors
 

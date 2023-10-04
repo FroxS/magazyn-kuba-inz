@@ -28,6 +28,6 @@ public interface IImageRepository : IBaseRepository<WareHouseImage>
 public interface IOrderRepository : IBaseRepository<Order> { }
 public interface IOrderProductRepository : IBaseRepository<OrderProduct> { }
 public interface IStorageUnitRepository : IBaseRepository<StorageUnit> { }
-public interface IStorageItemRepository : IBaseRepository<StorageItem> { }
+public interface IStorageItemPackageRepository : IBaseRepository<StorageItemPackage> { }
 public interface IRackRepository : IBaseRepository<Rack> { }
-public interface IStorageItemCollectionRepository : IBaseRepository<StorageItemCollection> { }
+public interface IStorageItemRepository : IBaseRepository<StorageItem> { }

@@ -12,6 +12,10 @@ public class ItemState : BaseEntity
 
     public string? Name { get; set; }
 
+    public bool InWareHouse { get; set; }
+
+    public bool CanRealizeOrder { get; set; }
+
     public List<WareHouseItem>? Items { get; set; }
 
     public static ItemState Get()

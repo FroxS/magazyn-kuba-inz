@@ -10,6 +10,7 @@ namespace magazyn_kuba_inz.Core.ViewModel.InnerDialog
         #region Private properties
 
         protected readonly IApp _app;
+        protected bool _dialogResult = false;
 
         #endregion
 
@@ -17,7 +18,11 @@ namespace magazyn_kuba_inz.Core.ViewModel.InnerDialog
 
         public T? Result { get; set; }
 
-        public bool DialogResult { get; private set; } = false;
+        public bool DialogResult 
+        {
+            get => _dialogResult;
+            private set { _dialogResult = value; OnPropertyChanged(nameof(DialogResult)); }
+        } 
 
         #endregion
 

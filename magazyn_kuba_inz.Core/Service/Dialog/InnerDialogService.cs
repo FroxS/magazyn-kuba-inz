@@ -142,6 +142,16 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
             );
         }
 
+        public async Task<StorageUnit> AddStorageUnitInnerDialog()
+        {
+            return await OpenInnerDialogAsync(
+                new AddStorageUnitInnerDialogViewModel(
+                    _service.GetRequiredService<IApp>(), 
+                    _service.GetRequiredService<IStorageUnitService>()
+                    )
+                );
+        }
+
         #endregion
 
 
@@ -164,6 +174,22 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
             });
         }
 
+        public async Task<T> OpenInnerDialogAsync<T>(BaseInnerDialogViewModel<T> vm)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            vm.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "DialogResult" && vm.DialogResult)
+                {
+                    tcs.SetResult(vm.Result);
+                }
+            };
+
+            InnerDialogVM = vm;
+            IsInnerDialogOpen = true;
+            return await tcs.Task;
+        }
+
         public void OpenInnerDialog<T>(BaseInnerDialogViewModel<T> vm)
         {
             InnerDialogVM = vm;
@@ -175,6 +201,8 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
             InnerDialogVM = null;
             IsInnerDialogOpen = false;
         }
+
+        
 
         #endregion
     }

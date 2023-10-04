@@ -21,8 +21,8 @@
     <Grid x:Name="parent" >
         <custom:ModalControl x:Name="Modal" Panel.ZIndex="10"
                              DataContext="{Binding InnerDialog.InnerDialogVM,
-                                              Source={x:Static helpers:AppHelper.Instance}, 
-                                              UpdateSourceTrigger=PropertyChanged}"
+                                                   Source={x:Static helpers:AppHelper.Instance}, 
+                                                   UpdateSourceTrigger=PropertyChanged}"
                              IsOpen="{Binding InnerDialog.IsInnerDialogOpen,
                                               Source={x:Static helpers:AppHelper.Instance}, 
                                               UpdateSourceTrigger=PropertyChanged}">
@@ -53,7 +53,7 @@
                     <controls:LeftMenuView2 Grid.Column="0" DataContext="{Binding Navigation,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged}"
-                                   d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"/>
+                                            d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"/>
 
                     <!--#endregion-->
 
@@ -66,8 +66,8 @@
 
                         <!--#region Top navigation-->
                         <Border Grid.Row="0"
-                        BorderBrush="{StaticResource DarkColorBrush}"
-                        BorderThickness="0,0,0,1">
+                                BorderBrush="{StaticResource DarkColorBrush}"
+                                BorderThickness="0,0,0,1">
 
 
                             <Grid>
@@ -77,24 +77,24 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBox Width="250" 
-                                 Grid.Column="0"
-                                 Margin="5"/>
+                                         Grid.Column="0"
+                                         Margin="5"/>
 
                                 <StackPanel Grid.Column="1"
-                                    Orientation="Horizontal">
+                                            Orientation="Horizontal">
                                     <TextBlock Text="{Binding Application.User.Name,
-                                            Source={x:Static helpers:AppHelper.Instance}, 
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            FallbackValue=Admin}"
-                                       VerticalAlignment="Center"
-                                       Margin="10"/>
+                                                              Source={x:Static helpers:AppHelper.Instance}, 
+                                                              UpdateSourceTrigger=PropertyChanged,
+                                                              FallbackValue=Admin}"
+                                               VerticalAlignment="Center"
+                                               Margin="10"/>
 
                                     <Border Width="40"
-                                    Height="40"
-                                    Margin="10,0"
-                                    BorderThickness="1"
-                                    BorderBrush="{StaticResource DarkColorBrush}"
-                                    CornerRadius="20">
+                                            Height="40"
+                                            Margin="10,0"
+                                            BorderThickness="1"
+                                            BorderBrush="{StaticResource DarkColorBrush}"
+                                            CornerRadius="20">
                                         <Image Source="{Binding Application.User.Image,
                                             Source={x:Static helpers:AppHelper.Instance}, 
                                             UpdateSourceTrigger=PropertyChanged,
@@ -124,84 +124,77 @@
                                 <Border Background="{Binding MessageService.Type,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource MessageTypeToColor}}"
-                                Panel.ZIndex="-2"
-                                Opacity=".7"/>
+                                        Panel.ZIndex="-2"
+                                        Opacity=".7"/>
 
                                 <TextBlock VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   Padding="10,2"
-                                   Text="{Binding MessageService.Message,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, 
-                            FallbackValue=Testowa wiadomość}"/>
+                                           HorizontalAlignment="Left"
+                                           Padding="10,2"
+                                           Text="{Binding MessageService.Message,
+                                                          Source={x:Static helpers:AppHelper.Instance}, 
+                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, 
+                                                          FallbackValue=Testowa wiadomość}"/>
                                 <Button Content="X"
-                                Width="20"
-                                Height="20"
-                                VerticalAlignment="Top"
-                                Command="{Binding MessageService.HideMessageCommand,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-                                HorizontalAlignment="Right"
-                                />
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Top"
+                                        Command="{Binding MessageService.HideMessageCommand,
+                                                                 Source={x:Static helpers:AppHelper.Instance}, 
+                                                                 UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                        HorizontalAlignment="Right"/>
                             </Grid>
-
-
-
                             <controls:PageHost Grid.Row="1"
                                                x:Name="Test"
-                                       CurrentPageViewModel="{Binding Navigation.PageVM,
+                                               CurrentPageViewModel="{Binding Navigation.PageVM,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-                                   CurrentPage="{Binding Navigation.Page,
+                                               CurrentPage="{Binding Navigation.Page,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
                                    
-                                   d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"
-                                   
-                                   >
+                                              d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}">
                             </controls:PageHost>
                         </Grid>
-
-
                         <!--#endregion-->
                     </Grid>
                 </Grid>
 
                 <Border Height="40"
-                Grid.Row="1"
-                BorderThickness="0,1,0,0"
-                BorderBrush="{StaticResource DarkColorBrush}">
+                        Grid.Row="1"
+                        BorderThickness="0,1,0,0"
+                        BorderBrush="{StaticResource DarkColorBrush}">
 
                     <Grid VerticalAlignment="Center"
-                  Margin="10,0">
+                          Margin="10,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock HorizontalAlignment="Left"
-                           Grid.Row="0"
-                           VerticalAlignment="Center">
-                    <Run Text="Użytkownik"/><Run Text=" :"/>
-                    <Run Text="{Binding Application.User.Name,
-                                        Source={x:Static helpers:AppHelper.Instance}, 
-                                        UpdateSourceTrigger=PropertyChanged,
-                                        FallbackValue=Admin}"/>
+                                   Grid.Row="0"
+                                   VerticalAlignment="Center">
+                            <Run Text="Użytkownik"/><Run Text=" :"/>
+                            <Run Text="{Binding Application.User.Name,
+                                                Source={x:Static helpers:AppHelper.Instance}, 
+                                                UpdateSourceTrigger=PropertyChanged,
+                                                FallbackValue=Admin}"/>
                         </TextBlock>
 
                         <TextBlock HorizontalAlignment="Right"
-                           Grid.Row="0"
-                           Text="{Binding Source={x:Static sys:DateTime.Now},
-                           StringFormat='{}{0:dddd, dd MMMM yyyy}'}"/>
+                                   Grid.Row="0"
+                                   Text="{Binding Source={x:Static sys:DateTime.Now},
+                                   StringFormat='{}{0:dddd, dd MMMM yyyy}'}"/>
 
-                        <ProgressBar Grid.Row="1" Height="10"
-                             Background="Transparent"
-                             IsIndeterminate="{Binding Application.IsTaskRunning,
-                                        Source={x:Static helpers:AppHelper.Instance}, 
-                                        UpdateSourceTrigger=PropertyChanged,
-                                        FallbackValue=False}"
-                             BorderThickness="0"
-                             Foreground="{StaticResource Color4Brush}"/>
+                        <ProgressBar Grid.Row="1" 
+                                     Height="10"
+                                     Background="Transparent"
+                                     IsIndeterminate="{Binding Application.IsTaskRunning,
+                                                               Source={x:Static helpers:AppHelper.Instance}, 
+                                                               UpdateSourceTrigger=PropertyChanged,
+                                                               FallbackValue=False}"
+                                     BorderThickness="0"
+                                     Foreground="{StaticResource Color4Brush}"/>
 
                     </Grid>
 

@@ -17,7 +17,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace magazyn_kuba_inz;
 
@@ -73,12 +72,12 @@ public partial class App : Application
         services.AddTransient<IOrderProductService, OrderProductService>();
         services.AddTransient<IRackService, RackService>();
         services.AddTransient<IStorageUnitService, StorageUnitService>();
+        services.AddTransient<IStorageItemPackageService, StorageItemPackageService>();
         services.AddTransient<IStorageItemService, StorageItemService>();
-        services.AddTransient<IStorageItemCollectionService, StorageItemCollectionService>();
 
         services.AddSingleton<MessageService>();
         services.AddSingleton<IDialogService, DialogService>();
-        services.AddTransient<Dispatcher>((o) => { return Dispatcher; });
+        services.AddTransient((o) => { return Dispatcher; });
     }
 
     private void PrepareApplication(IServiceCollection services)
@@ -116,6 +115,8 @@ public partial class App : Application
         services.AddTransient<ItemStatesPageViewModel>();
         services.AddTransient<SettingsPageViewModel>();
         services.AddTransient<WareHouseItemsPageViewModel>();
+        services.AddTransient<StorageUnitsPageViewModel>();
+        services.AddTransient<WareHouseCreatorPageViewModel>();
     }
 
     private void PrepareRepository(IServiceCollection services)
@@ -132,8 +133,8 @@ public partial class App : Application
         services.AddTransient<IOrderProductRepository, OrderProductRepository>();
         services.AddTransient<IRackRepository, RackRepository>();
         services.AddTransient<IStorageUnitRepository, StorageUnitRepository>();
+        services.AddTransient<IStorageItemPackageRepository, StorageItemPackageRepository>();
         services.AddTransient<IStorageItemRepository, StorageItemRepository>();
-        services.AddTransient<IStorageItemCollectionRepository, StorageItemCollectionRepository>();
     }
 
     private void PrepareDatabase(IServiceCollection services)
@@ -151,6 +152,8 @@ public partial class App : Application
         services.AddTransient<ProductStatusesPage>();
         services.AddTransient<ItemStatesPage>();
         services.AddTransient<WareHouseItemsPage>();
+        services.AddTransient<StorageUnitsPage>();
+        services.AddTransient<WareHouseCreatorPage>();
     }
 
     private void AddCOnfiguration(IServiceCollection services)
@@ -162,7 +165,5 @@ public partial class App : Application
         Configuration = builder.Build();
         services.AddSingleton(Configuration);
     }
-
-
 }
 

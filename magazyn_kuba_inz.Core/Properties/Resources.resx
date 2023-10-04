@@ -123,6 +123,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Creator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
@@ -162,8 +165,14 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="StorageUnits" xml:space="preserve">
+    <value>Storage units</value>
+  </data>
   <data name="Suppliers" xml:space="preserve">
     <value>Suppliers</value>
+  </data>
+  <data name="WareHouse" xml:space="preserve">
+    <value>Ware house</value>
   </data>
   <data name="WareHouseItems" xml:space="preserve">
     <value>WareHouse items</value>

@@ -1,6 +1,9 @@
 ﻿using magazyn_kuba_inz.Core.Helpers;
+using magazyn_kuba_inz.Core.Service.Dialog;
 using magazyn_kuba_inz.Core.Service.Interface;
+using magazyn_kuba_inz.Core.ViewModel.InnerDialog;
 using magazyn_kuba_inz.Core.ViewModel.Service;
+using System.Windows;
 using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel.Pages;

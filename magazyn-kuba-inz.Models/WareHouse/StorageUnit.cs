@@ -14,5 +14,5 @@ public class StorageUnit : BaseEntity
     public double MaxHeight { get; set; }
     public double MaxWidth { get; set; }
     public double MaxDepth { get; set; }
-    public List<StorageItem>? StorageItems { get; set; }
+    public List<StorageItemPackage>? StorageItems { get; set; }
 }

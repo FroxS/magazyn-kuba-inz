@@ -8,7 +8,6 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
     {
         BaseViewModel? InnerDialogVM { get; }
         bool IsInnerDialogOpen { get; }
-
         void AddProductInnerDialog(Action<Product> OnResult);
         void AddItemStateInnerDialog(Action<ItemState> OnResult);
         void AddProductGroupInnerDialog(Action<ProductGroup> OnResult);
@@ -18,7 +17,7 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
         void CloseInnerDialog();
         void OpenInnerDialog<T>(BaseInnerDialogViewModel<T> vm, Action<T> OnClose);
         void OpenInnerDialog<T>(BaseInnerDialogViewModel<T> vm);
-
         void YesNoInnerDialog(string message, Action<DialogResult> OnResult);
+        Task<StorageUnit> AddStorageUnitInnerDialog();
     }
 }

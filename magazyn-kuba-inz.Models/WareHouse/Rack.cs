@@ -18,5 +18,5 @@ public class Rack : BaseEntity
     public double Deepth { get; set; }
     public EDir Direction { get; set; }
     public int AmountSpace { get; set; } = 2;
-    public List<StorageItem>? StorageItems { get; set; }
+    public List<StorageItemPackage>? StorageItems { get; set; }
 }

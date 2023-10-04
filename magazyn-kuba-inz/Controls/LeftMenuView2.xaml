@@ -154,56 +154,76 @@
             <StackPanel>
                 <controls:ItemMenuButton IconPath="{StaticResource HomeGeometry}"
                                          IsMenuSelected="False"
-                                         ClickCommand="{Binding SetPageCommand}"
-                                         ClickCommandParameter="{x:Static enumPage:ApplicationPage.DashBoard}"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.DashBoard}"
                                          Header="{x:Static resources:Resources.Home}"/>
                 <!--IsMenuSelected="{Binding Page,
                                                                   Converter={conventers:TheSamePropParameterConventer },
                                                                   ConverterParameter={x:Static enumPage:ApplicationPage.Products}}"-->
                 <controls:ItemMenuButton IconPath="{StaticResource WarehouseItems}"
                                          IsMenuSelected="False"
-                                         ClickCommand="{Binding SetPageCommand}"
-                                         ClickCommandParameter="{x:Static enumPage:ApplicationPage.WareHouseItems}"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseItems}"
                                          Header="{x:Static resources:Resources.WareHouseItems}"/>
                 
                 <controls:ItemMenuButton IconPath="{StaticResource ProductsGeometry}"
                                          ContainsSubMenu="True"
                                          IsMenuSelected="True"
                                          Header="{x:Static resources:Resources.Products}"
-                                         ClickCommand="{Binding SetPageCommand}"
-                                         ClickCommandParameter="{x:Static enumPage:ApplicationPage.Products}">
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Products}">
                     <StackPanel>
                         <controls:ItemMenuButton IconPath="{StaticResource SupplierHeometry}"
                                                  Header="{x:Static resources:Resources.Suppliers}"
                                                  IsMenuSelected="True"
-                                                 ClickCommand="{Binding SetPageCommand}"
-                                                 ClickCommandParameter="{x:Static enumPage:ApplicationPage.Suppliers}"/>
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Suppliers}"/>
                         <controls:ItemMenuButton IconPath="{StaticResource CategoryGeometry}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.Group}"
-                                                 ClickCommand="{Binding SetPageCommand}"
-                                                 ClickCommandParameter="{x:Static enumPage:ApplicationPage.ProductGroups}"/>
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductGroups}"/>
 
                         <controls:ItemMenuButton IconPath="{StaticResource ProductStatus}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.ProductStates}"
-                                                 ClickCommand="{Binding SetPageCommand}"
-                                                 ClickCommandParameter="{x:Static enumPage:ApplicationPage.ProductStatuses}"/>
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductStatuses}"/>
                         <controls:ItemMenuButton IconPath="{StaticResource ItemState}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.ItemState}"
-                                                 ClickCommand="{Binding SetPageCommand}"
-                                                 ClickCommandParameter="{x:Static enumPage:ApplicationPage.ItemStates}"/>
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ItemStates}"/>
                     </StackPanel>
 
                 </controls:ItemMenuButton>
+
+                <controls:ItemMenuButton IconPath="{StaticResource WareHouse}"
+                                         ContainsSubMenu="True"
+                                         IsMenuSelected="True"
+                                         Header="{x:Static resources:Resources.WareHouse}">
+                    <StackPanel>
+                        <controls:ItemMenuButton IconPath="{StaticResource Box}"
+                                                 Header="{x:Static resources:Resources.StorageUnits}"
+                                                 IsMenuSelected="True"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.StorageUnits}"/>
+                        <controls:ItemMenuButton IconPath="{StaticResource Creator}"
+                                                 IsMenuSelected="True"
+                                                 Header="{x:Static resources:Resources.Creator}"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseCreator}"/>
+                    </StackPanel>
+
+                </controls:ItemMenuButton>
+
 
                 <controls:ItemMenuButton IconPath="{StaticResource SettingsGeometry}"
                                          ContainsSubMenu="False"
                                          IsMenuSelected="True"
                                          Header="{x:Static resources:Resources.Settings}"
-                                         ClickCommand="{Binding SetPageCommand}"
-                                         ClickCommandParameter="{x:Static enumPage:ApplicationPage.Settings}"/>
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Settings}"/>
 
             </StackPanel>
         </StackPanel>

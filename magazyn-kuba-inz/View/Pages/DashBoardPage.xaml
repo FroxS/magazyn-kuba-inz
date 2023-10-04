@@ -15,9 +15,8 @@
 
     <Grid Margin="50,40" Background="Aqua">
         
-        <TextBlock Text="Test" FontSize="16"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   />
+        <Button Content="Test" FontSize="16"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
     </Grid>
 </service:BaseControlPage>

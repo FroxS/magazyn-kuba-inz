@@ -46,7 +46,7 @@ public class WarehouseDbContext : DbContext
     /// <summary>
     /// Table of storage item
     /// </summary>
-    public DbSet<StorageItem> StorageItem { get; set; }
+    public DbSet<StorageItemPackage> StorageItem { get; set; }
 
     /// <summary>
     /// Table of rack
@@ -61,7 +61,7 @@ public class WarehouseDbContext : DbContext
     /// <summary>
     /// Table of items in storage item
     /// </summary>
-    public DbSet<StorageItemCollection> StorageItemCollection { get; set; }
+    public DbSet<StorageItem> StorageItemCollection { get; set; }
 
     /// <summary>
     /// Table of orders
@@ -190,7 +190,7 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.AmountSpace).IsRequired().HasDefaultValue(2);
         });
 
-        modelBuilder.Entity<StorageItem>(o => {
+        modelBuilder.Entity<StorageItemPackage>(o => {
             o.LoadDefaultEntity();
             o.Property(x => x.Position);
             o.HasOne(x => x.Rack)
@@ -200,21 +200,21 @@ public class WarehouseDbContext : DbContext
                 .WithMany(x => x.StorageItems)
                 .HasForeignKey(x => x.ID_StorageUnit);
             o.HasMany(x => x.Items)
-                .WithOne(x => x.StorageItem)
+                .WithOne(x => x.Package)
                 .HasForeignKey(x => x.ID_StorageItem);
         });
 
-        modelBuilder.Entity<StorageItemCollection>(o => {
+        modelBuilder.Entity<StorageItem>(o => {
             o.LoadDefaultEntity();
             o.HasOne(x => x.Product)
                 .WithMany(x => x.StorageItemCollection)
                 .HasForeignKey(x => x.ID_Product);
-            o.HasOne(x => x.StorageItem)
+            o.HasOne(x => x.Package)
                 .WithMany(x => x.Items)
                 .HasForeignKey(x => x.ID_StorageItem);
             o.HasOne(x => x.OrderItem)
                 .WithOne(x => x.StorageItem)
-                .HasForeignKey<StorageItemCollection>(x => x.ID_OrderItem)
+                .HasForeignKey<StorageItem>(x => x.ID_OrderItem)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -237,7 +237,7 @@ public class WarehouseDbContext : DbContext
                 .HasForeignKey(x => x.ID_Product);
             o.HasOne(x => x.StorageItem)
                 .WithOne(x => x.OrderItem)
-                .HasForeignKey<StorageItemCollection>(x => x.ID_OrderItem)
+                .HasForeignKey<StorageItem>(x => x.ID_OrderItem)
                 .OnDelete(DeleteBehavior.Restrict);
             o.HasOne(x => x.Order)
                 .WithMany(x => x.Items)
@@ -268,7 +268,5 @@ public class WarehouseDbContext : DbContext
     }
 
     #endregion
-
-
 }
 
