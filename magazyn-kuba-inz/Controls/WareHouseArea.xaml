@@ -5,18 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:magazyn_kuba_inz.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450">
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Button Content="Dodaj Prostokąt" 
-                Grid.Row="0"
-                    Click="DodajProstokat_Click"/>
-        <Canvas x:Name="canvas" 
-                Grid.Row="1"
-                    Background="White"  
-                    MouseMove="Canvas_MouseMove" MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
+             d:DesignHeight="450" d:DesignWidth="450"
+             Background="White"
+             x:Name="mainControl"
+             SizeChanged="mainControl_SizeChanged">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <TextBlock Text="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"/>
+            </StackPanel>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <Canvas x:Name="wareHouseArea"
+                        Grid.Row="1" 
+                        Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                        Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                        MouseMove="Canvas_MouseMove" 
+                        Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                        MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
+            </ScrollViewer>
+        </DockPanel>
+
+        <TextBox Width="200"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                   Grid.Column="1"
+                   TextWrapping="Wrap"
+                   x:Name="Message">
+            
+        </TextBox>
+        
     </Grid>
+    
 </UserControl>

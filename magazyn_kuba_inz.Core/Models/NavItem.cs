@@ -1,5 +1,4 @@
-﻿
-namespace magazyn_kuba_inz.Core.Models;
+﻿namespace magazyn_kuba_inz.Core.Models;
 
 public enum NavItemType
 {

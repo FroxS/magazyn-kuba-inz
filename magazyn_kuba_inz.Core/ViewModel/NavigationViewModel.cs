@@ -34,7 +34,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
     public NavigationViewModel()
     {
         SetPageCommand = new RelayCommand<EApplicationPage>((o) => { SetPage(o); });
-        SetPage(EApplicationPage.DashBoard);
+        SetPage(EApplicationPage.WareHouseCreator);
     }
 
     #endregion
@@ -45,13 +45,13 @@ public class NavigationViewModel : BaseViewModel, INavigation
     {
         if(page != Page)
         {
-            PageVM.OnPageClose();
-            if (PageVM.CanChangePage)
+            PageVM?.OnPageClose();
+            if (PageVM?.CanChangePage ?? true)
             {
                 OnPropertyChanging(nameof(Page));
                 Page = page;
                 OnPropertyChanged(nameof(Page));
-                PageVM.OnPageOpen();
+                PageVM?.OnPageOpen();
                 PageChanged?.Invoke(Page);
             }
         }

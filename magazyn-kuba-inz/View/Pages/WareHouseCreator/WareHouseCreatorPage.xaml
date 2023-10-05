@@ -6,16 +6,53 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                          xmlns:local="clr-namespace:magazyn_kuba_inz.View.Pages"
                          xmlns:service="clr-namespace:magazyn_kuba_inz.View.Service"
+                         xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers"
                          xmlns:controls="clr-namespace:magazyn_kuba_inz.Controls"
                          xmlns:pageVM="clr-namespace:magazyn_kuba_inz.Core.ViewModel.Pages;assembly=magazyn_kuba_inz.Core"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:WareHouseCreatorPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000"
-                         Background="RosyBrown">
+                         >
 
-    <Grid Margin="10"
-          >
-        <controls:WareHouseArea Margin="10"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="5">
+            <Button Content="Add" 
+                    Width="200"
+                    Height="30"
+                    Command="{Binding AddRackCommand}"/>
+        </StackPanel>
+
+        <Grid Grid.Column="1"
+              Grid.Row="1"
+              Visibility="{Binding SelectedRack, Converter={conv:NullVisibleConventer}}">
+            <StackPanel Width="100"
+                        Height="100"
+                        Background="Gray">
+                
+            </StackPanel>
+        </Grid>
+        
+        
+        <controls:WareHouseArea Grid.Row="1"
+                                Grid.Column="0"
+                                AreaHeight="1000"
+                                AreaWidth="1000"
+                                Racks="{Binding Racks, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedRacks="{Binding SelectedRack}"
+                                BorderThickness="1"
+                                BorderBrush="Red"/>
     </Grid>
 </service:BaseControlPage>

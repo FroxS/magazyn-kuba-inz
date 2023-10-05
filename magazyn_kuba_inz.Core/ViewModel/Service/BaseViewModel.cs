@@ -24,5 +24,16 @@ public class BaseViewModel : ValidationViewModel, INotifyPropertyChanged, INotif
         onChanged?.Invoke();
     }
 
+    protected void SetProperty<T>(
+        ref T field,
+        T value,
+        string propName,
+        Action onChanged = null)
+    {
+        field = value;
+        OnPropertyChanged(propName);
+        onChanged?.Invoke();
+    }
+
 }
 
