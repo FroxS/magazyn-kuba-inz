@@ -1,11 +1,11 @@
 ﻿using magazyn_kuba_inz.Core.Models;
-using magazyn_kuba_inz.Core.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
+using System.Windows.Data;
+using magazyn_kuba_inz.Models.WareHouse.Object;
 
 namespace magazyn_kuba_inz.Controls;
 
@@ -21,6 +21,10 @@ public partial class WareHouseArea : UserControl
     private Point _startPoint;
 
     private FrameworkElement _movingElement = null;
+
+    private WayPointObject _selectedPoint = null;
+
+    private double zoomFactor = 1.2;
 
     #endregion
 
@@ -43,10 +47,22 @@ public partial class WareHouseArea : UserControl
         set { SetValue(RacksProperty, value); }
     }
 
-    public RackObject SelectedRacks
+    public ObservableCollection<WayPointObject> WayPoints
     {
-        get { return (RackObject)GetValue(SelectedRacksProperty); }
-        set { SetValue(SelectedRacksProperty, value); }
+        get { return (ObservableCollection<WayPointObject>)GetValue(WayPointsProperty); }
+        set { SetValue(WayPointsProperty, value); }
+    }
+
+    public BaseObject SelectedObject
+    {
+        get { return (BaseObject)GetValue(SelectedObjectProperty); }
+        set { SetValue(SelectedObjectProperty, value); }
+    }
+
+    public double Zoom
+    {
+        get { return (double)GetValue(ZoomProperty); }
+        set { SetValue(ZoomProperty, value); }
     }
 
     #endregion
@@ -74,8 +90,12 @@ public partial class WareHouseArea : UserControl
                     null)
             );
 
-    public static readonly DependencyProperty SelectedRacksProperty =
-        DependencyProperty.Register(nameof(SelectedRacks), typeof(RackObject), typeof(WareHouseArea), new PropertyMetadata(null));
+    public static readonly DependencyProperty SelectedObjectProperty =
+        DependencyProperty.Register(nameof(SelectedObject), typeof(BaseObject), typeof(WareHouseArea), new PropertyMetadata(null));
+
+    public static readonly DependencyProperty ZoomProperty =
+       DependencyProperty.Register(nameof(Zoom), typeof(double), typeof(WareHouseArea), new PropertyMetadata(100d));
+
 
     public static readonly DependencyProperty RacksProperty =
         DependencyProperty.Register(
@@ -84,7 +104,18 @@ public partial class WareHouseArea : UserControl
             typeof(WareHouseArea),
             new UIPropertyMetadata(
                     null,
-                    RacksPropertyChanged,
+                    null,//RacksPropertyChanged,
+                    null)
+            );
+
+    public static readonly DependencyProperty WayPointsProperty =
+        DependencyProperty.Register(
+            nameof(WayPoints),
+            typeof(ObservableCollection<WayPointObject>),
+            typeof(WareHouseArea),
+            new UIPropertyMetadata(
+                    null,
+                    null,//WayPointsPropertyChanged,
                     null)
             );
 
@@ -101,68 +132,32 @@ public partial class WareHouseArea : UserControl
 
     #region Dependecy Methods
 
-    private static void RacksPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    #endregion
+
+    #region EventMethods
+
+    private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if(d is WareHouseArea control && e.NewValue is ObservableCollection<RackObject> items)
+        if (WayGeneratorMode.IsChecked ?? false)
         {
-            control.wareHouseArea.Children.Clear();
-            
-            foreach(RackObject item in items)
-            {
-                control.AddRack(item);
-            }
+            WayPointObject wayPoint = new WayPointObject(e.GetPosition(wareHouseArea));
+            WayPoints?.Add(wayPoint);
         }
     }
 
-    #endregion
 
-    private FrameworkElement GetRectangle(RackObject rack)
+    public void Object_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        Grid control = new Grid() 
-        {
-            Background = rack?.Color ?? Brushes.Blue,
-            DataContext = rack
-        };
-        control.Children.Add(new Rectangle
-        {
-            //Width = CalcWidth(rack.Width),
-            //Height = CalcHeight(rack.Height),
-            Width = rack.Width,
-            Height = rack.Height,
-            Fill = rack?.Color ?? Brushes.Blue
-        });
-
-        control.Children.Add(new Label
-        {
-            Content = $"{rack.Width}x{rack.Height}", 
-            Foreground = rack.Color.GetContrastBrush(),
-            VerticalContentAlignment = VerticalAlignment.Center,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-        }); 
-
-        return control;
-    }
-    
-
-    private void AddRack(RackObject rack)
-    {
-        FrameworkElement rectangle = GetRectangle(rack);
-        //Point newPoz = CalcPoint(rack.Position);
-        Point newPoz = rack.Position;
-        Canvas.SetLeft(rectangle, newPoz.X);
-        Canvas.SetTop(rectangle, newPoz.Y);
-        rectangle.MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
-        wareHouseArea.Children.Add(rectangle);
-    }
-
-    private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if (sender is FrameworkElement rectangle)
+        if (sender is FrameworkElement obj)
         {
             _isDragging = true;
-            _movingElement = rectangle;
+            _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
-            SelectedRacks = rectangle?.DataContext as RackObject;
+            SelectedObject = obj?.DataContext as BaseObject;
+            if(obj?.DataContext is WayPointObject wpo)
+            {
+                _selectedPoint = wpo;
+            }
         }
     }
 
@@ -177,16 +172,21 @@ public partial class WareHouseArea : UserControl
             double newX = Canvas.GetLeft(_movingElement) + offsetX;
             double newY = Canvas.GetTop(_movingElement) + offsetY;
 
-            if (newX >= 0 && newX <= wareHouseArea.ActualWidth - _movingElement.ActualWidth &&
-            newY >= 0 && newY <= wareHouseArea.ActualHeight - _movingElement.ActualHeight)
+            Canvas parentCanvas = _movingElement.Parent as Canvas;
+
+            Point relativePosition = _movingElement.TransformToVisual(wareHouseArea).Transform(new Point(0, 0));
+            newX = relativePosition.X + offsetX;
+            newY = relativePosition.Y + offsetY;
+            //_movingElement.RenderTransform.
+            if (MoveElement(new Point(newX, newY), _movingElement))
             {
-                Canvas.SetLeft(_movingElement, newX);
-                Canvas.SetTop(_movingElement, newY);
-                if (_movingElement.DataContext is RackObject rack)
-                    rack.Position = new Point(newX, newY);
-                //rack.Position = CalcBackPoint(new Point(newX, newY));
                 _startPoint = currentPoint;
-            } 
+            }
+            else
+            {
+                _isDragging = false;
+                _movingElement = null;
+            }
         }
     }
 
@@ -196,50 +196,61 @@ public partial class WareHouseArea : UserControl
         _movingElement = null;
     }
 
-    //private Point CalcPoint(Point point)
-    //{
-    //    double x = point.X;
-    //    double y = point.Y;
-    //    x = CalcWidth(x);
-    //    y = CalcHeight(y);
-    //    return new Point(x,y); ;
-    //}
-
-    //private Point CalcBackPoint(Point point)
-    //{
-    //    double x = point.X;
-    //    double y = point.Y;
-    //    x = CalcBackWidth(x);
-    //    y = CalcBackHeight(y);
-    //    return new Point(x, y); ;
-    //}
-
-    private void AddMessage(string message)
+    private void Canvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        string prev = Message.Text;
-        Message.Text = $"{message};\n{prev}";
-    }
-
-    //private double CalcWidth(double width) => wareHouseArea.ActualWidth > 0 ? (width * AreaWidth / wareHouseArea.ActualWidth) : width;
-
-    //private double CalcBackWidth(double width) => wareHouseArea.ActualWidth > 0 ? (width * wareHouseArea.ActualWidth / AreaWidth) : width;
-
-    //private double CalcHeight(double height) => wareHouseArea.ActualHeight > 0 ? (height * AreaHeight / wareHouseArea.ActualHeight) : height;
-
-    //private double CalcBackHeight(double height) => wareHouseArea.ActualHeight > 0 ? (height * wareHouseArea.ActualHeight / AreaHeight) : height;
-
-    private void mainControl_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if(Racks != null)
+        if (Keyboard.Modifiers == ModifierKeys.Control)
         {
-            wareHouseArea.Children.Clear();
-
-            foreach (RackObject item in Racks)
+            if (e.Delta > 0)
             {
-                AddRack(item);
+                // Zoom in
+                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 * zoomFactor, wareHouseArea.LayoutTransform.Value.M22 * zoomFactor);
             }
+            else
+            {
+                // Zoom out
+                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 / zoomFactor, wareHouseArea.LayoutTransform.Value.M22 / zoomFactor);
+            }
+            Zoom = wareHouseArea.LayoutTransform.Value.M11 * 100;
+            e.Handled = true;
         }
     }
+
+    #endregion
+
+    #region Elements methods
+
+    private bool MoveElement(Point point, FrameworkElement element)
+    {
+        if ((point.X >= 0 && point.X <= wareHouseArea.ActualWidth - element.ActualWidth &&
+            point.Y >= 0 && point.Y <= wareHouseArea.ActualHeight - element.ActualHeight) &&
+            element.DataContext is BaseObject rack)
+        {
+            rack.X = point.X;
+            rack.Y = point.Y;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    #endregion
+
+    #region Helpers
+
+    private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName) where T : FrameworkElement
+    {
+        element.SetBinding(dp, new Binding(PropName)
+        {
+            Source = obj,
+            Mode = BindingMode.TwoWay,
+            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+        });
+        return element;
+    }
+
+    #endregion
+
+    
 }
 
 

@@ -1,15 +1,12 @@
 ﻿using magazyn_kuba_inz.Core.Models;
-using System.Drawing;
+using System.Windows;
 
 namespace magazyn_kuba_inz.Models.WareHouse.Object;
 
-public class WayPointObject
+public class WayPointObject : BaseObject
 {
     #region Public properties
 
-    public PointF Position { get; set; }
-
-    public RackObject[] RackAssign { get; set; }
 
     #endregion
 
@@ -22,6 +19,16 @@ public class WayPointObject
     {
 
     }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public WayPointObject(double x, double y) : base(x, y) { }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public WayPointObject(Point point) : base(point) { }
 
     #endregion
 }

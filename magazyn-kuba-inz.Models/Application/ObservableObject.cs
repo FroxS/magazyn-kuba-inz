@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace magazyn_kuba_inz.Models.Application;
@@ -31,6 +32,32 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
             if (string.IsNullOrEmpty(prop)) continue;
             OnPropertyChanged(prop);
         }
+    }
+
+    protected void SetProperty<T>(
+        Expression<Func<T>> field,
+        T value,
+        Action onChanged = null)
+    {
+        Func<T> compiledExpression = field.Compile();
+        T result = compiledExpression();
+        result = value;
+        if (field.Body is MemberExpression memberExpression)
+        {
+            OnPropertyChanged(memberExpression.Member.Name);
+        }
+        onChanged?.Invoke();
+    }
+
+    protected void SetProperty<T>(
+        ref T field,
+        T value,
+        string propName,
+        Action onChanged = null)
+    {
+        field = value;
+        OnPropertyChanged(propName);
+        onChanged?.Invoke();
     }
 }
 

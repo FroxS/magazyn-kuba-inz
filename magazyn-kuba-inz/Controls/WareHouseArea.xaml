@@ -4,44 +4,162 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:magazyn_kuba_inz.Controls"
+             xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450"
              Background="White"
-             x:Name="mainControl"
-             SizeChanged="mainControl_SizeChanged">
+             x:Name="mainControl">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type ToggleButton}">
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <DockPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+
+            <ToggleButton Style="{StaticResource {x:Type ToggleButton}}"
+                         
+                         Width="20"
+                         Height="20"
+                         Content="R"/>
+
+            <ToggleButton Style="{StaticResource {x:Type ToggleButton}}"
+                         ToolTip="Way generator mode"
+                         Name="WayGeneratorMode"
+                         Width="20"
+                         Height="20"
+                         Content="W"/>
+        </StackPanel>
+        
+        <DockPanel Grid.Row="1">
             <StackPanel DockPanel.Dock="Top"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-                <TextBlock Text="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"/>
+                <TextBlock VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
+                    <Run Text="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}, FallbackValue=1000}"/>
+                    <Run Text="m"/>
+                </TextBlock>
             </StackPanel>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <Canvas x:Name="wareHouseArea"
-                        Grid.Row="1" 
-                        Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
-                        Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
-                        MouseMove="Canvas_MouseMove" 
-                        Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
-                        MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
-            </ScrollViewer>
-        </DockPanel>
+            <StackPanel DockPanel.Dock="Left"
+                        VerticalAlignment="Center"
+                        Margin="-10,0,-10,0"
+                        HorizontalAlignment="Center"
+                        >
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="270"/>
+                        <TranslateTransform X="12"/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+                <TextBlock><Run Text="{Binding AreaHeight, FallbackValue=1000, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"/>
+                    <Run Text="m"/>
+                </TextBlock>
+            </StackPanel>
 
-        <TextBox Width="200"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                   Grid.Column="1"
-                   TextWrapping="Wrap"
-                   x:Name="Message">
-            
-        </TextBox>
-        
+            <StackPanel DockPanel.Dock="Bottom" 
+                        Orientation="Horizontal">
+                <TextBlock Text="Zoom:"/>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <Binding Path="Zoom" FallbackValue="100" StringFormat="N2" RelativeSource="{RelativeSource AncestorType={x:Type local:WareHouseArea}}" />
+                    </TextBlock.Text>
+                    <Run Text="%"/>
+                </TextBlock>
+            </StackPanel>
+
+            <Border BorderThickness="1"
+                    BorderBrush="Red">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                    <Canvas x:Name="wareHouseArea"
+                            PreviewMouseWheel="Canvas_PreviewMouseWheel"
+                            Grid.Row="1" 
+                            Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                            Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                            MouseMove="Canvas_MouseMove" 
+                            Background="White"
+                            MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
+                            MouseLeftButtonUp="Canvas_MouseLeftButtonUp">
+                        <!-- Stojaki -->
+                        <ItemsControl x:Name="racks"
+                                      ItemsSource="{Binding  Racks,RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid MouseLeftButtonDown="Object_MouseLeftButtonDown">
+                                        <Rectangle Fill="{Binding Color, UpdateSourceTrigger=PropertyChanged}"
+                                                   Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                                   Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                                   />
+                                        <!--<Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                               Foreground="{Binding Color, UpdateSourceTrigger=PropertyChanged, Converter={conv:ContrastBrushConventer}}"/>-->
+                                        <Grid.RenderTransform>
+                                            <TranslateTransform X="{Binding X, UpdateSourceTrigger=PropertyChanged}" 
+                                                                Y="{Binding Y, UpdateSourceTrigger=PropertyChanged}" />
+                                        </Grid.RenderTransform>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <!-- Linie połączeń -->
+                        <ItemsControl x:Name="wayPointConnections">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Line X1="{Binding X1}" Y1="{Binding Y1}"
+                                          X2="{Binding X2}" Y2="{Binding Y2}"
+                                          Stroke="Black" StrokeThickness="2" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- Węzły grafu -->
+                        <ItemsControl x:Name="wayPointNode"
+                                      ItemsSource="{Binding WayPoints,RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Ellipse Width="40" Height="40" Fill="LightBlue"
+                                             MouseLeftButtonDown="Object_MouseLeftButtonDown"
+                                             Stroke="DarkBlue" StrokeThickness="2">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Canvas>
+                    <!--Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"-->
+                </ScrollViewer>
+            </Border>
+
+        </DockPanel>
     </Grid>
-    
 </UserControl>

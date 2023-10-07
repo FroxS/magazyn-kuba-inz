@@ -9,31 +9,5 @@ public class BaseViewModel : ValidationViewModel, INotifyPropertyChanged, INotif
     private bool isTaskRunning = false;
     public override bool _CanValidate { get; protected set; } = false;
     public virtual bool IsTaskRunning { get => isTaskRunning; set { isTaskRunning = value; OnPropertyChanged(nameof(IsTaskRunning)); } }
-    protected void SetProperty<T>(
-        Expression<Func<T>> field,
-        T value, 
-        Action onChanged = null)
-    {
-        Func<T> compiledExpression = field.Compile();
-        T result = compiledExpression();
-        result = value;
-        if (field.Body is MemberExpression memberExpression)
-        {
-            OnPropertyChanged(memberExpression.Member.Name);
-        }
-        onChanged?.Invoke();
-    }
-
-    protected void SetProperty<T>(
-        ref T field,
-        T value,
-        string propName,
-        Action onChanged = null)
-    {
-        field = value;
-        OnPropertyChanged(propName);
-        onChanged?.Invoke();
-    }
-
 }
 
