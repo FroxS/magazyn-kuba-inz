@@ -49,9 +49,6 @@
     <Compile Update="Controls\LeftMenuView2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\GraphEditorControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Controls\WareHouseArea.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

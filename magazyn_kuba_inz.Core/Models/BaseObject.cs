@@ -11,6 +11,8 @@ public class BaseObject : ObservableObject
 
     protected double _y = 0;
 
+    protected bool _isSelected = false;
+
     #endregion
 
     #region Public properties 
@@ -21,6 +23,12 @@ public class BaseObject : ObservableObject
     {
         get => _x;
         set { SetProperty(ref _x, value, nameof(X)); }
+    }
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set { SetProperty(ref _isSelected, value, nameof(IsSelected)); }
     }
 
     public double Y

@@ -2,7 +2,6 @@
 using magazyn_kuba_inz.Core.Models;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.Models.WareHouse.Object;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,7 +16,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     private ObservableCollection<WayPointObject> _wayPoints = new ObservableCollection<WayPointObject>();
 
-    private RackObject _selectedRack;
+    //private RackObject _selectedRack;
 
     private BaseObject _selectedObject;
     
@@ -41,16 +40,16 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         set { SetProperty(ref _wayPoints, value, nameof(WayPoints)); }
     }
 
-    public RackObject SelectedRack
-    {
-        get => _selectedRack;
-        set { SetProperty(ref _selectedRack, value, nameof(SelectedRack)); }
-    }
+    //public RackObject SelectedRack
+    //{
+    //    get => _selectedRack;
+    //    set { SetProperty(ref _selectedRack, value, nameof(SelectedRack)); }
+    //}
 
     public BaseObject SelectedObject
     {
         get => _selectedObject;
-        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject), () => { if (value is RackObject ro) SelectedRack = ro;  }); }
+        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); }
     }
 
     public double Width
@@ -82,19 +81,18 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         Height = 1000;
         AddRackCommand = new RelayCommand((o) => AddRack());
         RemoveRackCommand = new RelayCommand((o) => RemoveRack(Racks.FirstOrDefault()));
-        WayPoints = new ObservableCollection<WayPointObject>()
+        var p1 = new WayPointObject()
         {
-            new WayPointObject()
-            {
-                X= 250,
-                Y = 250
-            },
-            new WayPointObject()
-            {
-                X= 500,
-                Y = 500
-            }
+            X = 250,
+            Y = 250
         };
+        var p2 = new WayPointObject()
+        {
+            X = 500,
+            Y = 500
+        };
+        p1.AddConnection(ref p2);
+        WayPoints = new ObservableCollection<WayPointObject>() { p1,p2 };
 
         Racks = new ObservableCollection<RackObject>()
         {
@@ -110,6 +108,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
                 Name = "Rack1",
                 X = 200,
                 Y = 150,
+                Width = 20,
+                Height = 20,
                 Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
             }
         };

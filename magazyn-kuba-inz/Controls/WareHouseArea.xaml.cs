@@ -5,7 +5,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Data;
-using magazyn_kuba_inz.Models.WareHouse.Object;
+using System;
+using System.Collections.Generic;
+using magazyn_kuba_inz.Conventers;
+using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Windows.Shapes;
 
 namespace magazyn_kuba_inz.Controls;
 
@@ -22,9 +27,18 @@ public partial class WareHouseArea : UserControl
 
     private FrameworkElement _movingElement = null;
 
+    private BaseObject _connectWidthPoint = null;
+
+    private RackObject _rackToPoint = null;
+
     private WayPointObject _selectedPoint = null;
 
+    private ObservableCollection<WayPointObject[]> _wayPointConnections = new ObservableCollection<WayPointObject[]>();
+
+    private ObservableCollection<KeyValuePair<WayPointObject, RackObject>> _wayPointToRacks = new ObservableCollection<KeyValuePair<WayPointObject, RackObject>>();
+
     private double zoomFactor = 1.2;
+
 
     #endregion
 
@@ -52,6 +66,17 @@ public partial class WareHouseArea : UserControl
         get { return (ObservableCollection<WayPointObject>)GetValue(WayPointsProperty); }
         set { SetValue(WayPointsProperty, value); }
     }
+    public ObservableCollection<WayPointObject[]> WayPointConnections
+    {
+        get => _wayPointConnections;
+        private set => _wayPointConnections = value;
+    }
+
+    public ObservableCollection<KeyValuePair<WayPointObject, RackObject>> WayPointToRacks
+    {
+        get => _wayPointToRacks;
+        private set => _wayPointToRacks = value;
+    }
 
     public BaseObject SelectedObject
     {
@@ -63,6 +88,18 @@ public partial class WareHouseArea : UserControl
     {
         get { return (double)GetValue(ZoomProperty); }
         set { SetValue(ZoomProperty, value); }
+    }
+
+    public bool WayGeneratorMode
+    {
+        get { return (bool)GetValue(WayGeneratorModeProperty); }
+        set { SetValue(WayGeneratorModeProperty, value); }
+    }
+
+    public bool CrossVisible
+    {
+        get { return (bool)GetValue(CrossVisibleProperty); }
+        set { SetValue(CrossVisibleProperty, value); }
     }
 
     #endregion
@@ -96,6 +133,11 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty ZoomProperty =
        DependencyProperty.Register(nameof(Zoom), typeof(double), typeof(WareHouseArea), new PropertyMetadata(100d));
 
+    public static readonly DependencyProperty WayGeneratorModeProperty =
+       DependencyProperty.Register(nameof(WayGeneratorMode), typeof(bool), typeof(WareHouseArea), new PropertyMetadata(false));
+
+    public static readonly DependencyProperty CrossVisibleProperty =
+       DependencyProperty.Register(nameof(CrossVisible), typeof(bool), typeof(WareHouseArea), new PropertyMetadata(false));
 
     public static readonly DependencyProperty RacksProperty =
         DependencyProperty.Register(
@@ -115,7 +157,7 @@ public partial class WareHouseArea : UserControl
             typeof(WareHouseArea),
             new UIPropertyMetadata(
                     null,
-                    null,//WayPointsPropertyChanged,
+                    WayPointsPropertyChanged,
                     null)
             );
 
@@ -132,24 +174,112 @@ public partial class WareHouseArea : UserControl
 
     #region Dependecy Methods
 
+    private static void WayPointsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is WareHouseArea wha)
+            wha.UpdateConnections();
+    }
+
     #endregion
 
     #region EventMethods
 
-    private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void MenuItem_Initialized(object sender, EventArgs e)
     {
-        if (WayGeneratorMode.IsChecked ?? false)
+        if (sender is MenuItem mi)
+            SetBinding(mi, MenuItem.IsEnabledProperty, this, nameof(WayGeneratorMode), new InverseBoolConventer());
+    }
+
+    private void Usun_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe)
         {
-            WayPointObject wayPoint = new WayPointObject(e.GetPosition(wareHouseArea));
-            WayPoints?.Add(wayPoint);
+            if(fe.DataContext is WayPointObject wpo)
+            {
+                WayPoints.Remove(wpo);
+                UpdateConnections();
+            }else if(fe.DataContext is WayPointObject[] connections)
+            {
+                foreach(WayPointObject point in WayPoints)
+                {
+                    if (point.Connections.Contains(connections[0]))
+                        point.Connections.Remove(connections[0]);
+
+                    if (point.Connections.Contains(connections[1]))
+                        point.Connections.Remove(connections[1]);
+                }
+                UpdateConnections();
+            }else if(fe.DataContext is RackObject ro)
+            {
+                Racks.Remove(ro);
+                UpdateConnections();
+            }
+        }
+
+        
+    }
+
+    private void ConnectWidth_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe && (!WayGeneratorMode))
+        {
+            if ( fe.DataContext is BaseObject wpo)
+            {
+                _connectWidthPoint = wpo;
+            }
         }
     }
 
+    private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (WayGeneratorMode)
+        {
+            WayPointObject wayPoint = new WayPointObject(e.GetPosition(wareHouseArea));
+
+            if (_selectedPoint  == null)
+                _selectedPoint = wayPoint.FoundTheNearestPoint(WayPoints); 
+
+            wayPoint.AddConnection(ref _selectedPoint);
+
+            WayPoints?.Add(wayPoint);
+            _selectedPoint = wayPoint;
+            UpdateConnections();
+        }
+    }
 
     public void Object_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (sender is FrameworkElement obj)
         {
+            if (_connectWidthPoint != null && obj?.DataContext is BaseObject toConnect)
+            {
+                if (toConnect is WayPointObject toconnectWPO)
+                {
+                    if (_connectWidthPoint is WayPointObject connectWPO)
+                    {
+                        connectWPO.AddConnection(ref toconnectWPO);
+                    }
+
+                    if (_connectWidthPoint is RackObject connectRO )
+                    {
+                        connectRO.AddConnection(ref toconnectWPO);
+                    }
+                }
+                UpdateConnections();
+                _connectWidthPoint = null;
+            }
+
+            if (_connectWidthPoint != null && obj?.DataContext is RackObject toROConnect)
+            {
+                
+                if (_connectWidthPoint is WayPointObject connectWPO)
+                {
+                    connectWPO.AddConnection(ref toROConnect);
+                }
+                UpdateConnections();
+                _connectWidthPoint = null;
+            }
+
             _isDragging = true;
             _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
@@ -163,20 +293,36 @@ public partial class WareHouseArea : UserControl
 
     private void Canvas_MouseMove(object sender, MouseEventArgs e)
     {
+        Point currentPoint = e.GetPosition(wareHouseArea);
+
+        if (CrossVisible)
+        {
+            // Aktualizacja pozycji linii poziomej
+            HorizontalCrossLine.Y1 = currentPoint.Y;
+            HorizontalCrossLine.Y2 = currentPoint.Y;
+
+            // Aktualizacja pozycji linii pionowej
+            VerticalCrossLine.X1 = currentPoint.X;
+            VerticalCrossLine.X2 = currentPoint.X;
+
+            CursorCrossText.Content = $"X:{currentPoint.X:F2} Y:{currentPoint.Y:F2}";
+            Canvas.SetLeft(CursorCrossText, currentPoint.X);
+            Canvas.SetTop(CursorCrossText, currentPoint.Y);
+        }
+
         if (_isDragging && _movingElement != null)
         {
-            Point currentPoint = e.GetPosition(wareHouseArea);
             double offsetX = currentPoint.X - _startPoint.X;
             double offsetY = currentPoint.Y - _startPoint.Y;
 
-            double newX = Canvas.GetLeft(_movingElement) + offsetX;
-            double newY = Canvas.GetTop(_movingElement) + offsetY;
+            BaseObject baseobj = _movingElement?.DataContext as BaseObject;
 
-            Canvas parentCanvas = _movingElement.Parent as Canvas;
+            if (baseobj == null) 
+                return;
 
-            Point relativePosition = _movingElement.TransformToVisual(wareHouseArea).Transform(new Point(0, 0));
-            newX = relativePosition.X + offsetX;
-            newY = relativePosition.Y + offsetY;
+            double newX = baseobj.X + offsetX;
+            double newY = baseobj.Y + offsetY;
+
             //_movingElement.RenderTransform.
             if (MoveElement(new Point(newX, newY), _movingElement))
             {
@@ -219,6 +365,57 @@ public partial class WareHouseArea : UserControl
 
     #region Elements methods
 
+    private void UpdateConnections()
+    {
+        if(WayPoints != null)
+        {
+            List<Action> delAct = new List<Action>();
+
+            WayPointConnections = new ObservableCollection<WayPointObject[]>();
+            WayPointToRacks = new ObservableCollection<KeyValuePair<WayPointObject, RackObject>>();
+            foreach (WayPointObject point in WayPoints)
+            {
+                if (point.Connections != null)
+                {
+                    foreach(WayPointObject connection in point.Connections)
+                    {
+                        if (WayPoints.Contains(connection))
+                            WayPointConnections.Add(new WayPointObject[2] { point, connection });
+                        else
+                        {
+                            delAct.Add(() => { point.Connections.Remove(connection); });
+                        }
+                        
+                    }
+                }
+
+                if (point.Racks != null)
+                {
+                    foreach (RackObject rack in point.Racks)
+                    {
+                        if (Racks.Contains(rack))
+                        {
+                            var keyValPar = new KeyValuePair<WayPointObject, RackObject>(point,rack);
+                            WayPointToRacks.Add(keyValPar);
+                        }  
+                        else
+                        {
+                            delAct.Add(() => { point.Racks.Remove(rack); });
+                        }
+
+                    }
+                }
+            }
+
+
+            foreach (var act in delAct)
+                act.Invoke();
+
+            wayPointConnections.ItemsSource = WayPointConnections;
+            wayPointToRacks.ItemsSource = WayPointToRacks;
+        }
+    }
+
     private bool MoveElement(Point point, FrameworkElement element)
     {
         if ((point.X >= 0 && point.X <= wareHouseArea.ActualWidth - element.ActualWidth &&
@@ -237,20 +434,21 @@ public partial class WareHouseArea : UserControl
 
     #region Helpers
 
-    private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName) where T : FrameworkElement
+    
+
+    private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName, IValueConverter conv = null) where T : FrameworkElement
     {
         element.SetBinding(dp, new Binding(PropName)
         {
             Source = obj,
             Mode = BindingMode.TwoWay,
             UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            Converter = conv
         });
         return element;
     }
 
     #endregion
-
-    
 }
 
 

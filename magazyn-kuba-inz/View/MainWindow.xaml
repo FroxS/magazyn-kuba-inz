@@ -68,8 +68,6 @@
                         <Border Grid.Row="0"
                                 BorderBrush="{StaticResource DarkColorBrush}"
                                 BorderThickness="0,0,0,1">
-
-
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
