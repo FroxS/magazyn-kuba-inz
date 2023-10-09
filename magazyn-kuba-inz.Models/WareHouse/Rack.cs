@@ -19,5 +19,5 @@ public class Rack : BaseEntity
     public int AmountSpace { get; set; } = 2;
     public List<StorageItemPackage>? StorageItems { get; set; }
     public Guid ID_Hall { get; set; }
-    //public Hall? Hall { get; set; }
+    public Hall? Hall { get; set; }
 }

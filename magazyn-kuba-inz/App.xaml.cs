@@ -74,6 +74,7 @@ public partial class App : Application
         services.AddTransient<IStorageUnitService, StorageUnitService>();
         services.AddTransient<IStorageItemPackageService, StorageItemPackageService>();
         services.AddTransient<IStorageItemService, StorageItemService>();
+        services.AddTransient<IHallService, HallService>();
 
         services.AddSingleton<MessageService>();
         services.AddSingleton<IDialogService, DialogService>();
@@ -135,6 +136,7 @@ public partial class App : Application
         services.AddTransient<IStorageUnitRepository, StorageUnitRepository>();
         services.AddTransient<IStorageItemPackageRepository, StorageItemPackageRepository>();
         services.AddTransient<IStorageItemRepository, StorageItemRepository>();
+        services.AddTransient<IHallRepository, HallRepository>();
     }
 
     private void PrepareDatabase(IServiceCollection services)

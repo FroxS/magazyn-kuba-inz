@@ -1,5 +1,6 @@
 ﻿using magazyn_kuba_inz.Core.Helpers;
 using magazyn_kuba_inz.Core.Models;
+using magazyn_kuba_inz.Core.Service;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using System.Collections.ObjectModel;
@@ -12,9 +13,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 {
     #region Private fields
 
-    private ObservableCollection<RackObject> _racks = new ObservableCollection<RackObject>();
-
-    private ObservableCollection<WayPointObject> _wayPoints = new ObservableCollection<WayPointObject>();
+    private HallObject _hall;
 
     private BaseObject _selectedObject;
     
@@ -26,16 +25,10 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     #region Public properties
 
-    public ObservableCollection<RackObject> Racks
+    public HallObject Hall
     {
-        get => _racks;
-        set { SetProperty(ref _racks, value, nameof(Racks)); }
-    }
-
-    public ObservableCollection<WayPointObject> WayPoints
-    {
-        get => _wayPoints;
-        set { SetProperty(ref _wayPoints, value, nameof(WayPoints)); }
+        get => _hall;
+        set { SetProperty(ref _hall, value, nameof(Hall)); }
     }
 
     public BaseObject SelectedObject
@@ -67,45 +60,15 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     #region Constructors
 
-    public WareHouseCreatorPageViewModel(IApp app) : base(app)
+    public WareHouseCreatorPageViewModel(IApp app, IHallService hallService) : base(app)
     {
         Width = 1000;
         Height = 1000;
         AddRackCommand = new RelayCommand((o) => AddRack());
-        RemoveRackCommand = new RelayCommand((o) => RemoveRack(Racks.FirstOrDefault()));
-        var p1 = new WayPointObject()
-        {
-            X = 250,
-            Y = 250
-        };
-        var p2 = new WayPointObject()
-        {
-            X = 500,
-            Y = 500,
-            IsStartPoint = true
-        };
-        p1.AddConnection(ref p2);
-        WayPoints = new ObservableCollection<WayPointObject>() { p1,p2 };
+        RemoveRackCommand = new RelayCommand((o) => RemoveRack(Hall.Racks.FirstOrDefault()));
+        var list = hallService.GetAll();
+        var test = hallService.GetHallObject(Guid.Empty);
 
-        Racks = new ObservableCollection<RackObject>()
-        {
-            new RackObject()
-            {
-                Name = "Rack",
-                X = 100,
-                Y = 100,
-                Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
-            },
-            new RackObject()
-            {
-                Name = "Rack1",
-                X = 200,
-                Y = 150,
-                Width = 20,
-                Height = 20,
-                Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
-            }
-        };
     }
 
     #endregion
@@ -118,7 +81,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     private void AddRack()
     {
-        Racks.Add(new RackObject()
+        Hall.Racks.Add(new RackObject(Guid.NewGuid())
         {
             Name = "Rack",
             X = 100,
@@ -130,7 +93,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     private void RemoveRack(RackObject rack)
     {
         if(rack != null)
-            Racks.Remove(rack);
+            Hall.Racks.Remove(rack);
     }
 
     #endregion

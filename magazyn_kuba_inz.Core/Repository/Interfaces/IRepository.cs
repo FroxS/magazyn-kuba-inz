@@ -31,3 +31,4 @@ public interface IStorageUnitRepository : IBaseRepository<StorageUnit> { }
 public interface IStorageItemPackageRepository : IBaseRepository<StorageItemPackage> { }
 public interface IRackRepository : IBaseRepository<Rack> { }
 public interface IStorageItemRepository : IBaseRepository<StorageItem> { }
+public interface IHallRepository : IBaseRepository<Hall> { }

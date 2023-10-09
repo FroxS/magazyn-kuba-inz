@@ -1,4 +1,5 @@
-﻿using magazyn_kuba_inz.Core.Resources;
+﻿using magazyn_kuba_inz.Core.Models;
+using magazyn_kuba_inz.Core.Resources;
 using magazyn_kuba_inz.Core.ViewModel.Pages;
 using magazyn_kuba_inz.Models.Interfaces;
 using magazyn_kuba_inz.Models.WareHouse;
@@ -109,4 +110,9 @@ public interface IStorageUnitService : IBaseService<StorageUnit> { }
 public interface IRackService : IBaseService<Rack> { }
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> { }
 public interface IStorageItemService : IBaseService<StorageItem> { }
+
+public interface IHallService : IBaseService<Hall> 
+{
+    HallObject GetHallObject(Guid id);
+}
 

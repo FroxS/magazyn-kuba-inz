@@ -3,8 +3,6 @@ using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Pages;
 using magazyn_kuba_inz.Models.WareHouse;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
-
 namespace magazyn_kuba_inz.Core.Service;
 
 public class ProductStatusService : BaseServiceWithRepository<IProductStatusRepository, ProductStatus>, IProductStatusService

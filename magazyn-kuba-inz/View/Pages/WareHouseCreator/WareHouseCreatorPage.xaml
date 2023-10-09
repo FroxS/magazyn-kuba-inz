@@ -203,8 +203,8 @@
                                 Grid.Column="0"
                                 AreaHeight="1000"
                                 AreaWidth="1000"
-                                Racks="{Binding Racks, UpdateSourceTrigger=PropertyChanged}"
-                                WayPoints="{Binding WayPoints, UpdateSourceTrigger=PropertyChanged}"
+                                Racks="{Binding Hall.Racks, UpdateSourceTrigger=PropertyChanged}"
+                                WayPoints="{Binding Hall.WayPoints, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedObject="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:WareHouseArea.ContextMenu >
                 <ContextMenu>

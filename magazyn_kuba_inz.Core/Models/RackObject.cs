@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
 
@@ -7,6 +8,8 @@ namespace magazyn_kuba_inz.Core.Models;
 public class RackObject : BaseObject
 {
     #region Private fields
+
+    private Guid _id;
 
     private string _name;
 
@@ -21,6 +24,12 @@ public class RackObject : BaseObject
     #endregion
 
     #region Public properties
+
+    public Guid Id
+    {
+        get => _id;
+        private set { SetProperty(ref _id, value, nameof(Id)); }
+    }
 
     public string Name 
     {
@@ -59,20 +68,29 @@ public class RackObject : BaseObject
     /// <summary>
     /// Default constructor
     /// </summary>
-    public RackObject():base()
+    [JsonConstructor]
+    public RackObject(Guid id):base()
     {
+        Id = id;
+    }
+
+
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public RackObject(Guid id ,double x, double y) : base(x,y) 
+    {
+        Id = id;
     }
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public RackObject(double x, double y) : base(x,y) { }
-
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public RackObject(Point point) : base(point) { }
-
+    public RackObject(Guid id, Point point) : base(point) 
+    {
+        Id = id;
+    }
 
     #endregion
 
