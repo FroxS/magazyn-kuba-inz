@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="magazyn_kuba_inz.Controls.WareHouseArea"
+             xmlns:effects="http://schemas.microsoft.com/winfx/2006/xaml/presentation/effects"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450"
              Background="White"
-             x:Name="mainControl">
+             x:Name="mainControl" >
     <UserControl.Resources>
         <ResourceDictionary>
             <Style TargetType="{x:Type ToggleButton}">
@@ -87,19 +88,28 @@
                 </TextBlock>
             </StackPanel>
 
-            <Border BorderThickness="1"
-                    BorderBrush="Red">
+            <Border Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}">
+                
                 <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
+                              VerticalScrollBarVisibility="Auto"
+                              Padding="10">
                     <Canvas x:Name="wareHouseArea"
                             PreviewMouseWheel="Canvas_PreviewMouseWheel"
                             Grid.Row="1" 
+                            Margin="20"
                             Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             MouseMove="Canvas_MouseMove" 
-                            Background="White"
+                            Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
-                            MouseLeftButtonUp="Canvas_MouseLeftButtonUp">
+                            MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
+                            Focusable="True">
+                        <Canvas.Effect>
+                            <DropShadowEffect BlurRadius="25" 
+                                              Direction="-120" 
+                                              RenderingBias="Quality" 
+                                              ShadowDepth="5" Color="Black"/>
+                        </Canvas.Effect>
 
                         <Label Content="x:0 y=0"
                                Visibility="{Binding CrossVisible, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
@@ -133,7 +143,6 @@
                                                    Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
                                                    Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
                                                    att:MarginCorrection.Value="True">
-                                            
                                         </Rectangle>
                                         <Grid.ContextMenu>
                                             <ContextMenu>
@@ -150,8 +159,6 @@
                                     <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged}" />
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
-                            
-
                         </ItemsControl>
                         
                         <!-- Linie połączeń -->
@@ -166,7 +173,8 @@
                                 <DataTemplate>
                                     <Line X1="{Binding [0].X}" Y1="{Binding [0].Y}"
                                           X2="{Binding [1].X}" Y2="{Binding [1].Y}"
-                                          Stroke="Black" StrokeThickness="2" >
+                                          Stroke="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" 
+                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}">
                                         <Line.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="Usuń" Click="Usun_Click" />
@@ -189,11 +197,11 @@
                                 <DataTemplate>
                                     <Line X1="{Binding Key.X}" Y1="{Binding Key.Y}"
                                           X2="{Binding Value.X}" Y2="{Binding Value.Y}"
-                                          Stroke="Green" StrokeThickness="2" >
+                                          Stroke="{Binding LineToRackBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" 
+                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" >
                                         <Line.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="Usuń" Click="Usun_Click" />
-                                                
                                             </ContextMenu>
                                         </Line.ContextMenu>
                                     </Line>
@@ -208,29 +216,41 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
-                            Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}" />
+                                            Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Ellipse Width="10"
-                                             Height="10"
-                                             Fill="Black"
-                                             Opacity="1"
-                                             MouseLeftButtonDown="Object_MouseLeftButtonDown">
+                                    <Ellipse Width="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                             Height="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                             Fill="{Binding PointBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                             MouseLeftButtonDown="Object_MouseLeftButtonDown"
+                                             att:MarginCorrection.Value="True">
                                         <Ellipse.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="Usuń" Click="Usun_Click" />
                                                 <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
                                             </ContextMenu>
                                         </Ellipse.ContextMenu>
+                                        <Ellipse.Style>
+                                            <Style TargetType="{x:Type Ellipse}">
+                                                <Style.Triggers>
+                                                    <DataTrigger  Binding="{Binding IsStartPoint}"  Value="True">
+                                                        <Setter Property="Fill" Value="Green"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                
+                                            </Style>
+                                        </Ellipse.Style>
                                     </Ellipse>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="FrameworkElement">
-                                    <Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />
-                                    <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />
+                                    <Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged}" />
+                                    <!--<Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />
+                                    <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />-->
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
                         </ItemsControl>

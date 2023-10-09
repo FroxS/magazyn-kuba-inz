@@ -11,6 +11,8 @@ public class WayPointObject : BaseObject
 
     protected ObservableCollection<RackObject> _racks = new ObservableCollection<RackObject>();
 
+    protected bool _isStartPoint = false;
+
     #endregion
 
     #region Public properties 
@@ -25,6 +27,12 @@ public class WayPointObject : BaseObject
     {
         get => _racks;
         set { SetProperty(ref _racks, value, nameof(Racks)); }
+    }
+
+    public bool IsStartPoint
+    {
+        get => _isStartPoint;
+        set { SetProperty(ref _isStartPoint, value, nameof(IsStartPoint)); }
     }
 
     #endregion
@@ -53,13 +61,7 @@ public class WayPointObject : BaseObject
 
     #region Private methods
 
-    private double Distance(WayPointObject p1, WayPointObject p2)
-    {
-        //double deltaX = point1.X - point2.X;
-        //double deltaY = point1.Y - point2.Y;
-        //return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-        return Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
-    }
+    private double Distance(WayPointObject p1, WayPointObject p2) => Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
 
     #endregion
 

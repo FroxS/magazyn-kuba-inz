@@ -1,8 +1,6 @@
-﻿using magazyn_kuba_inz.Models.Application;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace magazyn_kuba_inz.Core.Models;
 

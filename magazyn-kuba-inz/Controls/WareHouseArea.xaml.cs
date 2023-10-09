@@ -8,9 +8,6 @@ using System.Windows.Data;
 using System;
 using System.Collections.Generic;
 using magazyn_kuba_inz.Conventers;
-using System.Linq;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using System.Windows.Shapes;
 
 namespace magazyn_kuba_inz.Controls;
 
@@ -33,12 +30,11 @@ public partial class WareHouseArea : UserControl
 
     private WayPointObject _selectedPoint = null;
 
+    private FrameworkElement _selectedElement = null;
+
     private ObservableCollection<WayPointObject[]> _wayPointConnections = new ObservableCollection<WayPointObject[]>();
 
     private ObservableCollection<KeyValuePair<WayPointObject, RackObject>> _wayPointToRacks = new ObservableCollection<KeyValuePair<WayPointObject, RackObject>>();
-
-    private double zoomFactor = 1.2;
-
 
     #endregion
 
@@ -49,6 +45,13 @@ public partial class WareHouseArea : UserControl
         get { return (double)GetValue(AreaWidthProperty); }
         set { SetValue(AreaWidthProperty, value); }
     }
+
+    public double ZoomFactor
+    {
+        get { return (double)GetValue(ZoomFactorProperty); }
+        set { SetValue(ZoomFactorProperty, value); }
+    }
+
     public double AreaHeight
     {
         get { return (double)GetValue(AreaHeightProperty); }
@@ -84,6 +87,12 @@ public partial class WareHouseArea : UserControl
         set { SetValue(SelectedObjectProperty, value); }
     }
 
+    public WayPointObject StartObject
+    {
+        get { return (WayPointObject)GetValue(StartObjectProperty); }
+        set { SetValue(StartObjectProperty, value); }
+    }
+
     public double Zoom
     {
         get { return (double)GetValue(ZoomProperty); }
@@ -100,6 +109,48 @@ public partial class WareHouseArea : UserControl
     {
         get { return (bool)GetValue(CrossVisibleProperty); }
         set { SetValue(CrossVisibleProperty, value); }
+    }
+
+    public SolidColorBrush PointBrush
+    {
+        get { return (SolidColorBrush)GetValue(PointBrushProperty); }
+        set { SetValue(PointBrushProperty, value); }
+    }
+
+    public SolidColorBrush StartPointBrush
+    {
+        get { return (SolidColorBrush)GetValue(StartPointBrushProperty); }
+        set { SetValue(StartPointBrushProperty, value); }
+    }
+
+    public SolidColorBrush LineBrush
+    {
+        get { return (SolidColorBrush)GetValue(LineBrushProperty); }
+        set { SetValue(LineBrushProperty, value); }
+    }
+
+    public SolidColorBrush LineToRackBrush
+    {
+        get { return (SolidColorBrush)GetValue(LineToRackBrushProperty); }
+        set { SetValue(LineToRackBrushProperty, value); }
+    }
+
+    public double LineStroke
+    {
+        get { return (double)GetValue(LineStrokeProperty); }
+        set { SetValue(LineStrokeProperty, value); }
+    }
+
+    public double PointDiameter
+    {
+        get { return (double)GetValue(PointDiameterProperty); }
+        set { SetValue(PointDiameterProperty, value); }
+    }
+
+    public double KeyStep
+    {
+        get { return (double)GetValue(KeyStepProperty); }
+        set { SetValue(KeyStepProperty, value); }
     }
 
     #endregion
@@ -130,6 +181,9 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty SelectedObjectProperty =
         DependencyProperty.Register(nameof(SelectedObject), typeof(BaseObject), typeof(WareHouseArea), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty ZoomFactorProperty =
+       DependencyProperty.Register(nameof(ZoomFactor), typeof(double), typeof(WareHouseArea), new PropertyMetadata(1.2d));
+
     public static readonly DependencyProperty ZoomProperty =
        DependencyProperty.Register(nameof(Zoom), typeof(double), typeof(WareHouseArea), new PropertyMetadata(100d));
 
@@ -138,6 +192,28 @@ public partial class WareHouseArea : UserControl
 
     public static readonly DependencyProperty CrossVisibleProperty =
        DependencyProperty.Register(nameof(CrossVisible), typeof(bool), typeof(WareHouseArea), new PropertyMetadata(false));
+
+    public static readonly DependencyProperty PointBrushProperty =
+       DependencyProperty.Register(nameof(PointBrush), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.Black));
+
+    public static readonly DependencyProperty StartPointBrushProperty =
+       DependencyProperty.Register(nameof(StartPointBrush), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.Green));
+
+    public static readonly DependencyProperty LineBrushProperty =
+       DependencyProperty.Register(nameof(LineBrush), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.Black));
+
+    public static readonly DependencyProperty LineToRackBrushProperty =
+       DependencyProperty.Register(nameof(LineToRackBrush), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.Green));
+
+    public static readonly DependencyProperty LineStrokeProperty =
+      DependencyProperty.Register(nameof(LineStroke), typeof(double), typeof(WareHouseArea), new PropertyMetadata(2.0d));
+
+    public static readonly DependencyProperty PointDiameterProperty =
+      DependencyProperty.Register(nameof(PointDiameter), typeof(double), typeof(WareHouseArea), new PropertyMetadata(10.0d));
+
+    public static readonly DependencyProperty KeyStepProperty =
+      DependencyProperty.Register(nameof(KeyStep), typeof(double), typeof(WareHouseArea), new PropertyMetadata(10.0d));
+
 
     public static readonly DependencyProperty RacksProperty =
         DependencyProperty.Register(
@@ -158,6 +234,17 @@ public partial class WareHouseArea : UserControl
             new UIPropertyMetadata(
                     null,
                     WayPointsPropertyChanged,
+                    null)
+            );
+
+    public static readonly DependencyProperty StartObjectProperty =
+        DependencyProperty.Register(
+            nameof(StartObject),
+            typeof(WayPointObject),
+            typeof(WareHouseArea),
+            new UIPropertyMetadata(
+                    null,
+                    null,
                     null)
             );
 
@@ -215,8 +302,8 @@ public partial class WareHouseArea : UserControl
                 UpdateConnections();
             }
         }
+        e.Handled = true;
 
-        
     }
 
     private void ConnectWidth_Click(object sender, RoutedEventArgs e)
@@ -228,6 +315,7 @@ public partial class WareHouseArea : UserControl
                 _connectWidthPoint = wpo;
             }
         }
+        e.Handled = true;
     }
 
     private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -245,6 +333,7 @@ public partial class WareHouseArea : UserControl
             _selectedPoint = wayPoint;
             UpdateConnections();
         }
+        e.Handled = true;
     }
 
     public void Object_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -284,11 +373,13 @@ public partial class WareHouseArea : UserControl
             _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
             SelectedObject = obj?.DataContext as BaseObject;
-            if(obj?.DataContext is WayPointObject wpo)
+            _selectedElement = obj;
+            if (obj?.DataContext is WayPointObject wpo)
             {
                 _selectedPoint = wpo;
             }
         }
+        e.Handled = true;
     }
 
     private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -317,8 +408,12 @@ public partial class WareHouseArea : UserControl
 
             BaseObject baseobj = _movingElement?.DataContext as BaseObject;
 
-            if (baseobj == null) 
+            if (baseobj == null)
+            {
+                e.Handled = true;
                 return;
+            }
+                
 
             double newX = baseobj.X + offsetX;
             double newY = baseobj.Y + offsetY;
@@ -334,12 +429,40 @@ public partial class WareHouseArea : UserControl
                 _movingElement = null;
             }
         }
+        e.Handled = true;
+    }
+    private void Object_KeyDown(object sender, KeyEventArgs e)
+    {
+        if(_selectedElement != null && _selectedElement.DataContext is BaseObject bo)
+        {
+            Point pozition = bo.Position;
+            switch (e.Key)
+            {
+                case Key.Left:
+                    pozition.X -= KeyStep;
+                    MoveElement(pozition, _selectedElement);
+                    break;
+                case Key.Right:
+                    pozition.X += KeyStep;
+                    MoveElement(pozition, _selectedElement);
+                    break;
+                case Key.Up:
+                    pozition.Y -= KeyStep;
+                    MoveElement(pozition, _selectedElement);
+                    break;
+                case Key.Down:
+                    pozition.Y += KeyStep;
+                    MoveElement(pozition, _selectedElement);
+                    break;
+            }
+        }
     }
 
     private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         _isDragging = false;
         _movingElement = null;
+        e.Handled = true;
     }
 
     private void Canvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -349,12 +472,12 @@ public partial class WareHouseArea : UserControl
             if (e.Delta > 0)
             {
                 // Zoom in
-                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 * zoomFactor, wareHouseArea.LayoutTransform.Value.M22 * zoomFactor);
+                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 * ZoomFactor, wareHouseArea.LayoutTransform.Value.M22 * ZoomFactor);
             }
             else
             {
                 // Zoom out
-                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 / zoomFactor, wareHouseArea.LayoutTransform.Value.M22 / zoomFactor);
+                wareHouseArea.LayoutTransform = new ScaleTransform(wareHouseArea.LayoutTransform.Value.M11 / ZoomFactor, wareHouseArea.LayoutTransform.Value.M22 / ZoomFactor);
             }
             Zoom = wareHouseArea.LayoutTransform.Value.M11 * 100;
             e.Handled = true;
@@ -434,8 +557,6 @@ public partial class WareHouseArea : UserControl
 
     #region Helpers
 
-    
-
     private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName, IValueConverter conv = null) where T : FrameworkElement
     {
         element.SetBinding(dp, new Binding(PropName)
@@ -448,7 +569,9 @@ public partial class WareHouseArea : UserControl
         return element;
     }
 
+
     #endregion
+
 }
 
 

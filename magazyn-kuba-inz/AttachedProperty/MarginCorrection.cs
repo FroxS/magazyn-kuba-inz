@@ -34,8 +34,8 @@ public class MarginCorrection : BaseAttachedProperty<MarginCorrection, bool>
     private void UpdateMargin(FrameworkElement element)
     {
         element.Margin = new Thickness(
-            -(element.Width / 2d),
-            -(element.Height / 2d),
+            -((element.Width.Equals(double.NaN) ? 0 : element.Width) / 2d),
+            -((element.Height.Equals(double.NaN) ? 0 : element.Height) / 2d),
             element.Margin.Right,
             element.Margin.Bottom
         );

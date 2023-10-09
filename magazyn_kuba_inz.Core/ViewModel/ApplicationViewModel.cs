@@ -70,16 +70,12 @@ public class ApplicationViewModel : BaseViewModel, IApp
         else
         {
             services.GetRequiredService<ILoginWindow>();
-
             ILoginWindow login = services.GetRequiredService<ILoginWindow>();
-
             if (login == null)
                 throw new Exception("Brak okna login");
 
-
             flag = login.ShowDialog();
         }
-
 
         if (flag == false)
         {

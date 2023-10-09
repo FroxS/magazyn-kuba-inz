@@ -16,8 +16,6 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     private ObservableCollection<WayPointObject> _wayPoints = new ObservableCollection<WayPointObject>();
 
-    //private RackObject _selectedRack;
-
     private BaseObject _selectedObject;
     
     private double _width;
@@ -39,12 +37,6 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         get => _wayPoints;
         set { SetProperty(ref _wayPoints, value, nameof(WayPoints)); }
     }
-
-    //public RackObject SelectedRack
-    //{
-    //    get => _selectedRack;
-    //    set { SetProperty(ref _selectedRack, value, nameof(SelectedRack)); }
-    //}
 
     public BaseObject SelectedObject
     {
@@ -89,7 +81,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         var p2 = new WayPointObject()
         {
             X = 500,
-            Y = 500
+            Y = 500,
+            IsStartPoint = true
         };
         p1.AddConnection(ref p2);
         WayPoints = new ObservableCollection<WayPointObject>() { p1,p2 };

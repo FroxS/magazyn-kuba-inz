@@ -198,18 +198,14 @@
                     </DataTemplate>
                 </ContentPresenter.Resources>
             </ContentPresenter>
-            
         </Grid>
-
         <controls:WareHouseArea Grid.Row="1"
                                 Grid.Column="0"
                                 AreaHeight="1000"
                                 AreaWidth="1000"
                                 Racks="{Binding Racks, UpdateSourceTrigger=PropertyChanged}"
                                 WayPoints="{Binding WayPoints, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedObject="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                BorderThickness="1"
-                                BorderBrush="Red">
+                                SelectedObject="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:WareHouseArea.ContextMenu >
                 <ContextMenu>
                     <MenuItem Header="Dodaj"
