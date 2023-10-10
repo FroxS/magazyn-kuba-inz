@@ -83,4 +83,10 @@ public interface IBaseRepository<T> where T : class
     void Update(T entity);
 
     void ReloadContext();
+
+    bool Exist(Guid id);
+
+    T? GetById(Func<IQueryable<T>, IQueryable<T>> include, Guid id);
+
+    IQueryable<T> GetItemsInclude(Func<IQueryable<T>, IQueryable<T>> include);
 }

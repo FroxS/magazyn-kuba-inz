@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using magazyn_kuba_inz.Models.WareHouse;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
 
 namespace magazyn_kuba_inz.Core.Models;
 
@@ -113,7 +116,26 @@ public class RackObject : BaseObject
 
         if (toWay)
             connection.AddConnection(ref self, false);
+    }
 
+    public bool Intersects(RackObject rack)
+    {
+        double left1 = X - Width / 2;
+        double right1 = X + Width / 2;
+        double top1 = Y - Height / 2;
+        double bottom1 = Y + Height / 2;
+
+        // Obliczamy lewą, prawą, górną i dolną krawędź obiektu other
+        double left2 = rack.X - rack.Width / 2;
+        double right2 = rack.X + rack.Width / 2;
+        double top2 = rack.Y - rack.Height / 2;
+        double bottom2 = rack.Y + rack.Height / 2;
+
+        // Sprawdzamy, czy obiekty nachodzą na siebie
+        bool horizontalOverlap = left1 <= right2 && right1 >= left2;
+        bool verticalOverlap = top1 <= bottom2 && bottom1 >= top2;
+
+        return horizontalOverlap && verticalOverlap;
     }
 
     #endregion

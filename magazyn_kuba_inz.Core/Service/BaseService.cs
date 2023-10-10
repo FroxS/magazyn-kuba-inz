@@ -80,12 +80,7 @@ public class BaseService<Model>: IBaseService<Model> where Model : class
         return true;
     }
 
-    public virtual async Task<List<Model>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        
-        return await _repozitory.GetAllAsync(); 
-        
-    }
+    public virtual async Task<List<Model>> GetAllAsync(CancellationToken cancellationToken = default) => await _repozitory.GetAllAsync(cancellationToken: cancellationToken);
 
     public virtual List<Model> GetAll()
     {
@@ -105,6 +100,8 @@ public class BaseService<Model>: IBaseService<Model> where Model : class
         return true;
     }
 
+    public virtual bool Add(Model entity) => _repozitory.Add(entity) != null;
+
     public virtual async Task<bool> SaveAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
         await _repozitory.SaveAsync(cancellationToken);
@@ -116,6 +113,8 @@ public class BaseService<Model>: IBaseService<Model> where Model : class
         _repozitory.Save();
         return true;
     }
+
+    public virtual bool Exist(Guid id) => _repozitory.Exist(id);
 
     public void RefreshDbContext()
     {

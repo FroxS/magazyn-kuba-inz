@@ -34,7 +34,6 @@ public class NavigationViewModel : BaseViewModel, INavigation
     public NavigationViewModel()
     {
         SetPageCommand = new RelayCommand<EApplicationPage>((o) => { SetPage(o); });
-        SetPage(EApplicationPage.WareHouseCreator);
     }
 
     #endregion

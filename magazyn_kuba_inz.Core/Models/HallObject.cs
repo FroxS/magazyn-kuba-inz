@@ -1,4 +1,6 @@
 ﻿using magazyn_kuba_inz.Models.Application;
+using magazyn_kuba_inz.Models.WareHouse;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
 namespace magazyn_kuba_inz.Core.Models;
@@ -7,7 +9,13 @@ public class HallObject : ObservableObject
 {
     #region Private fields
 
+    private Guid _id;
+
     private string _name;
+
+    private double _width;
+
+    private double _height;
 
     private ObservableCollection<WayPointObject> _wayPoints = new ObservableCollection<WayPointObject>();
 
@@ -17,11 +25,29 @@ public class HallObject : ObservableObject
 
     #region Public properties
 
-    public string Name 
+    public Guid Id
+    {
+        get => _id;
+        private set { SetProperty(ref _id, value, nameof(Id)); }
+    }
+
+    public string Name
     {
         get => _name;
         set { SetProperty(ref _name, value, nameof(Name)); }
-    }    
+    }
+
+    public double Width
+    {
+        get => _width;
+        set { SetProperty(ref _width, value, nameof(Width)); }
+    }
+
+    public double Height
+    {
+        get => _height;
+        set { SetProperty(ref _height, value, nameof(Height)); }
+    }
 
     public ObservableCollection<WayPointObject> WayPoints
     {
@@ -42,14 +68,31 @@ public class HallObject : ObservableObject
     /// <summary>
     /// Default constructor
     /// </summary>
-    public HallObject()
+    [JsonConstructor]
+    public HallObject(Guid id)
     {
-
+        Id = id;
     }
 
     #endregion
 
     #region Public methods
+
+    public void AddRacks(params RackObject[] racks)
+    {
+        foreach (RackObject rack in racks)
+        {
+            if (Racks.FirstOrDefault(x => x.Id == rack.Id) == null)
+                Racks.Add(rack);
+        }    
+    }
+
+    public void AddPoints(params WayPointObject[] points)
+    {
+        foreach (WayPointObject point in points)
+            if (WayPoints.FirstOrDefault(x => x.Position == point.Position) == null)
+                WayPoints.Add(point);
+    }
 
     #endregion
 }

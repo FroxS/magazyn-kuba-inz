@@ -93,6 +93,7 @@ public class ApplicationViewModel : BaseViewModel, IApp
                 throw new Exception("Brak okna głównego");
 
             app.MainWindow = window as Window;
+            Navigation.SetPage(magazyn_kuba_inz.Models.Page.EApplicationPage.WareHouseCreator);
             window.Show();
         }
     }

@@ -3,9 +3,8 @@ using magazyn_kuba_inz.Core.Models;
 using magazyn_kuba_inz.Core.Service;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
-using System.Collections.ObjectModel;
+using magazyn_kuba_inz.Models.WareHouse;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace magazyn_kuba_inz.Core.ViewModel.Pages;
 
@@ -13,13 +12,11 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 {
     #region Private fields
 
+    private IHallService _hallService;
+
     private HallObject _hall;
 
     private BaseObject _selectedObject;
-    
-    private double _width;
-
-    private double _height;
 
     #endregion
 
@@ -37,18 +34,6 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); }
     }
 
-    public double Width
-    {
-        get => _width;
-        set { SetProperty(ref _width, value, nameof(Width)); }
-    }
-
-    public double Height
-    {
-        get => _height;
-        set { SetProperty(ref _height, value, nameof(Height)); }
-    }
-
     #endregion
 
     #region Commands
@@ -62,18 +47,46 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     public WareHouseCreatorPageViewModel(IApp app, IHallService hallService) : base(app)
     {
-        Width = 1000;
-        Height = 1000;
+        _hallService = hallService;
         AddRackCommand = new RelayCommand((o) => AddRack());
         RemoveRackCommand = new RelayCommand((o) => RemoveRack(Hall.Racks.FirstOrDefault()));
-        var list = hallService.GetAll();
-        var test = hallService.GetHallObject(Guid.Empty);
-
     }
 
     #endregion
 
     #region Private methods
+
+    public override void OnPageOpen()
+    {
+        base.OnPageOpen(); 
+        var hall = _hallService.GetAll().FirstOrDefault();
+        Hall = _hallService.GetHallObject(hall.ID);
+    }
+
+    public override void OnPageClose()
+    {
+        string? message = _hallService.IsHallOk(Hall);
+        if (message != null)
+        {
+            Application.ShowSilentMessage(message);
+            CanChangePage = false;
+        }
+        else
+        {
+            if (_hallService.Exist(Hall.Id))
+            {
+                CanChangePage = _hallService.UpdatehHllObject(Hall);
+            }
+            else
+            {
+                CanChangePage = _hallService.Add(_hallService.GetHall(Hall));
+            }
+            if (CanChangePage)
+                _hallService.Save();
+        }
+
+        
+    }
 
     #endregion
 
@@ -81,19 +94,19 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     private void AddRack()
     {
-        Hall.Racks.Add(new RackObject(Guid.NewGuid())
-        {
-            Name = "Rack",
-            X = 100,
-            Y = 100,
-            Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
-        });
+        //Hall.Racks.Add(new RackObject(Guid.NewGuid())
+        //{
+        //    Name = "Rack",
+        //    X = 100,
+        //    Y = 100,
+        //    Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
+        //});
     }
 
     private void RemoveRack(RackObject rack)
     {
-        if(rack != null)
-            Hall.Racks.Remove(rack);
+        //if(rack != null)
+        //    Hall.Racks.Remove(rack);
     }
 
     #endregion

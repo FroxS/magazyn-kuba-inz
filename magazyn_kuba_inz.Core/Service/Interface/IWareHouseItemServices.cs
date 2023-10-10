@@ -33,7 +33,6 @@ public interface IBaseService<Model> where Model : class
     /// <returns></returns>
     Task<Model> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken));
 
-
     /// <summary>
     /// Method to add entity to database
     /// </summary>
@@ -41,6 +40,8 @@ public interface IBaseService<Model> where Model : class
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<bool> AddAsync(Model entity, CancellationToken cancellationToken = default(CancellationToken));
+
+    bool Add(Model entity);
 
     /// <summary>
     /// Method to update database
@@ -51,7 +52,10 @@ public interface IBaseService<Model> where Model : class
     Task<bool> SaveAsync(CancellationToken cancellationToken = default(CancellationToken));
 
     bool Save();
+
     void RefreshDbContext();
+
+    bool Exist(Guid id);
 }
 
 public interface IUserService
@@ -107,12 +111,19 @@ public interface IImageService : IBaseService<WareHouseImage> { }
 public interface IOrderService : IBaseService<Order> { }
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }
-public interface IRackService : IBaseService<Rack> { }
+public interface IRackService : IBaseService<Rack> 
+{
+    bool CanDeleteRack(Guid id);
+}
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> { }
 public interface IStorageItemService : IBaseService<StorageItem> { }
 
 public interface IHallService : IBaseService<Hall> 
 {
     HallObject GetHallObject(Guid id);
+    string? IsHallOk(HallObject obj);
+    bool UpdatehHllObject(HallObject obj);
+
+    Hall GetHall(HallObject obj);
 }
 

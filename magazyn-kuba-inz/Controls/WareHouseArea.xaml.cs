@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System;
 using System.Collections.Generic;
 using magazyn_kuba_inz.Conventers;
+using System.Collections.Specialized;
 
 namespace magazyn_kuba_inz.Controls;
 
@@ -222,7 +223,7 @@ public partial class WareHouseArea : UserControl
             typeof(WareHouseArea),
             new UIPropertyMetadata(
                     null,
-                    null,//RacksPropertyChanged,
+                    WayPointsPropertyChanged,//RacksPropertyChanged,
                     null)
             );
 
@@ -264,7 +265,12 @@ public partial class WareHouseArea : UserControl
     private static void WayPointsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is WareHouseArea wha)
+        {
             wha.UpdateConnections();
+
+            if (e.NewValue is INotifyCollectionChanged coll)
+                coll.CollectionChanged += (obj, args) => { wha.UpdateConnections(); };
+        }
     }
 
     #endregion
