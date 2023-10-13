@@ -123,10 +123,19 @@
 
                     <DataTemplate DataType="{x:Type models:WayPointObject}">
                         <StackPanel>
-                            <Label Content="Punkt"
-                                   FontSize="14"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Punkt"
+                                       FontSize="14"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                                <Label Content="(S)"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Visibility="{Binding IsStartPoint, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            
 
                             <Grid Grid.IsSharedSizeScope="True">
                                 <Grid.RowDefinitions>
@@ -201,6 +210,7 @@
         </Grid>
         <controls:WareHouseArea Grid.Row="1"
                                 Grid.Column="0"
+                                HallBackground="#a4ede8"
                                 AreaHeight="{Binding Hall.Height, UpdateSourceTrigger=PropertyChanged}"
                                 AreaWidth="{Binding Hall.Width, UpdateSourceTrigger=PropertyChanged}"
                                 Racks="{Binding Hall.Racks, UpdateSourceTrigger=PropertyChanged}"
@@ -208,8 +218,8 @@
                                 SelectedObject="{Binding SelectedObject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:WareHouseArea.ContextMenu >
                 <ContextMenu>
-                    <MenuItem Header="Dodaj"
-                          Command="{Binding AddRackCommand}"/>
+                    <MenuItem Header="Edytuj"
+                          Command="{Binding EditHallCommand}"/>
                 </ContextMenu>
             </controls:WareHouseArea.ContextMenu>
         </controls:WareHouseArea>

@@ -1,9 +1,7 @@
 ﻿using magazyn_kuba_inz.Core.Helpers;
 using magazyn_kuba_inz.Core.Models;
-using magazyn_kuba_inz.Core.Service;
 using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.Models.WareHouse;
 using System.Windows.Input;
 
 namespace magazyn_kuba_inz.Core.ViewModel.Pages;
@@ -41,6 +39,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public ICommand AddRackCommand { get; protected set; }
     public ICommand RemoveRackCommand { get; protected set; }
 
+    public ICommand EditHallCommand { get; protected set; }
+
     #endregion
 
     #region Constructors
@@ -48,8 +48,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public WareHouseCreatorPageViewModel(IApp app, IHallService hallService) : base(app)
     {
         _hallService = hallService;
-        AddRackCommand = new RelayCommand((o) => AddRack());
-        RemoveRackCommand = new RelayCommand((o) => RemoveRack(Hall.Racks.FirstOrDefault()));
+        EditHallCommand = new AsyncRelayCommand(() => EditHall());
     }
 
     #endregion
@@ -60,11 +59,43 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     {
         base.OnPageOpen(); 
         var hall = _hallService.GetAll().FirstOrDefault();
-        Hall = _hallService.GetHallObject(hall.ID);
+
+
+        if(hall == null)
+        {
+            Application.GetInnerDialogService().GetHallInnerDialog((o) => {
+
+                if (o == null)
+                {
+                    Application.Navigation.SetPage(magazyn_kuba_inz.Models.Page.EApplicationPage.DashBoard);
+                    return;
+                }
+                var p1 = new WayPointObject(100, 100) { IsStartPoint = true };
+                var p2 = new WayPointObject(200, 100);
+                p1.AddConnection(ref p2);
+                o.WayPoints.Add(p1);
+                o.WayPoints.Add(p2);
+                Hall = o;
+            });
+        }
+        else
+        {
+            Hall = _hallService.GetHallObject(hall.ID);
+        }
+    }
+
+    private async Task EditHall()
+    {
+        HallObject hall = await Application.GetInnerDialogService().GetHallInnerDialog(Hall);
+
+        if (hall != null)
+            Hall = hall;
     }
 
     public override void OnPageClose()
     {
+        if (Hall == null)
+            return;
         string? message = _hallService.IsHallOk(Hall);
         if (message != null)
         {
@@ -92,23 +123,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     #region Command Methods
 
-    private void AddRack()
-    {
-        //Hall.Racks.Add(new RackObject(Guid.NewGuid())
-        //{
-        //    Name = "Rack",
-        //    X = 100,
-        //    Y = 100,
-        //    Color = new SolidColorBrush(Color.FromRgb(255, 0, 0))
-        //});
-    }
-
-    private void RemoveRack(RackObject rack)
-    {
-        //if(rack != null)
-        //    Hall.Racks.Remove(rack);
-    }
-
+    
     #endregion
 
     #region Public Methods

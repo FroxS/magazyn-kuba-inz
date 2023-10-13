@@ -1,4 +1,5 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
+﻿using magazyn_kuba_inz.Core.Models;
+using magazyn_kuba_inz.Core.Service.Interface;
 using magazyn_kuba_inz.Core.ViewModel.InnerDialog;
 using magazyn_kuba_inz.Core.ViewModel.Service;
 using magazyn_kuba_inz.Models.WareHouse;
@@ -139,6 +140,27 @@ namespace magazyn_kuba_inz.Core.Service.Dialog
                     _service.GetRequiredService<IApp>()
                 ),
                 OnResult
+            );
+        }
+
+        public void GetHallInnerDialog(Action<HallObject> OnResult, HallObject hall = null)
+        {
+            OpenInnerDialog(
+                new GetHallInnerDialogViewModel(
+                    _service.GetRequiredService<IApp>(),
+                    hall
+                ),
+                OnResult
+            );
+        }
+
+        public async Task<HallObject> GetHallInnerDialog(HallObject hall = null)
+        {
+            return await OpenInnerDialogAsync(
+                new GetHallInnerDialogViewModel(
+                    _service.GetRequiredService<IApp>(),
+                    hall
+                )
             );
         }
 

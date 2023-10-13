@@ -100,7 +100,7 @@ public class WayPointObject : BaseObject
     {
         if (points == null || points.Count() == 0)
         {
-            throw new ArgumentException("Lista punktów nie może być pusta.");
+            return null;
         }
         WayPointObject nearestPoint = null;
         double minDist2 = double.MaxValue;

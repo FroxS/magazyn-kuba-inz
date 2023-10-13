@@ -9,8 +9,17 @@ using System;
 using System.Collections.Generic;
 using magazyn_kuba_inz.Conventers;
 using System.Collections.Specialized;
+using System.Windows.Shapes;
+using System.Linq;
 
 namespace magazyn_kuba_inz.Controls;
+
+public enum ECreatorMode
+{
+    None,
+    WayGeneratorMode,
+    RackCreateMode,
+}
 
 /// <summary>
 /// Interaction logic for WareHouseArea.xaml
@@ -100,10 +109,10 @@ public partial class WareHouseArea : UserControl
         set { SetValue(ZoomProperty, value); }
     }
 
-    public bool WayGeneratorMode
+    public ECreatorMode Mode
     {
-        get { return (bool)GetValue(WayGeneratorModeProperty); }
-        set { SetValue(WayGeneratorModeProperty, value); }
+        get { return (ECreatorMode)GetValue(ModeProperty); }
+        set { SetValue(ModeProperty, value); }
     }
 
     public bool CrossVisible
@@ -134,6 +143,12 @@ public partial class WareHouseArea : UserControl
     {
         get { return (SolidColorBrush)GetValue(LineToRackBrushProperty); }
         set { SetValue(LineToRackBrushProperty, value); }
+    }
+
+    public SolidColorBrush HallBackground
+    {
+        get { return (SolidColorBrush)GetValue(HallBackgroundProperty); }
+        set { SetValue(HallBackgroundProperty, value); }
     }
 
     public double LineStroke
@@ -188,8 +203,8 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty ZoomProperty =
        DependencyProperty.Register(nameof(Zoom), typeof(double), typeof(WareHouseArea), new PropertyMetadata(100d));
 
-    public static readonly DependencyProperty WayGeneratorModeProperty =
-       DependencyProperty.Register(nameof(WayGeneratorMode), typeof(bool), typeof(WareHouseArea), new PropertyMetadata(false));
+    public static readonly DependencyProperty ModeProperty =
+       DependencyProperty.Register(nameof(Mode), typeof(ECreatorMode), typeof(WareHouseArea), new PropertyMetadata(ECreatorMode.None));
 
     public static readonly DependencyProperty CrossVisibleProperty =
        DependencyProperty.Register(nameof(CrossVisible), typeof(bool), typeof(WareHouseArea), new PropertyMetadata(false));
@@ -205,6 +220,9 @@ public partial class WareHouseArea : UserControl
 
     public static readonly DependencyProperty LineToRackBrushProperty =
        DependencyProperty.Register(nameof(LineToRackBrush), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.Green));
+
+    public static readonly DependencyProperty HallBackgroundProperty =
+       DependencyProperty.Register(nameof(HallBackground), typeof(SolidColorBrush), typeof(WareHouseArea), new PropertyMetadata(Brushes.White));
 
     public static readonly DependencyProperty LineStrokeProperty =
       DependencyProperty.Register(nameof(LineStroke), typeof(double), typeof(WareHouseArea), new PropertyMetadata(2.0d));
@@ -277,10 +295,41 @@ public partial class WareHouseArea : UserControl
 
     #region EventMethods
 
+    private void ModeBtn_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is RadioButton tb && tb.Tag is ECreatorMode cm)
+        {
+
+            if(Mode == cm)
+            {
+                Mode = ECreatorMode.None;
+                tb.IsChecked = false;
+            }
+            else
+            {
+                Mode = cm;
+            }
+        }
+    }
+
     private void MenuItem_Initialized(object sender, EventArgs e)
     {
         if (sender is MenuItem mi)
-            SetBinding(mi, MenuItem.IsEnabledProperty, this, nameof(WayGeneratorMode), new InverseBoolConventer());
+            SetBinding(mi, MenuItem.IsEnabledProperty, this, nameof(Mode), new IsNotEqualToParamConventer(), convParam: ECreatorMode.WayGeneratorMode);
+    }
+    
+    private void SetAsStart_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is FrameworkElement fe && fe.DataContext is WayPointObject wpo)
+        { 
+            foreach(var point in WayPoints)
+            {
+                point.IsStartPoint = false;
+
+            }
+            wpo.IsStartPoint = true;
+            UpdateConnections();
+        }
     }
 
     private void Usun_Click(object sender, RoutedEventArgs e)
@@ -306,6 +355,11 @@ public partial class WareHouseArea : UserControl
             {
                 Racks.Remove(ro);
                 UpdateConnections();
+            }else if (fe.DataContext is KeyValuePair<WayPointObject, RackObject> par)
+            {
+                par.Value.WayPoints.Remove(par.Key);
+                par.Key.Racks.Remove(par.Value);
+                UpdateConnections();
             }
         }
         e.Handled = true;
@@ -314,7 +368,7 @@ public partial class WareHouseArea : UserControl
 
     private void ConnectWidth_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is FrameworkElement fe && (!WayGeneratorMode))
+        if (sender is FrameworkElement fe && (Mode != ECreatorMode.WayGeneratorMode))
         {
             if ( fe.DataContext is BaseObject wpo)
             {
@@ -326,17 +380,27 @@ public partial class WareHouseArea : UserControl
 
     private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (WayGeneratorMode)
+        if (Mode == ECreatorMode.WayGeneratorMode)
         {
             WayPointObject wayPoint = new WayPointObject(e.GetPosition(wareHouseArea));
 
             if (_selectedPoint  == null)
                 _selectedPoint = wayPoint.FoundTheNearestPoint(WayPoints); 
 
-            wayPoint.AddConnection(ref _selectedPoint);
+            if(_selectedPoint != null)
+                wayPoint.AddConnection(ref _selectedPoint);
 
             WayPoints?.Add(wayPoint);
             _selectedPoint = wayPoint;
+            UpdateConnections();
+        }
+
+        if (Mode == ECreatorMode.RackCreateMode)
+        {
+            RackObject rack = new RackObject(Guid.NewGuid() ,e.GetPosition(wareHouseArea));
+
+            Racks?.Add(rack);
+            SelectedObject = rack;
             UpdateConnections();
         }
         e.Handled = true;
@@ -360,21 +424,18 @@ public partial class WareHouseArea : UserControl
                         connectRO.AddConnection(ref toconnectWPO);
                     }
                 }
-                UpdateConnections();
-                _connectWidthPoint = null;
-            }
 
-            if (_connectWidthPoint != null && obj?.DataContext is RackObject toROConnect)
-            {
-                
-                if (_connectWidthPoint is WayPointObject connectWPO)
+                if (toConnect is RackObject toROConnect)
                 {
-                    connectWPO.AddConnection(ref toROConnect);
+                    if (_connectWidthPoint is WayPointObject connectWPO)
+                    {
+                        connectWPO.AddConnection(ref toROConnect);
+                    }
                 }
+
                 UpdateConnections();
                 _connectWidthPoint = null;
             }
-
             _isDragging = true;
             _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
@@ -531,17 +592,17 @@ public partial class WareHouseArea : UserControl
                         {
                             delAct.Add(() => { point.Racks.Remove(rack); });
                         }
-
                     }
                 }
             }
 
-
             foreach (var act in delAct)
                 act.Invoke();
-
+  
             wayPointConnections.ItemsSource = WayPointConnections;
             wayPointToRacks.ItemsSource = WayPointToRacks;
+            wayPointNode.UpdateDefaultStyle();
+            wayPointNode.UpdateLayout();
         }
     }
 
@@ -563,21 +624,43 @@ public partial class WareHouseArea : UserControl
 
     #region Helpers
 
-    private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName, IValueConverter conv = null) where T : FrameworkElement
+    private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName, IValueConverter conv = null, object convParam = null) where T : FrameworkElement
     {
         element.SetBinding(dp, new Binding(PropName)
         {
             Source = obj,
             Mode = BindingMode.TwoWay,
             UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-            Converter = conv
+            Converter = conv,
+            ConverterParameter = convParam
         });
         return element;
     }
 
 
+
     #endregion
 
+    private void Ellipse_MouseEnter(object sender, MouseEventArgs e)
+    {
+        if (sender is Ellipse ellipse)
+        {
+            
+                    // Zmiana koloru na czerwony, gdy mysz najedzie
+                    ellipse.Fill = Brushes.Red;
+            
+        }
+    }
+
+    private void Ellipse_MouseLeave(object sender, MouseEventArgs e)
+    {
+        if (sender is Ellipse ellipse)
+        {
+            
+            ellipse.Fill = PointBrush;
+            
+        }
+    }
 }
 
 

@@ -107,7 +107,6 @@ namespace magazyn_kuba_inz.Core.ViewModel.InnerDialog
             Result.MaxHeight = MaxHeight;
             Result.MaxDepth = MaxDepth;
             base.Submit();
-
         }
 
         #endregion

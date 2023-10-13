@@ -70,6 +70,9 @@
     <Compile Update="View\InnerDialog\AddItemStateInnerDialogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\InnerDialog\GetHallInnerDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\InnerDialog\AddSupplierInnerDialogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

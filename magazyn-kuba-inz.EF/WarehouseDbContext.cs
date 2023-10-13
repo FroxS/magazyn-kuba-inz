@@ -195,7 +195,8 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.AmountSpace).IsRequired().HasDefaultValue(2);
             o.HasOne(x => x.Hall)
             .WithMany(x => x.Racks)
-            .HasForeignKey(x => x.ID_Hall);
+            .HasForeignKey(x => x.ID_Hall)
+            .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<Hall>(o =>
@@ -204,7 +205,8 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.Name).IsRequired();
             o.HasMany(x => x.Racks)
             .WithOne(x => x.Hall)
-            .HasForeignKey(x => x.ID_Hall);
+            .HasForeignKey(x => x.ID_Hall)
+            .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<StorageItemPackage>(o => {

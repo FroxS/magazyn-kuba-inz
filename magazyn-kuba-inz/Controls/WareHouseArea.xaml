@@ -9,17 +9,27 @@
              xmlns:att="clr-namespace:magazyn_kuba_inz.AttachedProperty"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450"
-             Background="White"
-             x:Name="mainControl" >
+             x:Name="mainControl"
+             Background="White">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <Style TargetType="{x:Type ToggleButton}">
-                <Setter Property="Width" Value="20"/>
-                <Setter Property="Height" Value="20"/>
-            </Style>
-        </ResourceDictionary>
+        <Style TargetType="Ellipse" x:Key="PointStyle">
+            <Style.Triggers>
+                <!--<DataTrigger Binding="{Binding IsStartPoint, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Fill" Value="Red" />
+                </DataTrigger>-->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+
     </UserControl.Resources>
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -30,14 +40,17 @@
                     HorizontalAlignment="Left"
                     Orientation="Horizontal">
 
-            <ToggleButton Style="{StaticResource {x:Type ToggleButton}}"
+            <RadioButton Style="{StaticResource {x:Type ToggleButton}}"
                           Width="20"
                           Height="20"
+                          Tag="{x:Static local:ECreatorMode.RackCreateMode}"
+                          Click="ModeBtn_Click"
                           Content="R"/>
 
-            <ToggleButton Style="{StaticResource {x:Type ToggleButton}}"
+            <RadioButton Style="{StaticResource {x:Type ToggleButton}}"
                           ToolTip="Way generator mode"
-                          IsChecked="{Binding WayGeneratorMode, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}, FallbackValue=false}"
+                          Tag="{x:Static local:ECreatorMode.WayGeneratorMode}"
+                          Click="ModeBtn_Click"
                           Width="20"
                           Height="20"
                           Content="W"/>
@@ -100,7 +113,7 @@
                             Width="{Binding AreaWidth, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             Height="{Binding AreaHeight, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             MouseMove="Canvas_MouseMove" 
-                            Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
+                            Background="{Binding HallBackground, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
                             MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
                             Focusable="True">
@@ -225,23 +238,26 @@
                                              Height="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              Fill="{Binding PointBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              MouseLeftButtonDown="Object_MouseLeftButtonDown"
-                                             att:MarginCorrection.Value="True">
+                                             att:MarginCorrection.Value="True"
+                                             MouseEnter="Ellipse_MouseEnter"
+                                             MouseLeave="Ellipse_MouseLeave"
+                                             >
+                                        <Ellipse.Style>
+                                            <Style TargetType="{x:Type Ellipse}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
                                         <Ellipse.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="Usuń" Click="Usun_Click" />
                                                 <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
+                                                <MenuItem Header="Ustaw jako punkt stratowy" Click="SetAsStart_Click" Initialized="MenuItem_Initialized"/>
                                             </ContextMenu>
                                         </Ellipse.ContextMenu>
-                                        <Ellipse.Style>
-                                            <Style TargetType="{x:Type Ellipse}">
-                                                <Style.Triggers>
-                                                    <DataTrigger  Binding="{Binding IsStartPoint}"  Value="True">
-                                                        <Setter Property="Fill" Value="Green"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                                
-                                            </Style>
-                                        </Ellipse.Style>
                                     </Ellipse>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -249,8 +265,6 @@
                                 <Style TargetType="FrameworkElement">
                                     <Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged}" />
                                     <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged}" />
-                                    <!--<Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />
-                                    <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged, Converter={conv:CorrectPointConventer}, ConverterParameter=10}" />-->
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
                         </ItemsControl>
