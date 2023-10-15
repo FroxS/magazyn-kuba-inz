@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace magazyn_kuba_inz.EF.Migrations
+namespace Warehouse.EF.Migrations
 {
     /// <inheritdoc />
     public partial class Editingthehallremovalmechanism : Migration

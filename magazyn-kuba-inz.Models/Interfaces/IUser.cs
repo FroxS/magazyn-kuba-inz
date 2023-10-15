@@ -1,6 +1,6 @@
-﻿using magazyn_kuba_inz.Models.Enums;
+﻿using Warehouse.Models.Enums;
 
-namespace magazyn_kuba_inz.Models.Interfaces
+namespace Warehouse.Models.Interfaces
 {
     public interface IUser
     {

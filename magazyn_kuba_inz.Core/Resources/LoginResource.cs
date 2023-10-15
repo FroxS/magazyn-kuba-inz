@@ -1,4 +1,3 @@
-﻿
-namespace magazyn_kuba_inz.Core.Resources;
+﻿namespace Warehouse.Core.Resources;
 
 public sealed record LoginResource(string Login, string Password);

@@ -4,7 +4,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace magazyn_kuba_inz.Core.Helpers
+namespace Warehouse.Core.Helpers
 {
     public static class PasswordHelper
     {

@@ -1,8 +1,8 @@
-﻿using magazyn_kuba_inz.Models.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Enums;
 
-namespace magazyn_kuba_inz.Models.WareHouse;
+namespace Warehouse.Models;
 
 [Table("Rack")]
 public class Rack : BaseEntity

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace magazyn_kuba_inz.Core.Properties {
+namespace Warehouse.Core.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace magazyn_kuba_inz.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("magazyn_kuba_inz.Core.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Warehouse.Core.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -183,6 +183,15 @@ namespace magazyn_kuba_inz.Core.Properties {
         public static string ProductStates {
             get {
                 return ResourceManager.GetString("ProductStates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Racks.
+        /// </summary>
+        public static string Racks {
+            get {
+                return ResourceManager.GetString("Racks", resourceCulture);
             }
         }
         

@@ -1,10 +1,11 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel.Service;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
+using Warehouse.Service.Interface;
+using Warehouse.ViewModel.Service;
+using Warehouse.Core.Interface;
 
-namespace magazyn_kuba_inz.View.Service;
+namespace Warehouse.View.Service;
 
 public class BaseControlPage : UserControl, IBasePage
 {
@@ -171,7 +172,7 @@ public class BaseControlPage : UserControl, IBasePage
 
 
 public class BaseControlPage<VM> : BaseControlPage, IBasePage
-    where VM : BasePageViewModel
+    where VM : BasePageViewModel, IBasePageViewModel
 {
 
     #region Public Properties

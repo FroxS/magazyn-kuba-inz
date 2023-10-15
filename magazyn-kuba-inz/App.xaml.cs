@@ -1,29 +1,28 @@
-﻿using magazyn_kuba_inz.Core.Repository;
-using magazyn_kuba_inz.Core.Repository.Interfaces;
-using magazyn_kuba_inz.Core.Service;
-using magazyn_kuba_inz.Core.Service.Dialog;
-using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel;
-using magazyn_kuba_inz.Core.ViewModel.Dialog;
-using magazyn_kuba_inz.Core.ViewModel.Login;
-using magazyn_kuba_inz.Core.ViewModel.Pages;
-using magazyn_kuba_inz.EF;
-using magazyn_kuba_inz.View;
-using magazyn_kuba_inz.View.Dialog;
-using magazyn_kuba_inz.View.Login;
-using magazyn_kuba_inz.View.Pages;
+﻿using Warehouse.Repository;
+using Warehouse.EF;
+using Warehouse.View;
+using Warehouse.View.Dialog;
+using Warehouse.View.Login;
+using Warehouse.View.Pages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Windows;
+using Warehouse.Service.Interface;
+using Warehouse.Service;
+using Warehouse.Core.Interface;
+using Warehouse.Dialog;
+using Warehouse.ViewModel;
+using Warehouse.ViewModel.Pages;
+using Warehouse.ViewModel.Login;
 
-namespace magazyn_kuba_inz;
+namespace Warehouse;
 
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : Application
+public partial class App : System.Windows.Application
 {
     public static IHost? AppHost { get; private set; }
 
@@ -35,7 +34,7 @@ public partial class App : Application
             PrepareDatabase(services);
             PrepareService(services);
             PreparePages(services);
-            PrepareRepository(services);
+            services.PrepareRepository();
             PrepareViewModels(services);
             PrepareViews(services);
             PrepareApplication(services);
@@ -83,7 +82,7 @@ public partial class App : Application
 
     private void PrepareApplication(IServiceCollection services)
     {
-        services.AddSingleton<Application>((o) => { return this; });
+        services.AddSingleton<System.Windows.Application>((o) => { return this; });
         services.AddSingleton<INavigation, NavigationViewModel>((o) => {
             return new NavigationViewModel() { AppHost = AppHost };
         });
@@ -99,8 +98,8 @@ public partial class App : Application
 
         services.AddTransient<IDialogWindow, BaseDialogWindow>();
 
-        services.AddTransient<IYesNoDialogView,YesNoDialogView>();
-        services.AddTransient<IAlertDialogView,AlertDialogView>();
+        services.AddTransient<IYesNoDialogView, YesNoDialogView>();
+        services.AddTransient<IAlertDialogView, AlertDialogView>();
     }
 
     private void PrepareViewModels(IServiceCollection services)
@@ -118,25 +117,7 @@ public partial class App : Application
         services.AddTransient<WareHouseItemsPageViewModel>();
         services.AddTransient<StorageUnitsPageViewModel>();
         services.AddTransient<WareHouseCreatorPageViewModel>();
-    }
-
-    private void PrepareRepository(IServiceCollection services)
-    {
-        services.AddTransient<IUserRepository,UserRepository>();
-        services.AddTransient<IItemStateRepository, ItemStateRepository> ();
-        services.AddTransient<IProductGroupRepository, ProductGroupRepository>();
-        services.AddTransient<IProductRepository, ProductRepository>();
-        services.AddTransient<IProductStatusRepository, ProductStatusRepository>();
-        services.AddTransient<ISupplierRepository, SupplierRepository>();
-        services.AddTransient<IImageRepository, ImageRepository>();
-        services.AddTransient<IWareHouseItemRepository, WareHouseItemRepository>();
-        services.AddTransient<IOrderRepository, OrderRepository>();
-        services.AddTransient<IOrderProductRepository, OrderProductRepository>();
-        services.AddTransient<IRackRepository, RackRepository>();
-        services.AddTransient<IStorageUnitRepository, StorageUnitRepository>();
-        services.AddTransient<IStorageItemPackageRepository, StorageItemPackageRepository>();
-        services.AddTransient<IStorageItemRepository, StorageItemRepository>();
-        services.AddTransient<IHallRepository, HallRepository>();
+        services.AddTransient<RacksPageViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)
@@ -156,6 +137,7 @@ public partial class App : Application
         services.AddTransient<WareHouseItemsPage>();
         services.AddTransient<StorageUnitsPage>();
         services.AddTransient<WareHouseCreatorPage>();
+        services.AddTransient<RacksPage>();
     }
 
     private void AddCOnfiguration(IServiceCollection services)

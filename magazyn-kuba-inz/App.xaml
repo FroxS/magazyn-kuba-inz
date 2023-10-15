@@ -1,8 +1,8 @@
-﻿<Application x:Class="magazyn_kuba_inz.App"
+﻿<Application x:Class="Warehouse.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:magazyn_kuba_inz"
-             xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers" >
+             xmlns:local="clr-namespace:Warehouse"
+             xmlns:conv="clr-namespace:Warehouse.Conventers" >
     
     <Application.Resources>
         <ResourceDictionary>
@@ -15,7 +15,7 @@
                     <conv:MessageTypeToColorConventer x:Key="MessageTypeToColor"/>
                     <conv:ArrayByteToImageConventer x:Key="ArrayByteToImage"/>
                 </ResourceDictionary>
-                <ResourceDictionary Source="/magazyn_kuba_inz.Theme;component/Style.xaml"/>
+                <ResourceDictionary Source="/Warehouse.Theme;component/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,13 +1,13 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel.Pages;
-using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.Models.Page;
-using magazyn_kuba_inz.View.Pages;
+﻿using Warehouse.View.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
+using Warehouse.Models.Page;
+using Warehouse.Service.Interface;
+using Warehouse.ViewModel.Service;
+using Warehouse.ViewModel.Pages;
 
-namespace magazyn_kuba_inz.Conventers;
+namespace Warehouse.Conventers;
 
 public static class AplicationPageConventer
 {
@@ -41,6 +41,8 @@ public static class AplicationPageConventer
                 return services.GetRequiredService<StorageUnitsPage>();
             case EApplicationPage.WareHouseCreator:
                 return services.GetRequiredService<WareHouseCreatorPage>();
+            case EApplicationPage.Racks:
+                return services.GetRequiredService<RacksPage>();
             default:
                 Debugger.Break();
                 return null;
@@ -73,6 +75,8 @@ public static class AplicationPageConventer
             return EApplicationPage.WareHouseItems;
         if (vm is StorageUnitsPageViewModel)
             return EApplicationPage.StorageUnits;
+        if (vm is RacksPageViewModel)
+            return EApplicationPage.Racks;
 
         Debugger.Break();
         return default(EApplicationPage);

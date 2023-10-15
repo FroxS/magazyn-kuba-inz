@@ -1,9 +1,8 @@
-﻿using magazyn_kuba_inz.Core.Service;
-using magazyn_kuba_inz.Core.Service.Dialog;
-using magazyn_kuba_inz.Core.Service.Interface;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Warehouse.Core.Interface;
+using Warehouse.Service;
 
-namespace magazyn_kuba_inz.Helper;
+namespace Warehouse.Helper;
 
 /// <summary>
 /// Locate viem models from the IoC gor use in binding in Xaml fiels

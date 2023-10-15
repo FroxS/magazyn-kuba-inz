@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace magazyn_kuba_inz.Core.Models;
+namespace Warehouse.Core.Models;
 
 public class WayPointObject : BaseObject
 {

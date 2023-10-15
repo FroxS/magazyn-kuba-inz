@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace magazyn_kuba_inz.View.Pages
+namespace Warehouse.View.Pages
 {
     /// <summary>
     /// Interaction logic for SupplierView.xaml

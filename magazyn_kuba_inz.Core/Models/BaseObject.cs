@@ -1,7 +1,7 @@
-﻿using magazyn_kuba_inz.Models.Application;
-using System.Windows;
+﻿using System.Windows;
+using Warehouse.Models;
 
-namespace magazyn_kuba_inz.Core.Models;
+namespace Warehouse.Core.Models;
 
 public class BaseObject : ObservableObject
 {
@@ -17,7 +17,7 @@ public class BaseObject : ObservableObject
 
     #region Public properties 
 
-    public Point Position => new Point(Y, Y);
+    public Point Position => new Point(X, Y);
 
     public double X
     {

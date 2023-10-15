@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controls\LeftMenuView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\cancel-icon.svg" />
+    <None Remove="Images\confirm-icon.svg" />
+    <None Remove="Images\warehoudebg.png" />
+    <None Remove="Images\warehouse.jpg" />
+    <None Remove="Images\warehouse_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Controls\LeftMenuView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\magazyn-kuba-inz.EF\Warehouse.EF.csproj" />
+    <ProjectReference Include="..\magazyn_kuba_inz.Core\Warehouse.Core.csproj" />
+    <ProjectReference Include="..\magazyn_kuba_inz.Theme\Warehouse.Theme.csproj" />
+    <ProjectReference Include="..\Warehouse.Dialog\Warehouse.Dialog.csproj" />
+    <ProjectReference Include="..\Warehouse.Repository\Warehouse.Repository.csproj" />
+    <ProjectReference Include="..\Warehouse.ViewModels\Warehouse.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cancel-icon.svg" />
+    <Resource Include="Images\confirm-icon.svg" />
+    <Resource Include="Images\warehoudebg.png" />
+    <Resource Include="Images\warehouse.jpg" />
+    <Resource Include="Images\warehouse_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\LeftMenuView2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\WareHouseArea.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

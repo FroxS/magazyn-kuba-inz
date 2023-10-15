@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace magazyn_kuba_inz.Core.Helpers
+namespace Warehouse.Core.Helpers
 {
     public class RelayCommand<T> : ICommand
     {
@@ -65,6 +65,8 @@ namespace magazyn_kuba_inz.Core.Helpers
 
         private readonly Func<Task> _callback;
 
+        protected readonly Predicate<object> _canExecute;
+
         #endregion
 
         #region Public properties
@@ -91,6 +93,13 @@ namespace magazyn_kuba_inz.Core.Helpers
             _callback = callback;
         }
 
+        public AsyncRelayCommand(Func<Task> callback, Predicate<object> canExecute, Action<Exception>? onException = null)
+        {
+            _onException = onException;
+            _callback = callback;
+            _canExecute = canExecute;
+        }
+
         #endregion
 
         #region Private methods
@@ -104,7 +113,7 @@ namespace magazyn_kuba_inz.Core.Helpers
 
         #region Public methods
 
-        public bool CanExecute(object parameter) => !IsExecuting;
+        public bool CanExecute(object parameter) => !IsExecuting && (_canExecute == null || _canExecute.Invoke(parameter));
 
         public async void Execute(object parameter)
         {

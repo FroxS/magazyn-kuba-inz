@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace magazyn_kuba_inz.Models.Validaton.Attribute;
+namespace Warehouse.Models.Validaton.Attribute;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter,
         AllowMultiple = false)]

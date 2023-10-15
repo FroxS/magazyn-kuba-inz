@@ -1,10 +1,10 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel.Login;
-using magazyn_kuba_inz.Models.Interfaces;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Warehouse.Models.Interfaces;
+using Warehouse.Core.Interface;
+using Warehouse.ViewModel.Login;
 
-namespace magazyn_kuba_inz.View.Login
+namespace Warehouse.View.Login
 {
     /// <summary>
     /// Interaction logic for Login.xaml

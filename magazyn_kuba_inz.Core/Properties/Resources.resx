@@ -159,6 +159,9 @@
   <data name="ProductStates" xml:space="preserve">
     <value>Product states</value>
   </data>
+  <data name="Racks" xml:space="preserve">
+    <value>Racks</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>

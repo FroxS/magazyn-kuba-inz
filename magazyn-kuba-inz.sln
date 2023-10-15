@@ -3,15 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "magazyn-kuba-inz", "magazyn-kuba-inz\magazyn-kuba-inz.csproj", "{F1800808-2A76-4898-8D49-B7E4BC77800E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse", "magazyn-kuba-inz\Warehouse.csproj", "{F1800808-2A76-4898-8D49-B7E4BC77800E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn-kuba-inz.EF", "magazyn-kuba-inz.EF\magazyn-kuba-inz.EF.csproj", "{0D01732A-6506-4B1B-B9B5-8C0B637F7683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.EF", "magazyn-kuba-inz.EF\Warehouse.EF.csproj", "{0D01732A-6506-4B1B-B9B5-8C0B637F7683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn-kuba-inz.Models", "magazyn-kuba-inz.Models\magazyn-kuba-inz.Models.csproj", "{44B0FE71-11D1-4F2A-865A-29FE0910533B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Models", "magazyn-kuba-inz.Models\Warehouse.Models.csproj", "{44B0FE71-11D1-4F2A-865A-29FE0910533B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn_kuba_inz.Core", "magazyn_kuba_inz.Core\magazyn_kuba_inz.Core.csproj", "{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Core", "magazyn_kuba_inz.Core\Warehouse.Core.csproj", "{C5966E20-1DF9-4BBB-AB96-C507ED3F8F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magazyn_kuba_inz.Theme", "magazyn_kuba_inz.Theme\magazyn_kuba_inz.Theme.csproj", "{6D9FA4E5-DA23-43E3-904A-89A09D00540C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Theme", "magazyn_kuba_inz.Theme\Warehouse.Theme.csproj", "{6D9FA4E5-DA23-43E3-904A-89A09D00540C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Repository", "Warehouse.Repository\Warehouse.Repository.csproj", "{948AF912-16FB-4EE0-A2AD-1FFA7538E15D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.ViewModels", "Warehouse.ViewModels\Warehouse.ViewModels.csproj", "{16E46C78-D694-4AE2-A4DD-8E931C4DA9B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Service", "Warehouse.Services\Warehouse.Service.csproj", "{31F10C23-839B-41F1-8895-4742B2B40B64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Dialog", "Warehouse.Dialog\Warehouse.Dialog.csproj", "{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,22 @@ Global
 		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D9FA4E5-DA23-43E3-904A-89A09D00540C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{948AF912-16FB-4EE0-A2AD-1FFA7538E15D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948AF912-16FB-4EE0-A2AD-1FFA7538E15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948AF912-16FB-4EE0-A2AD-1FFA7538E15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948AF912-16FB-4EE0-A2AD-1FFA7538E15D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E46C78-D694-4AE2-A4DD-8E931C4DA9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E46C78-D694-4AE2-A4DD-8E931C4DA9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E46C78-D694-4AE2-A4DD-8E931C4DA9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E46C78-D694-4AE2-A4DD-8E931C4DA9B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F10C23-839B-41F1-8895-4742B2B40B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F10C23-839B-41F1-8895-4742B2B40B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F10C23-839B-41F1-8895-4742B2B40B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F10C23-839B-41F1-8895-4742B2B40B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

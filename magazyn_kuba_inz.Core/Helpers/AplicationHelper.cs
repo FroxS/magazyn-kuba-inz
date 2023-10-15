@@ -1,6 +1,4 @@
-﻿
-
-namespace magazyn_kuba_inz.Core.Helpers;
+﻿namespace Warehouse.Core.Helpers;
 
 public static class AplicationHelper
 {

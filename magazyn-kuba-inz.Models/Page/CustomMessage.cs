@@ -1,6 +1,6 @@
-﻿using magazyn_kuba_inz.Models.Enums;
+﻿using Warehouse.Models.Enums;
 
-namespace magazyn_kuba_inz.Models.Page
+namespace Warehouse.Models.Page
 {
     public class CustomMessage
     {

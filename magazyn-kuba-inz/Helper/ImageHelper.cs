@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace magazyn_kuba_inz.Helper;
+namespace Warehouse.Helper;
 
 public static class ImageHelper
 {

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
 
-namespace magazyn_kuba_inz.Helper
+namespace Warehouse.Helper
 {
     public static class PasswordHelper
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace magazyn_kuba_inz.Theme.Controls
+namespace Warehouse.Theme.Controls
 {
     /// <summary>
     /// Logika interakcji dla klasy KeyControl.xaml

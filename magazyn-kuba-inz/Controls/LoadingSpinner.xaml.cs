@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace magazyn_kuba_inz.Controls;
+namespace Warehouse.Controls;
 
 /// <summary>
 /// Interaction logic for LoadingSpinner.xaml

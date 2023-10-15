@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using magazyn_kuba_inz.EF;
+using Warehouse.EF;
 
 #nullable disable
 
-namespace magazyn_kuba_inz.EF.Migrations
+namespace Warehouse.EF.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
     [Migration("20231002201412_Init_storage_data")]
@@ -40,7 +40,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("ProductWareHouseImage");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ItemState", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ItemState", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("ItemState");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -105,7 +105,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductGroup", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ProductGroup", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -131,7 +131,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("ProductGroup");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductStatus", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ProductStatus", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -153,7 +153,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("ProductStatus");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Rack", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Rack", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -205,7 +205,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("Rack");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageItem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -236,7 +236,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("StorageItem");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItemCollection", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageItemCollection", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -263,7 +263,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("StorageItemCollection");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageUnit", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageUnit", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("StorageUnit");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Supplier", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Supplier", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -326,7 +326,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.User", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.User", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -376,7 +376,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.WareHouseImage", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.WareHouseImage", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -405,7 +405,7 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.WareHouseItem", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.WareHouseItem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -439,34 +439,34 @@ namespace magazyn_kuba_inz.EF.Migrations
 
             modelBuilder.Entity("ProductWareHouseImage", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.WareHouseImage", null)
+                    b.HasOne("Warehouse.WareHouse.WareHouseImage", null)
                         .WithMany()
                         .HasForeignKey("ImagesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Product", null)
+                    b.HasOne("Warehouse.WareHouse.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.ProductGroup", "Group")
+                    b.HasOne("Warehouse.WareHouse.ProductGroup", "Group")
                         .WithMany("Products")
                         .HasForeignKey("ID_Group")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.ProductStatus", "Status")
+                    b.HasOne("Warehouse.WareHouse.ProductStatus", "Status")
                         .WithMany("Products")
                         .HasForeignKey("ID_Status")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Supplier", "Supplier")
+                    b.HasOne("Warehouse.WareHouse.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("ID_Supplier")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -479,15 +479,15 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageItem", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Rack", "Rack")
+                    b.HasOne("Warehouse.WareHouse.Rack", "Rack")
                         .WithMany("StorageItems")
                         .HasForeignKey("ID_Rack")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.StorageUnit", "StorageUnit")
+                    b.HasOne("Warehouse.WareHouse.StorageUnit", "StorageUnit")
                         .WithMany("StorageItems")
                         .HasForeignKey("ID_StorageUnit")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -498,15 +498,15 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Navigation("StorageUnit");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItemCollection", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageItemCollection", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Product", "Product")
+                    b.HasOne("Warehouse.WareHouse.Product", "Product")
                         .WithMany("StorageItemCollection")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.StorageItem", "StorageItem")
+                    b.HasOne("Warehouse.WareHouse.StorageItem", "StorageItem")
                         .WithMany("Items")
                         .HasForeignKey("ID_StorageItem")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -517,15 +517,15 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Navigation("StorageItem");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.WareHouseItem", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.WareHouseItem", b =>
                 {
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.Product", "Product")
+                    b.HasOne("Warehouse.WareHouse.Product", "Product")
                         .WithMany("WareHouseItems")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("magazyn_kuba_inz.Models.WareHouse.ItemState", "State")
+                    b.HasOne("Warehouse.WareHouse.ItemState", "State")
                         .WithMany("Items")
                         .HasForeignKey("ID_State")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -536,44 +536,44 @@ namespace magazyn_kuba_inz.EF.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ItemState", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ItemState", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
                 {
                     b.Navigation("StorageItemCollection");
 
                     b.Navigation("WareHouseItems");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductGroup", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ProductGroup", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.ProductStatus", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.ProductStatus", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Rack", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Rack", b =>
                 {
                     b.Navigation("StorageItems");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageItem", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageItem", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.StorageUnit", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.StorageUnit", b =>
                 {
                     b.Navigation("StorageItems");
                 });
 
-            modelBuilder.Entity("magazyn_kuba_inz.Models.WareHouse.Supplier", b =>
+            modelBuilder.Entity("Warehouse.WareHouse.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });

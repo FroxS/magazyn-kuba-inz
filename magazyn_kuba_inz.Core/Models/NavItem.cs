@@ -1,4 +1,4 @@
-﻿namespace magazyn_kuba_inz.Core.Models;
+﻿namespace Warehouse.Core.Models;
 
 public enum NavItemType
 {

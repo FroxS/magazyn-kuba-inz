@@ -1,4 +1,4 @@
-﻿using magazyn_kuba_inz.Core.Models;
+﻿using Warehouse.Core.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,12 +7,12 @@ using System.Windows.Media;
 using System.Windows.Data;
 using System;
 using System.Collections.Generic;
-using magazyn_kuba_inz.Conventers;
+using Warehouse.Conventers;
 using System.Collections.Specialized;
 using System.Windows.Shapes;
 using System.Linq;
 
-namespace magazyn_kuba_inz.Controls;
+namespace Warehouse.Controls;
 
 public enum ECreatorMode
 {
@@ -31,6 +31,10 @@ public partial class WareHouseArea : UserControl
     private bool _isDragging = false;
 
     private Point _startPoint;
+
+    private Line _creatingPointLine = new Line();
+
+    private Point mousePosition;
 
     private FrameworkElement _movingElement = null;
 
@@ -169,6 +173,12 @@ public partial class WareHouseArea : UserControl
         set { SetValue(KeyStepProperty, value); }
     }
 
+    public Func<RackObject, bool> CanDeleteRack
+    {
+        get { return (Func<RackObject, bool>)GetValue(CanDeleteRackProperty); }
+        set { SetValue(CanDeleteRackProperty, value); }
+    }
+
     #endregion
 
     #region Dependency Property
@@ -233,6 +243,11 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty KeyStepProperty =
       DependencyProperty.Register(nameof(KeyStep), typeof(double), typeof(WareHouseArea), new PropertyMetadata(10.0d));
 
+    public static readonly DependencyProperty StartObjectProperty = 
+        DependencyProperty.Register(nameof(StartObject), typeof(WayPointObject), typeof(WareHouseArea), new PropertyMetadata(null));
+
+    public static readonly DependencyProperty CanDeleteRackProperty =
+        DependencyProperty.Register(nameof(CanDeleteRack), typeof(Func<RackObject, bool>), typeof(WareHouseArea), new PropertyMetadata(null));
 
     public static readonly DependencyProperty RacksProperty =
         DependencyProperty.Register(
@@ -256,16 +271,7 @@ public partial class WareHouseArea : UserControl
                     null)
             );
 
-    public static readonly DependencyProperty StartObjectProperty =
-        DependencyProperty.Register(
-            nameof(StartObject),
-            typeof(WayPointObject),
-            typeof(WareHouseArea),
-            new UIPropertyMetadata(
-                    null,
-                    null,
-                    null)
-            );
+    
 
     #endregion
 
@@ -353,8 +359,11 @@ public partial class WareHouseArea : UserControl
                 UpdateConnections();
             }else if(fe.DataContext is RackObject ro)
             {
-                Racks.Remove(ro);
-                UpdateConnections();
+                if(CanDeleteRack == null || CanDeleteRack.Invoke(ro))
+                {
+                    Racks.Remove(ro);
+                    UpdateConnections();
+                }
             }else if (fe.DataContext is KeyValuePair<WayPointObject, RackObject> par)
             {
                 par.Value.WayPoints.Remove(par.Key);
@@ -382,26 +391,12 @@ public partial class WareHouseArea : UserControl
     {
         if (Mode == ECreatorMode.WayGeneratorMode)
         {
-            WayPointObject wayPoint = new WayPointObject(e.GetPosition(wareHouseArea));
-
-            if (_selectedPoint  == null)
-                _selectedPoint = wayPoint.FoundTheNearestPoint(WayPoints); 
-
-            if(_selectedPoint != null)
-                wayPoint.AddConnection(ref _selectedPoint);
-
-            WayPoints?.Add(wayPoint);
-            _selectedPoint = wayPoint;
-            UpdateConnections();
+            AddPoint(e.GetPosition(wareHouseArea));
         }
 
         if (Mode == ECreatorMode.RackCreateMode)
         {
-            RackObject rack = new RackObject(Guid.NewGuid() ,e.GetPosition(wareHouseArea));
-
-            Racks?.Add(rack);
-            SelectedObject = rack;
-            UpdateConnections();
+            AddRack(e.GetPosition(wareHouseArea));
         }
         e.Handled = true;
     }
@@ -496,8 +491,19 @@ public partial class WareHouseArea : UserControl
                 _movingElement = null;
             }
         }
+
+        if(!_isDragging && _connectWidthPoint != null)
+        {
+            AddTmpLine(currentPoint, _connectWidthPoint.Position);
+        }
+        else
+        {
+             wareHouseArea.Children.Remove(_creatingPointLine);
+        }
+
         e.Handled = true;
     }
+
     private void Object_KeyDown(object sender, KeyEventArgs e)
     {
         if(_selectedElement != null && _selectedElement.DataContext is BaseObject bo)
@@ -551,9 +557,64 @@ public partial class WareHouseArea : UserControl
         }
     }
 
+    private void Add_Point_Click(object sender, RoutedEventArgs e)
+    {
+        AddPoint(mousePosition);
+    }
+
+    private void Add_Rack_Click(object sender, RoutedEventArgs e)
+    {
+        AddRack(mousePosition);
+    }
+
+    private void GetPozitionEvent(object sender, RoutedEventArgs e)
+    {
+        mousePosition = Mouse.GetPosition(wareHouseArea);
+    }
+
     #endregion
 
     #region Elements methods
+
+    private void AddRack(Point point)
+    {
+        RackObject rack = new RackObject(Guid.NewGuid(), point);
+        Racks?.Add(rack);
+        SelectedObject = rack;
+        UpdateConnections();
+    }
+
+    private void AddPoint(Point point, bool connect = true)
+    {
+        WayPointObject wayPoint = new WayPointObject(point);
+
+        if (connect)
+        {
+            if (_selectedPoint == null)
+                _selectedPoint = wayPoint.FoundTheNearestPoint(WayPoints);
+
+            if (_selectedPoint != null)
+                wayPoint.AddConnection(ref _selectedPoint);
+        }
+
+        WayPoints?.Add(wayPoint);
+        _selectedPoint = wayPoint;
+        UpdateConnections();
+    }
+
+    private void AddTmpLine(Point start, Point end)
+    {
+        _creatingPointLine.X1 = start.X;
+        _creatingPointLine.Y1 = start.Y;
+        _creatingPointLine.X2 = end.X;
+        _creatingPointLine.Y2 = end.Y;
+        _creatingPointLine.Stroke = LineBrush;
+        _creatingPointLine.StrokeThickness = LineStroke;
+        _creatingPointLine.Opacity = .5d;
+        Panel.SetZIndex(_creatingPointLine, -1);
+        if (!wareHouseArea.Children.Contains(_creatingPointLine))
+            wareHouseArea.Children.Add(_creatingPointLine);
+    }
 
     private void UpdateConnections()
     {
@@ -637,30 +698,8 @@ public partial class WareHouseArea : UserControl
         return element;
     }
 
-
-
     #endregion
 
-    private void Ellipse_MouseEnter(object sender, MouseEventArgs e)
-    {
-        if (sender is Ellipse ellipse)
-        {
-            
-                    // Zmiana koloru na czerwony, gdy mysz najedzie
-                    ellipse.Fill = Brushes.Red;
-            
-        }
-    }
-
-    private void Ellipse_MouseLeave(object sender, MouseEventArgs e)
-    {
-        if (sender is Ellipse ellipse)
-        {
-            
-            ellipse.Fill = PointBrush;
-            
-        }
-    }
 }
 
 

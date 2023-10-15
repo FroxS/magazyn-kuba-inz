@@ -1,8 +1,7 @@
-﻿using magazyn_kuba_inz.Core.ViewModel.Pages;
-using magazyn_kuba_inz.View.Service;
-using System.Windows.Controls;
+﻿using Warehouse.View.Service;
+using Warehouse.ViewModel.Pages;
 
-namespace magazyn_kuba_inz.View.Pages;
+namespace Warehouse.View.Pages;
 
 /// <summary>
 /// Logika interakcji dla klasy DashBoardPage.xaml

@@ -1,12 +1,12 @@
-﻿using magazyn_kuba_inz.Conventers;
-using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel.Service;
-using magazyn_kuba_inz.Models.Page;
+﻿using Warehouse.Conventers;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
+using Warehouse.Models.Page;
+using Warehouse.ViewModel.Service;
+using Warehouse.Core.Interface;
 
-namespace magazyn_kuba_inz.Controls
+namespace Warehouse.Controls
 {
     /// <summary>
     /// Logika interakcji dla klasy PageHost.xaml

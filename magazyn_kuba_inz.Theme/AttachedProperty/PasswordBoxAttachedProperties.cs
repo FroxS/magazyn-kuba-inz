@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace magazyn_kuba_inz.Theme.AttachedProperty;
+namespace Warehouse.Theme.AttachedProperty;
 
 /// <summary>
 /// The MonitorPassword attached property for a <see cref="PasswordBox"/>

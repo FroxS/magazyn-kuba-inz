@@ -1,13 +1,13 @@
-﻿using magazyn_kuba_inz.Core.Service.Interface;
-using magazyn_kuba_inz.Core.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using Warehouse.Core.Interface;
+using Warehouse.ViewModel;
 
-namespace magazyn_kuba_inz.View;
+namespace Warehouse.View;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

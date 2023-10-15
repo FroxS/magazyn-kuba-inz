@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\magazyn-kuba-inz.Models\Warehouse.Models.csproj" />
+    <ProjectReference Include="..\Warehouse.ViewModels\Warehouse.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

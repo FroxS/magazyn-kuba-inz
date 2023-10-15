@@ -1,8 +1,8 @@
-﻿using magazyn_kuba_inz.Models.Enums;
-using magazyn_kuba_inz.Models.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Enums;
+using Warehouse.Models.Interfaces;
 
-namespace magazyn_kuba_inz.Models.WareHouse;
+namespace Warehouse.Models;
 
 
 [Table("User")]

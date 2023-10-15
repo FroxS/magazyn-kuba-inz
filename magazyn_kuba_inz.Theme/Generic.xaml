@@ -1,8 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:magazyn_kuba_inz.Theme.Controls"
-    xmlns:conv="clr-namespace:magazyn_kuba_inz.Theme.Conventers">
+    xmlns:controls="clr-namespace:Warehouse.Theme.Controls"
+    xmlns:conv="clr-namespace:Warehouse.Theme.Conventers">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Fonts.xaml" />

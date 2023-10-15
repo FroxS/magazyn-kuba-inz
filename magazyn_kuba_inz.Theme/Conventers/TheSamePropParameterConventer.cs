@@ -1,9 +1,8 @@
-﻿using magazyn_kuba_inz.Models.Page;
-using System;
+﻿using System;
 using System.Globalization;
-using System.Windows;
+using Warehouse.Models.Page;
 
-namespace magazyn_kuba_inz.Theme.Conventers;
+namespace Warehouse.Theme.Conventers;
 
 /// <summary>
 /// Base value conventer that allows direct XMAL usage

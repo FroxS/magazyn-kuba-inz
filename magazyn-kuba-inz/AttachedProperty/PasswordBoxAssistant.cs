@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace magazyn_kuba_inz.AttachedProperty;
+namespace Warehouse.AttachedProperty;
 
 public static class PasswordBoxAssistant
 {

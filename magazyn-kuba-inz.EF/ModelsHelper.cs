@@ -1,8 +1,7 @@
-﻿using magazyn_kuba_inz.Models.WareHouse;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Warehouse.Models;
 
-
-namespace magazyn_kuba_inz.EF;
+namespace Warehouse.EF;
 
 public static class ModelsHelper 
 {

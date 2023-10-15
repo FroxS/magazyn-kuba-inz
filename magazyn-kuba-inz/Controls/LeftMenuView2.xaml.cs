@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace magazyn_kuba_inz.Controls;
+namespace Warehouse.Controls;
 
 /// <summary>
 /// Interaction logic for LeftMenuView2.xaml

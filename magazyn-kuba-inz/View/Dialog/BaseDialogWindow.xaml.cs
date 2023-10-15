@@ -1,7 +1,7 @@
-﻿using magazyn_kuba_inz.Core.Service.Dialog;
-using System.Windows;
+﻿using System.Windows;
+using Warehouse.Core.Interface;
 
-namespace magazyn_kuba_inz.View.Dialog
+namespace Warehouse.View.Dialog
 {
     /// <summary>
     /// Interaction logic for BaseDialogWindow.xaml

@@ -1,8 +1,8 @@
-﻿using magazyn_kuba_inz.Models.Enums;
-using magazyn_kuba_inz.Models.WareHouse;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Warehouse.Models;
+using Warehouse.Models.Enums;
 
-namespace magazyn_kuba_inz.EF;
+namespace Warehouse.EF;
 
 public class WarehouseDbContext : DbContext
 {

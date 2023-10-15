@@ -1,4 +1,4 @@
-﻿namespace magazyn_kuba_inz.Core.Exeptions;
+﻿namespace Warehouse.Core.Exeptions;
 
 public class DataException : Exception
 {

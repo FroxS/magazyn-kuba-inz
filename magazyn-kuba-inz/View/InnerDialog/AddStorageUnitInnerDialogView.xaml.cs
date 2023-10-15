@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace magazyn_kuba_inz.View.InnerDialog
+namespace Warehouse.View.InnerDialog
 {
     /// <summary>
     /// Interaction logic for AddStorageUnitInnerDialogView.xaml

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace magazyn_kuba_inz.Models.WareHouse;
+namespace Warehouse.Models;
 
 public abstract class BaseEntity
 {

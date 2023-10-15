@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace magazyn_kuba_inz.Models.Application;
+namespace Warehouse.Models;
 
 public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
 {

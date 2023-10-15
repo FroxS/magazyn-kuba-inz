@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace magazyn_kuba_inz.Theme.Controls
+namespace Warehouse.Theme.Controls
 {
     public class ItemMenuButton : Button
     {

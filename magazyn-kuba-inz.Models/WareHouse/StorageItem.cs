@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace magazyn_kuba_inz.Models.WareHouse;
+namespace Warehouse.Models;
 
 [Table("StorageItem")]
 public class StorageItem : BaseEntity

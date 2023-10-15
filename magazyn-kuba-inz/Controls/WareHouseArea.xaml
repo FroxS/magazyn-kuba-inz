@@ -1,28 +1,17 @@
-﻿<UserControl x:Class="magazyn_kuba_inz.Controls.WareHouseArea"
+﻿<UserControl x:Class="Warehouse.Controls.WareHouseArea"
              xmlns:effects="http://schemas.microsoft.com/winfx/2006/xaml/presentation/effects"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:magazyn_kuba_inz.Controls"
-             xmlns:conv="clr-namespace:magazyn_kuba_inz.Conventers"
-             xmlns:att="clr-namespace:magazyn_kuba_inz.AttachedProperty"
+             xmlns:local="clr-namespace:Warehouse.Controls"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:att="clr-namespace:Warehouse.AttachedProperty"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450"
              x:Name="mainControl"
              Background="White">
     <UserControl.Resources>
-        <Style TargetType="Ellipse" x:Key="PointStyle">
-            <Style.Triggers>
-                <!--<DataTrigger Binding="{Binding IsStartPoint, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                    <Setter Property="Fill" Value="Red" />
-                </DataTrigger>-->
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Fill" Value="Red" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
             <Setter Property="Width" Value="20"/>
             <Setter Property="Height" Value="20"/>
@@ -210,6 +199,7 @@
                                 <DataTemplate>
                                     <Line X1="{Binding Key.X}" Y1="{Binding Key.Y}"
                                           X2="{Binding Value.X}" Y2="{Binding Value.Y}"
+                                          Opacity=".8"
                                           Stroke="{Binding LineToRackBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" 
                                           StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" >
                                         <Line.ContextMenu>
@@ -236,12 +226,15 @@
                                 <DataTemplate>
                                     <Ellipse Width="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              Height="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
-                                             Fill="{Binding PointBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              MouseLeftButtonDown="Object_MouseLeftButtonDown"
-                                             att:MarginCorrection.Value="True"
-                                             MouseEnter="Ellipse_MouseEnter"
-                                             MouseLeave="Ellipse_MouseLeave"
-                                             >
+                                             att:MarginCorrection.Value="True">
+                                        <Ellipse.Fill>
+                                            <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                                <Binding Path="IsStartPoint" UpdateSourceTrigger="PropertyChanged" />
+                                                <Binding Path="StartPointBrush" RelativeSource="{RelativeSource AncestorType=local:WareHouseArea}" />
+                                                <Binding Path="PointBrush" RelativeSource="{RelativeSource AncestorType=local:WareHouseArea}" />
+                                            </MultiBinding>
+                                        </Ellipse.Fill>
                                         <Ellipse.Style>
                                             <Style TargetType="{x:Type Ellipse}">
                                                 <Style.Triggers>
@@ -268,6 +261,14 @@
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
                         </ItemsControl>
+
+                        <Canvas.ContextMenu>
+                            <ContextMenu Opened="GetPozitionEvent">
+                                <MenuItem Header="Dodaj punkt" Click="Add_Point_Click"/>
+                                <MenuItem Header="Dodaj regał" Click="Add_Rack_Click" />
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
+                        
                     </Canvas>
                 </ScrollViewer>
             </Border>

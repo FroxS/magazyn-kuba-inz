@@ -1,9 +1,8 @@
-﻿using magazyn_kuba_inz.Models.Application;
-using magazyn_kuba_inz.Models.WareHouse;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using Warehouse.Models;
 
-namespace magazyn_kuba_inz.Core.Models;
+namespace Warehouse.Core.Models;
 
 public class HallObject : ObservableObject
 {

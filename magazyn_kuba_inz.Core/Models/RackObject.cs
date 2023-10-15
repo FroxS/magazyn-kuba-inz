@@ -1,12 +1,9 @@
-﻿using magazyn_kuba_inz.Models.WareHouse;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
 
-namespace magazyn_kuba_inz.Core.Models;
+namespace Warehouse.Core.Models;
 
 public class RackObject : BaseObject
 {

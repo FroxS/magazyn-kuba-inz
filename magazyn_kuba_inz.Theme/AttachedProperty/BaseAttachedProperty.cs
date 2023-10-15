@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace magazyn_kuba_inz.Theme.AttachedProperty;
+namespace Warehouse.Theme.AttachedProperty;
 
 /// <summary>
 /// A base attached property to replace the vanilla WPF attached property

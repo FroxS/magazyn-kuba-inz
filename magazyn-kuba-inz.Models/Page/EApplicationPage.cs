@@ -1,4 +1,4 @@
-﻿namespace magazyn_kuba_inz.Models.Page;
+﻿namespace Warehouse.Models.Page;
 
 public enum EApplicationPage
 {
@@ -6,6 +6,7 @@ public enum EApplicationPage
     WareHouseItems,
     Products,
     Suppliers,
+    Racks,
     ProductGroups,
     ProductStatuses,
     ItemStates,

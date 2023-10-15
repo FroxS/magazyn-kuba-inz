@@ -1,10 +1,10 @@
-﻿using magazyn_kuba_inz.Theme.Conventers;
+﻿using Warehouse.Theme.Conventers;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 
-namespace magazyn_kuba_inz.Conventers;
+namespace Warehouse.Conventers;
 
 /// <summary>
 /// Base value conventer that allows direct XMAL usage

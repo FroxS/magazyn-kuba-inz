@@ -1,4 +1,4 @@
-﻿namespace magazyn_kuba_inz.Models.Enums;
+﻿namespace Warehouse.Models.Enums;
 
 public enum EDir
 {
