@@ -157,6 +157,27 @@ namespace Warehouse.Dialog
             );
         }
 
+        public void GetCount(Action<double?> OnResult, double def = 1)
+        {
+            OpenInnerDialog(
+                new GetCountInnerDialogViewModel(
+                    _service.GetRequiredService<IApp>(),
+                    def
+                ),
+                OnResult
+            );
+        }
+        
+        public async Task<double?> GetCountAsync( double def = 1)
+        {
+            return await OpenInnerDialogAsync(
+                new GetCountInnerDialogViewModel(
+                    _service.GetRequiredService<IApp>(),
+                    def
+                )
+            );
+        }
+
         public async Task<HallObject> GetHallInnerDialog(HallObject hall = null)
         {
             return await OpenInnerDialogAsync(

@@ -1,7 +1,6 @@
 ﻿using Warehouse.Repository;
 using Warehouse.EF;
 using Warehouse.View;
-using Warehouse.View.Dialog;
 using Warehouse.View.Login;
 using Warehouse.View.Pages;
 using Microsoft.Extensions.Configuration;
@@ -86,7 +85,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<INavigation, NavigationViewModel>((o) => {
             return new NavigationViewModel() { AppHost = AppHost };
         });
-        services.AddSingleton<IApp, ApplicationViewModel>();
+        services.AddSingleton<IApp, WareHouseApp>();
         services.AddSingleton<IInnerDialogService,InnerDialogService>();
     }
 
@@ -95,11 +94,6 @@ public partial class App : System.Windows.Application
         services.AddTransient<IMainWindow, MainWindow>();
         services.AddSingleton<ILoginWindow, LoginView>();
         services.AddSingleton<IRegisterWindow, RegisterView>();
-
-        services.AddTransient<IDialogWindow, BaseDialogWindow>();
-
-        services.AddTransient<IYesNoDialogView, YesNoDialogView>();
-        services.AddTransient<IAlertDialogView, AlertDialogView>();
     }
 
     private void PrepareViewModels(IServiceCollection services)

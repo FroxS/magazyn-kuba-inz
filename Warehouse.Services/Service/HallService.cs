@@ -39,7 +39,7 @@ public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHal
 
         if(hall.Data != null)
             hallobj = GetData(hall.Data);
-        IEnumerable<RackObject> racksTODell = hallobj.Racks.Where(x => !hall.Racks.Any(db => db.ID == x.Id));
+        IEnumerable<RackObject> racksTODell = hallobj.Racks.Where(x => !hall.Racks.Any(db => db.ID == x.ID));
         foreach(RackObject rackTODell in new List<RackObject>(racksTODell))
             hallobj.Racks.Remove(rackTODell);
 
@@ -91,7 +91,8 @@ public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHal
 
     public bool UpdateRacks(HallObject hall)
     {
-        var racks = GetRack(hall);
+
+        var racks = hall.Racks;
         var inDatabase = _rackService.GetAll().Where(x => x.ID_Hall == hall.Id);
         List<Guid> ToDel = new List<Guid>();
         foreach (Rack rack in inDatabase)
@@ -105,8 +106,9 @@ public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHal
         ToDel.ForEach((o) => {
             _rackService.Delete(o);
         });
-        foreach (Rack rack in GetRack(hall))
+        foreach (Rack rack in hall.Racks)
         {
+            rack.ID_Hall = hall.Id;
             Rack found = _rackService.GetById(rack.ID);
             if (found == null)
             {
@@ -114,8 +116,6 @@ public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHal
             }
             else
             {
-                found.Width = rack.Width;
-                found.Heigth = rack.Heigth;
                 _rackService.Update(found);
             } 
         }
@@ -207,25 +207,15 @@ public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHal
         var racks = _rackService.GetAll();
         foreach(var rack in hallObj.Racks)
         {
-            var found = racks.FirstOrDefault(x => x.ID == rack.Id);
+            var found = racks.FirstOrDefault(x => x.ID == rack.ID);
             if(found != null)
             {
                 rack.Width = found.Width;
-                rack.Height = found.Heigth;
+                rack.Heigth = found.Heigth;
             }
         }
-
-
         return hallObj;
     }
-
-    private IEnumerable<Rack> GetRack(HallObject hall) => hall.Racks.Select(x => new Rack() 
-    { 
-        ID = x.Id, 
-        ID_Hall = hall.Id,
-        Width = x.Width,
-        Heigth = x.Height
-    });
 
     #endregion
 }

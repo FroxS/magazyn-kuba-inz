@@ -53,6 +53,15 @@ namespace Warehouse.Core.Helpers
         {
 
         }
+
+        public RelayCommand(Action execute, Func<bool> canExecute) : this((o) => execute(), (o) => canExecute())
+        {
+        }
+
+        public RelayCommand(Action execute) : this((o) => execute(), null)
+        {
+
+        }
     }
 
     public class AsyncRelayCommand : ICommand

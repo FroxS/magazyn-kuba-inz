@@ -2,14 +2,14 @@
 
 namespace Warehouse.Models;
 
-public abstract class BaseEntity
+public abstract class BaseEntity : ObservableObject
 {
     [Key]
     [Required]
     public abstract Guid ID { get; set; }
     public virtual uint Lp { get; set; }
     public DateTime CreatedAt { get; set; }
-
+    public DateTime Modified { get; set; }
     public override bool Equals(System.Object obj)
     {
         // Check if the object is a RecommendationDTO.

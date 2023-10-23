@@ -22,4 +22,6 @@ public interface IInnerDialogService
     void GetHallInnerDialog(Action<HallObject> OnResult, HallObject hall = null);
     Task<HallObject> GetHallInnerDialog(HallObject hall = null);
     Task<StorageUnit> AddStorageUnitInnerDialog();
+    void GetCount(Action<double?> OnResult, double def = 1);
+    Task<double?> GetCountAsync(double def = 1);
 }

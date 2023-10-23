@@ -12,13 +12,29 @@ namespace Warehouse.ViewModel.Service
         void Load();
     }
 
-    public abstract class Tab : ObservableObject, ITab
+    public abstract class Tab : BaseViewModel, ITab
     {
+        #region Private fields
+
+        private string _title;
+
+        private bool _isEmpty = true;
+
+        #endregion
+
         #region Public Properties
 
-        public string Title { get; set; }
+        public string Title
+        {
+            get => _title;
+            set { _title = value; OnPropertyChanged(nameof(Title)); }
+        }
 
-        public bool IsEmpty { get; set; } = true;
+        public bool IsEmpty
+        {
+            get => _isEmpty;
+            set { _isEmpty = value; OnPropertyChanged(nameof(IsEmpty)); }
+        }
 
         #endregion
 

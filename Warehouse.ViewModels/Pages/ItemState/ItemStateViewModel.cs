@@ -2,6 +2,7 @@
 using Warehouse.Models;
 using System.ComponentModel.DataAnnotations;
 using Warehouse.Service.Interface;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -23,30 +24,17 @@ public class ItemStateViewModel : BaseEntityViewModel<ItemState>
         }
     }
 
-
-    public bool InWareHouse
+    [Required(ErrorMessage = "State is required.")]
+    public EState State
     {
-        get => _entity.InWareHouse;
+        get => _entity.State;
         set
         {
-            if (_entity.InWareHouse == value)
+            if (_entity.State == value)
                 return;
             Saved = false;
-            _entity.InWareHouse = value;
-            OnPropertyChanged(nameof(InWareHouse));
-        }
-    }
-
-    public bool CanRealizeOrder
-    {
-        get => _entity.CanRealizeOrder;
-        set
-        {
-            if (_entity.CanRealizeOrder == value)
-                return;
-            Saved = false;
-            _entity.CanRealizeOrder = value;
-            OnPropertyChanged(nameof(CanRealizeOrder));
+            _entity.State = value;
+            OnPropertyChanged(nameof(State));
         }
     }
 

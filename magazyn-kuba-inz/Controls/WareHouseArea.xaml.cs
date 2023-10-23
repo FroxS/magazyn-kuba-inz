@@ -11,6 +11,7 @@ using Warehouse.Conventers;
 using System.Collections.Specialized;
 using System.Windows.Shapes;
 using System.Linq;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Controls;
 
@@ -38,7 +39,7 @@ public partial class WareHouseArea : UserControl
 
     private FrameworkElement _movingElement = null;
 
-    private BaseObject _connectWidthPoint = null;
+    private IBaseObject _connectWidthPoint = null;
 
     private RackObject _rackToPoint = null;
 
@@ -95,9 +96,9 @@ public partial class WareHouseArea : UserControl
         private set => _wayPointToRacks = value;
     }
 
-    public BaseObject SelectedObject
+    public IBaseObject SelectedObject
     {
-        get { return (BaseObject)GetValue(SelectedObjectProperty); }
+        get { return (IBaseObject)GetValue(SelectedObjectProperty); }
         set { SetValue(SelectedObjectProperty, value); }
     }
 
@@ -205,7 +206,7 @@ public partial class WareHouseArea : UserControl
             );
 
     public static readonly DependencyProperty SelectedObjectProperty =
-        DependencyProperty.Register(nameof(SelectedObject), typeof(BaseObject), typeof(WareHouseArea), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(SelectedObject), typeof(IBaseObject), typeof(WareHouseArea), new PropertyMetadata(null));
 
     public static readonly DependencyProperty ZoomFactorProperty =
        DependencyProperty.Register(nameof(ZoomFactor), typeof(double), typeof(WareHouseArea), new PropertyMetadata(1.2d));
@@ -379,7 +380,7 @@ public partial class WareHouseArea : UserControl
     {
         if (sender is FrameworkElement fe && (Mode != ECreatorMode.WayGeneratorMode))
         {
-            if ( fe.DataContext is BaseObject wpo)
+            if ( fe.DataContext is IBaseObject wpo)
             {
                 _connectWidthPoint = wpo;
             }
@@ -405,7 +406,7 @@ public partial class WareHouseArea : UserControl
     {
         if (sender is FrameworkElement obj)
         {
-            if (_connectWidthPoint != null && obj?.DataContext is BaseObject toConnect)
+            if (_connectWidthPoint != null && obj?.DataContext is IBaseObject toConnect)
             {
                 if (toConnect is WayPointObject toconnectWPO)
                 {
@@ -434,7 +435,7 @@ public partial class WareHouseArea : UserControl
             _isDragging = true;
             _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
-            SelectedObject = obj?.DataContext as BaseObject;
+            SelectedObject = obj?.DataContext as IBaseObject;
             _selectedElement = obj;
             if (obj?.DataContext is WayPointObject wpo)
             {
@@ -468,7 +469,7 @@ public partial class WareHouseArea : UserControl
             double offsetX = currentPoint.X - _startPoint.X;
             double offsetY = currentPoint.Y - _startPoint.Y;
 
-            BaseObject baseobj = _movingElement?.DataContext as BaseObject;
+            IBaseObject baseobj = _movingElement?.DataContext as IBaseObject;
 
             if (baseobj == null)
             {
@@ -506,7 +507,7 @@ public partial class WareHouseArea : UserControl
 
     private void Object_KeyDown(object sender, KeyEventArgs e)
     {
-        if(_selectedElement != null && _selectedElement.DataContext is BaseObject bo)
+        if(_selectedElement != null && _selectedElement.DataContext is IBaseObject bo)
         {
             Point pozition = bo.Position;
             switch (e.Key)
@@ -579,6 +580,7 @@ public partial class WareHouseArea : UserControl
     private void AddRack(Point point)
     {
         RackObject rack = new RackObject(Guid.NewGuid(), point);
+        
         Racks?.Add(rack);
         SelectedObject = rack;
         UpdateConnections();
@@ -671,7 +673,7 @@ public partial class WareHouseArea : UserControl
     {
         if ((point.X >= 0 && point.X <= wareHouseArea.ActualWidth - element.ActualWidth &&
             point.Y >= 0 && point.Y <= wareHouseArea.ActualHeight - element.ActualHeight) &&
-            element.DataContext is BaseObject rack)
+            element.DataContext is IBaseObject rack)
         {
             rack.X = point.X;
             rack.Y = point.Y;
@@ -701,5 +703,3 @@ public partial class WareHouseArea : UserControl
     #endregion
 
 }
-
-

@@ -15,14 +15,23 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
+        <Grid Grid.Row="0"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch">
+            <TextBlock Text="{Binding Title}"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="10,5"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
             <Button Content="X"
                     Command="{Binding ExitCommand}"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                     Margin="5"
                     Padding="5"/>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="1">
             <Grid.Resources>
@@ -55,6 +64,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:GetHallInnerDialogViewModel}">
                     <local:GetHallInnerDialogView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:GetCountInnerDialogViewModel}">
+                    <local:GetCountInnerDialogView/>
                 </DataTemplate>
             </Grid.Resources>
             <ContentControl Margin="5" Content="{Binding}">

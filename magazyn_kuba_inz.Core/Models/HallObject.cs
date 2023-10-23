@@ -81,8 +81,11 @@ public class HallObject : ObservableObject
     {
         foreach (RackObject rack in racks)
         {
-            if (Racks.FirstOrDefault(x => x.Id == rack.Id) == null)
+            if (Racks.FirstOrDefault(x => x.ID == rack.ID) == null)
+            {
+                rack.ID_Hall = Id;
                 Racks.Add(rack);
+            }
         }    
     }
 

@@ -2,22 +2,26 @@
 using System.Windows.Input;
 using Warehouse.Models;
 using Warehouse.Core.Interface;
+using System.Windows;
 
 namespace Warehouse.Dialog
 {
-    public abstract class DialogViewModelBase<T> : ObservableObject, IDialogViewModelBase<T>
+    internal abstract class DialogViewModelBase<T> : ObservableObject, IDialogViewModelBase<T>
     {
+
         #region Public properties
 
         public string Title { get; set; }
         public string Message { get; set; }
         public T DialogResult { get; set; }
 
+        public Window Window { protected get; set; }
+
         #endregion
 
         #region Commands
 
-        public abstract ICommand OKCommand { get; protected set; }
+        public ICommand OKCommand { get; protected set; }
         public ICommand ExitCommand { get; protected set; }
 
         #endregion
@@ -32,28 +36,34 @@ namespace Warehouse.Dialog
         {
             Title = title;
             Message = message;
-            ExitCommand = new RelayCommand<IDialogWindow>(o => exit(o));
+            ExitCommand = new RelayCommand(exit);
+            OKCommand = new RelayCommand(ok);
         }
 
         #endregion
 
         #region Private methods
 
-        private void exit(IDialogWindow window)
+        private void exit()
         {
-            window.DialogResult = false;
+            Window.DialogResult = false;
         }
 
         #endregion
 
         #region Public methods
 
-        public void CloseDialogWithResult(IDialogWindow dialog, T result)
+        protected virtual void ok()
+        {
+            CloseDialogWithResult(DialogResult);
+        }
+
+        public void CloseDialogWithResult( T result)
         {
             DialogResult = result;
-            if (dialog != null)
+            if (Window != null)
             {
-                dialog.DialogResult = true;
+                Window.DialogResult = true;
             }
         }
 

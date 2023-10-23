@@ -47,13 +47,15 @@ public interface IWareHouseItemService : IBaseService<WareHouseItem>
     //Task<WareHouseItemViewModel> CreateWareHouseItemVM();
     //Task<List<WareHouseItemViewModel>> GetAllWareHouseItemToViewModel();
     Task<List<WareHouseItem>> GetAllByProductAsync(Guid productid, CancellationToken token = default(CancellationToken));
-    Task<WareHouseItem> RemoveProduct(Product product, ItemState status,  CancellationToken token = default(CancellationToken));
-    Task<WareHouseItem> AddProduct(Product product, ItemState status, CancellationToken token = default(CancellationToken));
     Task<WareHouseItem> SetCountProduct(Product product, ItemState status, int count, CancellationToken token = default(CancellationToken));
     Task<List<Product?>> GetProductsByState(ItemState state);
     Task<int> GetCoutOfProduct(Product product, ItemState state);
     Task<int> GetCoutOfProduct(Product product);
     Task<bool> ExistProduct(Guid product);
+
+    List<WareHouseItem> GetProductsByState(Guid stateId);
+    WareHouseItem? GetItem(Guid productId, Guid stateId);
+    string MoveProductToState(WareHouseItem item, Guid targetState, int count);
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }

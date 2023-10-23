@@ -1,5 +1,4 @@
 ﻿using Warehouse.ViewModel.Service;
-using Warehouse.Models;
 using System.Collections.ObjectModel;
 using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
@@ -11,46 +10,33 @@ public class WareHouseItemsPageViewModel : BasePageViewModel
     #region Private fields
 
     private readonly IWareHouseItemService _service;
-    private readonly IProductService _productService;
-    private ProductWareHouseItemsViewModel _wareHouseProductItemViewModel;
-    private ObservableCollection<Product> _items;
-    private Product? _selectedItem;
+    private readonly IItemStateService _itemStateService;
+    private ObservableCollection<ProtuctStateTabViewModel> _states;
+    private ProtuctStateTabViewModel? _selectedState;
 
     #endregion
 
     #region Public properties
 
-    public ObservableCollection<Product> Items
+    public ObservableCollection<ProtuctStateTabViewModel> States
     {
-        get => _items;
+        get => _states;
         private set
         {
-            _items = value;
-            OnPropertyChanged(nameof(Items));
+            _states = value;
+            OnPropertyChanged(nameof(States));
         }
     }
 
-    public Product? SelectedItem
+    public ProtuctStateTabViewModel? SelectedState
     {
-        get => _selectedItem;
+        get => _selectedState;
         set
         {
-            _selectedItem = value;
-            if (_selectedItem != null)
-            {
-                WareHouseProductItemViewModel = new ProductWareHouseItemsViewModel(_service, _selectedItem, Application);
-            }
-            OnPropertyChanged(nameof(SelectedItem));
-        }
-    }
-
-    public ProductWareHouseItemsViewModel WareHouseProductItemViewModel
-    {
-        get => _wareHouseProductItemViewModel;
-        set
-        {
-            _wareHouseProductItemViewModel = value;
-            OnPropertyChanged(nameof(WareHouseProductItemViewModel));
+            _selectedState = value;
+            if (_selectedState != null)
+                _selectedState.Load();
+            OnPropertyChanged(nameof(SelectedState));
         }
     }
 
@@ -58,20 +44,11 @@ public class WareHouseItemsPageViewModel : BasePageViewModel
 
     #region Constructors
 
-    public WareHouseItemsPageViewModel(IApp app, IWareHouseItemService service, IProductService productService) : base(app)
+    public WareHouseItemsPageViewModel(IApp app, IItemStateService itemStateService, IWareHouseItemService service, IProductService productService) : base(app)
     {
-        _productService = productService;
+        _itemStateService = itemStateService;
         _service = service;
-        Items = new ObservableCollection<Product>();
     }
-
-    #endregion
-
-    #region Private methods
-
-    #endregion
-
-    #region Command Methods
 
     #endregion
 
@@ -83,13 +60,12 @@ public class WareHouseItemsPageViewModel : BasePageViewModel
         {
             CanChangePage = false;
             Application.IsTaskRunning = true;
-            var selectedGuid = SelectedItem?.ID;
-            _selectedItem = null;
-            Items = new ObservableCollection<Product>(await _productService.GetAllAsync());
-            SelectedItem = Items.FirstOrDefault(x => x.ID == selectedGuid);
+            States = new ObservableCollection<ProtuctStateTabViewModel>(_itemStateService.GetAll().OrderBy(x => x.State).Select(
+                s => 
+                new ProtuctStateTabViewModel(_service, _itemStateService, Application, s)
+                ));
+            SelectedState = States.FirstOrDefault();
             CanChangePage = true;
-            OnPropertyChanged(nameof(Items));
-            OnPropertyChanged(nameof(SelectedItem));
         }
         catch (Exception ex) { Application.GetDialogService().ShowAlert(ex.Message); }
         finally { Application.IsTaskRunning = false; }

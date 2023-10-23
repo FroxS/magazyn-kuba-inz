@@ -15,7 +15,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     private HallObject _hall;
 
-    private BaseObject _selectedObject;
+    private IBaseObject _selectedObject;
 
     private Func<RackObject,bool> _canDeleteRack;
 
@@ -29,7 +29,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         set { SetProperty(ref _hall, value, nameof(Hall)); }
     }
 
-    public BaseObject SelectedObject
+    public IBaseObject SelectedObject
     {
         get => _selectedObject;
         set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); }
@@ -60,7 +60,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         _hallService = hallService;
         EditHallCommand = new AsyncRelayCommand(() => EditHall());
         CanDeleteRack = (rack) => {
-            bool flag = rackService.CanDeleteRack(rack.Id);
+            bool flag = rackService.CanDeleteRack(rack.ID);
             flag = false;
             if (!flag)
                 Application.ShowSilentMessage("Nie można usunąć stojaka, Prawdopodobnie posiada jakieś elementy");
@@ -132,9 +132,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
             }
             if (CanChangePage)
                 _hallService.Save();
-        }
-
-        
+        } 
     }
 
     #endregion

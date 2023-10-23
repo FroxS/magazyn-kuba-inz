@@ -10,5 +10,5 @@ public interface IDialogViewModelBase<T>
     ICommand OKCommand { get; }
     string Title { get; set; }
 
-    void CloseDialogWithResult(IDialogWindow dialog, T result);
+    void CloseDialogWithResult(T result);
 }

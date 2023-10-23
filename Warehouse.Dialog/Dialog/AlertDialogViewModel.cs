@@ -1,19 +1,11 @@
 ﻿using Warehouse.Core.Helpers;
-using System.Windows.Input;
 using Warehouse.Models.Enums;
 using Warehouse.Core.Interface;
 
 namespace Warehouse.Dialog
 {
-    public interface IAlertDialogView { }
-    public class AlertDialogViewModel : DialogViewModelBase<EDialogResult>
+    internal class AlertDialogViewModel : DialogViewModelBase<EDialogResult>
     {
-        #region Public properties
-
-        public override ICommand OKCommand { get; protected set; }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -21,16 +13,16 @@ namespace Warehouse.Dialog
         /// </summary>
         public AlertDialogViewModel(string message, string title = "") : base(title, message)
         {
-            OKCommand = new RelayCommand<IDialogWindow>(Yes);
+            OKCommand = new RelayCommand(Yes);
         }
 
         #endregion
 
         #region Command methods
 
-        private void Yes(IDialogWindow window)
+        private void Yes()
         {
-            CloseDialogWithResult(window, EDialogResult.Yes);
+            CloseDialogWithResult(EDialogResult.Yes);
         }
 
         #endregion

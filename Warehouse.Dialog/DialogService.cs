@@ -2,7 +2,10 @@
 using System.Diagnostics;
 using System.Windows;
 using Warehouse.Core.Interface;
+using Warehouse.Dialog.View;
+using Warehouse.Models;
 using Warehouse.Models.Enums;
+using Warehouse.Service.Interface;
 
 namespace Warehouse.Dialog
 {
@@ -18,14 +21,12 @@ namespace Warehouse.Dialog
 
         public T OpenDialog<T>(IDialogViewModelBase<T> wm)
         {
-            IDialogWindow window = _service.GetRequiredService<IDialogWindow>();
-            var control = GetControlDialog(wm);
-            if (control == null)
+            var window = GetControlDialog(wm);
+
+            if (window == null)
                 throw new ArgumentException("Dialog now found");
-            window.Control = control;
             window.ShowDialog();
             return wm.DialogResult;
-
         }
 
         #endregion
@@ -44,12 +45,14 @@ namespace Warehouse.Dialog
 
         #region Private methods
 
-        public FrameworkElement? GetControlDialog<T>(IDialogViewModelBase<T> wm)
+        public Window? GetControlDialog<T>(IDialogViewModelBase<T> vm)
         {
-            if(wm is AlertDialogViewModel)
-                return _service.GetRequiredService<IAlertDialogView>() as FrameworkElement;
-            if (wm is YesNoDialogViewModel)
-                return _service.GetRequiredService<IYesNoDialogView>() as FrameworkElement;
+            if(vm is AlertDialogViewModel avm)
+                return new AlertDialog(avm);
+            if (vm is YesNoDialogViewModel ynvm)
+                return new YesNoDialog(ynvm);
+            if (vm is ProductDialogViewModel pvm)
+                return new ProductDialog(pvm);
 
             Debugger.Break();
             return null;
@@ -67,6 +70,11 @@ namespace Warehouse.Dialog
         public EDialogResult GetYesNoDialog(string message, string title = "")
         {
             return OpenDialog(new YesNoDialogViewModel(message, title));
+        }
+
+        public Product GetProduct(string message)
+        {
+            return OpenDialog(new ProductDialogViewModel(_service.GetService<IProductService>() ,message));
         }
 
         #endregion

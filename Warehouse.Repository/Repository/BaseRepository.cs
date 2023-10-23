@@ -71,7 +71,15 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// Method to get all entites to list
     /// </summary>
     /// <returns></returns>
-    public virtual List<T> GetAll(bool sortbylp = true) => _context.Set<T>().OrderBy(x => x.ID).ToList();
+    public virtual List<T> GetAll(bool sortbylp = true)
+    {
+        IQueryable<T> items = _context.Set<T>();
+        if (sortbylp)
+            items = items.OrderBy(x => x.Lp);
+        else
+            items = items.OrderBy(x => x.ID);
+        return items.ToList();
+    }
 
     /// <summary>
     /// Method to get all entites to list

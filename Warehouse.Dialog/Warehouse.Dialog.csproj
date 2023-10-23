@@ -1,14 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<UseWPF>true</UseWPF>
+	  <EnableDefaultPageItems>false</EnableDefaultPageItems>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="View\AlertDialog.xaml" />
+    <None Remove="View\ProductDialog.xaml" />
+    <None Remove="View\YesNoDialog.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\magazyn-kuba-inz.Models\Warehouse.Models.csproj" />
     <ProjectReference Include="..\Warehouse.ViewModels\Warehouse.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="View\YesNoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProductDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AlertDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\YesNoDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ProductDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AlertDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

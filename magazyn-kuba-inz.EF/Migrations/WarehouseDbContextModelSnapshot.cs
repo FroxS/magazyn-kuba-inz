@@ -37,7 +37,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("ProductWareHouseImage");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Hall", b =>
+            modelBuilder.Entity("Warehouse.Models.Hall", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -53,6 +53,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -62,33 +65,34 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Hall");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ItemState", b =>
+            modelBuilder.Entity("Warehouse.Models.ItemState", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("CanRealizeOrder")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("InWareHouse")
-                        .HasColumnType("bit");
 
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.ToTable("ItemState");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Order", b =>
+            modelBuilder.Entity("Warehouse.Models.Order", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -108,6 +112,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,7 +129,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.OrderProduct", b =>
+            modelBuilder.Entity("Warehouse.Models.OrderProduct", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -143,6 +150,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -155,7 +165,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.Models.Product", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -179,6 +189,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -200,7 +213,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ProductGroup", b =>
+            modelBuilder.Entity("Warehouse.Models.ProductGroup", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -215,6 +228,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -226,7 +242,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("ProductGroup");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ProductStatus", b =>
+            modelBuilder.Entity("Warehouse.Models.ProductStatus", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -238,6 +254,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -248,7 +267,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("ProductStatus");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Rack", b =>
+            modelBuilder.Entity("Warehouse.Models.Rack", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -293,6 +312,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("Width")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
@@ -305,7 +327,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Rack");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageItem", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageItem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -326,6 +348,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ID_OrderItem")
@@ -338,7 +363,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("StorageItem");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageItemPackage", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageItemPackage", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -356,6 +381,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
@@ -368,7 +396,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("StorageItemPackage");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageUnit", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageUnit", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -400,6 +428,9 @@ namespace Warehouse.EF.Migrations
                         .HasColumnType("float")
                         .HasDefaultValue(0.0);
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -408,7 +439,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("StorageUnit");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Supplier", b =>
+            modelBuilder.Entity("Warehouse.Models.Supplier", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -420,6 +451,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -430,7 +464,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.User", b =>
+            modelBuilder.Entity("Warehouse.Models.User", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -459,6 +493,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -480,7 +517,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.WareHouseImage", b =>
+            modelBuilder.Entity("Warehouse.Models.WareHouseImage", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -496,6 +533,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -509,7 +549,7 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.WareHouseItem", b =>
+            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -532,6 +572,9 @@ namespace Warehouse.EF.Migrations
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ID_Product");
@@ -543,22 +586,22 @@ namespace Warehouse.EF.Migrations
 
             modelBuilder.Entity("ProductWareHouseImage", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.WareHouseImage", null)
+                    b.HasOne("Warehouse.Models.WareHouseImage", null)
                         .WithMany()
                         .HasForeignKey("ImagesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.Product", null)
+                    b.HasOne("Warehouse.Models.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Order", b =>
+            modelBuilder.Entity("Warehouse.Models.Order", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.User", "User")
+                    b.HasOne("Warehouse.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("ID_User")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -567,15 +610,15 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.OrderProduct", b =>
+            modelBuilder.Entity("Warehouse.Models.OrderProduct", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.Order", "Order")
+                    b.HasOne("Warehouse.Models.Order", "Order")
                         .WithMany("Items")
                         .HasForeignKey("ID_Order")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.Product", "Product")
+                    b.HasOne("Warehouse.Models.Product", "Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -586,21 +629,21 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.Models.Product", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.ProductGroup", "Group")
+                    b.HasOne("Warehouse.Models.ProductGroup", "Group")
                         .WithMany("Products")
                         .HasForeignKey("ID_Group")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.ProductStatus", "Status")
+                    b.HasOne("Warehouse.Models.ProductStatus", "Status")
                         .WithMany("Products")
                         .HasForeignKey("ID_Status")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.Supplier", "Supplier")
+                    b.HasOne("Warehouse.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("ID_Supplier")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -613,9 +656,9 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Rack", b =>
+            modelBuilder.Entity("Warehouse.Models.Rack", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.Hall", "Hall")
+                    b.HasOne("Warehouse.Models.Hall", "Hall")
                         .WithMany("Racks")
                         .HasForeignKey("ID_Hall")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -624,21 +667,21 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("Hall");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageItem", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageItem", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.OrderProduct", "OrderItem")
+                    b.HasOne("Warehouse.Models.OrderProduct", "OrderItem")
                         .WithOne("StorageItem")
-                        .HasForeignKey("Warehouse.WareHouse.StorageItem", "ID_OrderItem")
+                        .HasForeignKey("Warehouse.Models.StorageItem", "ID_OrderItem")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.Product", "Product")
+                    b.HasOne("Warehouse.Models.Product", "Product")
                         .WithMany("StorageItemCollection")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.StorageItemPackage", "Package")
+                    b.HasOne("Warehouse.Models.StorageItemPackage", "Package")
                         .WithMany("Items")
                         .HasForeignKey("ID_StorageItem")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -651,15 +694,15 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageItemPackage", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageItemPackage", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.Rack", "Rack")
+                    b.HasOne("Warehouse.Models.Rack", "Rack")
                         .WithMany("StorageItems")
                         .HasForeignKey("ID_Rack")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.StorageUnit", "StorageUnit")
+                    b.HasOne("Warehouse.Models.StorageUnit", "StorageUnit")
                         .WithMany("StorageItems")
                         .HasForeignKey("ID_StorageUnit")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -670,15 +713,15 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("StorageUnit");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.WareHouseItem", b =>
+            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
                 {
-                    b.HasOne("Warehouse.WareHouse.Product", "Product")
+                    b.HasOne("Warehouse.Models.Product", "Product")
                         .WithMany("WareHouseItems")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.WareHouse.ItemState", "State")
+                    b.HasOne("Warehouse.Models.ItemState", "State")
                         .WithMany("Items")
                         .HasForeignKey("ID_State")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -689,27 +732,27 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Hall", b =>
+            modelBuilder.Entity("Warehouse.Models.Hall", b =>
                 {
                     b.Navigation("Racks");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ItemState", b =>
+            modelBuilder.Entity("Warehouse.Models.ItemState", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Order", b =>
+            modelBuilder.Entity("Warehouse.Models.Order", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.OrderProduct", b =>
+            modelBuilder.Entity("Warehouse.Models.OrderProduct", b =>
                 {
                     b.Navigation("StorageItem");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Product", b =>
+            modelBuilder.Entity("Warehouse.Models.Product", b =>
                 {
                     b.Navigation("OrderItems");
 
@@ -718,37 +761,37 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("WareHouseItems");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ProductGroup", b =>
+            modelBuilder.Entity("Warehouse.Models.ProductGroup", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.ProductStatus", b =>
+            modelBuilder.Entity("Warehouse.Models.ProductStatus", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Rack", b =>
+            modelBuilder.Entity("Warehouse.Models.Rack", b =>
                 {
                     b.Navigation("StorageItems");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageItemPackage", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageItemPackage", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.StorageUnit", b =>
+            modelBuilder.Entity("Warehouse.Models.StorageUnit", b =>
                 {
                     b.Navigation("StorageItems");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.Supplier", b =>
+            modelBuilder.Entity("Warehouse.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Warehouse.WareHouse.User", b =>
+            modelBuilder.Entity("Warehouse.Models.User", b =>
                 {
                     b.Navigation("Orders");
                 });

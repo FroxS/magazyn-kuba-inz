@@ -1,118 +1,65 @@
-﻿using Warehouse.Models.Enums;
-using Warehouse.Models;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
+using Warehouse.ViewModel.Service;
+using Warehouse.Core.Models;
 
 namespace Warehouse.ViewModel.Pages;
 
-public class RacksPageViewModel : 
-    BasePageWIthItemsViewModel<
-        Rack, 
-        RackViewModel, 
-        IRackService>
+public class RacksPageViewModel : BasePageViewModel
 {
+    #region Private fields
+
+    private readonly IRackService _service;
+    private ObservableCollection<RackObject> _racks;
+    private RackObject _rack;
+
+    #endregion
+
+    #region Public Properties
+
+    public ObservableCollection<RackObject> Racks 
+    {
+        get => _racks; 
+        set { SetProperty(ref _racks, value, nameof(Racks)); }
+    }
+
+    public RackObject Rack
+    {
+        get => _rack;
+        set { SetProperty(ref _rack, value, nameof(Rack)); }
+    }
+
+    #endregion
+
+    #region Commands
+
+
+
+    #endregion
 
     #region Constructors
-    public RacksPageViewModel(IApp app, IRackService service) : base(app, service)
+
+    public RacksPageViewModel(IApp app, IRackService service) : base(app)
     {
+        _service = service;
     }
 
     #endregion
 
     #region Public methods
 
-    public override RackViewModel GetVM(ref Rack? item, RackViewModel? lastVm = null)
+    public override void OnPageOpen()
     {
-        if (item == null)
-            return lastVm;
-        bool flag = false;
-        if (lastVm != null && !(lastVm?.Saved ?? true))
-        {
-            string? message = lastVm.Valid();
-            if (message != null)
-            {
-                Application.ShowSilentMessage($"{message}", EMessageType.Warning);
-                return lastVm;
-            }
-            ;
-
-            var task = Task.Run(async () => await lastVm.SaveAsync());
-            Task.WaitAll(task);
-            if (!task.Result)
-            {
-                Application.ShowSilentMessage($"Nie udało się zapisać danych", EMessageType.Warning);
-                return lastVm;
-            }
-        }
-        RackViewModel newVM = new RackViewModel(_service, item);
-        return newVM;
-    }
-
-    public async override void OnPageOpen()
-    {
-        try
-        {
-            CanChangePage = false;
-            Application.IsTaskRunning = true;
-            var selectedGuid = SelectedItemViewModel?.ID;
-            _selectedItemViewModel = null;
-            List<Rack> pgList = await _service.GetAllAsync();
-            Items = new ObservableCollection<Rack>(pgList);
-            if (selectedGuid.HasValue)
-            {
-                SelectedItem = Items.FirstOrDefault(x => x.ID == selectedGuid.Value);
-            }
-            CanChangePage = true;
-            OnPropertyChanged(nameof(Items));
-            OnPropertyChanged(nameof(SelectedItemViewModel));
-        }
-        catch (Exception ex) { MessageBox.Show(ex.Message); }
-        finally { Application.IsTaskRunning = false; }
+        Racks = new ObservableCollection<RackObject>(_service.GetAll().Select(x => new RackObject(x.ID) { Flors = x.Flors, Width = x.Width, Heigth = x.Heigth }));
+        Rack = Racks.FirstOrDefault();
     }
 
     #endregion
 
     #region Command Methods
 
-    public override async Task DeleteItems(IList items)
-    {
-        if (items == null)
-            return;
-        try
-        {
-            if (MessageBox.Show("Czy jesteś pewien ?", "Pytanie", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                bool flag = true;
-                List<Rack> itemstoRemove = new List<Rack>();
-                foreach (Rack item in items)
-                {
-                    flag = await _service.DeleteAsync(item.ID);
-                    itemstoRemove.Add(item);
-                    
-                };
-                itemstoRemove.ForEach(o => Items.Remove(o));
-                flag = await _service.SaveAsync();
 
-                if (!flag)
-                {
-                    Application.ShowSilentMessage("Nie udało się usunąć", EMessageType.Warning);
-                }
-                else
-                {
-                    Application.ShowSilentMessage("Udało się usunąć", EMessageType.Ok);
-                    _selectedItemViewModel = null;
-                    OnPropertyChanged(nameof(SelectedItemViewModel));
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Application.ShowSilentMessage(ex.Message);
-        }
-    }
 
     #endregion
 }

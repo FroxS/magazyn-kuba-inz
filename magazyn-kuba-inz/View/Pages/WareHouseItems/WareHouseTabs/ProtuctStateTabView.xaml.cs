@@ -3,11 +3,11 @@
 namespace Warehouse.View.Pages
 {
     /// <summary>
-    /// Interaction logic for WareHouseStatusTabView.xaml
+    /// Interaction logic for ProtuctStateTabView.xaml
     /// </summary>
-    public partial class WareHouseStatusTabView : UserControl
+    public partial class ProtuctStateTabView : UserControl
     {
-        public WareHouseStatusTabView()
+        public ProtuctStateTabView()
         {
             InitializeComponent();
         }

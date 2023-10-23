@@ -9,10 +9,10 @@ public class StorageItem : BaseEntity
     [Key]
     [Required]
     public override Guid ID { get; set; }
-    public Guid ID_StorageItem { get; set; }
-    public StorageItemPackage? Package { get; set; }
-    public Guid ID_Product { get; set; }
-    public Product? Product { get; set; }
-    public Guid ID_OrderItem { get; set; }
-    public OrderProduct? OrderItem { get; set; }
+    public virtual Guid ID_StorageItem { get; set; }
+    public virtual StorageItemPackage? Package { get; set; }
+    public virtual Guid ID_Product { get; set; }
+    public virtual Product? Product { get; set; }
+    public virtual Guid ID_OrderItem { get; set; }
+    public virtual OrderProduct? OrderItem { get; set; }
 }

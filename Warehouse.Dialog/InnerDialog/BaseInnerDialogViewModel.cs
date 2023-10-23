@@ -11,6 +11,7 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
 
     protected readonly IApp _app;
     protected bool _dialogResult = false;
+    protected string _title;
 
     #endregion
 
@@ -22,6 +23,12 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
     {
         get => _dialogResult;
         private set { _dialogResult = value; OnPropertyChanged(nameof(DialogResult)); }
+    }
+
+    public string Title
+    {
+        get => _title;
+        protected set { _title = value; OnPropertyChanged(nameof(Title)); }
     }
 
     #endregion

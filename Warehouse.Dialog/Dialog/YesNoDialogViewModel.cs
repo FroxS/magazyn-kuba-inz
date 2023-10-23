@@ -5,8 +5,7 @@ using Warehouse.Core.Interface;
 
 namespace Warehouse.Dialog
 {
-    public interface IYesNoDialogView { }
-    public class YesNoDialogViewModel: DialogViewModelBase<EDialogResult>
+    internal class YesNoDialogViewModel: DialogViewModelBase<EDialogResult>
     {
         #region Private properties
 
@@ -14,7 +13,6 @@ namespace Warehouse.Dialog
 
         #region Public properties
 
-        public override ICommand OKCommand { get; protected set; }
 
         public ICommand NoCommand { get; private set; }
 
@@ -27,23 +25,22 @@ namespace Warehouse.Dialog
         /// </summary>
         public YesNoDialogViewModel(string title, string message) : base(title, message)
         {
-            OKCommand = new RelayCommand<IDialogWindow>(Yes);
-            NoCommand = new RelayCommand<IDialogWindow>(No);
+            OKCommand = new RelayCommand(Yes);
+            NoCommand = new RelayCommand(No);
         }
-
 
         #endregion
 
         #region Command methods
 
-        private void Yes(IDialogWindow window)
+        private void Yes()
         {
-            CloseDialogWithResult(window, EDialogResult.Yes);
+            CloseDialogWithResult(EDialogResult.Yes);
         }
 
-        private void No(IDialogWindow window)
+        private void No()
         {
-            CloseDialogWithResult(window, EDialogResult.No);
+            CloseDialogWithResult(EDialogResult.No);
         }
 
         #endregion

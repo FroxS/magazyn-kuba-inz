@@ -46,6 +46,11 @@ internal class WareHouseItemRepository : BaseRepository<WareHouseItem, Warehouse
         return await _items.FirstOrDefaultAsync(x => x.ID_Product == productId && x.ID_State == stateId, cancellationToken);
     }
 
+    public WareHouseItem? GetItem(Guid productId, Guid stateId)
+    {
+        return _items.FirstOrDefault(x => x.ID_Product == productId && x.ID_State == stateId);
+    }
+
     public async Task<List<WareHouseItem>> GetItemAsync(Guid productId, CancellationToken cancellationToken = default)
     {
         return await _items.Where(x => x.ID_Product == productId).ToListAsync(cancellationToken);

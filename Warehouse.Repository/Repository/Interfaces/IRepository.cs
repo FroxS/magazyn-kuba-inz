@@ -14,6 +14,7 @@ public interface IWareHouseItemRepository : IBaseRepository<WareHouseItem>
     Task<WareHouseItem?> GetItemAsync(Guid productId, Guid stateId, CancellationToken cancellationToken = default);
     Task<List<WareHouseItem>> GetItemAsync(Guid productId, CancellationToken cancellationToken = default);
     Task<List<Product?>> GetProdictsWidthStateAsync(Guid statusId, CancellationToken cancellationToken = default);
+    WareHouseItem? GetItem(Guid productId, Guid stateId);
 }
 public interface IProductRepository : IBaseRepository<Product> 
 {

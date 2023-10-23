@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="Warehouse.Controls.RackControl"
+             xmlns:effects="http://schemas.microsoft.com/winfx/2006/xaml/presentation/effects"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.Controls"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:att="clr-namespace:Warehouse.AttachedProperty"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450"
+             x:Name="mainControl"
+             Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Column="0"
+                   Width="20"
+                   Fill="{Binding Rack.Color, FallbackValue=Orange}"/>
+
+        <Grid Grid.Column="1">
+
+
+            <ItemsControl ItemsSource="{Binding Flors, RelativeSource={RelativeSource AncestorType=local:RackControl}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="{Binding Flors.Count, RelativeSource={RelativeSource AncestorType=local:RackControl}}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0,0,0,5"  BorderBrush="{Binding Rack.Color, FallbackValue=Orange}">
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Left"
+                                                   FlowDirection="RightToLeft"
+                                                   Margin="5,0"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="50"
+                                                Height="50"
+                                                Margin="2"
+                                                Background="SaddleBrown"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<UniformGrid Rows="3" VerticalAlignment="Stretch" >
+                <Border BorderThickness="0,0,0,5" BorderBrush="Orange" >
+                    <WrapPanel VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               FlowDirection="RightToLeft"
+                               Margin="5,0">
+                        <WrapPanel.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Width" Value="50"/>
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="Margin" Value="2"/>
+                                <Setter Property="Background" Value="SaddleBrown"/>
+                            </Style>
+                        </WrapPanel.Resources>
+                        <WrapPanel.LayoutTransform >
+                            <RotateTransform Angle="180" />
+                        </WrapPanel.LayoutTransform>
+
+                        <Border />
+
+                    </WrapPanel>
+                </Border>
+                <Border BorderThickness="0,0,0,5"  BorderBrush="Orange">
+                    
+                </Border>
+                <Border BorderThickness="0,0,0,5"  BorderBrush="Orange" >
+                    
+                </Border>
+            </UniformGrid>-->
+        </Grid>
+
+        
+
+        <Rectangle Grid.Column="2"
+                   Width="20"
+                   Fill="{Binding Rack.Color, FallbackValue=Orange}"/>
+
+    </Grid>
+</UserControl>

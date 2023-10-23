@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.Models;
 
@@ -12,9 +13,7 @@ public class ItemState : BaseEntity
 
     public string? Name { get; set; }
 
-    public bool InWareHouse { get; set; }
-
-    public bool CanRealizeOrder { get; set; }
+    public EState State { get; set; }
 
     public List<WareHouseItem>? Items { get; set; }
 

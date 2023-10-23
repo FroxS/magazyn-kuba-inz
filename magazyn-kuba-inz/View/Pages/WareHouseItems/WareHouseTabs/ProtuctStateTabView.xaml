@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Warehouse.View.Pages.ProtuctStateTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+             xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400"
+             Background="White"
+             d:DataContext="{d:DesignInstance vm:ProtuctStateTabViewModel}">
+    <Grid>
+        <DataGrid IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Extended"
+                  ItemsSource="{Binding Items}"  
+                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeColumns="True"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa produktu"
+                                    MinWidth="200"
+                                    Binding="{Binding Product.Name}"/>
+                <DataGridTextColumn Header="Ilość"
+                                    MinWidth="50"
+                                    Binding="{Binding Count}"/>
+            </DataGrid.Columns>
+
+            <DataGrid.ContextMenu>
+                <ContextMenu >
+                    <MenuItem Header="Przenieś do" ItemsSource="{Binding StatusesToMove, UpdateSourceTrigger=PropertyChanged}" >
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Header" Value="{Binding Name}"/>
+                                <Setter Property="Command" Value="{Binding DataContext.MoveToStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
+                                <Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+
+                    <MenuItem Header="Dodaj" IsEnabled="{Binding CanAddNew}"
+                              Command="{Binding AddNewCommand}"
+                              />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            
+        </DataGrid>
+    </Grid>
+</UserControl>

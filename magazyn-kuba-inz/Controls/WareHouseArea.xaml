@@ -143,7 +143,7 @@
                                     <Grid MouseLeftButtonDown="Object_MouseLeftButtonDown">
                                         <Rectangle Fill="{Binding Color, UpdateSourceTrigger=PropertyChanged}"
                                                    Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
-                                                   Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                                   Height="{Binding Heigth, UpdateSourceTrigger=PropertyChanged}"
                                                    att:MarginCorrection.Value="True">
                                         </Rectangle>
                                         <Grid.ContextMenu>

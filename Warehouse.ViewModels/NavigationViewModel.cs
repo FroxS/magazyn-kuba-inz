@@ -58,8 +58,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
     public void UpdateViewModel(IBasePageViewModel vm)
     {
         PageVM = vm;
-    }
-    
+    }  
 
     #endregion
 }

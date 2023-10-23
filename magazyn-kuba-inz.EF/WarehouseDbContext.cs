@@ -164,6 +164,15 @@ public class WarehouseDbContext : DbContext
                 .HasForeignKey(x => x.ID_Product);
         });
 
+        modelBuilder.Entity<ItemState>(o => {
+            o.LoadDefaultEntity();
+            o.Property(x => x.State).IsRequired();
+            o.Property(x => x.Name).IsRequired();
+            o.HasMany(x => x.Items)
+                .WithOne(x => x.State)
+                .HasForeignKey(x => x.ID_State);
+        });
+
         modelBuilder.Entity<User>(o => {
             o.LoadDefaultEntity();
             o.Property(x => x.Name);

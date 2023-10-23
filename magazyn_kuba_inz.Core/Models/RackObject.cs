@@ -2,33 +2,35 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using Warehouse.Core.Interface;
+using Warehouse.Models;
 
 namespace Warehouse.Core.Models;
 
-public class RackObject : BaseObject
+public class RackObject : Rack, IBaseObject
 {
     #region Private fields
-
-    private Guid _id;
 
     private string _name;
 
     private Brush _color = new BrushConverter().ConvertFrom("#ff8c00") as SolidColorBrush;
 
-    private double _width = 50;
-
-    private double _height = 50;
-
     private ObservableCollection<WayPointObject> _wayPoints = new ObservableCollection<WayPointObject>();
+
+    protected double _x = 0;
+
+    protected double _y = 0;
+
+    protected bool _isSelected = false;
 
     #endregion
 
     #region Public properties
 
-    public Guid Id
+    public override Guid ID
     {
-        get => _id;
-        private set { SetProperty(ref _id, value, nameof(Id)); }
+        get => base.ID;
+        set { base.ID = value; U(() => ID); }
     }
 
     public string Name 
@@ -43,22 +45,48 @@ public class RackObject : BaseObject
         set { SetProperty(ref _color, value, nameof(Color)); }
     }
 
-    public double Width
+    public override double Width
     {
-        get => _width;
-        set { SetProperty(ref _width, value, nameof(Width)); }
+        get => base.Width;
+        set { base.Width = value; U(() => Name); }
     }
 
-    public double Height
+    public override double Heigth
     {
-        get => _height;
-        set { SetProperty(ref _height, value, nameof(Height)); }
+        get => base.Heigth;
+        set { base.Heigth = value; U(() => Heigth); }
+    }
+
+    public override int Flors
+    {
+        get => base.Flors;
+        set { base.Flors = value; U(() => Flors); }
     }
 
     public ObservableCollection<WayPointObject> WayPoints
     {
         get => _wayPoints;
         set { SetProperty(ref _wayPoints, value, nameof(WayPoints)); }
+    }
+
+    public Point Position => new Point(X, Y);
+
+    public double X
+    {
+        get => _x;
+        set { SetProperty(ref _x, value, nameof(X)); }
+    }
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set { SetProperty(ref _isSelected, value, nameof(IsSelected)); }
+    }
+
+    public double Y
+    {
+        get => _y;
+        set { SetProperty(ref _y, value, nameof(Y)); }
     }
 
     #endregion
@@ -71,25 +99,27 @@ public class RackObject : BaseObject
     [JsonConstructor]
     public RackObject(Guid id):base()
     {
-        Id = id;
-    }
-
-
-
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public RackObject(Guid id ,double x, double y) : base(x,y) 
-    {
-        Id = id;
+        ID = id;
+        if (Width == 0)
+            Width = 50;
+        if (Heigth == 0)
+            Heigth = 50;
     }
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public RackObject(Guid id, Point point) : base(point) 
+    public RackObject(Guid id ,double x, double y):this(id)
     {
-        Id = id;
+        X = x;
+        Y = y;
+    }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public RackObject(Guid id, Point point) : this(id,point.X,point.Y) 
+    {
     }
 
     #endregion
@@ -119,14 +149,14 @@ public class RackObject : BaseObject
     {
         double left1 = X - Width / 2;
         double right1 = X + Width / 2;
-        double top1 = Y - Height / 2;
-        double bottom1 = Y + Height / 2;
+        double top1 = Y - Heigth / 2;
+        double bottom1 = Y + Heigth / 2;
 
         // Obliczamy lewą, prawą, górną i dolną krawędź obiektu other
         double left2 = rack.X - rack.Width / 2;
         double right2 = rack.X + rack.Width / 2;
-        double top2 = rack.Y - rack.Height / 2;
-        double bottom2 = rack.Y + rack.Height / 2;
+        double top2 = rack.Y - rack.Heigth / 2;
+        double bottom2 = rack.Y + rack.Heigth / 2;
 
         // Sprawdzamy, czy obiekty nachodzą na siebie
         bool horizontalOverlap = left1 <= right2 && right1 >= left2;

@@ -1,9 +1,10 @@
 ﻿using System.Windows;
+using Warehouse.Core.Interface;
 using Warehouse.Models;
 
 namespace Warehouse.Core.Models;
 
-public class BaseObject : ObservableObject
+public class BaseObject : ObservableObject, IBaseObject
 {
     #region Private fields
 

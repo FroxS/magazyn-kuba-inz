@@ -13,7 +13,7 @@ using Warehouse.Service.Interface;
 
 namespace Warehouse.ViewModel;
 
-public class ApplicationViewModel : BaseViewModel, IApp
+public class WareHouseApp : BaseViewModel, IApp
 {
     #region Private Properties
 
@@ -21,7 +21,7 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     private readonly System.Windows.Application app;
 
-    private readonly IServiceProvider services;
+    private static IServiceProvider _services;
 
     private readonly IUserService userService;
 
@@ -35,15 +35,19 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     public INavigation Navigation => nav;
 
+    public static IInnerDialogService InnerDialog => _services.GetRequiredService<IInnerDialogService>();
+
+    public static IDialogService Dialog => _services.GetRequiredService<IDialogService>();
+
     #endregion
 
     #region Constructors
 
-    public ApplicationViewModel(INavigation nav, System.Windows.Application app, IServiceProvider services, IUserService userService)
+    public WareHouseApp(INavigation nav, System.Windows.Application app, IServiceProvider services, IUserService userService)
     {
         this.nav = nav;
         this.app = app;
-        this.services = services;
+        _services = services;
         this.userService = userService;
     }
 
@@ -51,7 +55,7 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     #region Public Methods
 
-    public Dispatcher GetDispather() => services.GetRequiredService<Dispatcher>();
+    public Dispatcher GetDispather() => _services.GetRequiredService<Dispatcher>();
 
     public void Run()
     {
@@ -69,8 +73,8 @@ public class ApplicationViewModel : BaseViewModel, IApp
         }
         else
         {
-            services.GetRequiredService<ILoginWindow>();
-            ILoginWindow login = services.GetRequiredService<ILoginWindow>();
+            _services.GetRequiredService<ILoginWindow>();
+            ILoginWindow login = _services.GetRequiredService<ILoginWindow>();
             if (login == null)
                 throw new Exception("Brak okna login");
 
@@ -88,7 +92,7 @@ public class ApplicationViewModel : BaseViewModel, IApp
         }
         else
         {
-            IMainWindow window = services.GetRequiredService<IMainWindow>();
+            IMainWindow window = _services.GetRequiredService<IMainWindow>();
             if (window == null)
                 throw new Exception("Brak okna głównego");
 
@@ -100,14 +104,14 @@ public class ApplicationViewModel : BaseViewModel, IApp
 
     public void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning)
     {
-        services.GetRequiredService<MessageService>().AddMessage(message, type);
+        _services.GetRequiredService<MessageService>().AddMessage(message, type);
     }
 
-    public IDialogService GetDialogService() => services.GetRequiredService<IDialogService>();
+    public IDialogService GetDialogService() => _services.GetRequiredService<IDialogService>();
 
-    public IInnerDialogService GetInnerDialogService() => services.GetRequiredService<IInnerDialogService>();
+    public IInnerDialogService GetInnerDialogService() => _services.GetRequiredService<IInnerDialogService>();
 
-    public S GetService<S,T>() where T : class where S: IBaseService<T> => services.GetRequiredService<S>();
+    public S GetService<S,T>() where T : class where S: IBaseService<T> => _services.GetRequiredService<S>();
 
     public bool IsUserLogin()
     {

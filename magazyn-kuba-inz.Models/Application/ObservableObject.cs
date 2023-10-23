@@ -49,6 +49,15 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
         onChanged?.Invoke();
     }
 
+    protected void U<T>(
+        Expression<Func<T>> field)
+    {
+        if (field.Body is MemberExpression memberExpression)
+        {
+            OnPropertyChanged(memberExpression.Member.Name);
+        }
+    }
+
     protected void SetProperty<T>(
         ref T field,
         T value,
