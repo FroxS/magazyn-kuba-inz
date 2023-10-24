@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="View\AlertDialog.xaml" />
     <None Remove="View\ProductDialog.xaml" />
+    <None Remove="View\StorageUnitDialog.xaml" />
     <None Remove="View\YesNoDialog.xaml" />
   </ItemGroup>
 
@@ -21,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="View\StorageUnitDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\YesNoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -36,6 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\StorageUnitDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\YesNoDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

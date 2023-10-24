@@ -43,19 +43,18 @@ public interface IItemStateService : IBaseService<ItemState>
 
 public interface IWareHouseItemService : IBaseService<WareHouseItem>
 {
-    //Task<WareHouseItemViewModel> GetWareHouseItemVM(WareHouseItem item);
-    //Task<WareHouseItemViewModel> CreateWareHouseItemVM();
-    //Task<List<WareHouseItemViewModel>> GetAllWareHouseItemToViewModel();
     Task<List<WareHouseItem>> GetAllByProductAsync(Guid productid, CancellationToken token = default(CancellationToken));
     Task<WareHouseItem> SetCountProduct(Product product, ItemState status, int count, CancellationToken token = default(CancellationToken));
     Task<List<Product?>> GetProductsByState(ItemState state);
     Task<int> GetCoutOfProduct(Product product, ItemState state);
     Task<int> GetCoutOfProduct(Product product);
     Task<bool> ExistProduct(Guid product);
-
     List<WareHouseItem> GetProductsByState(Guid stateId);
     WareHouseItem? GetItem(Guid productId, Guid stateId);
-    string MoveProductToState(WareHouseItem item, Guid targetState, int count);
+    string MoveProductToState(ref WareHouseItem item, Guid targetState, int count);
+    List<WareHouseItem> GetProductsAvailableToRack();
+    bool MoveItemsToRack(IEnumerable<StorageItem> items);
+    bool RemoveFromRack(StorageItem item);
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
@@ -65,8 +64,12 @@ public interface IStorageUnitService : IBaseService<StorageUnit> { }
 public interface IRackService : IBaseService<Rack> 
 {
     bool CanDeleteRack(Guid id);
+    List<Rack> GetAllWithItems();
 }
-public interface IStorageItemPackageService : IBaseService<StorageItemPackage> { }
+public interface IStorageItemPackageService : IBaseService<StorageItemPackage> 
+{
+    List<StorageItem>? GetItemsByID(Guid id);
+}
 public interface IStorageItemService : IBaseService<StorageItem> { }
 
 public interface IHallService : IBaseService<Hall> 

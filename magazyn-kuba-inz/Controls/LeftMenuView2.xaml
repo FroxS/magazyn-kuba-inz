@@ -13,7 +13,7 @@
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}">
     <Grid Background="{StaticResource Color2Brush}"
-          Width="65"
+          Width="200"
           x:Name="nav_pnl"
           HorizontalAlignment="Left">
         <Grid.Resources>
@@ -97,6 +97,7 @@
                 </TextBlock>
                 <ToggleButton x:Name="Tg_Btn"
                               Grid.Column="0"
+                              IsChecked="True"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="18,-20,0,0"

@@ -20,12 +20,10 @@
 
         <Rectangle Grid.Column="0"
                    Width="20"
-                   Fill="{Binding Rack.Color, FallbackValue=Orange}"/>
+                   Fill="{Binding RackBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"/>
 
         <Grid Grid.Column="1">
-
-
-            <ItemsControl ItemsSource="{Binding Flors, RelativeSource={RelativeSource AncestorType=local:RackControl}}">
+            <ItemsControl x:Name="rackItemsControl" ItemsSource="{Binding Flors, RelativeSource={RelativeSource AncestorType=local:RackControl}, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Rows="{Binding Flors.Count, RelativeSource={RelativeSource AncestorType=local:RackControl}}" />
@@ -33,7 +31,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0,0,0,5"  BorderBrush="{Binding Rack.Color, FallbackValue=Orange}">
+                        <Border BorderThickness="0,0,0,5"  
+                                BorderBrush="{Binding RackBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}">
                             <ItemsControl ItemsSource="{Binding Items}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -48,7 +47,8 @@
                                         <Border Width="50"
                                                 Height="50"
                                                 Margin="2"
-                                                Background="SaddleBrown"/>
+                                                Background="{Binding BoxBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"
+                                                MouseDown="Box_MouseDown"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -56,42 +56,11 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <!--<UniformGrid Rows="3" VerticalAlignment="Stretch" >
-                <Border BorderThickness="0,0,0,5" BorderBrush="Orange" >
-                    <WrapPanel VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               FlowDirection="RightToLeft"
-                               Margin="5,0">
-                        <WrapPanel.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="Width" Value="50"/>
-                                <Setter Property="Height" Value="50"/>
-                                <Setter Property="Margin" Value="2"/>
-                                <Setter Property="Background" Value="SaddleBrown"/>
-                            </Style>
-                        </WrapPanel.Resources>
-                        <WrapPanel.LayoutTransform >
-                            <RotateTransform Angle="180" />
-                        </WrapPanel.LayoutTransform>
-
-                        <Border />
-
-                    </WrapPanel>
-                </Border>
-                <Border BorderThickness="0,0,0,5"  BorderBrush="Orange">
-                    
-                </Border>
-                <Border BorderThickness="0,0,0,5"  BorderBrush="Orange" >
-                    
-                </Border>
-            </UniformGrid>-->
         </Grid>
-
-        
 
         <Rectangle Grid.Column="2"
                    Width="20"
-                   Fill="{Binding Rack.Color, FallbackValue=Orange}"/>
+                   Fill="{Binding RackBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"/>
 
     </Grid>
 </UserControl>

@@ -1,11 +1,10 @@
-﻿using Warehouse.Core.Models;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using Warehouse.Models;
+using System.Windows.Media;
 using System;
-using System.Collections.Specialized;
 
 namespace Warehouse.Controls;
 
@@ -21,10 +20,28 @@ public partial class RackControl : UserControl
 
     #region Public Properties
 
-    public RackObject Rack
+    public Rack Rack
     {
-        get { return (RackObject)GetValue(RackProperty); }
+        get { return (Rack)GetValue(RackProperty); }
         set { SetValue(RackProperty, value); }
+    }
+
+    public StorageItemPackage SelectedPackage
+    {
+        get { return (StorageItemPackage)GetValue(SelectedPackageProperty); }
+        set { SetValue(SelectedPackageProperty, value); }
+    }
+
+    public SolidColorBrush RackBrush
+    {
+        get { return (SolidColorBrush)GetValue(RackBrushProperty); }
+        set { SetValue(RackBrushProperty, value); }
+    }
+
+    public SolidColorBrush BoxBrush
+    {
+        get { return (SolidColorBrush)GetValue(BoxBrushProperty); }
+        set { SetValue(BoxBrushProperty, value); }
     }
 
     public ObservableCollection<Flor> Flors { get; set; }
@@ -34,7 +51,17 @@ public partial class RackControl : UserControl
     #region Dependency Property
 
     public static readonly DependencyProperty RackProperty =
-        DependencyProperty.Register(nameof(Rack), typeof(RackObject), typeof(RackControl), new PropertyMetadata(null, RackChanged,null));
+        DependencyProperty.Register(nameof(Rack), typeof(Rack), typeof(RackControl), new PropertyMetadata(null, RackChanged,RackCoreChanged));
+
+    public static readonly DependencyProperty RackBrushProperty =
+       DependencyProperty.Register(nameof(RackBrush), typeof(SolidColorBrush), typeof(RackControl), new PropertyMetadata(Brushes.Orange));
+
+    public static readonly DependencyProperty BoxBrushProperty =
+       DependencyProperty.Register(nameof(BoxBrush), typeof(SolidColorBrush), typeof(RackControl), new PropertyMetadata(Brushes.SaddleBrown));
+
+    public static readonly DependencyProperty SelectedPackageProperty =
+       DependencyProperty.Register(nameof(SelectedPackage), typeof(StorageItemPackage), typeof(RackControl), new PropertyMetadata(null));
+
 
     #endregion
 
@@ -51,26 +78,19 @@ public partial class RackControl : UserControl
 
     private static void RackChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is RackControl control && e.NewValue is RackObject ro)
+        if (d is RackControl control && e.NewValue is Rack ro)
         {
-            var flors = new ObservableCollection<Flor>();
-            for (int i = 0; i < ro.Flors; i++)
-            {
-                //double height = (control.rack.ActualHeight / (double)ro.Flors) * (double)i;
-                var flor = new Flor();
-                flor.Items = new ObservableCollection<Package>();
-                flor.Items.Add(new Package());
-                flor.Items.Add(new Package());
-                flor.Items.Add(new Package());
-                flor.Items.Add(new Package());
-                flor.Items.Add(new Package());
-                flor.Items.Add(new Package());
-                flors.Add(flor);
-            }
-
-            control.Flors = flors;  
-
+            control.UpdateRack(ro);
         }
+    }
+
+    private static object RackCoreChanged(DependencyObject d, object baseValue)
+    {
+        if (d is RackControl control && baseValue is Rack ro)
+        {
+            control.UpdateRack(ro);
+        }
+        return baseValue;
     }
 
 
@@ -78,14 +98,46 @@ public partial class RackControl : UserControl
 
     #region EventMethods
 
+    private void Box_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (sender is FrameworkElement obj && obj.DataContext is StorageItemPackage sip)
+            SelectedPackage = sip;
+    }
 
     #endregion
 
     #region Elements methods
 
-    private void UpdateRack()
+    internal void UpdateRack(Rack ro)
     {
+        var flors = new ObservableCollection<Flor>();
 
+        if(ro != null)
+        {
+            for (int i = 0; i < ro.Flors; i++)
+            {
+                var flor = new Flor();
+                flor.Items = new ObservableCollection<StorageItemPackage>();
+                flors.Add(flor);
+            }
+
+            if (flors.Count > 0 && ro.StorageItems != null)
+            {
+                foreach (var item in ro.StorageItems)
+                {
+                    int itemFlor = item.Flor;
+
+                    var flor = flors[0];
+                    if (flors.Count < itemFlor)
+                        flor = flors[itemFlor];
+
+                    flor.Items.Add(item);
+                }
+            }
+        }
+        
+        Flors = flors;
+        rackItemsControl.ItemsSource = Flors;
     }
 
     #endregion
@@ -107,23 +159,13 @@ public partial class RackControl : UserControl
 
     #endregion
 
-    public class Item
-    {
-        public Item() { }
-    }
-
-    public class Package
-    {
-        public ObservableCollection<Item> Items { get; set; }
-        public Package() { }
-    }
-
     public class Flor
     {
-        public ObservableCollection<Package> Items { get; set; }
+        public ObservableCollection<StorageItemPackage> Items { get; set; }
         public Flor() { }
     }
 
+    
 }
 
 

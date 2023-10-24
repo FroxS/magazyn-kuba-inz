@@ -22,4 +22,5 @@ public interface IApp
     void Exit();
     Dispatcher GetDispather();
     S GetService<S, T>() where T : class where S : IBaseService<T>;
+    void CatchExeption(System.Exception ex);
 }

@@ -44,7 +44,7 @@ public class RackObject : Rack, IBaseObject
         get => _color;
         set { SetProperty(ref _color, value, nameof(Color)); }
     }
-
+       
     public override double Width
     {
         get => base.Width;

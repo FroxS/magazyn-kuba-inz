@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.EF;
 
@@ -11,9 +12,11 @@ using Warehouse.EF;
 namespace Warehouse.EF.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    partial class WarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231024182901_allow set Id order to storage item")]
+    partial class allowsetIdordertostorageitem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,11 +376,6 @@ namespace Warehouse.EF.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Flor")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
                     b.Property<Guid>("ID_Rack")
                         .HasColumnType("uniqueidentifier");
 
@@ -389,6 +387,9 @@ namespace Warehouse.EF.Migrations
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -677,7 +678,7 @@ namespace Warehouse.EF.Migrations
                         .HasForeignKey("Warehouse.Models.StorageItem", "ID_OrderItem")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Warehouse.Models.WareHouseItem", "Product")
+                    b.HasOne("Warehouse.Models.Product", "Product")
                         .WithMany("StorageItemCollection")
                         .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -758,6 +759,8 @@ namespace Warehouse.EF.Migrations
                 {
                     b.Navigation("OrderItems");
 
+                    b.Navigation("StorageItemCollection");
+
                     b.Navigation("WareHouseItems");
                 });
 
@@ -794,11 +797,6 @@ namespace Warehouse.EF.Migrations
             modelBuilder.Entity("Warehouse.Models.User", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
-                {
-                    b.Navigation("StorageItemCollection");
                 });
 #pragma warning restore 612, 618
         }

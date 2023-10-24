@@ -53,6 +53,8 @@ namespace Warehouse.Dialog
                 return new YesNoDialog(ynvm);
             if (vm is ProductDialogViewModel pvm)
                 return new ProductDialog(pvm);
+            if (vm is StorageUnitDialogViewModel suvm)
+                return new StorageUnitDialog(suvm);
 
             Debugger.Break();
             return null;
@@ -75,6 +77,16 @@ namespace Warehouse.Dialog
         public Product GetProduct(string message)
         {
             return OpenDialog(new ProductDialogViewModel(_service.GetService<IProductService>() ,message));
+        }
+
+        public void ShowError(Exception ex)
+        {
+            OpenDialog(new AlertDialogViewModel(ex.Message, "Bład aplikacji"));
+        }
+
+        public StorageUnit GetStorageUnit(string message)
+        {
+            return OpenDialog(new StorageUnitDialogViewModel(_service.GetService<IStorageUnitService>(), message));
         }
 
         #endregion

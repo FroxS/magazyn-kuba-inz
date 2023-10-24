@@ -166,7 +166,8 @@ namespace Warehouse.ViewModel.Pages
 
             if (count != null && count > 0)
             {
-                string message = _service.MoveProductToState(SelectedItem, itemState.ID, (int)count);
+                var item = SelectedItem;
+                string message = _service.MoveProductToState(ref item, itemState.ID, (int)count);
                 if (message == null)
                 {
                     _service.Save();

@@ -32,7 +32,7 @@ public class Product : BaseEntity
 
     public List<WareHouseImage>? Images { get; set; }
 
-    public List<StorageItem>? StorageItemCollection { get; set; }
+    //public List<StorageItem>? StorageItemCollection { get; set; }
 
     public List<OrderProduct>? OrderItems { get; set; }
 

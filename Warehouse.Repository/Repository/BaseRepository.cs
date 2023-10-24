@@ -161,7 +161,11 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// </summary>
     /// <param name="id">Id of this entity</param>
     /// <returns></returns>
-    public virtual void Insert(T entity) => _context.Entry(entity).State = EntityState.Added;
+    public virtual void Insert(T entity)
+    {
+        entity.CreatedAt = entity.Modified = DateTime.Now;
+        _context.Entry(entity).State = EntityState.Added;
+    }
 
 
     /// <summary>
@@ -169,13 +173,21 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// </summary>
     /// <param name="id">Id of this entity</param>
     /// <returns></returns>
-    public virtual T Add(T entity) => _context.Set<T>().Add(entity).Entity;
+    public virtual T Add(T entity)
+    {
+        entity.CreatedAt = entity.Modified = DateTime.Now;
+        return _context.Set<T>().Add(entity).Entity;
+    }
 
     /// <summary>
     /// Method to update entity in database
     /// </summary>
     /// <param name="entity">Entity to update</param>
-    public virtual void Update(T entity) => _context.Entry(entity).State = EntityState.Modified;
+    public virtual void Update(T entity)
+    {
+        entity.Modified = DateTime.Now;
+        _context.Entry(entity).State = EntityState.Modified;
+    }
 
     /// <summary>
     /// Async method to update entity in database

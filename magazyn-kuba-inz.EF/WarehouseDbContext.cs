@@ -131,9 +131,6 @@ public class WarehouseDbContext : DbContext
                 .HasForeignKey(x => x.ID_Group);
             o.HasMany(x => x.Images)
                 .WithMany(x => x.Products);
-            o.HasMany(x => x.StorageItemCollection)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ID_Product);
         });
 
         modelBuilder.Entity<ProductGroup>(o =>
@@ -161,6 +158,9 @@ public class WarehouseDbContext : DbContext
                 .HasForeignKey(x => x.ID_State);
             o.HasOne(x => x.Product)
                 .WithMany(x => x.WareHouseItems)
+                .HasForeignKey(x => x.ID_Product);
+            o.HasMany(x => x.StorageItemCollection)
+                .WithOne(x => x.Product)
                 .HasForeignKey(x => x.ID_Product);
         });
 
@@ -220,7 +220,7 @@ public class WarehouseDbContext : DbContext
 
         modelBuilder.Entity<StorageItemPackage>(o => {
             o.LoadDefaultEntity();
-            o.Property(x => x.Position);
+            o.Property(x => x.Flor).HasDefaultValue(0);
             o.HasOne(x => x.Rack)
                 .WithMany(x => x.StorageItems)
                 .HasForeignKey(x => x.ID_Rack);
@@ -240,6 +240,9 @@ public class WarehouseDbContext : DbContext
             o.HasOne(x => x.Package)
                 .WithMany(x => x.Items)
                 .HasForeignKey(x => x.ID_StorageItem);
+            o.HasOne(x => x.Product)
+                .WithMany(x => x.StorageItemCollection)
+                .HasForeignKey(x => x.ID_Product);
             o.HasOne(x => x.OrderItem)
                 .WithOne(x => x.StorageItem)
                 .HasForeignKey<StorageItem>(x => x.ID_OrderItem)

@@ -12,6 +12,8 @@ public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepo
 
     private readonly IItemStateRepository _stateRepo;
 
+    private readonly IStorageItemRepository _storageItemRepository;
+
     #endregion
 
     #region Constructors
@@ -19,9 +21,10 @@ public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepo
     /// <summary>
     /// Default constructor
     /// </summary>
-    public WareHouseItemService(IWareHouseItemRepository repository, IItemStateRepository stateRepo):base(repository)
+    public WareHouseItemService(IWareHouseItemRepository repository, IItemStateRepository stateRepo, IStorageItemRepository storageItemRepository):base(repository)
     {
         _stateRepo = stateRepo;
+        _storageItemRepository = storageItemRepository;
     }
 
     #endregion
@@ -96,7 +99,7 @@ public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepo
         return await _repozitory.GetItemAsync(productid, token);
     }
 
-    public string MoveProductToState(WareHouseItem item, Guid targetState, int count)
+    public string MoveProductToState(ref WareHouseItem item, Guid targetState, int count)
     {
         string messages = null;
         WareHouseItem targetitem = GetItem(item.ID_Product, targetState);
@@ -127,19 +130,17 @@ public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepo
                 item.Count -= count;
                 _repozitory.Update(item);
             }
+
+            item = targetitem;
         }
         else
             messages = "Nie można przenieść";
-
         return messages;
 
     }
 
     public bool CanMove(EState oldState, EState newState)
     {
-        if (newState == EState.InStock)
-            return false;
-
         int oldStateValue = (int)oldState;
         int newStateValue = (int)newState;
 
@@ -157,6 +158,57 @@ public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepo
         {
             return false; // newState i oldState są na tym samym poziomie lub mają inne stany pośrednie
         }
+    }
+
+    public List<WareHouseItem> GetProductsAvailableToRack()
+    {
+        return _repozitory.GetAll(x => x.Include(i => i.State).Include(i => i.Product)).Where(x => x.State.State == EState.InStock).ToList();
+    }
+
+    public bool MoveItemsToRack(IEnumerable<StorageItem> items)
+    {
+        var possible = GetProductsAvailableToRack();
+        foreach(var item in items.GroupBy(x => x.ID_Product))
+        {
+            var count = possible.Where(x=> x.ID == item.Key).Select(x => x.Count).Sum();
+            if (!(item.Count() <= count))
+                return false;
+
+        }
+
+        Guid IdState = _stateRepo.GetAll().FirstOrDefault(x => x.State == EState.Available).ID;
+
+        foreach (var item in items.GroupBy(x => x.ID_Product))
+        {
+            var whitem = GetById(item.Key);
+            MoveProductToState(ref whitem, IdState, item.Count());
+            foreach (var itemState in item)
+            {
+                itemState.ID_Product = whitem.ID;
+                _storageItemRepository.Add(itemState);
+            }
+            _storageItemRepository.Save();
+            
+            
+        }
+
+        return true;
+    }
+
+    public bool RemoveFromRack(StorageItem item)
+    {
+        if (item.ID_OrderItem != null)
+            return false;
+
+        Guid IdState = _stateRepo.GetAll().FirstOrDefault(x => x.State == EState.InStock).ID;
+        var whitem =  GetById( item.ID_Product);
+        if(MoveProductToState(ref whitem, IdState, 1) == null)
+        {
+            _storageItemRepository.Delete(item.ID);
+            _storageItemRepository.Save();
+            return true;
+        }
+        return false;
     }
 
     #endregion

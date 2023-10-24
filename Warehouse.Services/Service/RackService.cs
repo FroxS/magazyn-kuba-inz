@@ -50,5 +50,10 @@ public class RackService : BaseServiceWithRepository<IRackRepository, Rack>, IRa
         return (obj.StorageItems?.Count ?? 0) <= 0;
     }
 
+    public List<Rack> GetAllWithItems()
+    {
+        return _repozitory.GetAll(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Product));
+    }
+
     #endregion
 }

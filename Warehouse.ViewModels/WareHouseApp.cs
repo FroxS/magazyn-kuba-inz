@@ -153,5 +153,14 @@ public class WareHouseApp : BaseViewModel, IApp
         await userService.Register(user);
     }
 
-    #endregion
+    public void CatchExeption(System.Exception ex)
+    {
+        ShowSilentMessage("Wystąpił bład aplikacji", EMessageType.Error);
+
+#if DEBUG
+        GetDialogService().ShowError(ex);
+#endif
+    }
+
+#endregion
 }

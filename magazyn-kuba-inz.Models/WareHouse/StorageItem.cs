@@ -12,7 +12,7 @@ public class StorageItem : BaseEntity
     public virtual Guid ID_StorageItem { get; set; }
     public virtual StorageItemPackage? Package { get; set; }
     public virtual Guid ID_Product { get; set; }
-    public virtual Product? Product { get; set; }
-    public virtual Guid ID_OrderItem { get; set; }
+    public virtual WareHouseItem? Product { get; set; }
+    public virtual Guid? ID_OrderItem { get; set; }
     public virtual OrderProduct? OrderItem { get; set; }
 }
