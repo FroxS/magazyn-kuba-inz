@@ -5,7 +5,7 @@ using Warehouse.Core.Interface;
 
 namespace Warehouse.Service;
 
-public class BaseServiceWithRepository<R, M> : BaseService<M> where M : BaseEntity where R : IBaseRepository<M>
+internal class BaseServiceWithRepository<R, M> : BaseService<M> where M : BaseEntity where R : IBaseRepository<M>
 {
 
     #region Private fields
@@ -26,7 +26,7 @@ public class BaseServiceWithRepository<R, M> : BaseService<M> where M : BaseEnti
     #endregion
 }
 
-public class BaseService<Model>: IBaseService<Model> where Model : class
+internal class BaseService<Model>: IBaseService<Model> where Model : class
 {
     #region protected fields
 

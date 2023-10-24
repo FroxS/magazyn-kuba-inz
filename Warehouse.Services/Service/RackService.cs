@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Service;
 
-public class RackService : BaseServiceWithRepository<IRackRepository, Rack>, IRackService
+internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, IRackService
 {
     #region Private fields
 

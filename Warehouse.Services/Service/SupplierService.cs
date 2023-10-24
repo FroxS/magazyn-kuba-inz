@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class SupplierService : BaseServiceWithRepository<ISupplierRepository,Supplier>, ISupplierService
+internal class SupplierService : BaseServiceWithRepository<ISupplierRepository,Supplier>, ISupplierService
 {
     #region Constructors
 

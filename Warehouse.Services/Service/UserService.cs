@@ -8,7 +8,7 @@ using Warehouse.Core.Exeptions;
 
 namespace Warehouse.Service;
 
-public class UserService : IUserService
+internal class UserService : IUserService
 {
     #region Private properties
 

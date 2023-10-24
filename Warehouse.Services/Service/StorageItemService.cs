@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class StorageItemService : BaseServiceWithRepository<IStorageItemRepository,StorageItem>, IStorageItemService
+internal class StorageItemService : BaseServiceWithRepository<IStorageItemRepository,StorageItem>, IStorageItemService
 {
     #region Constructors
 

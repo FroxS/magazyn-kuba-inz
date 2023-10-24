@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class ProductService : BaseServiceWithRepository<IProductRepository,Product>, IProductService
+internal class ProductService : BaseServiceWithRepository<IProductRepository,Product>, IProductService
 {
     #region Private fields
 

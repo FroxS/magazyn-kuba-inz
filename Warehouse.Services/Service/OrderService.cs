@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class OrderService : BaseServiceWithRepository<IOrderRepository,Order>, IOrderService
+internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>, IOrderService
 {
     #region Constructors
 

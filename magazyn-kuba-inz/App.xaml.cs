@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Windows;
-using Warehouse.Service.Interface;
 using Warehouse.Service;
 using Warehouse.Core.Interface;
 using Warehouse.Dialog;
@@ -34,6 +33,7 @@ public partial class App : System.Windows.Application
             PrepareService(services);
             PreparePages(services);
             services.PrepareRepository();
+            services.PrepareService();
             PrepareViewModels(services);
             PrepareViews(services);
             PrepareApplication(services);
@@ -58,23 +58,7 @@ public partial class App : System.Windows.Application
 
     private void PrepareService(IServiceCollection services)
     {
-        services.AddTransient<IUserService,UserService>();
-        services.AddTransient<IProductService, ProductService>();
-        services.AddTransient<IProductGroupService, ProductGroupService>();
-        services.AddTransient<IProductStatusService, ProductStatusService>();
-        services.AddTransient<ISupplierService, SupplierService>();
-        services.AddTransient<IItemStateService, ItemStateService>();
-        services.AddTransient<IWareHouseItemService, WareHouseItemService>();
-        services.AddTransient<IImageService, ImageService>();
-        services.AddTransient<IOrderService, OrderService>();
-        services.AddTransient<IOrderProductService, OrderProductService>();
-        services.AddTransient<IRackService, RackService>();
-        services.AddTransient<IStorageUnitService, StorageUnitService>();
-        services.AddTransient<IStorageItemPackageService, StorageItemPackageService>();
-        services.AddTransient<IStorageItemService, StorageItemService>();
-        services.AddTransient<IHallService, HallService>();
-
-        services.AddSingleton<MessageService>();
+        
         services.AddSingleton<IDialogService, DialogService>();
         services.AddTransient((o) => { return Dispatcher; });
     }

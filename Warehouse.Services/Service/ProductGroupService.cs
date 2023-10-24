@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace Warehouse.Service;
 
-public class ProductGroupService : BaseServiceWithRepository<IProductGroupRepository, ProductGroup>, IProductGroupService
+internal class ProductGroupService : BaseServiceWithRepository<IProductGroupRepository, ProductGroup>, IProductGroupService
 {
     #region Constructors
 

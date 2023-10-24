@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class ItemStateService : BaseServiceWithRepository<IItemStateRepository, ItemState>, IItemStateService
+internal class ItemStateService : BaseServiceWithRepository<IItemStateRepository, ItemState>, IItemStateService
 {
     #region Constructors
 

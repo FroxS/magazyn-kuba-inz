@@ -4,7 +4,7 @@ using Warehouse.Models;
 using System.Collections.ObjectModel;
 namespace Warehouse.Service;
 
-public class ProductStatusService : BaseServiceWithRepository<IProductStatusRepository, ProductStatus>, IProductStatusService
+internal class ProductStatusService : BaseServiceWithRepository<IProductStatusRepository, ProductStatus>, IProductStatusService
 {
     #region Constructors
 

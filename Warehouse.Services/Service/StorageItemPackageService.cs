@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Service;
 
-public class StorageItemPackageService : BaseServiceWithRepository<IStorageItemPackageRepository, StorageItemPackage>, IStorageItemPackageService
+internal class StorageItemPackageService : BaseServiceWithRepository<IStorageItemPackageRepository, StorageItemPackage>, IStorageItemPackageService
 {
     #region Constructors
 

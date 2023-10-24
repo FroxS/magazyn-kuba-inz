@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Service;
 
-public class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHallService
+internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IHallService
 {
     #region Private fields
 

@@ -4,7 +4,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Service;
 
-public class ImageService : BaseServiceWithRepository<IImageRepository,WareHouseImage>, IImageService
+internal class ImageService : BaseServiceWithRepository<IImageRepository,WareHouseImage>, IImageService
 {
     #region Constructors
 

@@ -6,7 +6,7 @@ using Warehouse.Models.Enums;
 
 namespace Warehouse.Service;
 
-public class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepository, WareHouseItem>, IWareHouseItemService
+internal class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRepository, WareHouseItem>, IWareHouseItemService
 {
     #region Private fields
 
