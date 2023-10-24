@@ -10,8 +10,10 @@ using Warehouse.Service;
 using Warehouse.Core.Exeptions;
 using Warehouse.Core.Helpers;
 using Warehouse.Service.Interface;
+using System.Threading.Tasks;
+using System;
 
-namespace Warehouse.ViewModel;
+namespace Warehouse;
 
 public class WareHouseApp : BaseViewModel, IApp
 {
@@ -162,5 +164,5 @@ public class WareHouseApp : BaseViewModel, IApp
 #endif
     }
 
-#endregion
+    #endregion
 }

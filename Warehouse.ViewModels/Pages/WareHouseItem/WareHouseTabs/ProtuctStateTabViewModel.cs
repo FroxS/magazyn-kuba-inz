@@ -130,7 +130,7 @@ namespace Warehouse.ViewModel.Pages
             Product p = _app.GetDialogService().GetProduct("Wybierz Produkt");
             if (p == null)
                 return;
-            double? count = await WareHouseApp.InnerDialog.GetCountAsync();
+            double? count = await _app.GetInnerDialogService().GetCountAsync();
 
             if (count == null)
                 return;
@@ -162,7 +162,7 @@ namespace Warehouse.ViewModel.Pages
 
             var itemState = _stateService.GetAll().FirstOrDefault(x => x.State == state);
 
-            double? count = await WareHouseApp.InnerDialog.GetCountAsync();
+            double? count = await _app.GetInnerDialogService().GetCountAsync();
 
             if (count != null && count > 0)
             {

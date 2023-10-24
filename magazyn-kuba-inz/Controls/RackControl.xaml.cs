@@ -128,7 +128,7 @@ public partial class RackControl : UserControl
                     int itemFlor = item.Flor;
 
                     var flor = flors[0];
-                    if (flors.Count < itemFlor)
+                    if (flors.Count > itemFlor)
                         flor = flors[itemFlor];
 
                     flor.Items.Add(item);
