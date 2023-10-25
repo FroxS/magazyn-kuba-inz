@@ -4,7 +4,8 @@ using System.Windows.Data;
 using System.Collections.ObjectModel;
 using Warehouse.Models;
 using System.Windows.Media;
-using System;
+using System.Linq;
+using System.IO.Packaging;
 
 namespace Warehouse.Controls;
 
@@ -44,7 +45,7 @@ public partial class RackControl : UserControl
         set { SetValue(BoxBrushProperty, value); }
     }
 
-    public ObservableCollection<Flor> Flors { get; set; }
+    public ObservableCollection<SFlor> Flors { get; set; }
 
     #endregion
 
@@ -100,8 +101,8 @@ public partial class RackControl : UserControl
 
     private void Box_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        if (sender is FrameworkElement obj && obj.DataContext is StorageItemPackage sip)
-            SelectedPackage = sip;
+        if (sender is FrameworkElement obj && obj.DataContext is SPackage sip)
+            SelectedPackage = sip.Package;
     }
 
     #endregion
@@ -110,14 +111,14 @@ public partial class RackControl : UserControl
 
     internal void UpdateRack(Rack ro)
     {
-        var flors = new ObservableCollection<Flor>();
+        var flors = new ObservableCollection<SFlor>();
 
         if(ro != null)
         {
             for (int i = 0; i < ro.Flors; i++)
             {
-                var flor = new Flor();
-                flor.Items = new ObservableCollection<StorageItemPackage>();
+                var flor = new SFlor();
+                flor.Items = new ObservableCollection<SPackage>();
                 flors.Add(flor);
             }
 
@@ -131,8 +132,14 @@ public partial class RackControl : UserControl
                     if (flors.Count > itemFlor)
                         flor = flors[itemFlor];
 
-                    flor.Items.Add(item);
+                    flor.Items.Add(new SPackage(item));
                 }
+                
+            }
+
+            foreach(var flor in flors)
+            {
+                flor.UpdateColumns();
             }
         }
         
@@ -159,13 +166,96 @@ public partial class RackControl : UserControl
 
     #endregion
 
-    public class Flor
+    public class SFlor : ObservableObject
     {
-        public ObservableCollection<StorageItemPackage> Items { get; set; }
-        public Flor() { }
+        private ObservableCollection<SPackage> _items;
+        private int _column = 1;
+
+        public ObservableCollection<SPackage> Items 
+        {
+            get => _items;
+            set { 
+                _items = value;
+                OnPropertyChanged(nameof(Items));
+            }
+        }
+
+        public int Column
+        {
+            get => _column;
+            set
+            {
+                _column = value;
+                OnPropertyChanged(nameof(Column));
+            }
+        }
+
+        public SFlor() { }
+
+        public void UpdateColumns()
+        {
+            double percent = Items.FirstOrDefault()?.Package?.StorageUnit?.SizeOfRack ?? 1;
+            int cols = (int)(1.0 / percent);
+            if (cols < 1)
+            {
+                cols = 1;
+            }
+            Column = cols;
+        }
     }
 
-    
+    public class SPackage : ObservableObject
+    {
+        private bool _isSelected = false;
+        private StorageItemPackage _package;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
+
+        public StorageItemPackage Package
+        {
+            get => _package;
+            private set
+            {
+                _package = value;
+                OnPropertyChanged(nameof(Package));
+            }
+        }
+
+       
+
+        public SPackage(StorageItemPackage pack) 
+        {
+            Package = pack;
+        }  
+    }
+
+    public class SItem : ObservableObject
+    {
+        private StorageItem _item;
+        public StorageItem Item
+        {
+            get => _item;
+            private set
+            {
+                _item = value;
+                OnPropertyChanged(nameof(Item));
+            }
+        }
+
+        public SItem(StorageItem item)
+        {
+            Item = item;
+        }
+    }
+
+
 }
 
 

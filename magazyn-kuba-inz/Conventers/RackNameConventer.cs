@@ -15,7 +15,7 @@ public class RackNameConventer : BaseValueConventer<RackNameConventer>
 {
     public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is RackObject rack)
+        if (value is Rack rack)
             return rack.GetName();
         return value;
     }

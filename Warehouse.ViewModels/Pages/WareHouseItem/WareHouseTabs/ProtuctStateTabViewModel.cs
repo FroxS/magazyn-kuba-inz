@@ -96,6 +96,8 @@ namespace Warehouse.ViewModel.Pages
 
         public ICommand AddNewCommand { get; private set; }
 
+        public ICommand ChangeCountCommand { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -114,6 +116,7 @@ namespace Warehouse.ViewModel.Pages
             _state = state;
             MoveToStateCommand = new AsyncRelayCommand<EState>(MoveToState, (o) => SelectedItem != null && CanMove);
             AddNewCommand = new AsyncRelayCommand(AddItem, (o) => CanAddNew);
+            ChangeCountCommand = new AsyncRelayCommand<WareHouseItem>(ChangeCount, (o) => CanChangeCount);
             CanAddNew = ((state.State & (EState.Delivery | EState.InStock)) != 0);
             CanChangeCount = ((state.State & (EState.Delivery | EState.InStock)) != 0);
             Load();
@@ -149,6 +152,28 @@ namespace Warehouse.ViewModel.Pages
             }
             Load();
 
+        }
+
+        private async Task ChangeCount(WareHouseItem item)
+        {
+            try
+            {
+                if (item == null)
+                    return;
+                double? count = await _app.GetInnerDialogService().GetCountAsync(item.Count);
+
+                if(count != null)
+                {
+                    item.Count = (int)count;
+                    _service.Update(item);
+                    await _service.SaveAsync();
+                    Load();
+                }
+            }
+            catch(Exception ex)
+            {
+                _app.CatchExeption(ex);
+            }
         }
 
         private async Task MoveToState(EState state)

@@ -106,19 +106,34 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
         ToDel.ForEach((o) => {
             _rackService.Delete(o);
         });
+
+
         foreach (Rack rack in hall.Racks)
         {
             rack.ID_Hall = hall.Id;
-            Rack found = _rackService.GetById(rack.ID);
+            Rack found = inDatabase.FirstOrDefault(x => x.ID == rack.ID);//_rackService.GetById(rack.ID);
             if (found == null)
             {
                 _rackService.Add(rack);
             }
             else
             {
+                found.Width = rack.Width;
+                found.Heigth = rack.Heigth;
+                found.Lp = rack.Lp;
+                found.Corridor = rack.Corridor;
+                found.Row = rack.Row;
+                found.CreatedAt = rack.CreatedAt;
+                found.Modified = rack.Modified;
+                found.AmountSpace = rack.AmountSpace;
+                rack.Deepth = rack.Deepth;
+                found.Flors = rack.Flors;
+                found.Direction = rack.Direction;
+                found.ID_Hall = rack.ID_Hall;
                 _rackService.Update(found);
             } 
         }
+
         return true;
     }
 
@@ -212,10 +227,22 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
             {
                 rack.Width = found.Width;
                 rack.Heigth = found.Heigth;
+                rack.Lp = found.Lp;
+                rack.Corridor = found.Corridor;
+                rack.Row = found.Row;
+                rack.CreatedAt = found.CreatedAt;
+                rack.Modified = found.Modified;
+                rack.AmountSpace = found.AmountSpace;
+                rack.Deepth = found.Deepth;
+                rack.Flors = found.Flors;
+                rack.Direction = found.Direction;
+                rack.ID_Hall = found.ID_Hall;
             }
         }
         return hallObj;
     }
+
+
 
     #endregion
 }

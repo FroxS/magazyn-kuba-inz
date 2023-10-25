@@ -73,7 +73,7 @@
                             Command="{Binding AddNewPackageCommand}"
                             
                             Height="30"/>
-                    
+
                 </StackPanel>
 
                 <DataGrid ItemsSource="{Binding ItemsInPackage, UpdateSourceTrigger=PropertyChanged}"
@@ -85,11 +85,11 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Nazwa"
                                             Width="*"
-                                            Binding="{Binding Product.Product.Name}">
+                                            Binding="{Binding Item.Product.Name}">
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Cena"
                                             Width="100"
-                                            Binding="{Binding Product.Product.Price}">
+                                            Binding="{Binding Item.Product.Price}">
                         </DataGridTextColumn>
                     </DataGrid.Columns>
 
@@ -103,7 +103,7 @@
                             </MenuItem>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
-                    
+
                 </DataGrid>
 
             </Grid>
@@ -129,7 +129,7 @@
                                             Binding="{Binding Count}"/>
                         <DataGridTextColumn Header="Nazwa"
                                             Width="*"
-                                            Binding="{Binding Product.Price}">
+                                            Binding="{Binding Product.Name}">
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Cena"
                                             Width="100"
@@ -138,13 +138,6 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
-            
-            
         </Grid>
-        
-        
-        
-             
-
     </Grid>
 </service:BaseControlPage>

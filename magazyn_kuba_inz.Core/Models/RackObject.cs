@@ -48,7 +48,7 @@ public class RackObject : Rack, IBaseObject
     public override double Width
     {
         get => base.Width;
-        set { base.Width = value; U(() => Name); }
+        set { base.Width = value; U(() => Width); }
     }
 
     public override double Heigth

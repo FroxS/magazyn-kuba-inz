@@ -20,7 +20,7 @@ public class WareHouseItem : BaseEntity
 
     public ItemState? State { get; set; }
 
-    public List<StorageItem>? StorageItemCollection { get; set; }
+    public List<StorageItem>? Items { get; set; }
 
     public static WareHouseItem Get()
     {

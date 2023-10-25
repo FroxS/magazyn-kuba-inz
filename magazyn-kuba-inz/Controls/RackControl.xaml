@@ -36,17 +36,19 @@
                             <ItemsControl ItemsSource="{Binding Items}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel VerticalAlignment="Bottom"
-                                                   HorizontalAlignment="Left"
-                                                   FlowDirection="RightToLeft"
-                                                   Margin="5,0"/>
+                                        <UniformGrid Columns="{Binding Column}"
+                                                     FlowDirection="RightToLeft" >
+                                            <UniformGrid.LayoutTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="180"/>
+                                                </TransformGroup>
+                                            </UniformGrid.LayoutTransform>
+                                        </UniformGrid>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Width="50"
-                                                Height="50"
-                                                Margin="2"
+                                        <Border Margin="2"
                                                 Background="{Binding BoxBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"
                                                 MouseDown="Box_MouseDown"/>
                                     </DataTemplate>
@@ -57,10 +59,8 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-
         <Rectangle Grid.Column="2"
                    Width="20"
                    Fill="{Binding RackBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"/>
-
     </Grid>
 </UserControl>

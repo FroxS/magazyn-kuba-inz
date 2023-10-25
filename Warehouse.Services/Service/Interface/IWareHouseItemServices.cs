@@ -70,7 +70,10 @@ public interface IStorageItemPackageService : IBaseService<StorageItemPackage>
 {
     List<StorageItem>? GetItemsByID(Guid id);
 }
-public interface IStorageItemService : IBaseService<StorageItem> { }
+public interface IStorageItemService : IBaseService<StorageItem> 
+{
+    List<StorageItem>? GetItemsByPackage(Guid id);
+}
 
 public interface IHallService : IBaseService<Hall> 
 {

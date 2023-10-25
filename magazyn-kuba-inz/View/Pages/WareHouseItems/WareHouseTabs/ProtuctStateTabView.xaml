@@ -43,6 +43,13 @@
                     <MenuItem Header="Dodaj" IsEnabled="{Binding CanAddNew}"
                               Command="{Binding AddNewCommand}"
                               />
+
+                    <MenuItem Header="Zmień ilość" IsEnabled="{Binding CanChangeCount}"
+                              Command="{Binding ChangeCountCommand}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                         AncestorType={x:Type ContextMenu}}, 
+                                                         Path=PlacementTarget.SelectedItem}"
+                              />
                 </ContextMenu>
             </DataGrid.ContextMenu>
             

@@ -5,8 +5,8 @@ namespace Warehouse.Core.Helpers;
 
 public static class RackHelper
 {
-    public static string GetName(this RackObject rack)
+    public static string GetName(this Rack rack)
     {
-        return $"{rack.Flors}/{0}";
+        return $"{rack.Corridor}/{rack.Row}/{rack.Flors}";
     }
 }

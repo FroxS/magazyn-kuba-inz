@@ -11,6 +11,7 @@ public class Rack : BaseEntity
     [Required]
     public override Guid ID { get; set; }
     public virtual int Corridor { get; set; }
+    public virtual int Row { get; set; }
     public virtual int Flors { get; set; }
     public virtual double Width { get; set; }
     public virtual double Heigth { get; set; }

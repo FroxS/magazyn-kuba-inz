@@ -168,7 +168,7 @@ internal class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRe
     public bool MoveItemsToRack(IEnumerable<StorageItem> items)
     {
         var possible = GetProductsAvailableToRack();
-        foreach(var item in items.GroupBy(x => x.ID_Product))
+        foreach(var item in items.GroupBy(x => x.ID_Item))
         {
             var count = possible.Where(x=> x.ID == item.Key).Select(x => x.Count).Sum();
             if (!(item.Count() <= count))
@@ -178,13 +178,13 @@ internal class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRe
 
         Guid IdState = _stateRepo.GetAll().FirstOrDefault(x => x.State == EState.Available).ID;
 
-        foreach (var item in items.GroupBy(x => x.ID_Product))
+        foreach (var item in items.GroupBy(x => x.ID_Item))
         {
             var whitem = GetById(item.Key);
             MoveProductToState(ref whitem, IdState, item.Count());
             foreach (var itemState in item)
             {
-                itemState.ID_Product = whitem.ID;
+                itemState.ID_Item = whitem.ID;
                 _storageItemRepository.Add(itemState);
             }
             _storageItemRepository.Save();
@@ -201,7 +201,7 @@ internal class WareHouseItemService : BaseServiceWithRepository<IWareHouseItemRe
             return false;
 
         Guid IdState = _stateRepo.GetAll().FirstOrDefault(x => x.State == EState.InStock).ID;
-        var whitem =  GetById( item.ID_Product);
+        var whitem =  GetById(item.ID_Item);
         if(MoveProductToState(ref whitem, IdState, 1) == null)
         {
             _storageItemRepository.Delete(item.ID);

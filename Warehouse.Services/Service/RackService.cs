@@ -52,7 +52,7 @@ internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, I
 
     public List<Rack> GetAllWithItems()
     {
-        return _repozitory.GetAll(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Product));
+        return _repozitory.GetAll(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Item),false);
     }
 
     #endregion

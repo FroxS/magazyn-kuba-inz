@@ -5,9 +5,6 @@ using Warehouse.ViewModel.Service;
 using Warehouse.Models;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
-using Warehouse.Service;
-using Newtonsoft.Json.Linq;
-using Warehouse.EF.Migrations;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -188,8 +185,8 @@ public class RacksPageViewModel : BasePageViewModel
                 var item = new StorageItem()
                 {
                     ID = Guid.NewGuid(),
-                    ID_Product = AvailableItem.ID,
-                    ID_StorageItem = SelectedPackage.ID,
+                    ID_Item = AvailableItem.ID,
+                    ID_Package = SelectedPackage.ID,
                     ID_OrderItem = null
                 };
                 items.Add(item);
@@ -217,7 +214,7 @@ public class RacksPageViewModel : BasePageViewModel
 
     private ObservableCollection<StorageItem> GetStoragrItemByPackageID(Guid id)
     {
-        return new ObservableCollection<StorageItem>(_storageItemPackageService.GetItemsByID(id));
+        return new ObservableCollection<StorageItem>(_storageItemService.GetItemsByPackage(id));
     }
 
     #endregion

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using Warehouse.EF.Migrations;
 using Warehouse.Models;
 using Warehouse.Repository.Interfaces;
 
@@ -32,6 +33,18 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
 
     #endregion
 
+    #region Protected methods
+
+    protected virtual IQueryable<T> Order(IQueryable<T> items, bool sortbylp = true)
+    {
+        if (sortbylp)
+            return items.OrderBy(x => x.Lp);
+        else
+            return items.OrderBy(x => x.ID);
+    }
+
+    #endregion
+
     #region Public methods
 
     public void ReloadContext()
@@ -52,9 +65,7 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     public async virtual Task<List<T>> GetAllAsync(bool sortbylp = true, CancellationToken cancellationToken = default(CancellationToken))
     {
         IQueryable<T> items = _context.Set<T>();
-        if (sortbylp)
-            items = items.OrderBy(x => x.Lp);
-        return await items.ToListAsync(cancellationToken);
+        return await Order(items, sortbylp).ToListAsync(cancellationToken);
     }
 
 
@@ -62,9 +73,7 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     {
         IQueryable<T> items = _context.Set<T>();
         items = include.Invoke(items);
-        if (sortbylp)
-            items = items.OrderBy(x => x.Lp);
-        return await items.ToListAsync(cancellationToken);
+        return await Order(items, sortbylp).ToListAsync(cancellationToken);
     }
 
     /// <summary>
@@ -74,11 +83,7 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     public virtual List<T> GetAll(bool sortbylp = true)
     {
         IQueryable<T> items = _context.Set<T>();
-        if (sortbylp)
-            items = items.OrderBy(x => x.Lp);
-        else
-            items = items.OrderBy(x => x.ID);
-        return items.ToList();
+        return Order(items, sortbylp).ToList();
     }
 
     /// <summary>
@@ -89,9 +94,7 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     {
         IQueryable<T> items = _context.Set<T>();
         items = include.Invoke(items);
-        if (sortbylp)
-            items = items.OrderBy(x => x.Lp);
-        return items.ToList();
+        return Order(items, sortbylp).ToList();
     }
 
     /// <summary>

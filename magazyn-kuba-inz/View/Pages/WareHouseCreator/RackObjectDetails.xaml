@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:service="clr-namespace:Warehouse.View.Service"
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
              mc:Ignorable="d" 
              Background="{StaticResource FontColorBrush}"
@@ -18,6 +19,9 @@
 
         <Grid Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -95,10 +99,53 @@
                 <Label Content="Wysokość" 
                        Grid.Column="0"/>
 
-                <TextBox Text="{Binding Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Text="{Binding Heigth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Column="1"/>
 
             </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Piętra" 
+                       Grid.Column="0"/>
+
+                <TextBox Text="{Binding Flors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Korytaż" 
+                       Grid.Column="0"/>
+
+                <TextBox Text="{Binding Corridor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Rząd" 
+                       Grid.Column="0"/>
+
+                <TextBox Text="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"/>
+
+            </Grid>
+
         </Grid>
     </StackPanel>
 </UserControl>

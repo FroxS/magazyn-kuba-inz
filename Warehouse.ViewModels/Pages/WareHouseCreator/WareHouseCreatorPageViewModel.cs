@@ -12,11 +12,9 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     #region Private fields
 
     private IHallService _hallService;
-
+    private IRackService _rackService;
     private HallObject _hall;
-
     private IBaseObject _selectedObject;
-
     private Func<RackObject,bool> _canDeleteRack;
 
     #endregion
@@ -32,7 +30,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public IBaseObject SelectedObject
     {
         get => _selectedObject;
-        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); }
+        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); 
+        }
     }
 
     public Func<RackObject, bool> CanDeleteRack
@@ -58,6 +57,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public WareHouseCreatorPageViewModel(IApp app, IHallService hallService, IRackService rackService) : base(app)
     {
         _hallService = hallService;
+        _rackService = rackService;
         EditHallCommand = new AsyncRelayCommand(() => EditHall());
         CanDeleteRack = (rack) => {
             bool flag = rackService.CanDeleteRack(rack.ID);

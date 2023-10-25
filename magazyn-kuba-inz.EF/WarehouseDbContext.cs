@@ -159,9 +159,9 @@ public class WarehouseDbContext : DbContext
             o.HasOne(x => x.Product)
                 .WithMany(x => x.WareHouseItems)
                 .HasForeignKey(x => x.ID_Product);
-            o.HasMany(x => x.StorageItemCollection)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ID_Product);
+            o.HasMany(x => x.Items)
+                .WithOne(x => x.Item)
+                .HasForeignKey(x => x.ID_Item);
         });
 
         modelBuilder.Entity<ItemState>(o => {
@@ -191,6 +191,7 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.MaxHeight).IsRequired().HasDefaultValue(0);
             o.Property(x => x.MaxWeight).IsRequired().HasDefaultValue(0);
             o.Property(x => x.MaxDepth).IsRequired().HasDefaultValue(1);
+            o.Property(x => x.SizeOfRack).IsRequired().HasDefaultValue(1);
         });
 
         modelBuilder.Entity<Rack>(o => {
@@ -225,24 +226,24 @@ public class WarehouseDbContext : DbContext
                 .WithMany(x => x.StorageItems)
                 .HasForeignKey(x => x.ID_Rack);
             o.HasOne(x => x.StorageUnit)
-                .WithMany(x => x.StorageItems)
+                .WithMany(x => x.Packages)
                 .HasForeignKey(x => x.ID_StorageUnit);
             o.HasMany(x => x.Items)
                 .WithOne(x => x.Package)
-                .HasForeignKey(x => x.ID_StorageItem);
+                .HasForeignKey(x => x.ID_Item);
         });
 
         modelBuilder.Entity<StorageItem>(o => {
             o.LoadDefaultEntity();
-            o.HasOne(x => x.Product)
-                .WithMany(x => x.StorageItemCollection)
-                .HasForeignKey(x => x.ID_Product);
+            o.HasOne(x => x.Item)
+                .WithMany(x => x.Items)
+                .HasForeignKey(x => x.ID_Item);
             o.HasOne(x => x.Package)
                 .WithMany(x => x.Items)
-                .HasForeignKey(x => x.ID_StorageItem);
-            o.HasOne(x => x.Product)
-                .WithMany(x => x.StorageItemCollection)
-                .HasForeignKey(x => x.ID_Product);
+                .HasForeignKey(x => x.ID_Package);
+            o.HasOne(x => x.Item)
+                .WithMany(x => x.Items)
+                .HasForeignKey(x => x.ID_Item);
             o.HasOne(x => x.OrderItem)
                 .WithOne(x => x.StorageItem)
                 .HasForeignKey<StorageItem>(x => x.ID_OrderItem)
