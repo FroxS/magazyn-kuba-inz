@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Windows.Shapes;
 using System.Linq;
 using Warehouse.Core.Interface;
+using Warehouse.Core.Helpers;
 
 namespace Warehouse.Controls;
 
@@ -180,6 +181,12 @@ public partial class WareHouseArea : UserControl
         set { SetValue(CanDeleteRackProperty, value); }
     }
 
+    public bool CanEdit
+    {
+        get { return (bool)GetValue(CanEditProperty); }
+        set { SetValue(CanEditProperty, value); }
+    }
+
     #endregion
 
     #region Dependency Property
@@ -250,6 +257,9 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty CanDeleteRackProperty =
         DependencyProperty.Register(nameof(CanDeleteRack), typeof(Func<RackObject, bool>), typeof(WareHouseArea), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty CanEditProperty =
+        DependencyProperty.Register(nameof(CanEdit), typeof(bool), typeof(WareHouseArea), new UIPropertyMetadata(true,null,CanEditChanged));
+
     public static readonly DependencyProperty RacksProperty =
         DependencyProperty.Register(
             nameof(Racks), 
@@ -271,8 +281,6 @@ public partial class WareHouseArea : UserControl
                     WayPointsPropertyChanged,
                     null)
             );
-
-    
 
     #endregion
 
@@ -298,6 +306,19 @@ public partial class WareHouseArea : UserControl
         }
     }
 
+    private static object CanEditChanged(DependencyObject d, object baseValue)
+    {
+        if(d is WareHouseArea wha && baseValue is bool flag)
+        {
+            string[] ContextMenuNames = { "RackContextMenu", "LineContextMenu", "WayPointsContextMenu", "LinesToRacksContextMenu", "CanvasContextMenu" };
+            foreach(string ContextMenuName in ContextMenuNames)
+                if (wha.TryFindResource(ContextMenuName) is ContextMenu cm)
+                    cm.Visibility = flag ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        return baseValue;
+    }
+
     #endregion
 
     #region EventMethods
@@ -306,7 +327,6 @@ public partial class WareHouseArea : UserControl
     {
         if (sender is RadioButton tb && tb.Tag is ECreatorMode cm)
         {
-
             if(Mode == cm)
             {
                 Mode = ECreatorMode.None;
@@ -322,7 +342,9 @@ public partial class WareHouseArea : UserControl
     private void MenuItem_Initialized(object sender, EventArgs e)
     {
         if (sender is MenuItem mi)
+        {
             SetBinding(mi, MenuItem.IsEnabledProperty, this, nameof(Mode), new IsNotEqualToParamConventer(), convParam: ECreatorMode.WayGeneratorMode);
+        }
     }
     
     private void SetAsStart_Click(object sender, RoutedEventArgs e)
@@ -404,8 +426,11 @@ public partial class WareHouseArea : UserControl
 
     public void Object_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
+       
         if (sender is FrameworkElement obj)
         {
+            SelectedObject = obj?.DataContext as IBaseObject;
+
             if (_connectWidthPoint != null && obj?.DataContext is IBaseObject toConnect)
             {
                 if (toConnect is WayPointObject toconnectWPO)
@@ -435,7 +460,6 @@ public partial class WareHouseArea : UserControl
             _isDragging = true;
             _movingElement = obj;
             _startPoint = e.GetPosition(wareHouseArea);
-            SelectedObject = obj?.DataContext as IBaseObject;
             _selectedElement = obj;
             if (obj?.DataContext is WayPointObject wpo)
             {
@@ -507,7 +531,7 @@ public partial class WareHouseArea : UserControl
 
     private void Object_KeyDown(object sender, KeyEventArgs e)
     {
-        if(_selectedElement != null && _selectedElement.DataContext is IBaseObject bo)
+        if (_selectedElement != null && _selectedElement.DataContext is IBaseObject bo)
         {
             Point pozition = bo.Position;
             switch (e.Key)
@@ -541,6 +565,7 @@ public partial class WareHouseArea : UserControl
 
     private void Canvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
+
         if (Keyboard.Modifiers == ModifierKeys.Control)
         {
             if (e.Delta > 0)
@@ -580,7 +605,6 @@ public partial class WareHouseArea : UserControl
     private void AddRack(Point point)
     {
         RackObject rack = new RackObject(Guid.NewGuid(), point);
-        
         Racks?.Add(rack);
         SelectedObject = rack;
         UpdateConnections();
@@ -620,7 +644,7 @@ public partial class WareHouseArea : UserControl
 
     private void UpdateConnections()
     {
-        if(WayPoints != null)
+        if (WayPoints != null)
         {
             List<Action> delAct = new List<Action>();
 
@@ -671,6 +695,8 @@ public partial class WareHouseArea : UserControl
 
     private bool MoveElement(Point point, FrameworkElement element)
     {
+        if (!CanEdit)
+            return false;
         if ((point.X >= 0 && point.X <= wareHouseArea.ActualWidth - element.ActualWidth &&
             point.Y >= 0 && point.Y <= wareHouseArea.ActualHeight - element.ActualHeight) &&
             element.DataContext is IBaseObject rack)

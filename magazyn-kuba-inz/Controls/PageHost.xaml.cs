@@ -18,9 +18,9 @@ namespace Warehouse.Controls
         /// <summary>
         /// The current page to show in the page host
         /// </summary>
-        public EApplicationPage CurrentPage
+        public IBasePageViewModel CurrentPage
         {
-            get => (EApplicationPage)GetValue(CurrentPageProperty);
+            get => (IBasePageViewModel)GetValue(CurrentPageProperty);
             set => SetValue(CurrentPageProperty, value);
         }
 
@@ -30,34 +30,14 @@ namespace Warehouse.Controls
         public static readonly DependencyProperty CurrentPageProperty =
             DependencyProperty.Register(
                 nameof(CurrentPage), 
-                typeof(EApplicationPage), 
+                typeof(IBasePageViewModel), 
                 typeof(PageHost), 
                 new UIPropertyMetadata(
-                    default(EApplicationPage),
+                    null,
                     null, 
                     CurrentPagePropertyChanged)
                 );
 
-
-        /// <summary>
-        /// The current page to show in the page host
-        /// </summary>
-        public BasePageViewModel CurrentPageViewModel
-        {
-            get => (BasePageViewModel)GetValue(CurrentPageViewModelProperty);
-            set => SetValue(CurrentPageViewModelProperty, value);
-        }
-
-        /// <summary>
-        /// Registers <see cref="CurrentPage"/> as a dependency property
-        /// </summary>
-        public static readonly DependencyProperty CurrentPageViewModelProperty =
-            DependencyProperty.Register(
-                nameof(CurrentPageViewModel),
-                typeof(BasePageViewModel),
-                typeof(PageHost),
-                null
-                );
 
 
 
@@ -81,7 +61,7 @@ namespace Warehouse.Controls
         /// <param name="e"></param>
         private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
-            if(value is EApplicationPage page)
+            if(value is IBasePageViewModel page)
             {
                 Frame? newPageFrame = (d as PageHost)?.NewPage;
                 var oldPageContent = newPageFrame.Content;
@@ -93,7 +73,7 @@ namespace Warehouse.Controls
                 {
                     var pageVIew = page.ToBasePage(App.AppHost.Services);
                     //(d as PageHost).CurrentPageViewModel = pageVIew.ViewModelObject as BasePageViewModel;
-                    App.AppHost.Services.GetService<INavigation>().UpdateViewModel(pageVIew.ViewModelObject as BasePageViewModel);
+                    //App.AppHost.Services.GetService<INavigation>().UpdateViewModel(pageVIew.ViewModelObject as BasePageViewModel);
                     newPageFrame.Content = pageVIew;
                 }
                     

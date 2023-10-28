@@ -46,6 +46,7 @@ public class WareHouseItemsPageViewModel : BasePageViewModel
 
     public WareHouseItemsPageViewModel(IApp app, IItemStateService itemStateService, IWareHouseItemService service, IProductService productService) : base(app)
     {
+        Page = Models.Page.EApplicationPage.WareHouseItems;
         _itemStateService = itemStateService;
         _service = service;
     }

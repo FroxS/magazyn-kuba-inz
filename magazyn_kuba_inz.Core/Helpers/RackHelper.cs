@@ -7,6 +7,6 @@ public static class RackHelper
 {
     public static string GetName(this Rack rack)
     {
-        return $"{rack.Corridor}/{rack.Row}/{rack.Flors}";
+        return $"{rack.Flors}/{rack.Corridor}/{rack.Row}/{rack.Direction.ToString().FirstOrDefault()}";
     }
 }

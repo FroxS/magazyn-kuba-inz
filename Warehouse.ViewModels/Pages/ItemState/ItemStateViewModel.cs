@@ -3,6 +3,7 @@ using Warehouse.Models;
 using System.ComponentModel.DataAnnotations;
 using Warehouse.Service.Interface;
 using Warehouse.Models.Enums;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Pages;
 

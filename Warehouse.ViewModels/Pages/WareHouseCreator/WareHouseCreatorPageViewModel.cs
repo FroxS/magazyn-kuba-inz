@@ -4,6 +4,10 @@ using Warehouse.ViewModel.Service;
 using System.Windows.Input;
 using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
+using Newtonsoft.Json.Bson;
+using Newtonsoft.Json;
+using Warehouse.Models;
+using System.Collections.ObjectModel;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -14,6 +18,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     private IHallService _hallService;
     private IRackService _rackService;
     private HallObject _hall;
+    private bool _canEdit = false;
+    private bool _toSave = false;
     private IBaseObject _selectedObject;
     private Func<RackObject,bool> _canDeleteRack;
 
@@ -30,7 +36,15 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public IBaseObject SelectedObject
     {
         get => _selectedObject;
-        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject)); 
+        set { SetProperty(ref _selectedObject, value, nameof(SelectedObject), 
+            () =>
+            {
+                if(value != null && _selectedObject is RackObject ro)
+                {
+                    ro.Items = new ObservableCollection<StorageItem>(_rackService.GetAllPackages(ro.ID).SelectMany(x => x.Items));
+                }
+            }
+            ); 
         }
     }
 
@@ -38,6 +52,18 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     {
         get => _canDeleteRack;
         set { SetProperty(ref _canDeleteRack, value, nameof(CanDeleteRack)); }
+    }
+
+    public bool CanEdit
+    {
+        get => _canEdit;
+        set { SetProperty(ref _canEdit, value, nameof(CanEdit)); }
+    }
+
+    public bool ToSave
+    {
+        get => _toSave;
+        set { SetProperty(ref _toSave, value, nameof(ToSave)); }
     }
 
     #endregion
@@ -50,15 +76,19 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     public ICommand EditHallCommand { get; protected set; }
 
+    public ICommand EditCommand { get; protected set; }
+
     #endregion
 
     #region Constructors
 
     public WareHouseCreatorPageViewModel(IApp app, IHallService hallService, IRackService rackService) : base(app)
     {
+        Page = Models.Page.EApplicationPage.WareHouseCreator;
         _hallService = hallService;
         _rackService = rackService;
-        EditHallCommand = new AsyncRelayCommand(() => EditHall());
+        EditHallCommand = new AsyncRelayCommand(() => EditHall(), (o) => CanEdit);
+        EditCommand = new RelayCommand((o) => { CanEdit = true; ToSave = true; }, (o) => !CanEdit) ;
         CanDeleteRack = (rack) => {
             bool flag = rackService.CanDeleteRack(rack.ID);
             flag = false;
@@ -77,9 +107,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     {
         base.OnPageOpen(); 
         var hall = _hallService.GetAll().FirstOrDefault();
-
-
-        if(hall == null)
+        if (hall == null)
         {
             Application.GetInnerDialogService().GetHallInnerDialog((o) => {
 
@@ -112,7 +140,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     public override void OnPageClose()
     {
-        if (Hall == null)
+        if (Hall == null || !ToSave)
             return;
         string? message = _hallService.IsHallOk(Hall);
         if (message != null)
@@ -150,6 +178,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     #region Private methods
 
+    
 
     #endregion
 }

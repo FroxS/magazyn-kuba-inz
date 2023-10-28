@@ -17,6 +17,30 @@
             <Setter Property="Height" Value="20"/>
         </Style>
 
+        <ContextMenu x:Key="RackContextMenu">
+            <MenuItem Header="Usuń" Click="Usun_Click" />
+            <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
+        </ContextMenu>
+
+        <ContextMenu x:Key="LineContextMenu">
+            <MenuItem Header="Usuń" Click="Usun_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="WayPointsContextMenu">
+            <MenuItem Header="Usuń" Click="Usun_Click" />
+            <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
+            <MenuItem Header="Ustaw jako punkt stratowy" Click="SetAsStart_Click" Initialized="MenuItem_Initialized"/>
+        </ContextMenu>
+
+        <ContextMenu x:Key="LinesToRacksContextMenu">
+            <MenuItem Header="Usuń" Click="Usun_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="CanvasContextMenu" Opened="GetPozitionEvent">
+            <MenuItem Header="Dodaj punkt" Click="Add_Point_Click"/>
+            <MenuItem Header="Dodaj regał" Click="Add_Rack_Click" />
+        </ContextMenu>
+
     </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
@@ -25,6 +49,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
+                    Visibility="{Binding CanEdit,Converter={conv:BoolToVisibleConventer} ,ConverterParameter=True, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal">
@@ -105,7 +130,8 @@
                             Background="{Binding HallBackground, RelativeSource={RelativeSource AncestorType={x:Type local:WareHouseArea}}}"
                             MouseLeftButtonDown="Canvas_MouseLeftButtonDown"
                             MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
-                            Focusable="True">
+                            Focusable="True"
+                            ContextMenu="{StaticResource CanvasContextMenu}">
                         <Canvas.Effect>
                             <DropShadowEffect BlurRadius="25" 
                                               Direction="-120" 
@@ -140,18 +166,22 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid MouseLeftButtonDown="Object_MouseLeftButtonDown">
+                                    <Grid MouseLeftButtonDown="Object_MouseLeftButtonDown"
+                                          ContextMenu="{StaticResource RackContextMenu}">
                                         <Rectangle Fill="{Binding Color, UpdateSourceTrigger=PropertyChanged}"
                                                    Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
                                                    Height="{Binding Heigth, UpdateSourceTrigger=PropertyChanged}"
                                                    att:MarginCorrection.Value="True">
                                         </Rectangle>
-                                        <Grid.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Usuń" Click="Usun_Click" />
-                                                <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
-                                            </ContextMenu>
-                                        </Grid.ContextMenu>
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -176,12 +206,8 @@
                                     <Line X1="{Binding [0].X}" Y1="{Binding [0].Y}"
                                           X2="{Binding [1].X}" Y2="{Binding [1].Y}"
                                           Stroke="{Binding LineBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" 
-                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}">
-                                        <Line.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Usuń" Click="Usun_Click" />
-                                            </ContextMenu>
-                                        </Line.ContextMenu>
+                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                          ContextMenu="{StaticResource LineContextMenu}">
                                     </Line>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -201,12 +227,9 @@
                                           X2="{Binding Value.X}" Y2="{Binding Value.Y}"
                                           Opacity=".8"
                                           Stroke="{Binding LineToRackBrush, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" 
-                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}" >
-                                        <Line.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Usuń" Click="Usun_Click" />
-                                            </ContextMenu>
-                                        </Line.ContextMenu>
+                                          StrokeThickness="{Binding LineStroke, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                          ContextMenu="{StaticResource LinesToRacksContextMenu}">
+                                        
                                     </Line>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -224,10 +247,11 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Ellipse Width="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                    <!--<Ellipse Width="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              Height="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
                                              MouseLeftButtonDown="Object_MouseLeftButtonDown"
-                                             att:MarginCorrection.Value="True">
+                                             att:MarginCorrection.Value="True"
+                                             ContextMenu="{StaticResource WayPointsContextMenu}">
                                         <Ellipse.Fill>
                                             <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
                                                 <Binding Path="IsStartPoint" UpdateSourceTrigger="PropertyChanged" />
@@ -244,14 +268,34 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Ellipse.Style>
-                                        <Ellipse.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Usuń" Click="Usun_Click" />
-                                                <MenuItem Header="Połącz z " Click="ConnectWidth_Click" Initialized="MenuItem_Initialized"/>
-                                                <MenuItem Header="Ustaw jako punkt stratowy" Click="SetAsStart_Click" Initialized="MenuItem_Initialized"/>
-                                            </ContextMenu>
-                                        </Ellipse.ContextMenu>
-                                    </Ellipse>
+                                    </Ellipse>-->
+
+                                    <Border Width="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                            Height="{Binding PointDiameter, RelativeSource={RelativeSource AncestorType=local:WareHouseArea}}"
+                                            MouseLeftButtonDown="Object_MouseLeftButtonDown"
+                                            att:MarginCorrection.Value="True"
+                                            ContextMenu="{StaticResource WayPointsContextMenu}">
+                                        <TextBlock Text="" Foreground="White"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   />
+                                        <Border.Background>
+                                            <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                                <Binding Path="IsStartPoint" UpdateSourceTrigger="PropertyChanged" />
+                                                <Binding Path="StartPointBrush" RelativeSource="{RelativeSource AncestorType=local:WareHouseArea}" />
+                                                <Binding Path="PointBrush" RelativeSource="{RelativeSource AncestorType=local:WareHouseArea}" />
+                                            </MultiBinding>
+                                        </Border.Background>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemContainerStyle>
@@ -261,14 +305,6 @@
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
                         </ItemsControl>
-
-                        <Canvas.ContextMenu>
-                            <ContextMenu Opened="GetPozitionEvent">
-                                <MenuItem Header="Dodaj punkt" Click="Add_Point_Click"/>
-                                <MenuItem Header="Dodaj regał" Click="Add_Rack_Click" />
-                            </ContextMenu>
-                        </Canvas.ContextMenu>
-                        
                     </Canvas>
                 </ScrollViewer>
             </Border>

@@ -17,6 +17,7 @@ public class StorageUnitsPageViewModel :
     #region Constructors
     public StorageUnitsPageViewModel(IApp app, IStorageUnitService service) : base(app, service)
     {
+        Page = Models.Page.EApplicationPage.StorageUnits;
     }
 
     #endregion

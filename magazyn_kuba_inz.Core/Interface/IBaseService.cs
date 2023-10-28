@@ -1,7 +1,9 @@
-﻿namespace Warehouse.Core.Interface;
+﻿using Warehouse.Models;
+
+namespace Warehouse.Core.Interface;
 
 
-public interface IBaseService<Model> where Model : class
+public interface IBaseService<Model> where Model : BaseEntity
 {
     /// <summary>
     /// Delete Entity by Id
@@ -52,4 +54,6 @@ public interface IBaseService<Model> where Model : class
     bool Exist(Guid id);
 
     Model GetById(Guid id);
+    void EndTransaction();
+    void RunTransaction();
 }

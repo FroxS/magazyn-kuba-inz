@@ -5,11 +5,15 @@ namespace Warehouse.Core.Interface;
 
 public interface INavigation
 {
-    EApplicationPage Page { get; }
-    IBasePageViewModel PageVM { get; }
+    IBasePageViewModel Page { get; }
+    bool CanSetNextPage { get; }
+
+    bool CanSetPrevPage { get; }
 
     event PageChanged PageChanged;
     void SetPage(EApplicationPage page);
-
-    void UpdateViewModel(IBasePageViewModel vm);
+    void SetPage(IBasePageViewModel pageVM);
+    void SetNextPage();
+    void SetPrevPage();
+    //void UpdateViewModel(IBasePageViewModel vm);
 }

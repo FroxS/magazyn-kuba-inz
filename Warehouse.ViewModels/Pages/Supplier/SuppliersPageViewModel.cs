@@ -18,6 +18,7 @@ public class SuppliersPageViewModel :
     #region Constructors
     public SuppliersPageViewModel(IApp app, ISupplierService service) : base(app, service)
     {
+        Page = Models.Page.EApplicationPage.Suppliers;
     }
 
     #endregion

@@ -194,6 +194,11 @@ public class BaseControlPage<VM> : BaseControlPage, IBasePage
 
     }
 
+    public BaseControlPage(IBasePageViewModel viewModel) : base(viewModel)
+    {
+
+    }
+
     #endregion
 }
 

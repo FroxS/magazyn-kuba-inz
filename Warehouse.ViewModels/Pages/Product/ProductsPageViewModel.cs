@@ -35,8 +35,9 @@ public class ProductsPageViewModel :
         ISupplierService supplierService,
         IProductGroupService productgroupService,
         IProductStatusService productStatusService) 
-        : base(app, service)
+        : base(app, service)    
     {
+        Page = Models.Page.EApplicationPage.Products;
         _supplierService = supplierService;
         _productgroupService = productgroupService;
         _productStatusService = productStatusService;

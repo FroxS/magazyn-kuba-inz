@@ -1,4 +1,5 @@
-﻿using Warehouse.View.Service;
+﻿using Warehouse.Core.Interface;
+using Warehouse.View.Service;
 using Warehouse.ViewModel.Pages;
 
 namespace Warehouse.View.Pages;
@@ -7,8 +8,12 @@ namespace Warehouse.View.Pages;
 /// Logika interakcji dla klasy WareHouseItemsPage.xaml
 /// </summary>
 public partial class WareHouseItemsPage : BaseControlPage<WareHouseItemsPageViewModel>
-{ 
-    public WareHouseItemsPage(WareHouseItemsPageViewModel? vm):base(vm)
+{
+    public WareHouseItemsPage(WareHouseItemsPageViewModel? vm) : base(vm)
+    {
+        InitializeComponent();
+    }
+    public WareHouseItemsPage(IBasePageViewModel? vm):base(vm)
     {
         InitializeComponent();
     }

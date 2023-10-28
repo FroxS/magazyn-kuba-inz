@@ -2,6 +2,7 @@
 using Warehouse.Models.Enums;
 using Warehouse.Models;
 using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Pages;
 

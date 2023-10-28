@@ -25,6 +25,8 @@ namespace Warehouse.Dialog
 
             if (window == null)
                 throw new ArgumentException("Dialog now found");
+            //window.Parent = IApp.MainWindow;
+            window.Owner = _service.GetService<IApp>().MainWindow;
             window.ShowDialog();
             return wm.DialogResult;
         }
@@ -71,7 +73,7 @@ namespace Warehouse.Dialog
 
         public EDialogResult GetYesNoDialog(string message, string title = "")
         {
-            return OpenDialog(new YesNoDialogViewModel(message, title));
+            return OpenDialog(new YesNoDialogViewModel( title, message));
         }
 
         public Product GetProduct(string message)

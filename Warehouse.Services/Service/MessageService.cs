@@ -1,11 +1,12 @@
 ﻿using System.Windows.Input;
 using Warehouse.Core.Helpers;
+using Warehouse.Core.Interface;
 using Warehouse.Models;
 using Warehouse.Models.Enums;
 
 namespace Warehouse.Service;
 
-public class MessageService : ObservableObject
+public class MessageService : ObservableObject, IMessageService
 {
     #region Private properties
 

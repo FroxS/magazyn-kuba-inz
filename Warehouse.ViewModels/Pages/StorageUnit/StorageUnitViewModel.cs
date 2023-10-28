@@ -2,6 +2,7 @@
 using Warehouse.Models;
 using System.ComponentModel.DataAnnotations;
 using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Pages;
 

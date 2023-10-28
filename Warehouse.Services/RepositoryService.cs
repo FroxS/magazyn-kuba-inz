@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Service
 {
@@ -25,7 +25,7 @@ namespace Warehouse.Service
             services.AddTransient<IStorageItemService, StorageItemService>();
             services.AddTransient<IHallService, HallService>();
 
-            services.AddSingleton<MessageService>();
+            services.AddSingleton<IMessageService,MessageService>();
 
             return services;
         }

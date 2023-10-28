@@ -4,13 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:service="clr-namespace:Warehouse.View.Service"
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
+             xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              Background="{StaticResource FontColorBrush}"
              d:DataContext="{d:DesignInstance models:RackObject}"
              xmlns:controls="clr-namespace:Warehouse.Controls"
              d:DesignHeight="450" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider MethodName="GetValues"
+                                ObjectType="{x:Type sys:Enum}"
+                                x:Key="DirTypes">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="enum:EDir" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
         <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=Nazwa}"
                FontSize="14"
@@ -19,6 +34,8 @@
 
         <Grid Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -35,6 +52,11 @@
                 </Style>
 
                 <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="100"/>
+                </Style>
+                <Style TargetType="{x:Type ComboBox}">
                     <Setter Property="HorizontalAlignment" Value="Left"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Width" Value="100"/>
@@ -143,6 +165,41 @@
 
                 <TextBox Text="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Kierunek" 
+                       Grid.Column="0"/>
+
+                <ComboBox ItemsSource="{Binding Source={StaticResource DirTypes}, Converter={conv:SortListConventer}}"
+                          SelectedItem="{Binding Direction, UpdateSourceTrigger=PropertyChanged}"
+                          Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="8">
+                <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="Extended"
+                          AutoGenerateColumns="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Piętro" 
+                                            Width="Auto"
+                                            Binding="{Binding Package.Flor}"/>
+
+                        <DataGridTextColumn Header="Nazwa" 
+                                            Binding="{Binding Item.Product.Name}"
+                                            Width="Auto"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
 
             </Grid>
 

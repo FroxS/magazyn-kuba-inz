@@ -98,11 +98,6 @@ namespace Warehouse.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Cost")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -111,6 +106,11 @@ namespace Warehouse.EF.Migrations
 
                     b.Property<long>("Lp")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Margin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
@@ -121,6 +121,9 @@ namespace Warehouse.EF.Migrations
 
                     b.Property<DateTime>("RealizationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Reserved")
+                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 

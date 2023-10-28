@@ -94,6 +94,7 @@ public class RacksPageViewModel : BasePageViewModel
         IStorageItemService storageItemService,
         IWareHouseItemService wareHouseItemService) : base(app)
     {
+        Page = Models.Page.EApplicationPage.Racks;
         _service = service;
         _storageItemPackageService = storageItemPackageService;
         _wareHouseItemService = wareHouseItemService;

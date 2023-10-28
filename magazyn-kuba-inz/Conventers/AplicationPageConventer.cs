@@ -1,11 +1,11 @@
 ﻿using Warehouse.View.Pages;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using Warehouse.Models.Page;
 using Warehouse.Service.Interface;
 using Warehouse.ViewModel.Service;
 using Warehouse.ViewModel.Pages;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Conventers;
 
@@ -17,32 +17,34 @@ public static class AplicationPageConventer
     /// <param name="page"></param>
     /// <param name="viewModel"></param>
     /// <returns></returns>
-    public static IBasePage ToBasePage(this EApplicationPage page, IServiceProvider services) 
+    public static IBasePage ToBasePage(this IBasePageViewModel pagevm, IServiceProvider services) 
     {
-        switch (page)
+        switch (pagevm.Page)
         {
             case EApplicationPage.DashBoard:
-                return services.GetRequiredService<DashBoardPage>();
+                return new DashBoardPage(pagevm);
             case EApplicationPage.Products:
-                return services.GetRequiredService<ProductsPage>();
+                return new ProductsPage(pagevm);
             case EApplicationPage.Suppliers:
-                return services.GetRequiredService<SuppliersPage>();
+                return new SuppliersPage(pagevm);
             case EApplicationPage.ProductGroups:
-                return services.GetRequiredService<ProductGroupPage>();
+                return new ProductGroupPage(pagevm);
             case EApplicationPage.Settings:
-                return services.GetRequiredService<SettingsPage>();
+                return new SettingsPage(pagevm);
             case EApplicationPage.ProductStatuses:
-                return services.GetRequiredService<ProductStatusesPage>();
+                return new ProductStatusesPage(pagevm);
             case EApplicationPage.ItemStates:
-                return services.GetRequiredService<ItemStatesPage>();
+                return new ItemStatesPage(pagevm);
             case EApplicationPage.WareHouseItems:
-                return services.GetRequiredService<WareHouseItemsPage>();
+                return new WareHouseItemsPage(pagevm);
             case EApplicationPage.StorageUnits:
-                return services.GetRequiredService<StorageUnitsPage>();
+                return new StorageUnitsPage(pagevm);
             case EApplicationPage.WareHouseCreator:
-                return services.GetRequiredService<WareHouseCreatorPage>();
+                return new WareHouseCreatorPage(pagevm);
             case EApplicationPage.Racks:
-                return services.GetRequiredService<RacksPage>();
+                return new RacksPage(pagevm);
+            case EApplicationPage.Order:
+                return new OrderPage(pagevm);
             default:
                 Debugger.Break();
                 return null;

@@ -9,7 +9,6 @@ public class OrderProduct : BaseEntity
     [Key]
     [Required]
     public override Guid ID { get; set; }
-
     public string? Name { get; set; }
     public Guid ID_Order { get; set; }
     public Order? Order { get; set; }
@@ -17,4 +16,16 @@ public class OrderProduct : BaseEntity
     public Product? Product { get; set; }
     public Guid ID_StorageItem { get; set; }
     public StorageItem? StorageItem { get; set; }
+
+    public static OrderProduct Get()
+    {
+        return new OrderProduct()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Modified = DateTime.Now,
+            Name = "",
+            Lp = 1
+        };
+    }
 }

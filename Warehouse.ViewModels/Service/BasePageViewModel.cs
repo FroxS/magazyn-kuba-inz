@@ -1,4 +1,5 @@
 ﻿using Warehouse.Core.Interface;
+using Warehouse.Models.Page;
 
 namespace Warehouse.ViewModel.Service;
 
@@ -9,6 +10,8 @@ public class BasePageViewModel : BaseViewModel, IBasePageViewModel
     public bool CanChangePage { get; protected set; } = true;
 
     public IApp Application { get; }
+
+    public EApplicationPage Page { get; protected set; }
 
     #endregion
 

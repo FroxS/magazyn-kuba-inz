@@ -1,10 +1,10 @@
-﻿using Warehouse.Repository.Interfaces;
-using Warehouse.Service.Interface;
-using Warehouse.Models;
+﻿using Warehouse.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using Warehouse.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.Core.Interface;
+using Warehouse.Repository.Interfaces;
 
 namespace Warehouse.Service;
 
@@ -75,7 +75,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
             return false;
 
         hall.Name = obj.Name;
-        
+
         hall.Data = GetData(obj);
 
         if (!UpdateRacks(obj))
@@ -126,7 +126,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
                 found.CreatedAt = rack.CreatedAt;
                 found.Modified = rack.Modified;
                 found.AmountSpace = rack.AmountSpace;
-                rack.Deepth = rack.Deepth;
+                found.Deepth = rack.Deepth;
                 found.Flors = rack.Flors;
                 found.Direction = rack.Direction;
                 found.ID_Hall = rack.ID_Hall;
@@ -204,7 +204,6 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
             serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
             serializer.Serialize(writer, hall);
         }
-
         return ms.ToArray();
     }
 

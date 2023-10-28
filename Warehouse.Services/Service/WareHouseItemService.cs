@@ -1,5 +1,5 @@
 ﻿using Warehouse.Repository.Interfaces;
-using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Models.Enums;

@@ -23,6 +23,9 @@ public class RackObject : Rack, IBaseObject
 
     protected bool _isSelected = false;
 
+    [JsonIgnore]
+    protected ObservableCollection<StorageItem> _items = new ObservableCollection<StorageItem>();
+
     #endregion
 
     #region Public properties
@@ -87,6 +90,13 @@ public class RackObject : Rack, IBaseObject
     {
         get => _y;
         set { SetProperty(ref _y, value, nameof(Y)); }
+    }
+
+    [JsonIgnore]
+    public ObservableCollection<StorageItem> Items
+    {
+        get => _items;
+        set { SetProperty(ref _items, value, nameof(Items)); }
     }
 
     #endregion

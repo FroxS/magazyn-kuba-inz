@@ -27,8 +27,19 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Grid.Row="0"
+              Grid.Column="0"
+                    Orientation="Horizontal">
+            <Button Content="Edit" Command="{Binding EditCommand}"
+                    Width="100"
+                    Height="30"
+                    Margin="5"/>
+        </StackPanel>
+        
+        
         <Grid Grid.Column="1"
               Grid.Row="1"
+              IsEnabled="{Binding CanEdit}"
               Visibility="{Binding SelectedObject, Converter={conv:NullVisibleConventer}}">
             <ContentPresenter Content="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ContentPresenter.Resources>
@@ -42,9 +53,12 @@
                 </ContentPresenter.Resources>
             </ContentPresenter>
         </Grid>
+        
         <controls:WareHouseArea Grid.Row="1"
                                 Grid.Column="0"
+                                CanEdit="{Binding CanEdit, UpdateSourceTrigger=PropertyChanged}"
                                 HallBackground="#a4ede8"
+                                PointDiameter="15"
                                 CanDeleteRack="{Binding CanDeleteRack, UpdateSourceTrigger=PropertyChanged}"
                                 AreaHeight="{Binding Hall.Height, UpdateSourceTrigger=PropertyChanged}"
                                 AreaWidth="{Binding Hall.Width, UpdateSourceTrigger=PropertyChanged}"

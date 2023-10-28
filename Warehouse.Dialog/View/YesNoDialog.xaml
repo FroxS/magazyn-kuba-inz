@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Warehouse.Dialog.View"
         xmlns:vm="clr-namespace:Warehouse.Dialog"
         d:DataContext="{d:DesignInstance Type=vm:YesNoDialogViewModel}"
-        mc:Ignorable="d" 
-        Height="450" Width="800">
+        mc:Ignorable="d" SizeToContent="WidthAndHeight"
+        MaxWidth="600">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding OKCommand}"/>
         <KeyBinding Key="Esc" Command="{Binding ExitCommand}"/>
@@ -25,7 +25,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    TextWrapping="Wrap"
-                   Foreground="WhiteSmoke"/>
+                   Foreground="Black"/>
 
             <Grid.ContextMenu>
                 <ContextMenu>
@@ -49,7 +49,7 @@
                 Width="200"/>
             <Button Content="Nie" 
                 VerticalAlignment="Center"
-                Command="{Binding OKCommand}"
+                Command="{Binding NoCommand}"
                 Margin="5,30,5,10"
                 Width="200"/>
         </StackPanel>

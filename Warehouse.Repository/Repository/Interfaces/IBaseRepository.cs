@@ -90,4 +90,6 @@ public interface IBaseRepository<T> where T : class
 
     IQueryable<T> GetItemsInclude(Func<IQueryable<T>, IQueryable<T>> include);
     List<T> GetAll(Func<IQueryable<T>, IQueryable<T>> include, bool sortbylp = true);
+    void EndTransaction();
+    void RunTransaction();
 }

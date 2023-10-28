@@ -2,7 +2,6 @@
 using Warehouse.EF;
 using Warehouse.View;
 using Warehouse.View.Login;
-using Warehouse.View.Pages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,7 +30,6 @@ public partial class App : System.Windows.Application
         {
             PrepareDatabase(services);
             PrepareService(services);
-            PreparePages(services);
             services.PrepareRepository();
             services.PrepareService();
             PrepareViewModels(services);
@@ -96,28 +94,13 @@ public partial class App : System.Windows.Application
         services.AddTransient<StorageUnitsPageViewModel>();
         services.AddTransient<WareHouseCreatorPageViewModel>();
         services.AddTransient<RacksPageViewModel>();
+        services.AddTransient<OrderPageViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)
     {
         services.AddDbContextFactory<WarehouseDbContext>();
     }
-
-    private void PreparePages(IServiceCollection services)
-    {
-        services.AddTransient<DashBoardPage>();
-        services.AddTransient<ProductsPage>();
-        services.AddTransient<ProductGroupPage>();
-        services.AddTransient<SuppliersPage>();
-        services.AddTransient<SettingsPage>();
-        services.AddTransient<ProductStatusesPage>();
-        services.AddTransient<ItemStatesPage>();
-        services.AddTransient<WareHouseItemsPage>();
-        services.AddTransient<StorageUnitsPage>();
-        services.AddTransient<WareHouseCreatorPage>();
-        services.AddTransient<RacksPage>();
-    }
-
     private void AddCOnfiguration(IServiceCollection services)
     {
         var builder = new ConfigurationBuilder()

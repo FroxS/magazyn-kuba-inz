@@ -5,12 +5,12 @@ using Warehouse.Core.Resources;
 using Warehouse.Models;
 using Warehouse.Models.Interfaces;
 
-namespace Warehouse.Service.Interface;
+namespace Warehouse.Core.Interface;
 
 public interface IUserService
 {
     Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
-    Task<IUser> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
+    Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
 }
 
 public interface IProductService : IBaseService<Product> 
@@ -58,13 +58,18 @@ public interface IWareHouseItemService : IBaseService<WareHouseItem>
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
-public interface IOrderService : IBaseService<Order> { }
+public interface IOrderService : IBaseService<Order> 
+{
+    List<OrderProduct> GetProducts(Guid id);
+    string GetNewOrderName();
+}
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }
 public interface IRackService : IBaseService<Rack> 
 {
     bool CanDeleteRack(Guid id);
     List<Rack> GetAllWithItems();
+    List<StorageItemPackage> GetAllPackages(Guid id);
 }
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> 
 {

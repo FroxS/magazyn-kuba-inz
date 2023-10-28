@@ -22,13 +22,12 @@ internal class RackRepository : BaseRepository<Rack,WarehouseDbContext>, IRackRe
 
     #region Public methods
 
-
     protected override IQueryable<Rack> Order(IQueryable<Rack> items, bool sortbylp = true)
     {
         if (sortbylp)
             return items.OrderBy(x => x.Lp);
         else
-            return items.OrderBy(x => x.Row).OrderBy(x => x.Corridor);
+            return items.OrderBy(x => x.Corridor).ThenBy(x => x.Row).ThenBy(x => x.Direction);
     }
 
     #endregion

@@ -24,7 +24,7 @@ public class ProductStatusesPageViewModel :
     /// <param name="service">Service of product group item</param>
     public ProductStatusesPageViewModel(IApp app, IProductStatusService service) : base(app, service)
     {
-
+        Page = Models.Page.EApplicationPage.ProductStatuses;
     }
 
     #endregion

@@ -20,6 +20,8 @@ public class BaseObject : ObservableObject, IBaseObject
 
     public Point Position => new Point(X, Y);
 
+    
+
     public double X
     {
         get => _x;
@@ -62,6 +64,18 @@ public class BaseObject : ObservableObject, IBaseObject
     /// Default constructor
     /// </summary>
     public BaseObject(Point point) : this(point.X, point.Y) { }
+
+    #endregion
+
+    #region Public methods
+
+    public double GetDistance(WayPointObject toPoint)
+    {
+        double deltaX = toPoint.X - this.X;
+        double deltaY = toPoint.Y - this.Y;
+        double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        return distance;
+    }
 
     #endregion
 }

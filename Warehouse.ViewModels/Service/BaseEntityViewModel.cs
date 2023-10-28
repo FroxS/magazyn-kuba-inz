@@ -2,7 +2,6 @@
 using Warehouse.Core.Interface;
 using Warehouse.Models;
 using System.Windows.Input;
-using Warehouse.Service.Interface;
 
 namespace Warehouse.ViewModel.Service;
 
@@ -17,7 +16,7 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
 
     protected bool _saved = true;
 
-    protected bool _enabled = false;
+    private bool _enabled = false;
 
     protected string? message;
 
@@ -121,6 +120,10 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
 
     public virtual void SetEnabled(bool enable = false)
     {
+        if (enable)
+            _service.RunTransaction();
+        else
+            _service.EndTransaction();
         Enabled = enable;
     }
 

@@ -1,5 +1,4 @@
 ﻿using Warehouse.Repository.Interfaces;
-using Warehouse.Service.Interface;
 using Warehouse.Models;
 using Warehouse.Core.Interface;
 
@@ -26,7 +25,7 @@ internal class BaseServiceWithRepository<R, M> : BaseService<M> where M : BaseEn
     #endregion
 }
 
-internal class BaseService<Model>: IBaseService<Model> where Model : class
+internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
 {
     #region protected fields
 
@@ -114,6 +113,23 @@ internal class BaseService<Model>: IBaseService<Model> where Model : class
     public void RefreshDbContext()
     {
         _repozitory.ReloadContext();
+    }
+
+    public void RunTransaction()
+    {
+        _repozitory.RunTransaction();
+    }
+
+    public void EndTransaction()
+    {
+        _repozitory.EndTransaction();
+    }
+
+    public void InTransact(Action<IBaseRepository<Model>> actionInTransact)
+    {
+        RunTransaction();
+        actionInTransact.Invoke(_repozitory);
+        EndTransaction();
     }
 
     #endregion

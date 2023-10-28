@@ -1,5 +1,5 @@
 ﻿using Warehouse.Repository.Interfaces;
-using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 using Warehouse.Models;
 using Warehouse.Models.Interfaces;
 using Warehouse.Core.Resources;
@@ -56,7 +56,7 @@ internal class UserService : IUserService
         return new UserResource(user.ID, user.Login, user.Email);
     }
 
-    public async Task<IUser> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken))
     {
         User? user = await _repozitory.GetByNameAsync(resource.Login, cancellationToken);
 

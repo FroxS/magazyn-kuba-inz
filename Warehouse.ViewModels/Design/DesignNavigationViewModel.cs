@@ -1,4 +1,5 @@
 ﻿using Warehouse.Models.Page;
+using Warehouse.ViewModel.Pages;
 
 namespace Warehouse.ViewModel.Design
 {
@@ -20,7 +21,7 @@ namespace Warehouse.ViewModel.Design
         /// </summary>
         public DesignNavigationViewModel()
         {
-            Page = EApplicationPage.DashBoard;
+            Page = new DashBoardPageViewModel(null);// EApplicationPage.DashBoard;
         }
 
         #endregion

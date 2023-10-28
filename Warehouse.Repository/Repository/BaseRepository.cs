@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading;
 using Warehouse.EF.Migrations;
 using Warehouse.Models;
@@ -16,6 +17,8 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     protected C _context;
 
     protected readonly IDbContextFactory<C> _contextFactory;
+
+    public IDbContextTransaction? ActualTransaction => _context.Database.CurrentTransaction;
 
     #endregion
 
@@ -51,6 +54,17 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     {
         _context = _contextFactory.CreateDbContext();
     }
+
+    public void RunTransaction()
+    {
+        _context.Database.BeginTransaction();
+    }
+
+    public void EndTransaction()
+    {
+        _context.Database.RollbackTransaction();
+    }
+
 
     public IQueryable<T> GetItemsInclude(Func<IQueryable<T>, IQueryable<T>> include)
     {
@@ -189,7 +203,8 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     public virtual void Update(T entity)
     {
         entity.Modified = DateTime.Now;
-        _context.Entry(entity).State = EntityState.Modified;
+        _context.Set<T>().Update(entity);
+       // _context.Entry(entity).State = EntityState.Modified;
     }
 
     /// <summary>

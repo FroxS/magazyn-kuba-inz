@@ -160,6 +160,12 @@
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.DashBoard}"
                                          Header="{x:Static resources:Resources.Home}"/>
+                <controls:ItemMenuButton IconPath="{StaticResource Order}"
+                                         IsMenuSelected="False"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Order}"
+                                         Header="Orders"/>
+                
                 <controls:ItemMenuButton IconPath="{StaticResource WarehouseItems}"
                                          IsMenuSelected="False"
                                          Command="{Binding SetPageCommand}"

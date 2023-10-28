@@ -1,6 +1,7 @@
 ﻿using Warehouse.Models;
 using System.Collections.ObjectModel;
 using Warehouse.Service.Interface;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Dialog
 {

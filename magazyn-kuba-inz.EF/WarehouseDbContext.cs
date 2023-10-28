@@ -253,7 +253,7 @@ public class WarehouseDbContext : DbContext
         modelBuilder.Entity<Order>(o => {
             o.LoadDefaultEntity();
             o.Property(x => x.Name).IsRequired();
-            o.Property(x => x.Cost).HasDefaultValue(0);
+            o.Property(x => x.Margin).HasDefaultValue(0);
             o.HasOne(x => x.User)
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.ID_User);

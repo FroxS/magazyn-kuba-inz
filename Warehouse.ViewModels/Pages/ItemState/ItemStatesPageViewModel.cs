@@ -17,6 +17,7 @@ public class ItemStatesPageViewModel :
     #region Constructors
     public ItemStatesPageViewModel(IApp app, IItemStateService service) : base(app, service)
     {
+        Page = Models.Page.EApplicationPage.ItemStates;
     }
 
     #endregion

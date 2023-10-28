@@ -1,21 +1,17 @@
-﻿using Warehouse.ViewModel.Service;
-using Warehouse.Models.Enums;
+﻿using Warehouse.Models.Enums;
 using Warehouse.Models.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using Warehouse.Core.Interface;
 using System.Windows.Threading;
 using Warehouse.Core.Resources;
-using Warehouse.Service;
 using Warehouse.Core.Exeptions;
 using Warehouse.Core.Helpers;
-using Warehouse.Service.Interface;
-using System.Threading.Tasks;
-using System;
+using Warehouse.Models;
 
 namespace Warehouse;
 
-public class WareHouseApp : BaseViewModel, IApp
+public class WareHouseApp : ObservableObject, IApp
 {
     #region Private Properties
 
@@ -27,11 +23,13 @@ public class WareHouseApp : BaseViewModel, IApp
 
     private readonly IUserService userService;
 
+    private bool isTaskRunning = false;
+    
     #endregion
 
     #region Public Properties
 
-    public IUser? User { get; private set; }
+    public User? User { get; private set; }
 
     public bool IsAdmin => User?.Type == EUserType.Admin;
 
@@ -40,6 +38,10 @@ public class WareHouseApp : BaseViewModel, IApp
     public static IInnerDialogService InnerDialog => _services.GetRequiredService<IInnerDialogService>();
 
     public static IDialogService Dialog => _services.GetRequiredService<IDialogService>();
+
+    public Window? MainWindow { get; private set; }
+
+    public virtual bool IsTaskRunning { get => isTaskRunning; set { isTaskRunning = value; OnPropertyChanged(nameof(IsTaskRunning)); } }
 
     #endregion
 
@@ -80,6 +82,7 @@ public class WareHouseApp : BaseViewModel, IApp
             if (login == null)
                 throw new Exception("Brak okna login");
 
+            MainWindow = login as Window;
             flag = login.ShowDialog();
         }
 
@@ -98,7 +101,7 @@ public class WareHouseApp : BaseViewModel, IApp
             if (window == null)
                 throw new Exception("Brak okna głównego");
 
-            app.MainWindow = window as Window;
+            MainWindow = app.MainWindow = window as Window;
             Navigation.SetPage(Warehouse.Models.Page.EApplicationPage.WareHouseCreator);
             window.Show();
         }
@@ -106,15 +109,15 @@ public class WareHouseApp : BaseViewModel, IApp
 
     public void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning)
     {
-        _services.GetRequiredService<MessageService>().AddMessage(message, type);
+        _services.GetRequiredService<IMessageService>().AddMessage(message, type);
     }
 
     public IDialogService GetDialogService() => _services.GetRequiredService<IDialogService>();
 
     public IInnerDialogService GetInnerDialogService() => _services.GetRequiredService<IInnerDialogService>();
 
-    public S GetService<S,T>() where T : class where S: IBaseService<T> => _services.GetRequiredService<S>();
-
+    public S GetService<S,T>() where T : BaseEntity where S: IBaseService<T> => _services.GetRequiredService<S>();
+    public S GetService<S>() where S : IBaseService<BaseEntity> => _services.GetRequiredService<S>();
     public bool IsUserLogin()
     {
         throw new NotImplementedException();

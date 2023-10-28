@@ -12,5 +12,6 @@ public enum EApplicationPage
     ItemStates,
     Settings,
     WareHouseCreator,
-    StorageUnits
+    StorageUnits,
+    Order
 }
