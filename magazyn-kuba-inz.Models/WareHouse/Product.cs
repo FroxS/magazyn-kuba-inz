@@ -16,6 +16,8 @@ public class Product : BaseEntity
 
     public double Price { get; set; }
 
+    public double Weight { get; set; }
+
     public Guid ID_Status { get; set; }
 
     public ProductStatus? Status { get; set; }

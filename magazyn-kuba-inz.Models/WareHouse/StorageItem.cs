@@ -15,4 +15,14 @@ public class StorageItem : BaseEntity
     public virtual WareHouseItem? Item { get; set; }
     public virtual Guid? ID_OrderItem { get; set; }
     public virtual OrderProduct? OrderItem { get; set; }
+
+    public static StorageItem Get()
+    {
+        return new StorageItem()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Lp = 1
+        };
+    }
 }

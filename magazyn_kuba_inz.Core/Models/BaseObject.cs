@@ -69,7 +69,7 @@ public class BaseObject : ObservableObject, IBaseObject
 
     #region Public methods
 
-    public double GetDistance(WayPointObject toPoint)
+    public double GetDistance(BaseObject toPoint)
     {
         double deltaX = toPoint.X - this.X;
         double deltaY = toPoint.Y - this.Y;

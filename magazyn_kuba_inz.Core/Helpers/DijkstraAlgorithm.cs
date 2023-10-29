@@ -1,86 +1,238 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Warehouse.Core.Interface;
+﻿using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
 using Warehouse.Models;
 
 namespace Warehouse.Core.Helpers
 {
-    public class DijkstraResult
+    public class WayResult
     {
-        public List<IBaseObject> Path { get; set; }
-        public double TotalDistance { get; set; }
+        private readonly List<object> _path;
+        public List<Product> Product => Get<Product>();
+
+        public List<WayPointObject> Points => Get<WayPointObject>();
+
+        public List<RackObject> Racks => Get<RackObject>();
+
+        public WayResult(List<object> path) 
+        {
+            _path = path;
+        }
+
+        public double GetDistance()
+        {
+            double distance = 0;
+            List<WayPointObject> points = Points;
+            for (int i = 0; i < points.Count -1; i++)
+            {
+                distance += points[i].GetDistance(points[i+1]);
+            }
+            return distance;
+        }
+
+        private List<T> Get<T>()
+        {
+            var items = new List<T>();
+
+            foreach(var path in _path)
+            {
+                if (path is T obj)
+                    items.Add(obj);
+            }
+
+            return items;
+        }
+
     }
 
-    public static class DijkstraAlgorithm
+    public class DijkstraAlgorithm
     {
-        public static DijkstraResult FindShortestPath(
-        WayPointObject start, List<WayPointObject> allWayPoints, List<StorageItem> products)
+        #region Private fields
+
+        private readonly double _maxThershold;
+
+        private readonly WayPointObject _p_start;
+
+        private readonly HallObject _hall;
+
+        private readonly List<Product> _products;
+
+        #endregion
+
+        #region Constructor
+
+        public DijkstraAlgorithm(WayPointObject p_start, HallObject hall, List<Product> products, double maxThershold = 2)
         {
-            Dictionary<WayPointObject, double> distances = new Dictionary<WayPointObject, double>();
-            Dictionary<WayPointObject, WayPointObject> previous = new Dictionary<WayPointObject, WayPointObject>();
-            HashSet<WayPointObject> unvisitedWayPoints = new HashSet<WayPointObject>(allWayPoints);
+            _maxThershold = maxThershold;
+            _p_start = p_start;
+            _hall = hall;
+            _products = products.OrderByDescending(x => x.Weight).ToList();
+        }
 
-            distances[start] = 0;
+        #endregion
 
-            while (unvisitedWayPoints.Count > 0)
+        #region Public methods
+
+        public WayResult GetPath()
+        {
+            List<object> trace = new List<object>();
+            IEnumerable<WayPointObject> points = _hall.WayPoints;
+            
+            List<Product> all = new List<Product>(_products);
+
+            WayPointObject startForm = _p_start;
+
+            while (!(all.Count == 0))
             {
-                WayPointObject current = distances
-                    .Where(d => unvisitedWayPoints.Contains(d.Key))
-                    .OrderBy(d => d.Value)
-                    .First()
-                    .Key;
+                Product product = all.First();
+                List<Product> productsToSearch = TakeSimilarProducts(product, all.Where(x => x != product));
+                List<KeyValuePair<Product, KeyValuePair<double, List<IBaseObject>>>> distances = new List<KeyValuePair<Product, KeyValuePair<double, List<IBaseObject>>>>();
 
-                unvisitedWayPoints.Remove(current);
-
-                foreach (WayPointObject neighbor in current.Connections)
+                foreach (var productToSearch in productsToSearch)
                 {
-                    double alt = distances[current] + current.GetDistance(neighbor);
-                    if (alt < distances.GetValueOrDefault(neighbor, double.PositiveInfinity))
+                    var result = GetShortestRoute(startForm, _hall, productToSearch);
+                    distances.Add(new KeyValuePair<Product, KeyValuePair<double, List<IBaseObject>>>(productToSearch, result));
+                }
+
+                var found = distances.OrderBy(kv => kv.Value.Key).FirstOrDefault();
+
+                trace.AddRange(found.Value.Value);
+
+                int lastWayIndeks = found.Value.Value.Count;
+                if (found.Value.Value[lastWayIndeks - 1] is WayPointObject wpo)
+                    startForm = wpo;
+                else
+                    startForm = found.Value.Value[lastWayIndeks - 2] as WayPointObject;
+                trace.Add(found.Key);
+
+                var indeksTODell = all.IndexOf(found.Key);
+
+                all.RemoveAt(indeksTODell);
+            }
+
+            WayPointObject lastWayPoint = null;
+            int i = 1;
+            while (lastWayPoint == null)
+            {
+                lastWayPoint = trace[trace.Count - i] as WayPointObject;
+                i++;
+            }
+            var dttohome = GetDictryTable(lastWayPoint, _hall.WayPoints);
+            var toHome = GetWayFromTableDictry(dttohome, _p_start);
+            trace.AddRange(toHome);
+            return new WayResult(trace);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private List<Product> TakeSimilarProducts(Product p, IEnumerable<Product> list)
+        {
+            List<Product> ret = new List<Product>();
+            ret.Add(p);
+
+            foreach (var listp in list)
+            {
+                if (p.Weight - listp.Weight <= _maxThershold)
+                    ret.Add(listp);
+                else
+                    break;
+            }
+            return ret;
+        }
+
+        private KeyValuePair<double, List<IBaseObject>> GetShortestRoute(WayPointObject start, HallObject hall, Product product, bool addRackToResult = true)
+        {
+            Dictionary<WayPointObject, DictryTable<WayPointObject>> table = GetDictryTable(start, hall.WayPoints);
+            ///Wyszykiwanie przystkich punktów przynależących do produktu
+            var racks = hall.Racks.Where(x => x.HasPrduct(product));
+
+            RackObject nearesRack = racks.First();
+            WayPointObject nearestPoint = nearesRack.WayPoints.First();
+            DictryTable<WayPointObject> tab = table[nearestPoint];
+            foreach (RackObject rack in racks)
+            {
+                foreach (WayPointObject rackPoint in rack.WayPoints)
+                {
+                    var newFound = table[rackPoint];
+                    if (newFound.Distance < tab.Distance)
                     {
-                        distances[neighbor] = alt;
-                        previous[neighbor] = current;
+                        nearesRack = rack;
+                        nearestPoint = rackPoint;
+                        tab = newFound;
                     }
+
                 }
             }
 
-            List<IBaseObject> path = new List<IBaseObject>();
-            double totalDistance = 0;
-            WayPointObject currentWayPoint = start;
+            //var dotest = table.Select(x => $"{x.Key.Name};{x.Value.Visited};{x.Value.Distance};{x.Value.Parent?.Name}");
+            List<IBaseObject> trace = GetWayFromTableDictry(table, nearestPoint);
 
-            while (previous.ContainsKey(currentWayPoint))
+            if (addRackToResult)
+                trace.Add(nearesRack);
+            return new KeyValuePair<double, List<IBaseObject>>(tab.Distance, trace);
+        }
+
+        private Dictionary<WayPointObject, DictryTable<WayPointObject>> GetDictryTable(WayPointObject start, IEnumerable<WayPointObject> points)
+        {
+            Dictionary<WayPointObject, DictryTable<WayPointObject>> table = new Dictionary<WayPointObject, DictryTable<WayPointObject>>();
+            foreach (var point in points)
             {
-                WayPointObject previousWayPoint = previous[currentWayPoint];
-                double distanceToPrevious = currentWayPoint.GetDistance(previousWayPoint);
-                totalDistance += distanceToPrevious;
-                path.Add(currentWayPoint);
-                currentWayPoint = previousWayPoint;
+                table.Add(point, new DictryTable<WayPointObject>());
             }
 
-            path.Add(start);
-            path.Reverse();
-
-            // Add racks and products to the path
-            //foreach (StorageItem product in products)
-            //{
-            //    RackObject rack = currentWayPoint.Racks.FirstOrDefault(r => r.Items.Contains(product));
-            //    if (rack != null)
-            //    {
-            //        path.Add(rack);
-            //        currentWayPoint = rack;
-            //    }
-            //}
-
-            DijkstraResult result = new DijkstraResult
+            WayPointObject operatingPoint = start;
+            table[operatingPoint].Distance = 0;
+            /// Tworzenie tablicy Dictry
+            while (!table.Values.All(x => x.Visited))
             {
-                Path = path,
-                TotalDistance = totalDistance
-            };
+                operatingPoint = table.Where(x => !x.Value.Visited).OrderBy(kv => kv.Value.Distance).FirstOrDefault().Key;
 
-            return result;
+                foreach (WayPointObject conn in operatingPoint.Connections)
+                {
+                    double dist = conn.GetDistance(operatingPoint) + table[operatingPoint].Distance;
+                    double curentDist = table[conn].Distance;
+                    if (curentDist > dist)
+                    {
+                        table[conn].Distance = dist;
+                        table[conn].Parent = operatingPoint;
+                    }
+                }
+                table[operatingPoint].Visited = true;
+            }
+
+            return table;
         }
+
+        private List<IBaseObject> GetWayFromTableDictry(Dictionary<WayPointObject, DictryTable<WayPointObject>> table, WayPointObject from)
+        {
+            List<IBaseObject> points = new List<IBaseObject>();
+
+            WayPointObject parent = from;
+
+            while (parent != null)
+            {
+                points.Insert(0, parent);
+                parent = table[parent].Parent;
+            }
+
+            return points;
+
+        }
+
+        #endregion
+
+        #region Helper Class
+
+        private class DictryTable<T> where T : class
+        {
+            public double Distance { get; set; } = double.MaxValue;
+            public bool Visited { get; set; } = false;
+            public T Parent { get; set; } = null;
+
+        }
+
+        #endregion
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Warehouse.Core.Helpers;
 using Warehouse.Models;
 
 namespace Warehouse.Core.Models;
@@ -94,6 +96,22 @@ public class HallObject : ObservableObject
         foreach (WayPointObject point in points)
             if (WayPoints.FirstOrDefault(x => x.Position == point.Position) == null)
                 WayPoints.Add(point);
+    }
+
+    public WayResult GetPath(List<Product> products)
+    {
+        try
+        {
+            var arg = new DijkstraAlgorithm(WayPoints.FirstOrDefault(x => x.IsStartPoint), this, products);
+            var result = arg.GetPath();
+
+            return result;
+        }catch(Exception ex)
+        {
+            return null;
+        }
+        
+
     }
 
     #endregion

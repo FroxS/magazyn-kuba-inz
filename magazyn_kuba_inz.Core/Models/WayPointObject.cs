@@ -13,6 +13,8 @@ public class WayPointObject : BaseObject
 
     protected bool _isStartPoint = false;
 
+    protected string _name;
+
     #endregion
 
     #region Public properties 
@@ -35,6 +37,12 @@ public class WayPointObject : BaseObject
         set { SetProperty(ref _isStartPoint, value, nameof(IsStartPoint)); }
     }
 
+    public string Name
+    {
+        get => _name;
+        set { SetProperty(ref _name, value, nameof(Name)); }
+    }
+
     #endregion
 
     #region Constructors
@@ -51,6 +59,11 @@ public class WayPointObject : BaseObject
     /// Default constructor
     /// </summary>
     public WayPointObject(double x, double y) : base(x, y) { }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public WayPointObject(string name, double x, double y) : base(x, y) { Name = name; }
 
     /// <summary>
     /// Default constructor
