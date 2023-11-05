@@ -8,6 +8,10 @@ using Warehouse.Core.Resources;
 using Warehouse.Core.Exeptions;
 using Warehouse.Core.Helpers;
 using Warehouse.Models;
+using Microsoft.EntityFrameworkCore;
+using Warehouse.EF;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Diagnostics;
 
 namespace Warehouse;
 
@@ -21,10 +25,13 @@ public class WareHouseApp : ObservableObject, IApp
 
     private static IServiceProvider _services;
 
-    private readonly IUserService userService;
+    private IUserService userService => _services.GetRequiredService<IUserService>();
 
     private bool isTaskRunning = false;
-    
+
+    private DbContext _database;
+
+    private IDbContextFactory<WarehouseDbContext> _databaseFactory;
     #endregion
 
     #region Public Properties
@@ -43,16 +50,19 @@ public class WareHouseApp : ObservableObject, IApp
 
     public virtual bool IsTaskRunning { get => isTaskRunning; set { isTaskRunning = value; OnPropertyChanged(nameof(IsTaskRunning)); } }
 
+    public DbContext Database => _database;
+
     #endregion
 
     #region Constructors
 
-    public WareHouseApp(INavigation nav, System.Windows.Application app, IServiceProvider services, IUserService userService)
+    public WareHouseApp(INavigation nav, System.Windows.Application app, IServiceProvider services)
     {
         this.nav = nav;
         this.app = app;
         _services = services;
-        this.userService = userService;
+        _databaseFactory = services.GetRequiredService<IDbContextFactory<WarehouseDbContext>>();
+        ReloadDatabase();
     }
 
     #endregion
@@ -117,7 +127,7 @@ public class WareHouseApp : ObservableObject, IApp
     public IInnerDialogService GetInnerDialogService() => _services.GetRequiredService<IInnerDialogService>();
 
     public S GetService<S,T>() where T : BaseEntity where S: IBaseService<T> => _services.GetRequiredService<S>();
-    public S GetService<S>() where S : IBaseService<BaseEntity> => _services.GetRequiredService<S>();
+    public S GetService<S>() => _services.GetRequiredService<S>();
     public bool IsUserLogin()
     {
         throw new NotImplementedException();
@@ -165,6 +175,43 @@ public class WareHouseApp : ObservableObject, IApp
 #if DEBUG
         GetDialogService().ShowError(ex);
 #endif
+    }
+
+    public void ReloadDatabase()
+    {
+        _database = _databaseFactory.CreateDbContext();
+    }
+
+    public void SetTheme(bool dark = true)
+    {
+        string resThemeName = "DarkTheme";
+        if (!dark)
+            resThemeName = "LightTheme";
+
+        string dictionaryNameToChange = "Theme";
+        ResourceDictionary targetDictionary = null;
+        foreach (var mergedDictionary in app.Resources.MergedDictionaries)
+        {
+            if (mergedDictionary is ResourceDictionary dictionary && dictionary.Source != null)
+            {
+                if (dictionary.Source.OriginalString.Contains(dictionaryNameToChange))
+                {
+                    targetDictionary = dictionary;
+                    break;
+                }
+            }
+        }
+
+        // Sprawdź, czy istnieje słownik o nazwie "Themes"
+        if (targetDictionary != null)
+        {
+            // Teraz możesz podmienić ten słownik na inny, na przykład "DarkTheme.xaml"
+            targetDictionary.Source = new Uri($"/Warehouse.Theme;component/{resThemeName}.xaml", UriKind.Relative);
+        }
+        else
+        {
+            Debugger.Break();
+        }
     }
 
     #endregion

@@ -16,7 +16,10 @@
         WindowStartupLocation="CenterScreen"
         Width="1200"
         Height="800"
-        Foreground="{StaticResource DarkColorBrush}">
+        ResizeMode="CanResizeWithGrip"
+        Background="{DynamicResource BackgroundColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
+        BorderBrush="{DynamicResource BorderColorBrush}">
     
     <Grid x:Name="parent" >
         <custom:ModalControl x:Name="Modal" Panel.ZIndex="10"
@@ -50,7 +53,7 @@
 
                     <!--#region  Menu-->
 
-                    <controls:LeftMenuView2 Grid.Column="0" DataContext="{Binding Navigation,
+                    <controls:LeftMenuView Grid.Column="0" DataContext="{Binding Navigation,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged}"
                                             d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"/>
@@ -66,7 +69,7 @@
 
                         <!--#region Top navigation-->
                         <Border Grid.Row="0"
-                                BorderBrush="{StaticResource DarkColorBrush}"
+                                BorderBrush="{DynamicResource BorderColorBrush}"
                                 BorderThickness="0,0,0,1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -110,6 +113,9 @@
 
                                 <StackPanel Grid.Column="2"
                                             Orientation="Horizontal">
+
+                                    <Button Content="Theme" Command="{Binding ChangeThemeCommand}"/>
+
                                     <TextBlock Text="{Binding Application.User.Name,
                                                               Source={x:Static helpers:AppHelper.Instance}, 
                                                               UpdateSourceTrigger=PropertyChanged,
@@ -121,7 +127,7 @@
                                             Height="40"
                                             Margin="10,0"
                                             BorderThickness="1"
-                                            BorderBrush="{StaticResource DarkColorBrush}"
+                                            BorderBrush="{DynamicResource BorderColorBrush}"
                                             CornerRadius="20">
                                         <Image Source="{Binding Application.User.Image,
                                             Source={x:Static helpers:AppHelper.Instance}, 
@@ -173,6 +179,7 @@
                             </Grid>
                             <controls:PageHost Grid.Row="1"
                                                x:Name="Test"
+                                               IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
                                                CurrentPage="{Binding Navigation.Page,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
@@ -187,7 +194,7 @@
                 <Border Height="40"
                         Grid.Row="1"
                         BorderThickness="0,1,0,0"
-                        BorderBrush="{StaticResource DarkColorBrush}">
+                        BorderBrush="{DynamicResource BorderColorBrush}">
 
                     <Grid VerticalAlignment="Center"
                           Margin="10,0">
@@ -219,7 +226,7 @@
                                                                UpdateSourceTrigger=PropertyChanged,
                                                                FallbackValue=False}"
                                      BorderThickness="0"
-                                     Foreground="{StaticResource Color4Brush}"/>
+                                     Foreground="#ffb703"/>
 
                     </Grid>
 

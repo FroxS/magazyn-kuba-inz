@@ -10,7 +10,7 @@
              xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
-             Background="{StaticResource FontColorBrush}"
+             Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance models:RackObject}"
              xmlns:controls="clr-namespace:Warehouse.Controls"
              d:DesignHeight="450" d:DesignWidth="400">
@@ -195,14 +195,11 @@
                                             Binding="{Binding Package.Flor}"/>
 
                         <DataGridTextColumn Header="Nazwa" 
-                                            Binding="{Binding Item.Product.Name}"
+                                            Binding="{Binding Product.Name}"
                                             Width="Auto"/>
                     </DataGrid.Columns>
-
                 </DataGrid>
-
             </Grid>
-
         </Grid>
     </StackPanel>
 </UserControl>

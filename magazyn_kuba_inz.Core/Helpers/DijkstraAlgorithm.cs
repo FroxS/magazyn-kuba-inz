@@ -1,9 +1,33 @@
-﻿using Warehouse.Core.Interface;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Windows;
+using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
+using Warehouse.EF.Migrations;
 using Warehouse.Models;
 
 namespace Warehouse.Core.Helpers
 {
+    public enum EWayElementType
+    {
+        None,
+        Point,
+        Rack,
+        Product
+    }
+
+    public class WayObject
+    {
+        public EWayElementType Type { get; set; }
+        public Guid? Itemid { get; set; }
+        public Point? Position { get; set; }
+        public string? Name { get; set; }
+        public WayObject()
+        {
+                
+        }
+    }
+
     public class WayResult
     {
         private readonly List<object> _path;
@@ -12,6 +36,8 @@ namespace Warehouse.Core.Helpers
         public List<WayPointObject> Points => Get<WayPointObject>();
 
         public List<RackObject> Racks => Get<RackObject>();
+
+        public List<object> Items => Get<object>();
 
         public WayResult(List<object> path) 
         {
@@ -41,6 +67,23 @@ namespace Warehouse.Core.Helpers
 
             return items;
         }
+
+        public List<WayObject> GetPath()
+        {
+            List <WayObject> result = new List<WayObject>();
+            foreach (var path in _path)
+            {
+                if (path is RackObject rack)
+                    result.Add(new WayObject() { Type = EWayElementType.Rack, Itemid = rack.ID, Position = rack.Position });
+
+                if (path is WayPointObject way)
+                    result.Add(new WayObject() { Type = EWayElementType.Point, Position = way.Position });
+
+                if (path is Product product)
+                    result.Add(new WayObject() { Type = EWayElementType.Product, Itemid = product.ID, Name = product.Name });
+            }
+            return result;
+        } 
 
     }
 
@@ -84,7 +127,8 @@ namespace Warehouse.Core.Helpers
             while (!(all.Count == 0))
             {
                 Product product = all.First();
-                List<Product> productsToSearch = TakeSimilarProducts(product, all.Where(x => x != product));
+                int indekofProduct = all.IndexOf(product);
+                List<Product> productsToSearch = TakeSimilarProducts(product, all.Skip(indekofProduct + 1));
                 List<KeyValuePair<Product, KeyValuePair<double, List<IBaseObject>>>> distances = new List<KeyValuePair<Product, KeyValuePair<double, List<IBaseObject>>>>();
 
                 foreach (var productToSearch in productsToSearch)
@@ -102,11 +146,19 @@ namespace Warehouse.Core.Helpers
                     startForm = wpo;
                 else
                     startForm = found.Value.Value[lastWayIndeks - 2] as WayPointObject;
-                trace.Add(found.Key);
+                
 
-                var indeksTODell = all.IndexOf(found.Key);
+                foreach(var dist in distances)
+                {
+                    trace.Add(dist.Key);
+                    var indeksTODell = all.IndexOf(dist.Key);
 
-                all.RemoveAt(indeksTODell);
+                    all.RemoveAt(indeksTODell);
+                }
+
+                //var indeksTODell = all.IndexOf(found.Key);
+
+                //all.RemoveAt(indeksTODell);
             }
 
             WayPointObject lastWayPoint = null;
@@ -163,15 +215,44 @@ namespace Warehouse.Core.Helpers
                     }
 
                 }
-            }
-
-            //var dotest = table.Select(x => $"{x.Key.Name};{x.Value.Visited};{x.Value.Distance};{x.Value.Parent?.Name}");
+            }            
             List<IBaseObject> trace = GetWayFromTableDictry(table, nearestPoint);
 
             if (addRackToResult)
                 trace.Add(nearesRack);
             return new KeyValuePair<double, List<IBaseObject>>(tab.Distance, trace);
         }
+
+        //private Dictionary<WayPointObject, DictryTable<WayPointObject>> GetDictryTableOLD(WayPointObject start, IEnumerable<WayPointObject> points)
+        //{
+        //    Dictionary<WayPointObject, DictryTable<WayPointObject>> table = new Dictionary<WayPointObject, DictryTable<WayPointObject>>();
+        //    foreach (var point in points)
+        //    {
+        //        table.Add(point, new DictryTable<WayPointObject>());
+        //    }
+
+        //    WayPointObject operatingPoint = start;
+        //    table[operatingPoint].Distance = 0;
+        //    /// Tworzenie tablicy Dictry
+        //    while (!table.Values.All(x => x.Visited))
+        //    {
+        //        operatingPoint = table.Where(x => !x.Value.Visited).OrderBy(kv => kv.Value.Distance).FirstOrDefault().Key;
+
+        //        foreach (WayPointObject conn in operatingPoint.Connections)
+        //        {
+        //            double dist = conn.GetDistance(operatingPoint) + table[operatingPoint].Distance;
+        //            double curentDist = table[conn].Distance;
+        //            if (curentDist > dist)
+        //            {
+        //                table[conn].Distance = dist;
+        //                table[conn].Parent = operatingPoint;
+        //            }
+        //        }
+        //        table[operatingPoint].Visited = true;
+        //    }
+
+        //    return table;
+        //}
 
         private Dictionary<WayPointObject, DictryTable<WayPointObject>> GetDictryTable(WayPointObject start, IEnumerable<WayPointObject> points)
         {
@@ -183,22 +264,39 @@ namespace Warehouse.Core.Helpers
 
             WayPointObject operatingPoint = start;
             table[operatingPoint].Distance = 0;
-            /// Tworzenie tablicy Dictry
-            while (!table.Values.All(x => x.Visited))
-            {
-                operatingPoint = table.Where(x => !x.Value.Visited).OrderBy(kv => kv.Value.Distance).FirstOrDefault().Key;
 
-                foreach (WayPointObject conn in operatingPoint.Connections)
+            while (true)
+            {
+                WayPointObject closestPoint = null;
+                double minDistance = double.MaxValue;
+
+                foreach (var kvp in table)
                 {
-                    double dist = conn.GetDistance(operatingPoint) + table[operatingPoint].Distance;
-                    double curentDist = table[conn].Distance;
-                    if (curentDist > dist)
+                    if (!kvp.Value.Visited && kvp.Value.Distance < minDistance)
                     {
-                        table[conn].Distance = dist;
-                        table[conn].Parent = operatingPoint;
+                        closestPoint = kvp.Key;
+                        minDistance = kvp.Value.Distance;
                     }
                 }
-                table[operatingPoint].Visited = true;
+
+                if (closestPoint == null)
+                {
+                    // Brak dostępnych wierzchołków do odwiedzenia.
+                    break;
+                }
+
+                foreach (WayPointObject conn in closestPoint.Connections)
+                {
+                    double dist = closestPoint.GetDistance(conn) + table[closestPoint].Distance;
+                    double currentDist = table[conn].Distance;
+                    if (dist < currentDist)
+                    {
+                        table[conn].Distance = dist;
+                        table[conn].Parent = closestPoint;
+                    }
+                }
+
+                table[closestPoint].Visited = true;
             }
 
             return table;
@@ -213,7 +311,8 @@ namespace Warehouse.Core.Helpers
             while (parent != null)
             {
                 points.Insert(0, parent);
-                parent = table[parent].Parent;
+                DictryTable<WayPointObject> fromTab = table[parent];
+                parent = fromTab.Parent;
             }
 
             return points;

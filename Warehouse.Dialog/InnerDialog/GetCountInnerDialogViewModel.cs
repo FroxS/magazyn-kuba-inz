@@ -39,7 +39,7 @@ public class GetCountInnerDialogViewModel : BaseInnerDialogViewModel<double?>
     public GetCountInnerDialogViewModel(IApp app, double count = 1) : base(app)
     {
         Count = count;
-        NoCommand = new RelayCommand((o) => No()); ;
+        NoCommand = new RelayCommand(No); ;
         Result = null;
         Title = "Podaj ilosć";
     }

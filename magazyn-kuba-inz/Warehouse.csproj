@@ -9,19 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controls\LeftMenuView.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Images\cancel-icon.svg" />
     <None Remove="Images\confirm-icon.svg" />
     <None Remove="Images\warehoudebg.png" />
     <None Remove="Images\warehouse.jpg" />
     <None Remove="Images\warehouse_BG.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="Controls\LeftMenuView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\LeftMenuView2.xaml.cs">
+    <Compile Update="Controls\LeftMenuView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\RackControl.xaml.cs">

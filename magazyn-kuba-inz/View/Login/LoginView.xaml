@@ -16,7 +16,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Name="Window"
-        Foreground="{StaticResource FontColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
         MouseDown="Window_MouseDown"
         Background="Transparent">
     <Border >
@@ -140,7 +140,7 @@
                                             </Trigger>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Cursor" Value="Hand"/>
-                                                <Setter Property="Background" Value="{StaticResource Color2Brush}" />
+                                                <Setter Property="Background" Value="#219ebc" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>

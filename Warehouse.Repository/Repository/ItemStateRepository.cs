@@ -2,6 +2,8 @@
 using Warehouse.EF;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.Models.Enums;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Repository;
 
@@ -13,7 +15,7 @@ internal class ItemStateRepository : BaseRepository<ItemState, WarehouseDbContex
     /// Default constructro
     /// </summary>
     /// <param name="context">Context of database</param>
-    public ItemStateRepository(IDbContextFactory<WarehouseDbContext> factory) : base(factory)
+    public ItemStateRepository(IApp app) : base(app)
     {
 
     }
@@ -43,6 +45,11 @@ internal class ItemStateRepository : BaseRepository<ItemState, WarehouseDbContex
     public override List<ItemState> GetAll(Func<IQueryable<ItemState>, IQueryable<ItemState>> include, bool sortbylp = true)
     {
         return base.GetAll(include,sortbylp).OrderBy(x => x.State).ToList();
+    }
+
+    public ItemState GetByState(EState state)
+    {
+        return base.GetAll().FirstOrDefault(x => x.State == state);
     }
 
     #endregion

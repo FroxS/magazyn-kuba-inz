@@ -34,11 +34,6 @@ public class WarehouseDbContext : DbContext
     public DbSet<ProductGroup> ProductGroups { get; set; }
 
     /// <summary>
-    /// Table of warehouse items
-    /// </summary>
-    public DbSet<WareHouseItem> WareHouseItems { get; set; }
-
-    /// <summary>
     /// Table of item states
     /// </summary>
     public DbSet<ItemState> ItemStates { get; set; }
@@ -129,6 +124,9 @@ public class WarehouseDbContext : DbContext
             o.HasOne(x => x.Group)
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.ID_Group);
+            o.HasMany(x => x.WareHouseItems)
+                .WithOne(x => x.Product)
+                .HasForeignKey(x => x.ID_Product);
             o.HasMany(x => x.Images)
                 .WithMany(x => x.Products);
         });
@@ -149,20 +147,20 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.Name).IsRequired().HasMaxLength(255);
         });
 
-        modelBuilder.Entity<WareHouseItem>(o => {
-            o.LoadDefaultEntity();
-            o.Property(x => x.Count).IsRequired();
-            o.Property(x => x.Count).HasDefaultValue(0);
-            o.HasOne(x => x.State)
-                .WithMany(x => x.Items)
-                .HasForeignKey(x => x.ID_State);
-            o.HasOne(x => x.Product)
-                .WithMany(x => x.WareHouseItems)
-                .HasForeignKey(x => x.ID_Product);
-            o.HasMany(x => x.Items)
-                .WithOne(x => x.Item)
-                .HasForeignKey(x => x.ID_Item);
-        });
+        //modelBuilder.Entity<WareHouseItem>(o => {
+        //    o.LoadDefaultEntity();
+        //    o.Property(x => x.Count).IsRequired();
+        //    o.Property(x => x.Count).HasDefaultValue(0);
+        //    o.HasOne(x => x.State)
+        //        .WithMany(x => x.Items)
+        //        .HasForeignKey(x => x.ID_State);
+        //    o.HasOne(x => x.Product)
+        //        .WithMany(x => x.WareHouseItems)
+        //        .HasForeignKey(x => x.ID_Product);
+        //    o.HasMany(x => x.Items)
+        //        .WithOne(x => x.Item)
+        //        .HasForeignKey(x => x.ID_Item);
+        //});
 
         modelBuilder.Entity<ItemState>(o => {
             o.LoadDefaultEntity();
@@ -230,20 +228,20 @@ public class WarehouseDbContext : DbContext
                 .HasForeignKey(x => x.ID_StorageUnit);
             o.HasMany(x => x.Items)
                 .WithOne(x => x.Package)
-                .HasForeignKey(x => x.ID_Item);
+                .HasForeignKey(x => x.ID_Package);
         });
 
         modelBuilder.Entity<StorageItem>(o => {
             o.LoadDefaultEntity();
-            o.HasOne(x => x.Item)
-                .WithMany(x => x.Items)
-                .HasForeignKey(x => x.ID_Item);
             o.HasOne(x => x.Package)
                 .WithMany(x => x.Items)
                 .HasForeignKey(x => x.ID_Package);
-            o.HasOne(x => x.Item)
+            o.HasOne(x => x.State)
                 .WithMany(x => x.Items)
-                .HasForeignKey(x => x.ID_Item);
+                .HasForeignKey(x => x.ID_State);
+            o.HasOne(x => x.Product)
+                .WithMany(x => x.WareHouseItems)
+                .HasForeignKey(x => x.ID_Product);
             o.HasOne(x => x.OrderItem)
                 .WithOne(x => x.StorageItem)
                 .HasForeignKey<StorageItem>(x => x.ID_OrderItem)

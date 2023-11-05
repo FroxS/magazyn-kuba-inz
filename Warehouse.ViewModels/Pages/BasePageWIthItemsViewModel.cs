@@ -10,7 +10,7 @@ using Warehouse.Service.Interface;
 
 namespace Warehouse.ViewModel.Pages;
 
-public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemService> : BasePageViewModel 
+public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemService> : BasePageViewModel , IPageReloadViewModel
     where Item: BaseEntity 
     where ItemViewModel : BaseEntityViewModel<Item>
     where ItemService : IBaseService<Item>
@@ -114,11 +114,14 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
     {
         try
         {
+            
             CanChangePage = true;
             if (_selectedItemViewModel == null)
                 return;
             else
             {
+                if(_selectedItemViewModel.Enabled)
+                    _selectedItemViewModel.SetEnabled();
                 var message = _selectedItemViewModel.Valid();
                 if(message != null)
                 {
@@ -146,6 +149,11 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
             Application.ShowSilentMessage(ex.Message);
             CanChangePage = false;
         }
+    }
+
+    public virtual void Reload()
+    {
+        _service.RefreshDbContext();
     }
 
     #endregion

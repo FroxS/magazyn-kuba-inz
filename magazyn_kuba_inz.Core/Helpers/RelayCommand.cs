@@ -44,23 +44,12 @@ namespace Warehouse.Core.Helpers
 
     public class RelayCommand : RelayCommand<object>
     {
-
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute) :base(execute,canExecute)
+        public RelayCommand(Action execute) : base((o) => execute(), (o) => true)
         {
         }
 
-        public RelayCommand(Action<object> execute) : this(execute, null)
+        public RelayCommand(Action execute, Func<bool> canExecute) : base((o) => execute(), (o) => canExecute())
         {
-
-        }
-
-        public RelayCommand(Action execute, Func<bool> canExecute) : this((o) => execute(), (o) => canExecute())
-        {
-        }
-
-        public RelayCommand(Action execute) : this((o) => execute(), null)
-        {
-
         }
     }
 

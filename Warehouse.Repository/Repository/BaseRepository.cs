@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Threading;
+using Warehouse.Core.Interface;
 using Warehouse.EF.Migrations;
 using Warehouse.Models;
 using Warehouse.Repository.Interfaces;
@@ -14,9 +15,9 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// <summary>
     /// Context of database
     /// </summary>
-    protected C _context;
+    protected C _context => (C)_app.Database;
 
-    protected readonly IDbContextFactory<C> _contextFactory;
+    protected readonly IApp _app;
 
     public IDbContextTransaction? ActualTransaction => _context.Database.CurrentTransaction;
 
@@ -28,10 +29,9 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// Default constructor
     /// </summary>
     /// <param name="context">Context od database</param>
-    public BaseRepository(IDbContextFactory<C> contextFactory)
+    public BaseRepository(IApp app)
     {
-        _contextFactory = contextFactory;
-        _context = contextFactory.CreateDbContext();
+        _app = app;
     }
 
     #endregion
@@ -52,17 +52,17 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
 
     public void ReloadContext()
     {
-        _context = _contextFactory.CreateDbContext();
+        _app.ReloadDatabase();
     }
 
     public void RunTransaction()
     {
-        _context.Database.BeginTransaction();
+        //_context.Database.BeginTransaction();
     }
 
     public void EndTransaction()
     {
-        _context.Database.RollbackTransaction();
+        //_context.Database.RollbackTransaction();
     }
 
 

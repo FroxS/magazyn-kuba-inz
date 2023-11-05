@@ -3,7 +3,6 @@ using Warehouse.Models;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Pages;
@@ -130,8 +129,14 @@ public class OrderPageViewModel :
             return;
         try
         {
-            if(MessageBox.Show("Czy jesteś pewien ?","Pytanie", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            //if(items.Cast<Order>().Any(x => x.Reserved))
+            //{
+            //    Application.ShowSilentMessage("Zamównienie jest już zarezerwowane");
+            //    return;
+            //}    
+            if (MessageBox.Show("Czy jesteś pewien ?","Pytanie", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
+                
                 IsTaskRunning = true;
                 bool flag = true;
                 List<Order> index = new List<Order>();

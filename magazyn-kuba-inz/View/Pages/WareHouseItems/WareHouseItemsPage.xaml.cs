@@ -7,9 +7,9 @@ namespace Warehouse.View.Pages;
 /// <summary>
 /// Logika interakcji dla klasy WareHouseItemsPage.xaml
 /// </summary>
-public partial class WareHouseItemsPage : BaseControlPage<WareHouseItemsPageViewModel>
+public partial class WareHouseItemsPage : BaseControlPage<WareHousePageViewModel>
 {
-    public WareHouseItemsPage(WareHouseItemsPageViewModel? vm) : base(vm)
+    public WareHouseItemsPage(WareHousePageViewModel? vm) : base(vm)
     {
         InitializeComponent();
     }

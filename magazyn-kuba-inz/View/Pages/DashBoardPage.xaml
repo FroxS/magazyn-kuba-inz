@@ -11,9 +11,9 @@
                   CanResize="CanResizeWithGrip"
                   d:DataContext="{d:DesignInstance Type=pageVM:DashBoardPageViewModel}"
                   d:DesignHeight="500" d:DesignWidth="1000">
-    
 
-    <Grid Margin="50,40" Background="Aqua">
+
+    <Grid Margin="50,40" Background="#99a4a8">
         
         <Button Content="Test" FontSize="16"
                 VerticalAlignment="Center"

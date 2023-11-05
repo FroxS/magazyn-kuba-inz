@@ -13,7 +13,7 @@ public class Order : BaseEntity
     public Guid ID_User { get; set; }
     public User? User { get; set; }
     public double Margin { get; set; }
-    public bool Reserved { get; set; }
+    public byte[]? OrderWay { get; set; }
     public DateTime RealizationDate { get; set; }
     public List<OrderProduct>? Items { get; set; }
 }

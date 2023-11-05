@@ -88,7 +88,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         _hallService = hallService;
         _rackService = rackService;
         EditHallCommand = new AsyncRelayCommand(() => EditHall(), (o) => CanEdit);
-        EditCommand = new RelayCommand((o) => { CanEdit = true; ToSave = true; }, (o) => !CanEdit) ;
+        EditCommand = new RelayCommand(() => { CanEdit = true; ToSave = true; }, () => !CanEdit) ;
         CanDeleteRack = (rack) => {
             bool flag = rackService.CanDeleteRack(rack.ID);
             flag = false;

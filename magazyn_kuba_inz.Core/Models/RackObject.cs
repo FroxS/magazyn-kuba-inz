@@ -177,12 +177,12 @@ public class RackObject : Rack, IBaseObject
 
     public List<Product> GetProducts()
     {
-        return StorageItems?.SelectMany(x => x.Items)?.Select(x => x.Item)?.Select(x => x.Product)?.ToList() ?? new List<Product>();
+        return StorageItems?.SelectMany(x => x.Items)?.Select(x => x.Product)?.ToList() ?? new List<Product>();
     }
 
     public bool HasPrduct(Product product)
     {
-        return GetProducts().Any(x => x == product);
+        return GetProducts().Any(x => x.Equals(product));
     }
 
     #endregion

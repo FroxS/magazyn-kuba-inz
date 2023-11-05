@@ -50,8 +50,8 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
     {
         DialogResult = false;
         _app = app;
-        SubmitCommand = new RelayCommand((o) => { Submit(); });
-        ExitCommand = new RelayCommand((o) => { Exit(); });
+        SubmitCommand = new RelayCommand(Submit);
+        ExitCommand = new RelayCommand(Exit);
     }
 
     #endregion

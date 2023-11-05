@@ -4,12 +4,6 @@
     xmlns:controls="clr-namespace:Warehouse.Theme.Controls"
     xmlns:conv="clr-namespace:Warehouse.Theme.Conventers">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Fonts.xaml" />
-        <ResourceDictionary Source="Colors.xaml" />
-        <ResourceDictionary Source="Paths.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Style TargetType="{x:Type controls:ModalControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -49,7 +43,7 @@
         <Setter Property="Height" Value="40"/>
         <Setter Property="Width" Value="100"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="Background" Value="{StaticResource Color3Brush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
@@ -62,7 +56,7 @@
     </Style>
 
     <Style TargetType="{x:Type controls:ItemMenuButton}">
-        <Setter Property="Foreground" Value="{StaticResource FontColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ItemMenuButton}">
@@ -79,7 +73,7 @@
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
                                         <DataTrigger Binding="{Binding IsMenuSelected, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                            <Setter Property="BorderBrush" Value="{StaticResource Color4Brush}"/>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -133,7 +127,7 @@
                                                                 Background="{TemplateBinding Background}"
                                                                 SnapsToDevicePixels="True">
                                                             <Path Fill="{TemplateBinding Foreground}"
-                                                                  Data="{StaticResource ChevronBottomGeometry}"
+                                                                  Data="{DynamicResource ChevronBottomGeometry}"
                                                                   Height="25"
                                                                   Width="25"
                                                                   Stretch="Uniform"/>
@@ -204,7 +198,7 @@
                                                                 To="{StaticResource Color4}"
                                                                 Duration="0:0:0.2"/>-->
                                                 <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                                To="{StaticResource Color1}"
+                                                                To="{DynamicResource HoverBackgroundColor}"
                                                                 Duration="0:0:0.2"/>
                                             </Storyboard>
                                         </BeginStoryboard>

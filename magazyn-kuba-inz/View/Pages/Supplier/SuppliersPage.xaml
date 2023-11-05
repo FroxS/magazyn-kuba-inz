@@ -12,8 +12,7 @@
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:SuppliersPageViewModel}"
-                         d:DesignHeight="500" d:DesignWidth="1000"
-                         Background="White">
+                         d:DesignHeight="500" d:DesignWidth="1000">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -80,7 +79,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Stretch"
                       ShowsPreview="False"
-                      Background="{StaticResource DarkColorBrush}"
+                      Background="{DynamicResource BackgroundColorBrush}"
                       />
 
         <!--#region Selected item-->

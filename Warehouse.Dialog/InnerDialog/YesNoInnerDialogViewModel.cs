@@ -41,7 +41,7 @@ public class YesNoInnerDialogViewModel : BaseInnerDialogViewModel<EDialogResult>
     public YesNoInnerDialogViewModel(string message, IApp app) : base(app)
     {
         Message = message;
-        NoCommand = new RelayCommand((o) => No()); ;
+        NoCommand = new RelayCommand(No); ;
         Result = EDialogResult.Undefind;
     }
 

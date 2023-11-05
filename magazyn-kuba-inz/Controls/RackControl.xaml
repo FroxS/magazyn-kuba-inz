@@ -9,8 +9,7 @@
              xmlns:att="clr-namespace:Warehouse.AttachedProperty"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450"
-             x:Name="mainControl"
-             Background="White">
+             x:Name="mainControl">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

@@ -123,7 +123,7 @@ namespace Warehouse.Dialog
             );
         }
 
-        public void AddProductToStateInnerDialog(Product product, List<ItemState> leftStates,Action<WareHouseItem> OnResult)
+        public void AddProductToStateInnerDialog(Product product, List<ItemState> leftStates,Action<StorageItem> OnResult)
         {
             OpenInnerDialog(
                 new AddProductToStateInnerDialogViewModel(

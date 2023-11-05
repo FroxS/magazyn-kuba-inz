@@ -12,7 +12,7 @@
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
-                         Background="{StaticResource FontColorBrush}"
+                         Background="{StaticResource BackgroundColorBrush}"
                          d:DataContext="{d:DesignInstance Type=pageVM:WareHouseCreatorPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000"
                          >
@@ -56,8 +56,9 @@
         
         <controls:WareHouseArea Grid.Row="1"
                                 Grid.Column="0"
+                                Background="{StaticResource BackgroundColorBrush}"
                                 CanEdit="{Binding CanEdit, UpdateSourceTrigger=PropertyChanged}"
-                                HallBackground="#a4ede8"
+                                HallBackground="#99a4a8"
                                 PointDiameter="15"
                                 CanDeleteRack="{Binding CanDeleteRack, UpdateSourceTrigger=PropertyChanged}"
                                 AreaHeight="{Binding Hall.Height, UpdateSourceTrigger=PropertyChanged}"

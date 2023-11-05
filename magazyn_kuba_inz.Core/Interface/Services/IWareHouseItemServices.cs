@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using Warehouse.Core.Helpers;
 using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
 using Warehouse.Core.Resources;
 using Warehouse.Models;
+using Warehouse.Models.Enums;
 using Warehouse.Models.Interfaces;
 
 namespace Warehouse.Core.Interface;
@@ -17,7 +19,7 @@ public interface IProductService : IBaseService<Product>
 {
     Task<Product> AddAsync(Product item);
     Task<Product> SetImage(Product product, byte[] imgBytes);
-    Task<bool> ExistOnWareHouse(Guid id);
+    bool ExistOnWareHouse(Guid id);
 }
 
 public interface IProductStatusService : IBaseService<ProductStatus> 
@@ -39,22 +41,20 @@ public interface ISupplierService : IBaseService<Supplier>
 public interface IItemStateService : IBaseService<ItemState>
 {
     Task<ItemState> AddAsync(ItemState supplier);
+    ItemState GetByState(EState state);
 }
 
-public interface IWareHouseItemService : IBaseService<WareHouseItem>
+public interface IWareHouseService
 {
-    Task<List<WareHouseItem>> GetAllByProductAsync(Guid productid, CancellationToken token = default(CancellationToken));
-    Task<WareHouseItem> SetCountProduct(Product product, ItemState status, int count, CancellationToken token = default(CancellationToken));
-    Task<List<Product?>> GetProductsByState(ItemState state);
-    Task<int> GetCoutOfProduct(Product product, ItemState state);
-    Task<int> GetCoutOfProduct(Product product);
-    Task<bool> ExistProduct(Guid product);
-    List<WareHouseItem> GetProductsByState(Guid stateId);
-    WareHouseItem? GetItem(Guid productId, Guid stateId);
-    string MoveProductToState(ref WareHouseItem item, Guid targetState, int count);
-    List<WareHouseItem> GetProductsAvailableToRack();
-    bool MoveItemsToRack(IEnumerable<StorageItem> items);
-    bool RemoveFromRack(StorageItem item);
+    bool Save();
+    bool CanAddProduct(Guid product, EState state);
+    bool Add(Guid product, EState state, int count);
+    string? MoveProductToState(EState targetStateType, params StorageItem[] items);
+    List<StorageItem> GetProductsByState(EState state);
+    bool ExistProduct(Guid idProduct);
+    bool CanMove(StorageItem item, EState targetStare);
+    List<StorageItem>? GetItemsByPackage(Guid id);
+    void Reload();
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
@@ -62,6 +62,13 @@ public interface IOrderService : IBaseService<Order>
 {
     List<OrderProduct> GetProducts(Guid id);
     string GetNewOrderName();
+    void SetWay(List<WayObject> way, Order order);
+    List<WayObject>? GetWay(Order order);
+    bool Reserv(Order order, IWareHouseService service, ref string message);
+    bool IsReserved(Guid id);
+    bool SetAsPrepared(Order order, IWareHouseService service);
+
+    bool IsPrepared(Guid id);
 }
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }

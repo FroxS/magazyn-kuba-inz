@@ -150,7 +150,7 @@ public class ProductsPageViewModel :
                 IsTaskRunning = true;
                 Product existWareHouse = null;
                 foreach (Product p in items)
-                    if(await _service.ExistOnWareHouse(p.ID))
+                    if(_service.ExistOnWareHouse(p.ID))
                     {
                         existWareHouse = p;
                         break;

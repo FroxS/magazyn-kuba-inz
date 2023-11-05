@@ -4,6 +4,8 @@ using Warehouse.Models.Enums;
 using Warehouse.Core.Resources;
 using Warehouse.Models;
 using System.Windows;
+using Warehouse.EF;
+using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Core.Interface;
 
@@ -14,6 +16,7 @@ public interface IApp
     bool IsTaskRunning { get; set; }
     bool IsAdmin { get; }
     Window? MainWindow { get; }
+    DbContext Database { get; }
     void Run();
     bool IsUserLogin();
     void LogOut();
@@ -26,8 +29,10 @@ public interface IApp
     Dispatcher GetDispather();
     S GetService<S, T>() where T : BaseEntity where S : IBaseService<T>;
 
-    S GetService<S>() where S : IBaseService<BaseEntity>;
+    S GetService<S>();
     void CatchExeption(System.Exception ex);
+    void ReloadDatabase();
 
-    
+    void SetTheme(bool dark = true);
+
 }

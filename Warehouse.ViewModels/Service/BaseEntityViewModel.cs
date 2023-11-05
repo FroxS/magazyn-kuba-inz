@@ -98,7 +98,7 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
         _entity = entity;
         Enabled = false;
         SaveCommand = new AsyncRelayCommand<bool>((o) => SaveAsync(), o => Enabled && !Saved);
-        EditCommand = new RelayCommand((o) => SetEnabled(true), (o) => !Enabled);
+        EditCommand = new RelayCommand(() => SetEnabled(true), () => !Enabled);
     }
 
     #endregion
@@ -139,6 +139,7 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
             Message = Valid();
             if(Message == null)
             {
+                _service.Update(_entity);
                 //return Saved = await _service.AddAsync(Entity); ;
                 return Saved = await _service.SaveAsync(); ;
             }
@@ -159,7 +160,7 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
                 return Saved;
             _CanValidate = true;
             OnPropertiesChanged(GetpropsNameToFireOnSave());
-
+            _service.Update(_entity);
             Saved = _service.Save();
             return Saved;
         }

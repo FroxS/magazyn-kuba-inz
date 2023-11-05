@@ -12,7 +12,7 @@ internal class ProductService : BaseServiceWithRepository<IProductRepository,Pro
     private readonly IProductGroupService _productgroupService;
     private readonly IProductStatusService _productStatusService;
     private readonly IImageService _imageService;
-    private readonly IWareHouseItemService _wareHouseItemService;
+    private readonly IWareHouseService _wareHouseItemService;
 
     #endregion
 
@@ -27,7 +27,7 @@ internal class ProductService : BaseServiceWithRepository<IProductRepository,Pro
         IProductGroupService productgroupService,
         IProductStatusService productStatusService,
         IImageService imageService,
-        IWareHouseItemService wareHouseItemService
+        IWareHouseService wareHouseItemService
         ) 
         : base(repozitory)
     {
@@ -93,13 +93,13 @@ internal class ProductService : BaseServiceWithRepository<IProductRepository,Pro
     public override async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
 
-        if (await ExistOnWareHouse(id))
+        if (ExistOnWareHouse(id))
             return false;
 
         return await base.DeleteAsync(id, cancellationToken);
     }
 
-    public async Task<bool> ExistOnWareHouse(Guid id) => await _wareHouseItemService.ExistProduct(id);
+    public bool ExistOnWareHouse(Guid id) => _wareHouseItemService.ExistProduct(id);
 
     #endregion
 }

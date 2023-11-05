@@ -68,7 +68,7 @@ public class RegisterViewModel : BaseViewModel
     {
         RegisterCommand = new RelayCommand<IWindow>(register);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
-        ExitCommand = new RelayCommand(o => exit());
+        ExitCommand = new RelayCommand(exit);
         this.app = app;
     }
 

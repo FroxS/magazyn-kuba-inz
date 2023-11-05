@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Warehouse.View.Pages"
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             Background="White"
              d:DataContext="{d:DesignInstance vm:ProtuctStateTabViewModel}">
     <Grid>
         <DataGrid IsSynchronizedWithCurrentItem="True"
@@ -23,9 +23,6 @@
                 <DataGridTextColumn Header="Nazwa produktu"
                                     MinWidth="200"
                                     Binding="{Binding Product.Name}"/>
-                <DataGridTextColumn Header="Ilość"
-                                    MinWidth="50"
-                                    Binding="{Binding Count}"/>
             </DataGrid.Columns>
 
             <DataGrid.ContextMenu>
@@ -35,20 +32,21 @@
                             <Style TargetType="MenuItem">
                                 <Setter Property="Header" Value="{Binding Name}"/>
                                 <Setter Property="Command" Value="{Binding DataContext.MoveToStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                <Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>
+                                <!--<Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>-->
+                                <Setter Property="CommandParameter">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{conv:MulitBindingParameterConventer}">
+                                            <Binding Path="State" UpdateSourceTrigger="PropertyChanged"/>
+                                            <Binding Path="PlacementTarget.SelectedItems" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
 
                     <MenuItem Header="Dodaj" IsEnabled="{Binding CanAddNew}"
                               Command="{Binding AddNewCommand}"
-                              />
-
-                    <MenuItem Header="Zmień ilość" IsEnabled="{Binding CanChangeCount}"
-                              Command="{Binding ChangeCountCommand}"
-                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                                         AncestorType={x:Type ContextMenu}}, 
-                                                         Path=PlacementTarget.SelectedItem}"
                               />
                 </ContextMenu>
             </DataGrid.ContextMenu>

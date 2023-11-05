@@ -7,10 +7,9 @@
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             Background="White"
              d:DataContext="{d:DesignInstance vm:ProductStatusViewModel}">
     <Border BorderThickness="1"
-            BorderBrush="{StaticResource FontDarkColorBrush}">
+            BorderBrush="{DynamicResource BorderColorBrush}">
 
         <Grid>
             <Grid.RowDefinitions>

@@ -1,6 +1,7 @@
 ﻿using Warehouse.Repository.Interfaces;
 using Warehouse.Core.Interface;
 using Warehouse.Models;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.Service;
 
@@ -19,6 +20,7 @@ internal class ItemStateService : BaseServiceWithRepository<IItemStateRepository
     #endregion
 
     #region Public Method
+
     public async Task<ItemState> AddAsync(ItemState item)
     {
         if (item == null)
@@ -26,6 +28,11 @@ internal class ItemStateService : BaseServiceWithRepository<IItemStateRepository
 
         await _repozitory.AddAsync(item);
         return item;
+    }
+
+    public ItemState GetByState(EState state)
+    {
+        return _repozitory.GetByState(state);
     }
 
     #endregion

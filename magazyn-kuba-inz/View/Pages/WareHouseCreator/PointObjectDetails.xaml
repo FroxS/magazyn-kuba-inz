@@ -7,7 +7,7 @@
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
              mc:Ignorable="d" 
-             Background="{StaticResource FontColorBrush}"
+             Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance models:WayPointObject}"
              xmlns:controls="clr-namespace:Warehouse.Controls"
              d:DesignHeight="450" d:DesignWidth="400">

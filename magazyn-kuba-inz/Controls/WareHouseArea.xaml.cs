@@ -13,6 +13,9 @@ using System.Windows.Shapes;
 using System.Linq;
 using Warehouse.Core.Interface;
 using Warehouse.Core.Helpers;
+using Warehouse.Models;
+using Warehouse.AttachedProperty;
+using System.Windows.Controls.Primitives;
 
 namespace Warehouse.Controls;
 
@@ -51,6 +54,10 @@ public partial class WareHouseArea : UserControl
     private ObservableCollection<WayPointObject[]> _wayPointConnections = new ObservableCollection<WayPointObject[]>();
 
     private ObservableCollection<KeyValuePair<WayPointObject, RackObject>> _wayPointToRacks = new ObservableCollection<KeyValuePair<WayPointObject, RackObject>>();
+
+    private Path wayPath;
+
+    private List<FrameworkElement> wayElements = new List<FrameworkElement>();
 
     #endregion
 
@@ -187,6 +194,12 @@ public partial class WareHouseArea : UserControl
         set { SetValue(CanEditProperty, value); }
     }
 
+    public WayResult Way
+    {
+        get { return (WayResult)GetValue(WayProperty); }
+        set { SetValue(WayProperty, value); }
+    }
+
     #endregion
 
     #region Dependency Property
@@ -257,6 +270,9 @@ public partial class WareHouseArea : UserControl
     public static readonly DependencyProperty CanDeleteRackProperty =
         DependencyProperty.Register(nameof(CanDeleteRack), typeof(Func<RackObject, bool>), typeof(WareHouseArea), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty WayProperty =
+        DependencyProperty.Register(nameof(Way), typeof(WayResult), typeof(WareHouseArea), new PropertyMetadata(null, WayChanged));
+
     public static readonly DependencyProperty CanEditProperty =
         DependencyProperty.Register(nameof(CanEdit), typeof(bool), typeof(WareHouseArea), new UIPropertyMetadata(true,null,CanEditChanged));
 
@@ -317,6 +333,15 @@ public partial class WareHouseArea : UserControl
         }
 
         return baseValue;
+    }
+
+    private static void WayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is WareHouseArea wha && e.NewValue is WayResult way)
+        {
+            if(wha.Racks != null)/// W tej metodzie są wyszukiwane stojaki 
+                wha.DrawWay(); 
+        }
     }
 
     #endregion
@@ -686,10 +711,11 @@ public partial class WareHouseArea : UserControl
             foreach (var act in delAct)
                 act.Invoke();
   
-            wayPointConnections.ItemsSource = WayPointConnections;
+            wayPointConnections.ItemsSource = GetNotDuplicatedPoints(WayPointConnections);
             wayPointToRacks.ItemsSource = WayPointToRacks;
             wayPointNode.UpdateDefaultStyle();
             wayPointNode.UpdateLayout();
+            DrawWay();
         }
     }
 
@@ -709,9 +735,262 @@ public partial class WareHouseArea : UserControl
             return false;
     }
 
+    private List<WayPointObject[]> GetNotDuplicatedPoints(IEnumerable<WayPointObject[]> connections)
+    {
+        List<WayPointObject[]> newlist = new List<WayPointObject[]>();
+
+        foreach(WayPointObject[] connection in connections)
+        {
+            if (!newlist.Any(
+                x => (x[0].Position == connection[0].Position && x[1].Position == connection[1].Position)
+                    || (x[0].Position == connection[1].Position && x[1].Position == connection[0].Position)
+                ))
+                newlist.Add(connection);
+        }
+
+        return newlist;
+    }
+
+    
+    private void DrawWay()
+    {
+        if(Way != null)
+        {
+            List<WayObject> items = Way.GetPath();
+
+            foreach (var step in wayElements)
+                wareHouseArea.Children.Remove(step);
+
+            wayElements.Clear();
+            int wayStep = 0;
+            wayPath = new Path() { Stroke = Brushes.Red, StrokeThickness = 1};
+            GeometryGroup data = new GeometryGroup() { Children = new GeometryCollection() };
+            PathGeometry pathGeometry = new PathGeometry() { Figures = new PathFigureCollection() };
+
+            WayObject? lastRack = null;
+            FrameworkElement? rackControl = null;
+            List<Product> products = null;
+            for (int i = 1; i < items.Count; i++)
+            {
+                WayObject p1 = items[i - 1];
+                WayObject p2 = items[i];
+
+                if(p2.Type == EWayElementType.Rack)
+                {
+                    lastRack = p2;
+                }
+                if (p2.Type == EWayElementType.Point && p1.Type == EWayElementType.Product)
+                {
+                    p1 = lastRack;
+                    lastRack = null;
+                }
+                if (p1.Position != null && p2.Position != null)
+                {
+                    PathFigure line = new PathFigure() {
+                        StartPoint = p1.Position.Value,
+                        Segments = new PathSegmentCollection
+                        {
+                            new BezierSegment(p1.Position.Value, GetCenterPoint(p1.Position.Value, p2.Position.Value,10), p2.Position.Value, true),
+                        }
+                    };
+                    var wheelPoz = GetCenterPoint(p1.Position.Value, p2.Position.Value, 15);
+                    var stepName = GetViewBox($"{++wayStep}");
+                    Canvas.SetTop(stepName, wheelPoz.Y - 5);
+                    Canvas.SetLeft(stepName, wheelPoz.X - 5);
+                    wayElements.Add(stepName);
+                    pathGeometry.Figures.Add(line);
+                }
+
+                if (items[i].Type == EWayElementType.Product && lastRack != null)
+                {
+                    if (products == null)
+                        products = new List<Product>();
+
+                    products.Add(new Product() { ID = items[i].Itemid.Value, Name = items[i].Name});
+                    if(!(items[i+1] is Product))
+                    {
+                        rackControl = GetRack(Racks.FirstOrDefault(x => x.ID == lastRack.Itemid), products);
+                        Canvas.SetTop(rackControl, lastRack.Position.Value.Y);
+                        Canvas.SetLeft(rackControl, lastRack.Position.Value.X);
+
+                        wayElements.Add(rackControl);
+                        products = null;
+                    }
+                }
+
+
+            }
+            data.Children.Add(pathGeometry);
+            wayPath.Data = data;
+
+            foreach (var step in wayElements)
+                wareHouseArea.Children.Add(step);
+
+            if (!wareHouseArea.Children.Contains(wayPath))
+                wareHouseArea.Children.Add(wayPath);
+
+            
+        }
+    }
+
+    //private void DrawWayOLD()
+    //{
+    //    if (Way != null)
+    //    {
+    //        List<WayObject> items = Way.GetPath();
+
+    //        foreach (var step in wayElements)
+    //            wareHouseArea.Children.Remove(step);
+
+    //        wayElements.Clear();
+    //        int wayStep = 0;
+    //        wayPath = new Path() { Stroke = Brushes.Red, StrokeThickness = 1 };
+    //        GeometryGroup data = new GeometryGroup() { Children = new GeometryCollection() };
+    //        PathGeometry pathGeometry = new PathGeometry() { Figures = new PathFigureCollection() };
+
+    //        RackObject? lastRack = null;
+    //        FrameworkElement? rackControl = null;
+    //        List<Product> products = null;
+    //        for (int i = 1; i < items.Count; i++)
+    //        {
+    //            IBaseObject? p1 = items[i - 1] as IBaseObject;
+    //            IBaseObject? p2 = items[i] as IBaseObject;
+
+    //            if (p2 is RackObject rack)
+    //            {
+    //                lastRack = rack;
+    //            }
+    //            if (p2 is WayPointObject && p1 == null)
+    //            {
+    //                p1 = lastRack;
+    //                lastRack = null;
+    //            }
+    //            if (p1 != null && p2 != null)
+    //            {
+    //                PathFigure line = new PathFigure()
+    //                {
+    //                    StartPoint = p1.Position,
+    //                    Segments = new PathSegmentCollection
+    //                    {
+    //                        new BezierSegment(p1.Position, GetCenterPoint(p1.Position,p2.Position,10), p2.Position, true),
+    //                    }
+    //                };
+    //                var wheelPoz = GetCenterPoint(p1.Position, p2.Position, 15);
+    //                var stepName = GetViewBox($"{++wayStep}");
+    //                Canvas.SetTop(stepName, wheelPoz.Y - 5);
+    //                Canvas.SetLeft(stepName, wheelPoz.X - 5);
+    //                wayElements.Add(stepName);
+    //                pathGeometry.Figures.Add(line);
+    //            }
+
+    //            if (items[i] is Product product && lastRack != null)
+    //            {
+    //                if (products == null)
+    //                    products = new List<Product>();
+
+    //                products.Add(product);
+    //                if (!(items[i + 1] is Product))
+    //                {
+    //                    rackControl = GetRack(lastRack, products);
+    //                    Canvas.SetTop(rackControl, lastRack.Y);
+    //                    Canvas.SetLeft(rackControl, lastRack.X);
+
+    //                    wayElements.Add(rackControl);
+    //                    products = null;
+    //                }
+    //            }
+
+
+    //        }
+    //        data.Children.Add(pathGeometry);
+    //        wayPath.Data = data;
+
+    //        foreach (var step in wayElements)
+    //            wareHouseArea.Children.Add(step);
+
+    //        if (!wareHouseArea.Children.Contains(wayPath))
+    //            wareHouseArea.Children.Add(wayPath);
+
+
+    //    }
+    //}
+
     #endregion
 
     #region Helpers
+
+    private Point GetCenterPoint(Point p1, Point p2, double move = 0)
+    {
+        Point vector = new Point(p2.X - p1.X, p2.Y - p1.Y);
+        double vectorLength = Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+        vector.X /= vectorLength;
+        vector.Y /= vectorLength;
+        return new Point(p1.X + vector.X * (vectorLength / 2) - move * vector.Y,
+                             p1.Y + vector.Y * (vectorLength / 2) + move * vector.X);
+    }
+
+    private Viewbox GetViewBox (string text)
+    {
+        return new Viewbox() { Child = new TextBlock() { Text = text, Foreground = this.Foreground } };
+    }
+
+    private FrameworkElement GetRack(RackObject rack, List<Product> items = null)
+    {
+        Grid grid = new Grid();
+        Rectangle rectangle = new Rectangle();
+        rectangle = SetBinding(rectangle, Rectangle.FillProperty, rack, nameof(rack.Color));
+        rectangle = SetBinding(rectangle, Rectangle.WidthProperty, rack, nameof(rack.Width));
+        rectangle = SetBinding(rectangle, Rectangle.HeightProperty, rack, nameof(rack.Heigth));
+        rectangle.SetValue(MarginCorrection.ValueProperty, true);
+        grid.Children.Add(rectangle);
+
+        if(items != null)
+        {
+            // Tworzenie Popup
+            Popup popup = new Popup();
+            popup.Placement = PlacementMode.Mouse; // Popup będzie położony względem pozycji myszki
+            popup.AllowsTransparency = true;
+
+            // Tworzenie zawartości Popup, na przykład, możesz dodać TextBlock z tekstem
+            StackPanel sp = new StackPanel()
+            {
+                Background = Brushes.White,
+                Orientation = Orientation.Vertical
+            };
+            foreach(Product prod in items)
+            {
+                TextBlock popupContent = new TextBlock() {
+                    Margin = new Thickness(5)
+                };
+                popupContent.Text = $"{prod.Name}";
+                sp.Children.Add(popupContent);
+            }
+            
+
+            // Dodanie zawartości do Popup
+            popup.Child = sp;
+
+            // Dodajemy obsługę wydarzenia MouseEnter na Grid, aby wyświetlić Popup
+            grid.MouseEnter += (sender, e) =>
+            {
+                if (!popup.IsOpen)
+                {
+                    popup.IsOpen = true;
+                }
+            };
+
+            // Dodajemy obsługę wydarzenia MouseLeave na Grid, aby schować Popup
+            grid.MouseLeave += (sender, e) =>
+            {
+                if (popup.IsOpen)
+                {
+                    popup.IsOpen = false;
+                }
+            };
+        }
+
+        return grid;
+    }
 
     private T SetBinding<T>(T element, DependencyProperty dp, object obj, string PropName, IValueConverter conv = null, object convParam = null) where T : FrameworkElement
     {

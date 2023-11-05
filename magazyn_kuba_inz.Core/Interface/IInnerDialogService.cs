@@ -13,7 +13,7 @@ public interface IInnerDialogService
     void AddProductGroupInnerDialog(Action<ProductGroup> OnResult);
     void AddSupplierInnerDialog(Action<Supplier> OnResult);
     void AddProductStatusInnerDialog(Action<ProductStatus> OnResult);
-    void AddProductToStateInnerDialog(Product product, List<ItemState> leftStates, Action<WareHouseItem> OnResult);
+    void AddProductToStateInnerDialog(Product product, List<ItemState> leftStates, Action<StorageItem> OnResult);
     void CloseInnerDialog();
     void OpenInnerDialog<T>(IBaseInnerDialogViewModel<T> vm, Action<T> OnClose);
     void OpenInnerDialog<T>(IBaseInnerDialogViewModel<T> vm);

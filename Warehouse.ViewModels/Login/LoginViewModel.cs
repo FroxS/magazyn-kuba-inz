@@ -45,7 +45,7 @@ public class LoginViewModel : BaseViewModel
     {
         LoginCommand = new RelayCommand<IWindow>(LoginUser, o => !IsTaskRunning);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
-        ExitCommand = new RelayCommand(o => exit());
+        ExitCommand = new RelayCommand(exit);
         this.app = app;
     }
 

@@ -83,18 +83,18 @@ public partial class App : System.Windows.Application
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<RegisterViewModel>();
-        services.AddTransient<DashBoardPageViewModel>();
-        services.AddTransient<ProductsPageViewModel>();
-        services.AddTransient<ProductGroupsPageViewModel>();
-        services.AddTransient<ProductStatusesPageViewModel>();
-        services.AddTransient<SuppliersPageViewModel>();
-        services.AddTransient<ItemStatesPageViewModel>();
-        services.AddTransient<SettingsPageViewModel>();
-        services.AddTransient<WareHouseItemsPageViewModel>();
-        services.AddTransient<StorageUnitsPageViewModel>();
-        services.AddTransient<WareHouseCreatorPageViewModel>();
-        services.AddTransient<RacksPageViewModel>();
-        services.AddTransient<OrderPageViewModel>();
+        services.AddSingleton<DashBoardPageViewModel>();
+        services.AddSingleton<ProductsPageViewModel>();
+        services.AddSingleton<ProductGroupsPageViewModel>();
+        services.AddSingleton<ProductStatusesPageViewModel>();
+        services.AddSingleton<SuppliersPageViewModel>();
+        services.AddSingleton<ItemStatesPageViewModel>();
+        services.AddSingleton<SettingsPageViewModel>();
+        services.AddSingleton<WareHousePageViewModel>();
+        services.AddSingleton<StorageUnitsPageViewModel>();
+        services.AddSingleton<WareHouseCreatorPageViewModel>();
+        services.AddSingleton<RacksPageViewModel>();
+        services.AddSingleton<OrderPageViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)

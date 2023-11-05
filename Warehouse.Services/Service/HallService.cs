@@ -38,7 +38,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
             return null;
 
         if(hall.Data != null)
-            hallobj = GetData(hall.Data);
+            hallobj = GetData<HallObject>(hall.Data);
         IEnumerable<RackObject> racksTODell = hallobj.Racks.Where(x => !hall.Racks.Any(db => db.ID == x.ID));
         foreach(RackObject rackTODell in new List<RackObject>(racksTODell))
             hallobj.Racks.Remove(rackTODell);
@@ -50,7 +50,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
     {
         if (IsHallOk(model) != null)
             return;
-        UpdatehHllObject(GetData(model.Data));
+        UpdatehHllObject(GetData<HallObject>(model.Data));
     }
 
     public override bool Add(Hall entity)
@@ -58,7 +58,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
         string? message = IsHallOk(entity);
         if (message != null)
             return false;
-        HallObject obj = GetData(entity.Data);
+        HallObject obj = GetData<HallObject>(entity.Data);
         if (!UpdateRacks(obj))
             return false;
         entity.Name = obj.Name;
@@ -146,7 +146,7 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
         return hall;
     }
 
-    public string? IsHallOk(Hall hall) => IsHallOk(GetData(hall.Data));
+    public string? IsHallOk(Hall hall) => IsHallOk(GetData<HallObject>(hall.Data));
 
     public string? IsHallOk(HallObject obj)
     {
@@ -193,36 +193,15 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
 
     #region Private Method
 
-    private byte[] GetData(HallObject hall)
+    protected override T GetData<T>(byte[] data)
     {
-        MemoryStream ms = new MemoryStream();
-        using (BsonDataWriter writer = new BsonDataWriter(ms))
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.Formatting = Formatting.Indented; //Format the output
-            serializer.TypeNameHandling = TypeNameHandling.Auto;
-            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-            serializer.Serialize(writer, hall);
-        }
-        return ms.ToArray();
-    }
-
-    private HallObject GetData(byte[] data)
-    {
-        HallObject hallObj;
-        MemoryStream ms = new MemoryStream(data);
-        using (BsonDataReader reader = new BsonDataReader(ms))
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-            hallObj = serializer.Deserialize<HallObject>(reader);
-        }
+        T hallObj = base.GetData<T>(data);
 
         var racks = _rackService.GetAll();
-        foreach(var rack in hallObj.Racks)
+        foreach (var rack in (hallObj as HallObject).Racks)
         {
             var found = racks.FirstOrDefault(x => x.ID == rack.ID);
-            if(found != null)
+            if (found != null)
             {
                 rack.Width = found.Width;
                 rack.Heigth = found.Heigth;
@@ -240,8 +219,6 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
         }
         return hallObj;
     }
-
-
 
     #endregion
 }

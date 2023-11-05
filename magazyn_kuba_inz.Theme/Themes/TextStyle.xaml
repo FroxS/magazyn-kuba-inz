@@ -3,11 +3,10 @@
                     xmlns:attat="clr-namespace:Warehouse.Theme.AttachedProperty"
                     xmlns:conv="clr-namespace:Warehouse.Theme.Conventers">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Fonts.xaml" />
-        <ResourceDictionary Source="Colors.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-    
+    <Style TargetType="{x:Type TextBox}" >
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+
     <Style TargetType="{x:Type TextBox}" x:Key="InputTextBox">
         <Setter Property="Foreground" Value="{DynamicResource  FontColorBrush}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource FontColorBrush}"/>

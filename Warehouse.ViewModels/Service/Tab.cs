@@ -58,7 +58,7 @@ namespace Warehouse.ViewModel.Service
         /// </summary>
         public Tab()
         {
-            CloseTab = new RelayCommand(p => CloseRequest?.Invoke(this, EventArgs.Empty));
+            CloseTab = new RelayCommand(() => CloseRequest?.Invoke(this, EventArgs.Empty));
         }
 
         #endregion

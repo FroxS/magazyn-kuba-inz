@@ -12,6 +12,8 @@ public class MainViewModel: BaseViewModel
 
     private readonly INavigation nav;
 
+    private bool flag = false;
+
     #endregion
 
     #region Public Properties
@@ -22,15 +24,22 @@ public class MainViewModel: BaseViewModel
 
     public ICommand NextPageCommand { get; private set; }
 
+    public ICommand ChangeThemeCommand { get; private set; }
+
     #endregion
 
     #region Constructors
 
-    public MainViewModel(INavigation nav)
+    public MainViewModel(INavigation nav, IApp app)
     {
         this.nav = nav;
-        NextPageCommand = new RelayCommand((o) => {
+        NextPageCommand = new RelayCommand(() => {
             nav.SetPage(EApplicationPage.DashBoard); 
+        });
+
+        ChangeThemeCommand = new RelayCommand(() => {
+            app.SetTheme(flag);
+            flag = !flag;
         });
     }
 

@@ -13,8 +13,7 @@
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:RacksPageViewModel}"
-                         d:DesignHeight="500" d:DesignWidth="1000"
-                         Background="White">
+                         d:DesignHeight="500" d:DesignWidth="1000">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -85,11 +84,11 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Nazwa"
                                             Width="*"
-                                            Binding="{Binding Item.Product.Name}">
+                                            Binding="{Binding Product.Name}">
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Cena"
                                             Width="100"
-                                            Binding="{Binding Item.Product.Price}">
+                                            Binding="{Binding Product.Price}">
                         </DataGridTextColumn>
                     </DataGrid.Columns>
 
@@ -109,24 +108,17 @@
             </Grid>
 
             <Grid Grid.Row="1" Margin="5">
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Move" Command="{Binding AddToPackageCommand}"
+                <Button Content="Move" Command="{Binding AddToPackageCommand}"
                             Height="30"/>
-                    <TextBox Width="50" Text="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                </StackPanel>
             </Grid>
 
             <Grid Grid.Row="2">
                 <DataGrid ItemsSource="{Binding AvailableItems, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding AvailableItem, UpdateSourceTrigger=PropertyChanged}"
-                          SelectionMode="Extended"
+                          SelectedItem="{Binding SelectedAvailableItem, UpdateSourceTrigger=PropertyChanged}"
                           AutoGenerateColumns="False"
                           CanUserDeleteRows="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ilość"
-                                            Width="100"
-                                            Binding="{Binding Count}"/>
                         <DataGridTextColumn Header="Nazwa"
                                             Width="*"
                                             Binding="{Binding Product.Name}">

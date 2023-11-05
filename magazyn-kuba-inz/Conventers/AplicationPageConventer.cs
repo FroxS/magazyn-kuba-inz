@@ -45,6 +45,8 @@ public static class AplicationPageConventer
                 return new RacksPage(pagevm);
             case EApplicationPage.Order:
                 return new OrderPage(pagevm);
+            case EApplicationPage.WayToOrder:
+                return new WayToOrderPage(pagevm);
             default:
                 Debugger.Break();
                 return null;
@@ -73,7 +75,7 @@ public static class AplicationPageConventer
             return EApplicationPage.ProductStatuses;
         if (vm is ItemStatesPageViewModel)
             return EApplicationPage.ItemStates;
-        if (vm is WareHouseItemsPageViewModel)
+        if (vm is WareHousePageViewModel)
             return EApplicationPage.WareHouseItems;
         if (vm is StorageUnitsPageViewModel)
             return EApplicationPage.StorageUnits;

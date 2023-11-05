@@ -13,5 +13,6 @@ public enum EApplicationPage
     Settings,
     WareHouseCreator,
     StorageUnits,
-    Order
+    Order,
+    WayToOrder
 }

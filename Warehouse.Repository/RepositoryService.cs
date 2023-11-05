@@ -16,7 +16,7 @@ namespace Warehouse.Repository
             services.AddTransient<IProductStatusRepository, ProductStatusRepository>();
             services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
-            services.AddTransient<IWareHouseItemRepository, WareHouseItemRepository>();
+            //services.AddTransient<IWareHouseItemRepository, WareHouseItemRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderProductRepository, OrderProductRepository>();
             services.AddTransient<IRackRepository, RackRepository>();

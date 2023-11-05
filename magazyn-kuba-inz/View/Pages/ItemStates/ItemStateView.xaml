@@ -24,7 +24,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Border BorderThickness="1"
-            BorderBrush="{StaticResource FontDarkColorBrush}">
+            BorderBrush="{DynamicResource BorderColorBrush}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

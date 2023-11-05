@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Warehouse.Core.Helpers;
+using Warehouse.Core.Interface;
 using Warehouse.Models;
 
 namespace Warehouse.Core.Models;
@@ -110,8 +110,46 @@ public class HallObject : ObservableObject
         {
             return null;
         }
-        
+    }
 
+    public WayResult GetPath(List<WayObject> existpath)
+    {
+        try
+        {
+            List<object> path = new List<object>();
+            foreach(WayObject way in existpath)
+            {
+                switch (way.Type) 
+                {
+                    case EWayElementType.Point:
+                        path.Add(WayPoints.FirstOrDefault(x => x.Position == way.Position));
+                        break;
+                    case EWayElementType.Rack:
+                        path.Add(Racks.FirstOrDefault(x => x.ID == way.Itemid));
+                        break;
+                    case EWayElementType.Product:
+                        path.Add(new Product() { ID = way.Itemid.Value, Name = way.Name});
+                        break;
+                }
+            }
+            WayResult result = new WayResult(path);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    public void IncludeProductToRacks(IRackService service)
+    {
+        List<Rack> DBRacks = service.GetAllWithItems();
+        foreach(RackObject rack in Racks)
+        {
+            rack.StorageItems = DBRacks.FirstOrDefault(x => x.ID == rack.ID).StorageItems;
+        }
+        
     }
 
     #endregion

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Warehouse.InnerDialog;
 
-public class AddProductToStateInnerDialogViewModel : BaseInnerDialogViewModel<WareHouseItem>
+public class AddProductToStateInnerDialogViewModel : BaseInnerDialogViewModel<StorageItem>
 {
     #region Private properties
 
@@ -97,10 +97,10 @@ public class AddProductToStateInnerDialogViewModel : BaseInnerDialogViewModel<Wa
             }
         }
 
-        Result = WareHouseItem.Get();
+        Result = StorageItem.Get();
         //Result.Product = _product;
         //Result.State = State;
-        Result.Count = Count;
+        //Result.Count = Count;
         Result.ID_State = State.ID;
         Result.ID_Product = _product.ID;
         base.Submit();

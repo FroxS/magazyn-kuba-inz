@@ -119,11 +119,11 @@ namespace Warehouse.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("OrderWay")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<DateTime>("RealizationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Reserved")
-                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -345,13 +345,16 @@ namespace Warehouse.EF.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ID_Item")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ID_OrderItem")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ID_Package")
+                    b.Property<Guid?>("ID_Package")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ID_Product")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ID_State")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Lp")
@@ -362,13 +365,15 @@ namespace Warehouse.EF.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ID_Item");
-
                     b.HasIndex("ID_OrderItem")
                         .IsUnique()
                         .HasFilter("[ID_OrderItem] IS NOT NULL");
 
                     b.HasIndex("ID_Package");
+
+                    b.HasIndex("ID_Product");
+
+                    b.HasIndex("ID_State");
 
                     b.ToTable("StorageItem");
                 });
@@ -566,41 +571,6 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Count")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ID_Product")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ID_State")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Lp")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ID_Product");
-
-                    b.HasIndex("ID_State");
-
-                    b.ToTable("WareHouseItem");
-                });
-
             modelBuilder.Entity("ProductWareHouseImage", b =>
                 {
                     b.HasOne("Warehouse.Models.WareHouseImage", null)
@@ -686,12 +656,6 @@ namespace Warehouse.EF.Migrations
 
             modelBuilder.Entity("Warehouse.Models.StorageItem", b =>
                 {
-                    b.HasOne("Warehouse.Models.WareHouseItem", "Item")
-                        .WithMany("Items")
-                        .HasForeignKey("ID_Item")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Warehouse.Models.OrderProduct", "OrderItem")
                         .WithOne("StorageItem")
                         .HasForeignKey("Warehouse.Models.StorageItem", "ID_OrderItem")
@@ -699,15 +663,27 @@ namespace Warehouse.EF.Migrations
 
                     b.HasOne("Warehouse.Models.StorageItemPackage", "Package")
                         .WithMany("Items")
-                        .HasForeignKey("ID_Package")
+                        .HasForeignKey("ID_Package");
+
+                    b.HasOne("Warehouse.Models.Product", "Product")
+                        .WithMany("WareHouseItems")
+                        .HasForeignKey("ID_Product")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Item");
+                    b.HasOne("Warehouse.Models.ItemState", "State")
+                        .WithMany("Items")
+                        .HasForeignKey("ID_State")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("OrderItem");
 
                     b.Navigation("Package");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Warehouse.Models.StorageItemPackage", b =>
@@ -727,25 +703,6 @@ namespace Warehouse.EF.Migrations
                     b.Navigation("Rack");
 
                     b.Navigation("StorageUnit");
-                });
-
-            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
-                {
-                    b.HasOne("Warehouse.Models.Product", "Product")
-                        .WithMany("WareHouseItems")
-                        .HasForeignKey("ID_Product")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Warehouse.Models.ItemState", "State")
-                        .WithMany("Items")
-                        .HasForeignKey("ID_State")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Warehouse.Models.Hall", b =>
@@ -808,11 +765,6 @@ namespace Warehouse.EF.Migrations
             modelBuilder.Entity("Warehouse.Models.User", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Warehouse.Models.WareHouseItem", b =>
-                {
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

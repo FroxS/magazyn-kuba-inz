@@ -15,7 +15,7 @@ public class ItemState : BaseEntity
 
     public EState State { get; set; }
 
-    public List<WareHouseItem>? Items { get; set; }
+    public List<StorageItem>? Items { get; set; }
 
     public static ItemState Get()
     {

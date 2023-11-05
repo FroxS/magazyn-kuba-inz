@@ -22,7 +22,7 @@ internal class StorageItemPackageService : BaseServiceWithRepository<IStorageIte
 
     public List<StorageItem>? GetItemsByID(Guid id)
     {
-        return _repozitory.GetById(x => x.Include(i => i.Items).ThenInclude(i => i.Item).ThenInclude(i => i.Product),id)?.Items;
+        return _repozitory.GetById(x => x.Include(i => i.Items).ThenInclude(i => i.Product),id)?.Items;
     }
 
     #endregion

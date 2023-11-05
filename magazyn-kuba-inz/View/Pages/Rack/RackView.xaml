@@ -7,10 +7,9 @@
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             Background="White"
              d:DataContext="{d:DesignInstance vm:RackViewModel}">
     <Border BorderThickness="1"
-            BorderBrush="{StaticResource FontDarkColorBrush}">
+            BorderBrush="{DynamicResource BorderColorBrush}">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -72,6 +71,7 @@
                         </Style>
 
                         <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
                             <Setter Property="HorizontalAlignment" Value="Left"/>
                             <Setter Property="Width" Value="200"/>
                             <Setter Property="Margin" Value="10,0"/>

@@ -5,6 +5,7 @@ using Warehouse.ViewModel.Service;
 using Warehouse.Models;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -14,25 +15,18 @@ public class RacksPageViewModel : BasePageViewModel
 
     private readonly IRackService _service;
     private readonly IStorageItemPackageService _storageItemPackageService;
-    private readonly IWareHouseItemService _wareHouseItemService;
+    private readonly IWareHouseService _wareHouseItemService;
     private readonly IStorageItemService _storageItemService;
     private ObservableCollection<Rack> _racks;
     private Rack _rack;
     private StorageItemPackage _selectedPackage;
     private ObservableCollection<StorageItem> _itemsInPackage = new ObservableCollection<StorageItem>();
-    private ObservableCollection<WareHouseItem> _availableItems = new ObservableCollection<WareHouseItem>();
-    private WareHouseItem _availableItem;
-    private int _count;
+    private ObservableCollection<StorageItem> _availableItems = new ObservableCollection<StorageItem>();
+    private StorageItem _selectedAvailableItem = null;
 
     #endregion
 
     #region Public Properties
-
-    public int Count
-    {
-        get => _count;
-        set { SetProperty(ref _count, value, nameof(Count)); }
-    }
 
     public ObservableCollection<Rack> Racks 
     {
@@ -49,11 +43,7 @@ public class RacksPageViewModel : BasePageViewModel
     public StorageItemPackage SelectedPackage
     {
         get => _selectedPackage;
-        set {
-            SetProperty(ref _selectedPackage, value, nameof(SelectedPackage),
-            () => { if (value?.Items != null) ItemsInPackage = GetStoragrItemByPackageID(value.ID); });
-             
-        }
+        set { SetProperty(ref _selectedPackage, value, nameof(SelectedPackage), () => Load());}
     }
 
     public ObservableCollection<StorageItem> ItemsInPackage
@@ -62,16 +52,16 @@ public class RacksPageViewModel : BasePageViewModel
         set { SetProperty(ref _itemsInPackage, value, nameof(ItemsInPackage)); }
     }
 
-    public ObservableCollection<WareHouseItem> AvailableItems
+    public ObservableCollection<StorageItem> AvailableItems
     {
         get => _availableItems;
         set { SetProperty(ref _availableItems, value, nameof(AvailableItems)); }
     }
 
-    public WareHouseItem AvailableItem
+    public StorageItem SelectedAvailableItem
     {
-        get => _availableItem;
-        set { SetProperty(ref _availableItem, value, nameof(AvailableItem)); }
+        get => _selectedAvailableItem;
+        set { SetProperty(ref _selectedAvailableItem, value, nameof(SelectedAvailableItem)); }
     }
 
     #endregion
@@ -92,7 +82,7 @@ public class RacksPageViewModel : BasePageViewModel
         IRackService service, 
         IStorageItemPackageService storageItemPackageService,
         IStorageItemService storageItemService,
-        IWareHouseItemService wareHouseItemService) : base(app)
+        IWareHouseService wareHouseItemService) : base(app)
     {
         Page = Models.Page.EApplicationPage.Racks;
         _service = service;
@@ -100,7 +90,7 @@ public class RacksPageViewModel : BasePageViewModel
         _wareHouseItemService = wareHouseItemService;
         _storageItemService = storageItemService;
         AddNewPackageCommand = new RelayCommand(AddNewPackage, () => Rack != null);
-        AddToPackageCommand = new RelayCommand(AddToPackage, () => Rack != null && SelectedPackage != null && AvailableItem != null);
+        AddToPackageCommand = new RelayCommand(AddToPackage, () => Rack != null && SelectedPackage != null);
         RemoveFromPackageCommand = new RelayCommand<StorageItem>(RemoveFromPackage, (o) => SelectedPackage != null && o != null);
     }
 
@@ -113,7 +103,7 @@ public class RacksPageViewModel : BasePageViewModel
     {
         Racks = new ObservableCollection<Rack>(_service.GetAllWithItems());
         Rack = Racks.FirstOrDefault();
-        AvailableItems = new ObservableCollection<WareHouseItem>(_wareHouseItemService.GetProductsAvailableToRack());
+        Load();
     }
 
     #endregion
@@ -131,9 +121,8 @@ public class RacksPageViewModel : BasePageViewModel
             _storageItemPackageService.Save();
             
             SelectedPackage = package;
-
             OnPropertyChanged(nameof(Rack));
-
+            Load();
         }
         catch(Exception ex)
         {
@@ -148,22 +137,20 @@ public class RacksPageViewModel : BasePageViewModel
             if (item == null)
                 return;
 
-            if (_wareHouseItemService.RemoveFromRack(item))
+            if (_wareHouseItemService.MoveProductToState(EState.Received , item) == null)
             {
                 _wareHouseItemService.Save();
                 _storageItemPackageService.Save();
                 _storageItemService.Save();
-                AvailableItems = new ObservableCollection<WareHouseItem>(_wareHouseItemService.GetProductsAvailableToRack());
+                AvailableItems = new ObservableCollection<StorageItem>(_wareHouseItemService.GetProductsByState(EState.InStock));
                 OnPropertyChanged(nameof(Rack));
-                ItemsInPackage = GetStoragrItemByPackageID(SelectedPackage.ID);
+                Load();
                 Application.ShowSilentMessage("Udało się", Models.Enums.EMessageType.Ok);
             }
             else
             {
                 Application.ShowSilentMessage("Nie można usunać z paczki, prawdopowdomnie jest już ten produt w ofercie");
             }
-
-
         }
         catch (Exception ex)
         {
@@ -176,36 +163,35 @@ public class RacksPageViewModel : BasePageViewModel
     {
         try
         {
-            if (Rack == null || SelectedPackage == null || AvailableItem == null)
+            if (Rack == null || SelectedPackage == null || SelectedAvailableItem == null)
                 return;
-            var count = AvailableItem.Count <= Count ? AvailableItem.Count : Count;
-            WareHouseItem curentProduct = AvailableItem;
-            List<StorageItem> items = new List<StorageItem>();
-            for (int i = 0; i < count; i++)
+
+            if(SelectedAvailableItem.State.State < EState.InStock)
             {
-                var item = new StorageItem()
+                EState currentState = SelectedAvailableItem.State.State;
+                while(!(currentState == EState.InStock))
                 {
-                    ID = Guid.NewGuid(),
-                    ID_Item = AvailableItem.ID,
-                    ID_Package = SelectedPackage.ID,
-                    ID_OrderItem = null
-                };
-                items.Add(item);
+                    currentState = (EState)((int)currentState << 1);
+                    string? mess = _wareHouseItemService.MoveProductToState(currentState, SelectedAvailableItem);
+                    if (mess != null)
+                    {
+                        Application.ShowSilentMessage($"{mess}");
+                        return;
+                    }
+                }
             }
-            if (_wareHouseItemService.MoveItemsToRack(items))
+
+            SelectedAvailableItem.ID_Package = SelectedPackage.ID;
+            string? message = _wareHouseItemService.MoveProductToState(EState.Available, SelectedAvailableItem);
+            if(message == null && _wareHouseItemService.Save())
             {
-                _wareHouseItemService.Save();
-                AvailableItems = new ObservableCollection<WareHouseItem>(_wareHouseItemService.GetProductsAvailableToRack());
-                OnPropertyChanged(nameof(Rack));
-                ItemsInPackage = GetStoragrItemByPackageID(SelectedPackage.ID);
                 Application.ShowSilentMessage("Udało się", Models.Enums.EMessageType.Ok);
             }
             else
             {
-                Application.ShowSilentMessage("Nie można przenieć elementów na stojak");
+                Application.ShowSilentMessage($"Nie można przenieć elementów na stojak: {message}");
             }
-            
-
+            Load();
         }
         catch (Exception ex)
         {
@@ -213,9 +199,16 @@ public class RacksPageViewModel : BasePageViewModel
         }
     }
 
-    private ObservableCollection<StorageItem> GetStoragrItemByPackageID(Guid id)
+    public void Load()
     {
-        return new ObservableCollection<StorageItem>(_storageItemService.GetItemsByPackage(id));
+        AvailableItems = new ObservableCollection<StorageItem>(_wareHouseItemService.GetProductsByState(EState.InStock | EState.Received));
+        if(Rack != null)
+        {
+            if(SelectedPackage != null)
+            {
+                ItemsInPackage = new ObservableCollection<StorageItem>(_wareHouseItemService.GetItemsByPackage(SelectedPackage.ID) ?? new List<StorageItem>());
+            }
+        }
     }
 
     #endregion

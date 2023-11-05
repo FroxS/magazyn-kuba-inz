@@ -52,7 +52,7 @@ public class MessageService : ObservableObject, IMessageService
     /// </summary>
     public MessageService()
     {
-        HideMessageCommand = new RelayCommand((o) => Message = null);
+        HideMessageCommand = new RelayCommand(() => Message = null);
     }
 
     #endregion

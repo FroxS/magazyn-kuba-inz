@@ -27,7 +27,7 @@ public class DashBoardPageViewModel : BasePageViewModel
     #region Constructors
     public DashBoardPageViewModel(IApp app) : base(app)
     {
-        ExitCommand = new RelayCommand((o) => {
+        ExitCommand = new RelayCommand(() => {
             if (app.IsAdmin)
                 System.Windows.MessageBox.Show("Jest admin");
             else

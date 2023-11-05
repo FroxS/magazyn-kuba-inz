@@ -2,6 +2,7 @@
 using Warehouse.EF;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Repository;
 
@@ -13,7 +14,7 @@ internal class RackRepository : BaseRepository<Rack,WarehouseDbContext>, IRackRe
     /// Default constructro
     /// </summary>
     /// <param name="context">Context of database</param>
-    public RackRepository(IDbContextFactory<WarehouseDbContext> factory) : base(factory)
+    public RackRepository(IApp app) : base(app)
     {
 
     }

@@ -80,7 +80,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Stretch"
                       ShowsPreview="False"
-                      Background="{StaticResource DarkColorBrush}"
+                      Background="{DynamicResource BackgroundColorBrush}"
                       />
 
         <!--#region Selected item-->

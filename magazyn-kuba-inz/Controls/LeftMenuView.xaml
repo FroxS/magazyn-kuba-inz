@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.Controls"
              xmlns:resources="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
-             xmlns:conventers="clr-namespace:Warehouse.Conventers"
-             xmlns:design="clr-namespace:Warehouse.Core.ViewModel.Design;assembly=Warehouse.Core"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:design="clr-namespace:Warehouse.ViewModel.Design;assembly=Warehouse.ViewModels"
+             xmlns:enumPage="clr-namespace:Warehouse.Models.Page;assembly=Warehouse.Models"
+             xmlns:conventers="clr-namespace:Warehouse.Theme.Conventers;assembly=Warehouse.Theme"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="100"
+             d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}">
-    <Grid Background="{StaticResource Color2Brush}"
-          Width="65"
+    <Grid Background="{DynamicResource SecondBackgroundColorBrush}"
+          Width="200"
           x:Name="nav_pnl"
           HorizontalAlignment="Left">
         <Grid.Resources>
@@ -20,9 +22,9 @@
                 <Setter Property="Height" Value="40"/>
                 <Setter Property="Width" Value="100"/>
                 <Setter Property="Margin" Value="20,0,0,0"/>
-                <Setter Property="Background" Value="{StaticResource Color3Brush}"/>
+                <Setter Property="Background" Value="{DynamicResource SecondBackgroundColorBrush}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
                 <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="PlacementRectangle" Value="60,0,0,0"/>
@@ -32,10 +34,9 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
             <Style x:Key="font_style" TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
                 <Setter Property="FontSize" Value="20"/>
             </Style>
             <Style x:Key="tb_style" TargetType="{x:Type ToggleButton}">
@@ -52,7 +53,7 @@
                                     SnapsToDevicePixels="True">
                                 <Path Stretch="Uniform" 
                                       x:Name="icon"
-                                      Fill="{StaticResource FontColorBrush}" 
+                                      Fill="{DynamicResource FontColorBrush}" 
                                       Height="25"
                                       Width="25"
                                       Style="{StaticResource Menu}"
@@ -67,7 +68,7 @@
                                 </Trigger>
 
                                 <Trigger Property="IsChecked" Value="true">
-                                    <Setter Property="Fill" TargetName="icon" Value="{StaticResource Color4Brush}"/>
+                                    <Setter Property="Fill" TargetName="icon" Value="{DynamicResource BorderColorBrush}"/>
                                 </Trigger>
 
                             </ControlTemplate.Triggers>
@@ -80,13 +81,14 @@
 
             </Style>
         </Grid.Resources>
+        
         <StackPanel x:Name="st_pnl">
             <Grid Height="90">
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
                            Margin="73,-20,0,0"
                            Text="M E N U"
-                           Foreground="White"
+                           Foreground="{DynamicResource FontColorBrush}"
                            FontSize="22"
                            Background="Transparent"
                            HorizontalAlignment="Left"
@@ -94,13 +96,14 @@
                 </TextBlock>
                 <ToggleButton x:Name="Tg_Btn"
                               Grid.Column="0"
+                              IsChecked="True"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
                               Margin="18,-20,0,0"
                               Height="30"
                               Width="30"
                               BorderThickness="0"
-                              Background="{StaticResource Color2Brush}"
+                              Background="{DynamicResource SecondBackgroundColorBrush}"
                               Style="{StaticResource tb_style}">
                     <ToggleButton.Triggers>
 
@@ -146,76 +149,93 @@
                     </ToggleButton.Triggers>
 
                 </ToggleButton>
-
             </Grid>
 
-            <ListView x:Name="LV"
-                      Background="Transparent"
-                      BorderBrush="Transparent"
-                      ItemsSource="{Binding NavItems}"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
-                                    Width="200">
-                            <Path Stretch="Uniform" 
-                                  Fill="{StaticResource FontColorBrush}" 
-                                  Height="30"
-                                  Width="30"
-                                  Data="{Binding Type, Converter={conventers:NavItemToGeometryConventer}, ConverterParameter=Type}"
-                                  Margin="10,0,0,0"
-                                  VerticalAlignment="Top"/>
 
-                            <TextBlock Text="{Binding Name}"
-                                       Margin="25,0,0,0"
-                                       Style="{StaticResource font_style}"/>
-
-                            <StackPanel.ToolTip>
-                                <ToolTip Content="{Binding Name}" 
-                                         Style="{StaticResource tt_style}"/>
-
-                            </StackPanel.ToolTip>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                <controls:ItemMenuButton IconPath="{StaticResource HomeGeometry}"
+                                         IsMenuSelected="False"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.DashBoard}"
+                                         Header="{x:Static resources:Resources.Home}"/>
+                <controls:ItemMenuButton IconPath="{StaticResource Order}"
+                                         IsMenuSelected="False"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Order}"
+                                         Header="Orders"/>
                 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <Border x:Name="Bd"
-                                            Height="50"
-                                            BorderBrush="Transparent"
-                                            BorderThickness="3,0,0,0"
-                                            Background="{TemplateBinding Background}"
-                                            Padding="{TemplateBinding Padding}"
-                                            SnapsToDevicePixels="True">
-                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <MultiTrigger>
-                                            <MultiTrigger.Conditions>
-                                                <Condition Property="IsMouseOver" Value="True"/>
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Background"
-                                                    TargetName="Bd"
-                                                    Value="{StaticResource Color1Brush}"/>
-                                            <Setter Property="BorderBrush"
-                                                    TargetName="Bd"
-                                                    Value="{StaticResource Color4Brush}"/>
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </MultiTrigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                <controls:ItemMenuButton IconPath="{StaticResource WarehouseItems}"
+                                         IsMenuSelected="False"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseItems}"
+                                         Header="{x:Static resources:Resources.WareHouseItems}"/>
+
+                <controls:ItemMenuButton IconPath="{StaticResource ProductsGeometry}"
+                                         ContainsSubMenu="True"
+                                         IsMenuSelected="True"
+                                         Header="{x:Static resources:Resources.Products}"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Products}">
+                    <StackPanel>
+                        <controls:ItemMenuButton IconPath="{StaticResource SupplierHeometry}"
+                                                 Header="{x:Static resources:Resources.Suppliers}"
+                                                 IsMenuSelected="True"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Suppliers}"/>
+                        <controls:ItemMenuButton IconPath="{StaticResource CategoryGeometry}"
+                                                 IsMenuSelected="True"
+                                                 Header="{x:Static resources:Resources.Group}"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductGroups}"/>
+
+                        <controls:ItemMenuButton IconPath="{StaticResource ProductStatus}"
+                                                 IsMenuSelected="True"
+                                                 Header="{x:Static resources:Resources.ProductStates}"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductStatuses}"/>
+                        <controls:ItemMenuButton IconPath="{StaticResource ItemState}"
+                                                 IsMenuSelected="True"
+                                                 Header="{x:Static resources:Resources.ItemState}"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ItemStates}"/>
+                    </StackPanel>
+
+                </controls:ItemMenuButton>
+
+                <controls:ItemMenuButton IconPath="{StaticResource WareHouse}"
+                                         ContainsSubMenu="True"
+                                         IsMenuSelected="True"
+                                         Header="{x:Static resources:Resources.WareHouse}">
+                    <StackPanel>
+                        <controls:ItemMenuButton IconPath="{StaticResource Box}"
+                                                 Header="{x:Static resources:Resources.StorageUnits}"
+                                                 IsMenuSelected="True"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.StorageUnits}"/>
+                        <controls:ItemMenuButton IconPath="{StaticResource Rack}"
+                                                 Header="{x:Static resources:Resources.Racks}"
+                                                 IsMenuSelected="False"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Racks}"/>
+                        <controls:ItemMenuButton IconPath="{StaticResource Creator}"
+                                                 IsMenuSelected="True"
+                                                 Header="{x:Static resources:Resources.Creator}"
+                                                 Command="{Binding SetPageCommand}"
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseCreator}"/>
+                    </StackPanel>
+
+                </controls:ItemMenuButton>
+
+
+                <controls:ItemMenuButton IconPath="{StaticResource SettingsGeometry}"
+                                         ContainsSubMenu="False"
+                                         IsMenuSelected="True"
+                                         Header="{x:Static resources:Resources.Settings}"
+                                         Command="{Binding SetPageCommand}"
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Settings}"/>
+
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

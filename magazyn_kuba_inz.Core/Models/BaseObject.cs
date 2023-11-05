@@ -20,12 +20,16 @@ public class BaseObject : ObservableObject, IBaseObject
 
     public Point Position => new Point(X, Y);
 
-    
-
     public double X
     {
         get => _x;
         set { SetProperty(ref _x, value, nameof(X)); }
+    }
+
+    public double Y
+    {
+        get => _y;
+        set { SetProperty(ref _y, value, nameof(Y)); }
     }
 
     public bool IsSelected
@@ -34,11 +38,7 @@ public class BaseObject : ObservableObject, IBaseObject
         set { SetProperty(ref _isSelected, value, nameof(IsSelected)); }
     }
 
-    public double Y
-    {
-        get => _y;
-        set { SetProperty(ref _y, value, nameof(Y)); }
-    }
+    
 
     #endregion
 

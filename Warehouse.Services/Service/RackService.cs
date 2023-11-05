@@ -52,12 +52,12 @@ internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, I
 
     public List<Rack> GetAllWithItems()
     {
-        return _repozitory.GetAll(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Item),false);
+        return _repozitory.GetAll(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Product),false);
     }
 
     public List<StorageItemPackage> GetAllPackages(Guid id)
     {
-        return _repozitory.GetById(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Item).ThenInclude(x => x.Product), id)?.StorageItems ?? new List<StorageItemPackage>();
+        return _repozitory.GetById(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Product), id)?.StorageItems ?? new List<StorageItemPackage>();
     }
 
     #endregion

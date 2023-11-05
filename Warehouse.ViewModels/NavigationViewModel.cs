@@ -8,6 +8,7 @@ using Warehouse.Core.Delegate;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 using Warehouse.ViewModel.Pages;
+using Warehouse.Core.Exeptions;
 
 namespace Warehouse.ViewModel;
 
@@ -58,9 +59,9 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public NavigationViewModel()
     {
-        SetPageCommand = new RelayCommand<EApplicationPage>((o) => { SetPage(o); });
-        PrevCommand = new RelayCommand((o) => SetPrevPage(), (o) => CanSetPrevPage);
-        NextCommand = new RelayCommand((o) => SetNextPage(), (o) => CanSetNextPage);
+        SetPageCommand = new RelayCommand<EApplicationPage>(SetPage);
+        PrevCommand = new RelayCommand(() => SetPrevPage(), () => CanSetPrevPage);
+        NextCommand = new RelayCommand(() => SetNextPage(), () => CanSetNextPage);
     }
 
     #endregion
@@ -90,7 +91,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
             case EApplicationPage.ItemStates:
                 return service.GetRequiredService<ItemStatesPageViewModel>();
             case EApplicationPage.WareHouseItems:
-                return service.GetRequiredService<WareHouseItemsPageViewModel>();
+                return service.GetRequiredService<WareHousePageViewModel>();
             case EApplicationPage.StorageUnits:
                 return service.GetRequiredService<StorageUnitsPageViewModel>();
             case EApplicationPage.WareHouseCreator:
@@ -116,23 +117,43 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     public void SetPage(IBasePageViewModel pageVM)
     {
-        if (pageVM != null && pageVM != Page)
+        var prevPage = Page;
+        try
         {
-
-            Page?.OnPageClose();
-            if (Page?.CanChangePage ?? true)
+            if (pageVM != null && pageVM != Page)
             {
-                if (Page != null)
-                    AddPrevPage(Page);
-                OnPropertyChanging(nameof(Page));
-                Page = pageVM;
-                OnPropertyChanged(nameof(Page));
-                Page?.OnPageOpen();
-                PageChanged?.Invoke(Page.Page);
+                Page?.OnPageClose();
+                if (Page?.CanChangePage ?? true)
+                {
+                    if (Page != null)
+                        AddPrevPage(Page);
+                    OnPropertyChanging(nameof(Page));
+                    AppHost.Services.GetService<IApp>().ReloadDatabase();
+                    Page = pageVM;
+                    if (Page is IPageReloadViewModel reload)
+                        reload.Reload();
+                    OnPropertyChanged(nameof(Page));
+                    Page?.OnPageOpen();
+                    PageChanged?.Invoke(Page.Page);
+                }
             }
+            CanSetNextPage = _nextPages.Any();
+            CanSetPrevPage = _prevPages.Any();
         }
-        CanSetNextPage = _nextPages.Any();
-        CanSetPrevPage = _prevPages.Any();
+        catch (PageExeption ex)
+        {
+            AppHost.Services.GetService<IApp>().CatchExeption(ex);
+            if (ex.PageVM == null)
+                SetPage(ex.Page);
+            else
+                SetPage(ex.PageVM);
+        }
+        catch (Exception ex)
+        {
+            AppHost.Services.GetService<IApp>().CatchExeption(ex);
+            SetPage(prevPage);
+
+        }
     }
 
     private void AddPrevPage(IBasePageViewModel page)

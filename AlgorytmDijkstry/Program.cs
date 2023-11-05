@@ -104,10 +104,8 @@ namespace AlgorytmDijkstry
                 for (int i = 0; i < count; i++)
                 {
                     StorageItem item = StorageItem.Get();
-                    item.Item = WareHouseItem.Get();
-                    item.ID_Item = item.Item.ID;
-                    item.Item.ID_Product = product.ID;
-                    item.Item.Product = product;
+                    item.ID_Product = product.ID;
+                    item.Product = product;
                     package.Items.Add(item);
                 }    
             }

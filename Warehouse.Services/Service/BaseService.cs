@@ -1,6 +1,10 @@
 ﻿using Warehouse.Repository.Interfaces;
 using Warehouse.Models;
 using Warehouse.Core.Interface;
+using Newtonsoft.Json.Bson;
+using Newtonsoft.Json;
+using Warehouse.Core.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Warehouse.Service;
 
@@ -41,6 +45,40 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
     public BaseService(IBaseRepository<Model> repozitory)
     {
         _repozitory = repozitory;
+    }
+
+    #endregion
+
+    #region Helper Method
+
+    protected virtual byte[] GetData<T>(T obj, Action<JsonSerializer> onSerialize = null)
+    {
+        MemoryStream ms = new MemoryStream();
+        using (BsonDataWriter writer = new BsonDataWriter(ms))
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Formatting = Formatting.Indented; //Format the output
+            serializer.TypeNameHandling = TypeNameHandling.Auto;
+            serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            onSerialize?.Invoke(serializer);
+            serializer.Serialize(writer, obj);
+        }
+        return ms.ToArray();
+    }
+
+    protected virtual T GetData<T>(byte[] data)
+    {
+        T obj = default(T);
+        using(MemoryStream ms = new MemoryStream(data))
+        {
+            using (BsonDataReader reader = new BsonDataReader(ms))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+                obj = serializer.Deserialize<T>(reader);
+            }
+        }
+        return obj;
     }
 
     #endregion
@@ -131,6 +169,8 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
         actionInTransact.Invoke(_repozitory);
         EndTransaction();
     }
+
+    
 
     #endregion
 }

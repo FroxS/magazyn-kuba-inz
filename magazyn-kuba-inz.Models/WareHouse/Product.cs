@@ -30,7 +30,7 @@ public class Product : BaseEntity
 
     public Supplier? Supplier { get; set; }
 
-    public List<WareHouseItem>? WareHouseItems { get; set; }
+    public List<StorageItem>? WareHouseItems { get; set; }
 
     public List<WareHouseImage>? Images { get; set; }
 

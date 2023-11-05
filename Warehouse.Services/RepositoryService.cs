@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Warehouse.Core.Interface;
+using Warehouse.Models;
 
 namespace Warehouse.Service
 {
@@ -15,7 +16,7 @@ namespace Warehouse.Service
             services.AddTransient<IProductStatusService, ProductStatusService>();
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<IItemStateService, ItemStateService>();
-            services.AddTransient<IWareHouseItemService, WareHouseItemService>();
+            services.AddTransient<IWareHouseService, WareHouseService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IOrderProductService, OrderProductService>();
@@ -24,9 +25,7 @@ namespace Warehouse.Service
             services.AddTransient<IStorageItemPackageService, StorageItemPackageService>();
             services.AddTransient<IStorageItemService, StorageItemService>();
             services.AddTransient<IHallService, HallService>();
-
             services.AddSingleton<IMessageService,MessageService>();
-
             return services;
         }
 
