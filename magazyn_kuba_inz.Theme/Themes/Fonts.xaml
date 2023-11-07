@@ -7,38 +7,6 @@
     <FontFamily x:Key="MontserratSemiBoldItalic">pack://appliction;,,,/Fonts/#Montserrat SemiBoldItalic</FontFamily>
     <FontFamily x:Key="MontserratThin">pack://appliction;,,,/Fonts/#Montserrat Thin</FontFamily>
 
-    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
-        <Setter Property="FontFamily" Value="{DynamicResource MontserratBlack}" />
-        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-        <Setter Property="FontSize" Value="14"/>
-    </Style>
-
-    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
-        <Setter Property="FontFamily" Value="{DynamicResource MontserratLight}" />
-        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" >
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-    </Style>
-    
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
-   
-    
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
-    
-    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" >
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-    </Style>
-
-    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource BaseStyle}" >
-    </Style>
-
-    <Style TargetType="{x:Type Window}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-    </Style>
-
     <system:Double x:Key="FontSizeSmaller">10</system:Double>
     <system:Double x:Key="FontSizeSmall">12</system:Double>
     <system:Double x:Key="FontSizeRegular">14</system:Double>

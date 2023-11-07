@@ -9,11 +9,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ModalControl}">
                     <ControlTemplate.Resources>
-                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/> 
+                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     </ControlTemplate.Resources>
                     <Grid Visibility="{TemplateBinding IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
                             Background="{TemplateBinding Background}">
-                        
+
                         <Border UseLayoutRounding="True"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -23,215 +23,16 @@
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=border}"/>
                                 </Grid.OpacityMask>
-                                <Border x:Name="border" Background="White" CornerRadius="5"/>
+                                <Border x:Name="border" Background="{DynamicResource BackgroundColorBrush}" CornerRadius="5"/>
                                 <ContentControl Content="{TemplateBinding Content}"/>
                             </Grid>
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="10" 
                                                   ShadowDepth="10"
-                                                  Color="Gray"/>
+                                                  Color="{DynamicResource HoverBackgroundColor}"/>
                             </Border.Effect>
                         </Border>
                     </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
-    <Style TargetType="{x:Type ToolTip}">
-        <Setter Property="Placement" Value="Right"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Width" Value="100"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundColorBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="PlacementRectangle" Value="60,0,0,0"/>
-        <Setter Property="HorizontalOffset" Value="15"/>
-        <Setter Property="VerticalOffset" Value="6"/>
-        <Setter Property="HasDropShadow" Value="True"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-    </Style>
-
-    <Style TargetType="{x:Type controls:ItemMenuButton}">
-        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:ItemMenuButton}">
-                    <StackPanel>
-                        <Border BorderThickness="2,0,0,0"
-                                x:Name="Border"
-                                BorderBrush="Transparent"
-                                Background="Transparent">
-                            
-                            <Border.Style>
-                                <Style TargetType="{x:Type Border}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                        <DataTrigger Binding="{Binding IsMenuSelected, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            
-                            <Grid Background="Transparent"
-                                  Name="StackPanelMenuItem"
-                                  HorizontalAlignment="Left"
-                                  Width="200" Height="30"
-                                  Margin="15,10,0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="120"/>
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Path Stretch="Uniform" 
-                                      Fill="{TemplateBinding Foreground}" 
-                                      Height="30"
-                                      x:Name="path"
-                                      Grid.Column="0"
-                                      Width="30"
-                                      Data="{TemplateBinding IconPath}"
-                                      Margin="0,0,0,0"
-                                      VerticalAlignment="Top"/>
-
-                                <TextBlock Text="{TemplateBinding Header}"
-                                           VerticalAlignment="Center"
-                                           Margin="30,0"
-                                           TextWrapping="Wrap"
-                                           Grid.Column="1"
-                                           HorizontalAlignment="Left"
-                                           Foreground="{TemplateBinding Foreground}"/>
-
-
-                                <ToggleButton Background="Transparent"
-                                              Grid.Column="2"
-                                              Visibility="{Binding ContainsSubMenu, 
-                                                                   RelativeSource={RelativeSource TemplatedParent}, 
-                                                                   Converter={conv:BoolToVisibleConventer}, 
-                                                                   ConverterParameter=True}"
-                                              Foreground="{TemplateBinding Foreground}">
-                                    <ToggleButton.Style>
-                                        
-                                        <Style TargetType="{x:Type ToggleButton}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                        <Border x:Name="border"
-                                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                                Background="{TemplateBinding Background}"
-                                                                SnapsToDevicePixels="True">
-                                                            <Path Fill="{TemplateBinding Foreground}"
-                                                                  Data="{DynamicResource ChevronBottomGeometry}"
-                                                                  Height="25"
-                                                                  Width="25"
-                                                                  Stretch="Uniform"/>
-                                                        </Border>
-
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="Cursor" Value="Hand"/>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ToggleButton.Style>
-                                
-                                    <ToggleButton.Triggers>
-                                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetName="SubMenu"
-                                                                 Storyboard.TargetProperty="Height"
-                                                                 BeginTime="0:0:0"
-                                                                 From="{Binding ElementName=SubMenu, Path=Height}" 
-                                                                 To="0"
-                                                                 Duration="0:0:0.2">
-
-                                                </DoubleAnimation>
-
-                                            </Storyboard>
-
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-
-                                    <EventTrigger RoutedEvent="ToggleButton.Checked">
-                                        <BeginStoryboard>
-
-                                            <Storyboard>
-
-                                                <DoubleAnimation Storyboard.TargetName="SubMenu"
-                                                                 Storyboard.TargetProperty="Height"
-                                                                 BeginTime="0:0:0"
-                                                                 From="{Binding ElementName=SubMenu, Path=Height}" 
-                                                                 To="{Binding ElementName=ContentSize, Path=DesiredSize.Height}"
-                                                                 Duration="0:0:0.2">
-
-                                                </DoubleAnimation>
-
-                                            </Storyboard>
-
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </ToggleButton.Triggers>
-                                </ToggleButton>
-
-
-                                <Grid.ToolTip>
-                                    <ToolTip Content="{TemplateBinding Header}" />
-                                </Grid.ToolTip>
-                            </Grid>
-
-                            <Border.Triggers>
-                                <EventTrigger RoutedEvent="Border.MouseEnter">
-                                    <EventTrigger.Actions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                                To="{StaticResource Color4}"
-                                                                Duration="0:0:0.2"/>-->
-                                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                                To="{DynamicResource HoverBackgroundColor}"
-                                                                Duration="0:0:0.2"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger.Actions>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="Border.MouseLeave">
-                                    <EventTrigger.Actions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                                To="Transparent"
-                                                                Duration="0:0:0.2"/>-->
-                                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                                To="Transparent"
-                                                                Duration="0:0:0.2"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger.Actions>
-                                </EventTrigger>
-                            </Border.Triggers>
-                        </Border>
-
-                        <StackPanel Height="0"
-                                    Visibility="{Binding ContainsSubMenu, RelativeSource={RelativeSource TemplatedParent}, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
-                                    x:Name="SubMenu">
-                            <Border x:Name="ContentSize">
-                                <ContentControl Content="{TemplateBinding Content}"
-                                                Margin="10,0,0,0"/>
-                            </Border>
-                        </StackPanel>
-
-                    </StackPanel>
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

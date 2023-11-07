@@ -24,7 +24,6 @@
                 <Setter Property="Margin" Value="20,0,0,0"/>
                 <Setter Property="Background" Value="{DynamicResource SecondBackgroundColorBrush}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
                 <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="PlacementRectangle" Value="60,0,0,0"/>
@@ -68,7 +67,7 @@
                                 </Trigger>
 
                                 <Trigger Property="IsChecked" Value="true">
-                                    <Setter Property="Fill" TargetName="icon" Value="{DynamicResource BorderColorBrush}"/>
+                                    <Setter Property="Fill" TargetName="icon" Value="{DynamicResource PrimaryColorBrush}"/>
                                 </Trigger>
 
                             </ControlTemplate.Triggers>
@@ -81,8 +80,8 @@
 
             </Style>
         </Grid.Resources>
-        
-        <StackPanel x:Name="st_pnl">
+
+        <StackPanel x:Name="st_pnl" Orientation="Vertical">
             <Grid Height="90">
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
@@ -151,7 +150,7 @@
                 </ToggleButton>
             </Grid>
 
-            <StackPanel>
+            <StackPanel  Orientation="Vertical">
 
 
                 <controls:ItemMenuButton IconPath="{StaticResource HomeGeometry}"
@@ -177,7 +176,7 @@
                                          Header="{x:Static resources:Resources.Products}"
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.Products}">
-                    <StackPanel>
+                    <StackPanel Orientation="Vertical" >
                         <controls:ItemMenuButton IconPath="{StaticResource SupplierHeometry}"
                                                  Header="{x:Static resources:Resources.Suppliers}"
                                                  IsMenuSelected="True"
@@ -207,7 +206,7 @@
                                          ContainsSubMenu="True"
                                          IsMenuSelected="True"
                                          Header="{x:Static resources:Resources.WareHouse}">
-                    <StackPanel>
+                    <StackPanel Orientation="Vertical">
                         <controls:ItemMenuButton IconPath="{StaticResource Box}"
                                                  Header="{x:Static resources:Resources.StorageUnits}"
                                                  IsMenuSelected="True"

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    
     <!--  FILTER SET ICON  -->
     <Geometry x:Key="FilterSet">
         M 0 0 Z

@@ -44,19 +44,19 @@ namespace Warehouse.Theme.Controls
         #region Dependency
 
         public static readonly DependencyProperty IconPathProperty =
-            DependencyProperty.Register("IconPath", typeof(Geometry), typeof(ItemMenuButton), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(IconPath), typeof(Geometry), typeof(ItemMenuButton), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ContainsSubMenuProperty =
-            DependencyProperty.Register("ContainsSubMenu", typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(ContainsSubMenu), typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
 
         public static readonly DependencyProperty IsMenuSelectedProperty =
-            DependencyProperty.Register("IsMenuSelected", typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsMenuSelected), typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
 
         public static readonly DependencyProperty IsMenuOpenProperty =
-            DependencyProperty.Register("IsMenuOpen", typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsMenuOpen), typeof(bool), typeof(ItemMenuButton), new PropertyMetadata(false));
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(ItemMenuButton), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Header), typeof(string), typeof(ItemMenuButton), new PropertyMetadata(string.Empty));
 
         #endregion
 

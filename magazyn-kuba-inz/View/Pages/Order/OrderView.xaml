@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:Warehouse.View.Pages"
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:att="clr-namespace:Warehouse.AttachedProperty"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance vm:OrderViewModel}">
@@ -23,11 +25,9 @@
                         Grid.Row="0">
 
                 <Button Command="{Binding EditCommand}"
-                        Content="Edit"
-                        Padding="10,5"/>
+                        Content="Edit"/>
 
                 <Button Content="Save" 
-                        Padding="10,5"
                         Visibility="{Binding Saved, Converter={StaticResource BoolToVisible}}"
                         Command="{Binding SaveCommand}"/>
 
@@ -63,40 +63,18 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type Grid}">
-                            <Setter Property="Margin" Value="5"/>
-                        </Style>
-                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
-                            <Setter Property="HorizontalAlignment" Value="Right"/>
-                        </Style>
-                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
-                            <Setter Property="Width" Value="200"/>
-                            <Setter Property="Margin" Value="10,0"/>
-                            <Setter Property="HorizontalAlignment" Value="Left"/>
-                        </Style>
-
-                        <Style TargetType="{x:Type DatePicker}">
-                            <Setter Property="Width" Value="200"/>
-                            <Setter Property="Margin" Value="10,0"/>
-                            <Setter Property="HorizontalAlignment" Value="Left"/>
-                        </Style>
-                    </Grid.Resources>
-
-
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0">
-                        <Run Text="Nazwa"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Nazwa" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                 Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Nazwa"/>
 
                     </Grid>
                     
@@ -106,14 +84,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Data realizacji"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Data realizacji" Style="{DynamicResource FormLabel}"/>
 
                         <DatePicker SelectedDate="{Binding RealizationDate, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                    Grid.Column="1"/>
+                                    Grid.Column="1"
+                                    Style="{StaticResource FormDatePicker}"/>
 
                     </Grid>
                     
@@ -124,14 +99,12 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Marża"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Marża" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Margin, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                 Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Margin, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Marża"/>
 
                     </Grid>
 
@@ -147,70 +120,35 @@
 
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
-                    <Button Width="20"
-                            Height="20"
-                            Margin="5"
-                            BorderThickness="0"
-                            Command="{Binding AddCommand}"
-                            Background="Transparent"
-                            Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}">
-                        <Path Data="{StaticResource Add}"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              Fill="{DynamicResource GoodColorBrush}"/>
-                    </Button>
-                    <Button Width="20"
-                            Height="20"
-                            Margin="5"
-                            BorderThickness="0"
-                            Background="Transparent"
-                            Command="{Binding DeleteCommand}"
-                            CommandParameter="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}"
-                            Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}">
-                        <Path Data="{StaticResource Delete}"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              Fill="{DynamicResource WrongColorBrush}"/>
-                    </Button>
+                    <controls:ButtonPath IconPath="{StaticResource Add}"
+                                         Foreground="{DynamicResource GoodColorBrush}"
+                                         Command="{Binding AddCommand}"
+                                         Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}"/>
+                    
+                    <controls:ButtonPath IconPath="{StaticResource Delete}"
+                                         Foreground="{DynamicResource WrongColorBrush}"
+                                         Command="{Binding DeleteCommand}"
+                                         CommandParameter="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}"
+                                         Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}"/>
 
-                    <Button Width="20"
-                            Height="20"
-                            Margin="5"
-                            BorderThickness="0"
-                            Command="{Binding GenerateWayCommand}"
-                            Background="Transparent">
-                        <Path Data="{StaticResource Map}"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              Fill="#FF0671FF"/>
-                    </Button>
+                    <controls:ButtonPath IconPath="{StaticResource Map}"
+                                         Foreground="{DynamicResource PrimaryColorBrush}"
+                                         Command="{Binding GenerateWayCommand}"/>
 
-                    <Button Width="50"
-                            Height="20"
-                            Margin="5"
-                            BorderThickness="0"
-                            Command="{Binding ReservCommand}"
-                            Background="Transparent"
-                            IsEnabled="{Binding Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
-                            Visibility="{Binding Prepared,Converter={conv:BoolToVisibleConventer}, UpdateSourceTrigger=PropertyChanged}">
-                        <Path Data="{StaticResource Reserved}"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              Fill="{DynamicResource WrongColorBrush}"/>
-                    </Button>
+                    <controls:ButtonPath IconPath="{StaticResource Reserved}"
+                                         Foreground="{DynamicResource WrongColorBrush}"
+                                         Command="{Binding ReservCommand}"
+                                         Width="80"
+                                         IsEnabled="{Binding Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
+                                         Visibility="{Binding Prepared,Converter={conv:BoolToVisibleConventer}, UpdateSourceTrigger=PropertyChanged}"/>
 
+                    <controls:ButtonPath IconPath="{StaticResource Prepared}"
+                                         Foreground="{DynamicResource GoodColorBrush}"
+                                         Command="{Binding SetAsPreapredCommand}"
+                                         Width="80"
+                                         ToolTip="Gotowe"
+                                         Visibility="{Binding Reserved,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Button Width="50"
-                            Height="20"
-                            Margin="5"
-                            Command="{Binding SetAsPreapredCommand}"
-                            Content="Gotowe"
-                            Visibility="{Binding Reserved,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}">
-                    </Button>
                 </StackPanel>
 
                 <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"

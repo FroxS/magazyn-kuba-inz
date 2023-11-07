@@ -30,10 +30,13 @@
         <StackPanel Grid.Row="0"
               Grid.Column="0"
                     Orientation="Horizontal">
-            <Button Content="Edit" Command="{Binding EditCommand}"
+            <Button Command="{Binding EditCommand}"
+                    IsDefault="True"
                     Width="100"
                     Height="30"
-                    Margin="5"/>
+                    Content="Edit"
+                    Margin="5">
+            </Button>
         </StackPanel>
         
         

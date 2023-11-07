@@ -1,19 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Warehouse.Theme.Controls"
+                    xmlns:conv="clr-namespace:Warehouse.Theme.Conventers">
 
     <Style TargetType="{x:Type Button}">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource  FontColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Background="{TemplateBinding Background}"
-                            CornerRadius="10,10,10,0">
-                        <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center"
+                            CornerRadius="5"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter Content="{TemplateBinding Content}" 
+                                          VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
                                           />
                     </Border>
@@ -28,8 +34,45 @@
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Background" Value="{DynamicResource HoverBackgroundColorBrush}" />
             </Trigger>
+            <Trigger Property="IsDefault" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource FontPrimaryColorBrush}"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="{x:Type controls:ButtonPath}">
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ButtonPath}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Path Stretch="Uniform" 
+                              Margin="{TemplateBinding Padding}"
+                              Fill="{TemplateBinding Foreground}" 
+                              Data="{TemplateBinding IconPath}"/>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".5"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="{DynamicResource HoverBackgroundColorBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+
 
     <Style TargetType="{x:Type Button}" x:Key="WindowsAppButton">
         <Setter Property="BorderThickness" Value="0"/>
@@ -60,6 +103,190 @@
                 <Setter Property="Foreground" Value="{DynamicResource BackgroundColorBrush}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type controls:ItemMenuButton}">
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ItemMenuButton}">
+                    <StackPanel Orientation="Vertical">
+                        <Border BorderThickness="2,0,0,0"
+                                x:Name="Border"
+                                BorderBrush="Transparent"
+                                Background="Transparent">
+
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </Trigger>
+                                        <DataTrigger Binding="{Binding IsMenuSelected, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Grid Background="Transparent"
+                                  Name="StackPanelMenuItem"
+                                  HorizontalAlignment="Left"
+                                  Width="200" Height="30"
+                                  Margin="15,10,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*" MaxWidth="120"/>
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Path Stretch="Uniform" 
+                                      Fill="{DynamicResource PrimaryColorBrush}" 
+                                      Height="30"
+                                      x:Name="path"
+                                      Grid.Column="0"
+                                      Width="30"
+                                      Data="{TemplateBinding IconPath}"
+                                      Margin="0,0,0,0"
+                                      VerticalAlignment="Top"/>
+
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           VerticalAlignment="Center"
+                                           Margin="30,0"
+                                           TextWrapping="Wrap"
+                                           Grid.Column="1"
+                                           HorizontalAlignment="Left"
+                                           Foreground="{TemplateBinding Foreground}"/>
+
+
+                                <ToggleButton Background="Transparent"
+                                              Grid.Column="2"
+                                              Visibility="{Binding ContainsSubMenu, 
+                                                                   RelativeSource={RelativeSource TemplatedParent}, 
+                                                                   Converter={conv:BoolToVisibleConventer}, 
+                                                                   ConverterParameter=True}"
+                                              Foreground="{TemplateBinding Foreground}">
+                                    <ToggleButton.Style>
+
+                                        <Style TargetType="{x:Type ToggleButton}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                        <Border x:Name="border"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                Background="{TemplateBinding Background}"
+                                                                SnapsToDevicePixels="True">
+                                                            <Path Fill="{TemplateBinding Foreground}"
+                                                                  Data="{DynamicResource ChevronBottomGeometry}"
+                                                                  Height="25"
+                                                                  Width="25"
+                                                                  Stretch="Uniform"/>
+                                                        </Border>
+
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter Property="Cursor" Value="Hand"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToggleButton.Style>
+
+                                    <ToggleButton.Triggers>
+                                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="SubMenu"
+                                                                 Storyboard.TargetProperty="Height"
+                                                                 BeginTime="0:0:0"
+                                                                 From="{Binding ElementName=SubMenu, Path=Height}" 
+                                                                 To="0"
+                                                                 Duration="0:0:0.2">
+
+                                                    </DoubleAnimation>
+
+                                                </Storyboard>
+
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+
+                                        <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                            <BeginStoryboard>
+
+                                                <Storyboard>
+
+                                                    <DoubleAnimation Storyboard.TargetName="SubMenu"
+                                                                 Storyboard.TargetProperty="Height"
+                                                                 BeginTime="0:0:0"
+                                                                 From="{Binding ElementName=SubMenu, Path=Height}" 
+                                                                 To="{Binding ElementName=ContentSize, Path=DesiredSize.Height}"
+                                                                 Duration="0:0:0.2">
+
+                                                    </DoubleAnimation>
+
+                                                </Storyboard>
+
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ToggleButton.Triggers>
+                                </ToggleButton>
+
+
+                                <Grid.ToolTip>
+                                    <ToolTip Content="{TemplateBinding Header}" />
+                                </Grid.ToolTip>
+                            </Grid>
+
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="Border.MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                                To="{StaticResource Color4}"
+                                                                Duration="0:0:0.2"/>-->
+                                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                To="{DynamicResource HoverBackgroundColor}"
+                                                                Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Border.MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                                To="Transparent"
+                                                                Duration="0:0:0.2"/>-->
+                                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                To="Transparent"
+                                                                Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Border.Triggers>
+                        </Border>
+
+                        <StackPanel Height="0"
+                                    Visibility="{Binding ContainsSubMenu, RelativeSource={RelativeSource TemplatedParent}, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                                    x:Name="SubMenu"
+                                    Orientation="Vertical">
+                            <Border x:Name="ContentSize">
+                                <ContentControl Content="{TemplateBinding Content}"
+                                                
+                                                Margin="10,0,0,0"/>
+                            </Border>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

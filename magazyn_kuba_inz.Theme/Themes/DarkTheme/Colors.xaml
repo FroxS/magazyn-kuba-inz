@@ -10,8 +10,11 @@
     <Color x:Key="WarningColor">#d9a011</Color>
     <SolidColorBrush x:Key="WarningColorBrush" Color="{DynamicResource WarningColor}"/>
 
-    <Color x:Key="FirstButtonBackgroundColor">#c7c70a</Color>
-    <SolidColorBrush x:Key="FirstButtonBackgroundColorBrush" Color="{DynamicResource FirstButtonBackgroundColor}"/>
+    <Color x:Key="PrimaryColor">#e3fc00</Color>
+    <SolidColorBrush x:Key="PrimaryColorBrush" Color="{DynamicResource PrimaryColor}"/>
+
+    <Color x:Key="FontPrimaryColor">#171715</Color>
+    <SolidColorBrush x:Key="FontPrimaryColorBrush" Color="{DynamicResource FontPrimaryColor}"/>
 
     <Color x:Key="FontColor">#ffffff</Color>
     <SolidColorBrush x:Key="FontColorBrush" Color="{DynamicResource FontColor}"/>
