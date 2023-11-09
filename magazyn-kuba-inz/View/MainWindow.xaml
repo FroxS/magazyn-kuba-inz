@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Warehouse.View"
         xmlns:controls="clr-namespace:Warehouse.Controls"
+        xmlns:controls2="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
         xmlns:custom="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
         xmlns:helpers="clr-namespace:Warehouse.Helper"
         xmlns:conventers="clr-namespace:Warehouse.Conventers"
@@ -12,15 +13,14 @@
         xmlns:design="clr-namespace:Warehouse.ViewModel.Design;assembly=Warehouse.ViewModels" 
         xmlns:innermessage="clr-namespace:Warehouse.View.InnerDialog"
         mc:Ignorable="d"
-        Title="Magazyn kuba" 
         WindowStartupLocation="CenterScreen"
         Width="1200"
         Height="800"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource BackgroundColorBrush}"
         Foreground="{DynamicResource FontColorBrush}"
-        BorderBrush="{DynamicResource BorderColorBrush}">
-    
+        BorderThickness="0"
+        Style="{StaticResource CustomWindowsStyle}">
     <Grid x:Name="parent" >
         <custom:ModalControl x:Name="Modal" Panel.ZIndex="10"
                              DataContext="{Binding InnerDialog.InnerDialogVM,
@@ -61,86 +61,6 @@
                     <!--#endregion-->
 
                     <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
-                            <RowDefinition Height="197*"/>
-                            <RowDefinition Height="297*"/>
-                        </Grid.RowDefinitions>
-
-                        <!--#region Top navigation-->
-                        <Border Grid.Row="0"
-                                BorderBrush="{DynamicResource BorderColorBrush}"
-                                BorderThickness="0,0,0,1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <StackPanel.Resources>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="Width" Value="30"/>
-                                            <Setter Property="Height" Value="30"/>
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Margin" Value="5"/>
-                                            <Setter Property="BorderThickness" Value="0"/>
-                                        </Style>
-
-                                        <Style TargetType="{x:Type Path}">
-                                            <Setter Property="Stretch" Value="Uniform"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="Fill" Value="Black"/>
-                                        </Style>
-                                    </StackPanel.Resources>
-                                    <Button Command="{Binding Navigation.PrevCommand,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
-                                        <Path Data="{StaticResource Prev}"/>
-                                    </Button>
-                                    <Button Command="{Binding Navigation.NextCommand,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}">
-                                        <Path Data="{StaticResource Next}"/>
-                                    </Button>
-                                </StackPanel>
-                                
-                                <TextBox Width="250" 
-                                         Grid.Column="1"
-                                         Margin="5"/>
-
-                                <StackPanel Grid.Column="2"
-                                            Orientation="Horizontal">
-
-                                    <Button Content="Theme" Command="{Binding ChangeThemeCommand}"/>
-
-                                    <TextBlock Text="{Binding Application.User.Name,
-                                                              Source={x:Static helpers:AppHelper.Instance}, 
-                                                              UpdateSourceTrigger=PropertyChanged,
-                                                              FallbackValue=Admin}"
-                                               VerticalAlignment="Center"
-                                               Margin="10"/>
-
-                                    <Border Width="40"
-                                            Height="40"
-                                            Margin="10,0"
-                                            BorderThickness="1"
-                                            BorderBrush="{DynamicResource BorderColorBrush}"
-                                            CornerRadius="20">
-                                        <Image Source="{Binding Application.User.Image,
-                                            Source={x:Static helpers:AppHelper.Instance}, 
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            Converter={conventers:ArrayByteToImageConventer}}"/>
-                                    </Border>
-                                </StackPanel>
-
-                            </Grid>
-                        </Border>
-
-                        <!--#endregion-->
-
                         <!--#region Page-->
                         <Grid Grid.Row="1" Grid.RowSpan="2">
 
@@ -152,7 +72,6 @@
                             <Grid Visibility="{Binding MessageService.Message,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}}"
-                          
                           >
 
                                 <Border Background="{Binding MessageService.Type,

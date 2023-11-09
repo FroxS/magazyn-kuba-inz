@@ -120,6 +120,9 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
 
     public virtual void SetEnabled(bool enable = false)
     {
+        if (_service == null)
+            return;
+
         if (enable)
             _service.RunTransaction();
         else
@@ -131,6 +134,8 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
     {
         try
         {
+            if (_service == null)
+                return true;
             if (Saved)
                 return Saved;
 

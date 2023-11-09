@@ -39,6 +39,12 @@ namespace Warehouse.Theme.Controls
             set { SetValue(IsMenuSelectedProperty, value); }
         }
 
+        public SolidColorBrush PathFill
+        {
+            get { return (SolidColorBrush)GetValue(PathFillProperty); }
+            set { SetValue(PathFillProperty, value); }
+        }
+
         #endregion
 
         #region Dependency
@@ -58,19 +64,23 @@ namespace Warehouse.Theme.Controls
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.Register(nameof(Header), typeof(string), typeof(ItemMenuButton), new PropertyMetadata(string.Empty));
 
+        public static readonly DependencyProperty PathFillProperty =
+            DependencyProperty.Register(nameof(PathFill), typeof(SolidColorBrush), typeof(ItemMenuButton), new PropertyMetadata(Brushes.White));
+
         #endregion
 
         #region Constructor
 
         static ItemMenuButton()
         {
-
+            
         }
 
         #endregion
 
         #region Private Methods
 
+        
         private static void OnClickCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ItemMenuButton button)

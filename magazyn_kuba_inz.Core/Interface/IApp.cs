@@ -17,7 +17,7 @@ public interface IApp
     bool IsAdmin { get; }
     Window? MainWindow { get; }
     DbContext Database { get; }
-    void Run();
+    Task Run();
     bool IsUserLogin();
     void LogOut();
     void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning);

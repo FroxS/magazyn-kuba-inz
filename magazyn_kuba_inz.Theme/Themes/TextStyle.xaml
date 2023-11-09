@@ -15,6 +15,11 @@
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
 
+    <Style TargetType="{x:Type Hyperlink}" >
+        <Setter Property="Foreground" Value="{DynamicResource  PrimaryColorBrush}"/>
+        
+    </Style>
+
     <Style TargetType="{x:Type Label}" >
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
     </Style>
@@ -23,7 +28,7 @@
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush }"/>
@@ -61,7 +66,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
 
                                 <Path Data="{TemplateBinding IconPath}"
                                       Fill="{TemplateBinding Foreground}"
@@ -99,14 +104,8 @@
                                     </TextBlock.Style>
 
                                 </TextBlock>
-
                             </Grid>
-                            
-                            
-
                         </Border>
-
-                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -205,28 +204,26 @@
     </Style>
 
     <Style TargetType="{x:Type PasswordBox}" x:Key="InputPasswordBox">
+        <Setter Property="attat:MonitorPasswordProperty.Value" Value="True"/>
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource FontColorBrush}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource FontColorBrush }"/>
-        <Setter Property="Padding" Value="10,5,0,5"/>
-        <Setter Property="attat:MonitorPasswordProperty.Value" Value="True"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush }"/>
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
-                    <Grid>
-                        <Path Data="M 95 0 c 15 0 25 10 25 25 c 0 15 -10.31 24.69 -25.31 24.69 c -15 0 -25 -10.62 -25 -25.62 C 70 10 80 0 95 0 L 95 0 L 95 0 L 95 18 L 95 21 L 87 15 C 86 14 84 14 83 15 C 82 16 82 18 83 19 L 91 25 L 83 31 C 82 32 82 34 83 35 C 84 36 86 36 87 35 L 95 29 L 103 35 C 104 36 106 36 107 35 C 108 34 108 32 107 31 L 99 25 L 107 19 C 108 18 108 16 107 15 C 106 14 104 14 103 15 L 95 21 z l -4.94 -5.01 z"
-                              Fill="{DynamicResource WrongColorBrush}"
-                              ToolTip="{Binding Path=/ErrorContent}"
-                              Height="30"
-                              Width="30"
-                              Stretch="Uniform"
-                              Margin="10,0,10,0"
-                              HorizontalAlignment="Right"/>
+                    <Grid >
                         <AdornedElementPlaceholder ToolTip="{Binding Path=/ErrorContent}" />
+                        <TextBlock Text="{Binding Path=/ErrorContent}"
+                                   Foreground="{DynamicResource WrongColorBrush}"
+                                   FontSize="10"
+                                   Margin="0,0,5,0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"/>
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -236,44 +233,56 @@
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
                     <Grid>
                         <Border x:Name="border" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{DynamicResource BorderColorBrush}" 
+                                BorderThickness="1"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                CornerRadius="2"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="10"
                                SnapsToDevicePixels="True">
-                            <StackPanel VerticalAlignment="Center"
-                                        HorizontalAlignment="Left"
-                                        Orientation="Horizontal"
-                                        Margin="5">
+                            <Grid Margin="5">
 
-                                <Path Style="{DynamicResource Key}"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Data="{DynamicResource KeyPass}"
                                       Stretch="Uniform"
-                                      Width="20"
-                                      Height="20"/>
+                                      Grid.Column="0"
+                                      Margin="0,0,10,0"
+                                      MinWidth="20"
+                                      MaxWidth="20"/>
 
                                 <ScrollViewer x:Name="PART_ContentHost" 
-                                    Focusable="False" 
-                                    HorizontalScrollBarVisibility="Hidden" 
-                                    VerticalScrollBarVisibility="Hidden" />
-                            </StackPanel>
+                                              Focusable="False" 
+                                              Grid.Column="1"
+                                              HorizontalScrollBarVisibility="Hidden" 
+                                              VerticalScrollBarVisibility="Hidden" />
 
+                                <TextBlock IsHitTestVisible="False"
+                                           Text="{TemplateBinding Tag}"
+                                           x:Name="placeholder"
+                                           Grid.Column="1"
+                                           Padding="5,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Visibility="{TemplateBinding attat:HasTextProperty.Value, Converter={conv:BoolToVisibleConventer}}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                           Foreground="{TemplateBinding Foreground}">
+                                </TextBlock>
+                            </Grid>
                         </Border>
-
-                        <TextBlock IsHitTestVisible="False"
-                            Text="{TemplateBinding Tag}"
-                            x:Name="placeholder"
-                            Padding="40,5,0,5"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            Foreground="{StaticResource FontColorGrayBrush}"
-                            Visibility="{TemplateBinding attat:HasTextProperty.Value, Converter={conv:BoolToVisibleConventer}}"
-                            >
-
-                        </TextBlock>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource BorderColorBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

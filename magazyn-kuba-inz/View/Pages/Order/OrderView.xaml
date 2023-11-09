@@ -10,30 +10,18 @@
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             d:DataContext="{d:DesignInstance vm:OrderViewModel}">
+             d:DataContext="{x:Static local:DesignOrderViewModel.Instance}">
     <Border BorderThickness="1"
+            CornerRadius="5"
             BorderBrush="{DynamicResource BorderColorBrush}">
-        <Grid>
+        <Grid Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0">
-
-                <Button Command="{Binding EditCommand}"
-                        Content="Edit"/>
-
-                <Button Content="Save" 
-                        Visibility="{Binding Saved, Converter={StaticResource BoolToVisible}}"
-                        Command="{Binding SaveCommand}"/>
-
-            </StackPanel>
-            <Grid Margin="10"
-                  Grid.Row="1"
+            <Grid Margin="0"
+                  Grid.Row="0"
                   IsEnabled="{Binding Enabled}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -111,7 +99,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="1"
                   Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -120,33 +108,44 @@
 
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
+                    <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                           IconPath="{StaticResource FilterSet}"
+                                           Width="200"
+                                           HorizontalAlignment="Left"
+                                           Style="{StaticResource FormTextBoxImage}"
+                                           Tag="Szukaj"/>
+                    
                     <controls:ButtonPath IconPath="{StaticResource Add}"
                                          Foreground="{DynamicResource GoodColorBrush}"
                                          Command="{Binding AddCommand}"
+                                         ToolTip="Dodaj"
                                          Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}"/>
                     
                     <controls:ButtonPath IconPath="{StaticResource Delete}"
                                          Foreground="{DynamicResource WrongColorBrush}"
                                          Command="{Binding DeleteCommand}"
+                                         ToolTip="Usuń"
                                          CommandParameter="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}"
                                          Visibility="{Binding Reserved, Converter={conv:BoolToVisibleConventer}}"/>
 
                     <controls:ButtonPath IconPath="{StaticResource Map}"
+                                         ToolTip="Generuj mapę"
                                          Foreground="{DynamicResource PrimaryColorBrush}"
                                          Command="{Binding GenerateWayCommand}"/>
 
                     <controls:ButtonPath IconPath="{StaticResource Reserved}"
                                          Foreground="{DynamicResource WrongColorBrush}"
                                          Command="{Binding ReservCommand}"
-                                         Width="80"
+                                         Width="50"
+                                         ToolTip="Zarezerwuj produkty"
                                          IsEnabled="{Binding Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
                                          Visibility="{Binding Prepared,Converter={conv:BoolToVisibleConventer}, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <controls:ButtonPath IconPath="{StaticResource Prepared}"
                                          Foreground="{DynamicResource GoodColorBrush}"
                                          Command="{Binding SetAsPreapredCommand}"
+                                         ToolTip="Ustaw jako gotowe"
                                          Width="80"
-                                         ToolTip="Gotowe"
                                          Visibility="{Binding Reserved,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </StackPanel>
@@ -154,8 +153,6 @@
                 <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
                           SelectionMode="Single"
                           Grid.Row="1"
-                          AutoGenerateColumns="False"
-                          CanUserDeleteRows="False"
                           SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                           IsReadOnly="True"
                           IsEnabled="{Binding Reserved, Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}">
@@ -180,7 +177,7 @@
             
 
             <Grid Visibility="{Binding Message, Converter={StaticResource NullToVisible}}"
-                  Grid.Row="3">
+                  Grid.Row="2">
 
                 <Border Background="{DynamicResource WrongColorBrush}"
                                 Panel.ZIndex="-2"

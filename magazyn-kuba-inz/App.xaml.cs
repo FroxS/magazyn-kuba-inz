@@ -44,7 +44,10 @@ public partial class App : System.Windows.Application
         await AppHost!.StartAsync();
         Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
         IApp app = AppHost.Services.GetRequiredService<IApp>();
-        app.Run();
+        var sp = AppHost.Services.GetRequiredService<ISplashScreen>();
+        (app as WareHouseApp)._splashScreen = sp;
+        sp.Show();
+        await app.Run();
         base.OnStartup(e);
     }
 
@@ -74,8 +77,9 @@ public partial class App : System.Windows.Application
     private void PrepareViews(IServiceCollection services)
     {
         services.AddTransient<IMainWindow, MainWindow>();
-        services.AddSingleton<ILoginWindow, LoginView>();
-        services.AddSingleton<IRegisterWindow, RegisterView>();
+        services.AddTransient<ILoginWindow, LoginView>();
+        services.AddTransient<IRegisterWindow, RegisterView>();
+        services.AddTransient<ISplashScreen, View.Login.SplashScreen>();
     }
 
     private void PrepareViewModels(IServiceCollection services)

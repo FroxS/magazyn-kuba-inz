@@ -35,6 +35,18 @@ public class OrderPageViewModel :
 
     #endregion
 
+    #region Filter 
+
+    protected override bool Filter(Order value, string search)
+    {
+        if (value?.Name?.ToLower().Contains(search?.ToLower()) ?? true)
+            return true;
+        else
+            return false;
+    }
+
+    #endregion
+
     #region Public methods
 
     public override OrderViewModel GetVM(ref Order? item, OrderViewModel? lastVm = null)
@@ -69,24 +81,20 @@ public class OrderPageViewModel :
 
     public async override void OnPageOpen()
     {
-        try
-        {
-            CanChangePage = false;
-            Application.IsTaskRunning = true;
-            var selectedGuid = SelectedItemViewModel?.ID;
-            _selectedItemViewModel = null;
-            List<Order> pgList = await _service.GetAllAsync();
-            Items = new ObservableCollection<Order>(pgList);
-            if (selectedGuid.HasValue)
-            {
-                SelectedItem = Items.FirstOrDefault(x => x.ID == selectedGuid.Value);
-            }
-            CanChangePage = true;
-            OnPropertyChanged(nameof(Items));
-            OnPropertyChanged(nameof(SelectedItemViewModel));
-        }
-        catch (Exception ex) { MessageBox.Show(ex.Message); }
-        finally { Application.IsTaskRunning = false; }
+        CanChangePage = false;
+        Application.IsTaskRunning = true;
+        var selectedGuid = SelectedItemViewModel?.ID;
+        _selectedItemViewModel = null;
+        List<Order> pgList = await _service.GetAllAsync();
+        Items = new ObservableCollection<Order>(pgList);
+        if (selectedGuid.HasValue)
+            SelectedItem = Items.FirstOrDefault(x => x.ID == selectedGuid.Value);
+        else
+            SelectedItem = Items.FirstOrDefault();
+        CanChangePage = true;
+        OnPropertyChanged(nameof(Items));
+        OnPropertyChanged(nameof(SelectedItemViewModel));
+        Application.IsTaskRunning = false;
     }
 
     #endregion
@@ -128,15 +136,9 @@ public class OrderPageViewModel :
         if (items == null)
             return;
         try
-        {
-            //if(items.Cast<Order>().Any(x => x.Reserved))
-            //{
-            //    Application.ShowSilentMessage("Zamównienie jest już zarezerwowane");
-            //    return;
-            //}    
+        {  
             if (MessageBox.Show("Czy jesteś pewien ?","Pytanie", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                
                 IsTaskRunning = true;
                 bool flag = true;
                 List<Order> index = new List<Order>();

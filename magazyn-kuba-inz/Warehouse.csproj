@@ -57,6 +57,9 @@
     <Compile Update="Controls\WareHouseArea.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\SplashScreen\SplashScreen.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -45,18 +45,33 @@
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ButtonPath}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Path Stretch="Uniform" 
-                              Margin="{TemplateBinding Padding}"
-                              Fill="{TemplateBinding Foreground}" 
-                              Data="{TemplateBinding IconPath}"/>
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    </Grid>
+                            <Label Content="{TemplateBinding Text}"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Visibility="{Binding Text, Converter={conv:NullVisibleConventer}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ButtonPath}}}"/>
+
+                            <Path Stretch="Uniform" 
+                                  Grid.Column="0"
+                                  Margin="{Binding PathPadding, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ButtonPath}}}"
+                                  Fill="{TemplateBinding Foreground}" 
+                                  Data="{TemplateBinding IconPath}"/>
+
+                        </Grid>
+                    </Border>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -71,38 +86,6 @@
             </Trigger>
         </Style.Triggers>
         
-    </Style>
-
-
-    <Style TargetType="{x:Type Button}" x:Key="WindowsAppButton">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Opacity" Value="1"/>
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="Transparent">
-                        <ContentPresenter Content="{TemplateBinding Content}" 
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"
-                                          />
-                    </Grid>
-                    
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.5"/>
-                <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Cursor" Value="Hand"/>
-                <Setter Property="Foreground" Value="{DynamicResource BackgroundColorBrush}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type controls:ItemMenuButton}">
@@ -122,9 +105,6 @@
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
-                                        <DataTrigger Binding="{Binding IsMenuSelected, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
-                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
@@ -141,14 +121,15 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Path Stretch="Uniform" 
-                                      Fill="{DynamicResource PrimaryColorBrush}" 
+                                      Fill="{TemplateBinding PathFill}" 
                                       Height="30"
                                       x:Name="path"
                                       Grid.Column="0"
                                       Width="30"
                                       Data="{TemplateBinding IconPath}"
                                       Margin="0,0,0,0"
-                                      VerticalAlignment="Top"/>
+                                      VerticalAlignment="Top">
+                                </Path>
 
                                 <TextBlock Text="{TemplateBinding Header}"
                                            VerticalAlignment="Center"
@@ -244,9 +225,6 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                                To="{StaticResource Color4}"
-                                                                Duration="0:0:0.2"/>-->
                                                 <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                                 To="{DynamicResource HoverBackgroundColor}"
                                                                 Duration="0:0:0.2"/>
@@ -258,9 +236,6 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <!--<ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                                To="Transparent"
-                                                                Duration="0:0:0.2"/>-->
                                                 <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                                 To="Transparent"
                                                                 Duration="0:0:0.2"/>
@@ -288,5 +263,53 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--#region Custom -->
+
+    <Style TargetType="{x:Type Button}" x:Key="WindowsAppButton">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="Transparent">
+                        <ContentPresenter Content="{TemplateBinding Content}" 
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          />
+                    </Grid>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+                <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="{DynamicResource BackgroundColorBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AddButton" TargetType="{x:Type controls:ButtonPath}" BasedOn="{StaticResource {x:Type controls:ButtonPath}}">
+        <Setter Property="IconPath" Value="{StaticResource Add}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="PathPadding" Value="5"/>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="WindowsAppButtonExit" BasedOn="{StaticResource WindowsAppButton}">
+        <Setter Property="Foreground" Value="{DynamicResource WrongColorBrush}"/>
+    </Style>
+
+    <!--#endregion-->
 
 </ResourceDictionary>

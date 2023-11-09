@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Warehouse.EF;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Diagnostics;
+using System.ComponentModel;
+using Warehouse.Core;
+using System.Threading;
 
 namespace Warehouse;
 
@@ -32,6 +35,9 @@ public class WareHouseApp : ObservableObject, IApp
     private DbContext _database;
 
     private IDbContextFactory<WarehouseDbContext> _databaseFactory;
+
+    public ISplashScreen _splashScreen;
+
     #endregion
 
     #region Public Properties
@@ -52,6 +58,8 @@ public class WareHouseApp : ObservableObject, IApp
 
     public DbContext Database => _database;
 
+    public bool CanEditData { get; private set; }
+
     #endregion
 
     #region Constructors
@@ -71,19 +79,15 @@ public class WareHouseApp : ObservableObject, IApp
 
     public Dispatcher GetDispather() => _services.GetRequiredService<Dispatcher>();
 
-    public void Run()
+    public async Task Run()
     {
-        //var register = services.GetRequiredService<IRegisterWindow>();
-        //register.ShowDialog();
+        await Task.Delay(5000);
         bool? flag = false;
         bool test = false;
-        //if(false)
-        if (System.Diagnostics.Debugger.IsAttached || test)
+        if (System.Diagnostics.Debugger.IsAttached && test)
         {
             flag = true;
-            //var task = Task.Run(async () => await Register(new RegisterResource("admin","admin@wp.pl", "admin")));
-            var task = Task.Run(async () => await LoginAsync(new LoginResource("admin", "admin")));
-            task.GetAwaiter().GetResult();
+            await LoginAsync(new LoginResource("admin", "admin"));
         }
         else
         {
@@ -93,6 +97,7 @@ public class WareHouseApp : ObservableObject, IApp
                 throw new Exception("Brak okna login");
 
             MainWindow = login as Window;
+            CloseSplashForm();
             flag = login.ShowDialog();
         }
 
@@ -103,16 +108,17 @@ public class WareHouseApp : ObservableObject, IApp
         }
         if (User == null)
         {
-            Run();
+            await Run();
         }
         else
         {
             IMainWindow window = _services.GetRequiredService<IMainWindow>();
             if (window == null)
                 throw new Exception("Brak okna głównego");
-
             MainWindow = app.MainWindow = window as Window;
             Navigation.SetPage(Warehouse.Models.Page.EApplicationPage.WareHouseCreator);
+
+            CloseSplashForm();
             window.Show();
         }
     }
@@ -127,7 +133,9 @@ public class WareHouseApp : ObservableObject, IApp
     public IInnerDialogService GetInnerDialogService() => _services.GetRequiredService<IInnerDialogService>();
 
     public S GetService<S,T>() where T : BaseEntity where S: IBaseService<T> => _services.GetRequiredService<S>();
+
     public S GetService<S>() => _services.GetRequiredService<S>();
+
     public bool IsUserLogin()
     {
         throw new NotImplementedException();
@@ -180,6 +188,18 @@ public class WareHouseApp : ObservableObject, IApp
     public void ReloadDatabase()
     {
         _database = _databaseFactory.CreateDbContext();
+    }
+
+    private BackgroundWorker waitingWorker = new BackgroundWorker();
+
+    private void CloseSplashForm()
+    {
+        if (_splashScreen != null)
+        {
+            // Zamknij splash screen
+            _splashScreen.Close();
+            _splashScreen = null;
+        }
     }
 
     public void SetTheme(bool dark = true)

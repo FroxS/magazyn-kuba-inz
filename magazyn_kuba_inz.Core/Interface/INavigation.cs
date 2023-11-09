@@ -12,7 +12,7 @@ public interface INavigation
 
     event PageChanged PageChanged;
     void SetPage(EApplicationPage page);
-    void SetPage(IBasePageViewModel pageVM);
+    void SetPage(IBasePageViewModel pageVM, bool savePrevPage = true);
     void SetNextPage();
     void SetPrevPage();
     //void UpdateViewModel(IBasePageViewModel vm);

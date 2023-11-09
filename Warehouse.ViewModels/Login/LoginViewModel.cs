@@ -37,6 +37,8 @@ public class LoginViewModel : BaseViewModel
     public ICommand ExitCommand { get; private set; }
     public ICommand LoginCommand { get; private set; }
 
+    public ICommand RegisterCommand { get; private set; }
+
     #endregion
 
     #region Constructors
@@ -45,13 +47,28 @@ public class LoginViewModel : BaseViewModel
     {
         LoginCommand = new RelayCommand<IWindow>(LoginUser, o => !IsTaskRunning);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
-        ExitCommand = new RelayCommand(exit);
+        ExitCommand = new RelayCommand<IWindow>(exit);
+        RegisterCommand = new RelayCommand<IWindow>(OpenRegister);
         this.app = app;
     }
 
     #endregion
 
     #region Commands methods
+
+    private void OpenRegister(IWindow window)
+    {
+        IRegisterWindow register = app.GetService<IRegisterWindow>();
+        if(window is Window parent && register != null)
+        {
+            register.Owner = parent;
+            var result = register.ShowDialog();
+            if(result.HasValue && result.Value)
+            {
+
+            }
+        }
+    }
 
     private async void LoginUser(IWindow window)
     {
@@ -99,9 +116,9 @@ public class LoginViewModel : BaseViewModel
         window.WindowState = WindowState.Minimized;
     }
 
-    private void exit()
+    private void exit(IWindow window)
     {
-        app.Exit();
+        window.DialogResult = false;
     }
 
     #endregion

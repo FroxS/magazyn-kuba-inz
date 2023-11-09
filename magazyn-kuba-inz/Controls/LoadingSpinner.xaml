@@ -19,56 +19,56 @@
                         <ControlTemplate.Resources>
                             <Storyboard x:Key="Animation0" BeginTime="00:00:00.0" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseN" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation1" BeginTime="00:00:00.2" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseNE" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation2" BeginTime="00:00:00.4" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseE" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation3" BeginTime="00:00:00.6" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseSE" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation4" BeginTime="00:00:00.8" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseS" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation5" BeginTime="00:00:01.0" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseSW" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation6" BeginTime="00:00:01.2" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseW" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>
 
                             <Storyboard x:Key="Animation7" BeginTime="00:00:01.4" RepeatBehavior="Forever">
                                 <ColorAnimationUsingKeyFrames Storyboard.TargetName="ellipseNW" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource Color5}"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.0" Value="{StaticResource PrimaryColor}"/>
                                     <SplineColorKeyFrame KeyTime="00:00:01.6" Value="{StaticResource UnfilledColor}"/>
                                 </ColorAnimationUsingKeyFrames>
                             </Storyboard>

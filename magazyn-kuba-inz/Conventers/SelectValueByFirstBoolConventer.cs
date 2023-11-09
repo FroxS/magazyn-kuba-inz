@@ -1,6 +1,7 @@
 ﻿using Warehouse.Theme.Conventers;
 using System;
 using System.Globalization;
+using System.Windows;
 
 namespace Warehouse.Conventers;
 
@@ -16,6 +17,14 @@ public class SelectValueByFirstBoolConventer : BaseMultiValueConventer<SelectVal
         {
             return flag ? value[1] : value[2];
         }
+        if (value.Length == 2)
+        {
+            if (!value[0].Equals(value[1]))
+                return Application.Current.FindResource("FontColorBrush");
+            else
+                return Application.Current.FindResource("PrimaryColorBrush");
+        }
+
         return value;
     }
 

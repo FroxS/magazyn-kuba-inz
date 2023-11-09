@@ -18,8 +18,8 @@ public class NavigationViewModel : BaseViewModel, INavigation
     #region Private fields
 
     private const int MAX_REMEMBER_PAGES = 2;
-    private List<IBasePageViewModel> _prevPages = new List<IBasePageViewModel>();
-    private List<IBasePageViewModel> _nextPages = new List<IBasePageViewModel>();
+    private readonly Stack<IBasePageViewModel> _prevPages = new Stack<IBasePageViewModel>();
+    private readonly Stack<IBasePageViewModel> _nextPages = new Stack<IBasePageViewModel>();
     private bool _canSetPrevPage = false;
     private bool _canSetNextPage = false;
 
@@ -115,7 +115,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
         SetPage(ToBasePage(page));
     }
 
-    public void SetPage(IBasePageViewModel pageVM)
+    public void SetPage(IBasePageViewModel pageVM, bool savePrevPage = true)
     {
         var prevPage = Page;
         try
@@ -125,7 +125,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
                 Page?.OnPageClose();
                 if (Page?.CanChangePage ?? true)
                 {
-                    if (Page != null)
+                    if (Page != null && savePrevPage)
                         AddPrevPage(Page);
                     OnPropertyChanging(nameof(Page));
                     AppHost.Services.GetService<IApp>().ReloadDatabase();
@@ -158,45 +158,27 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
     private void AddPrevPage(IBasePageViewModel page)
     {
-        if (_prevPages.Count >= MAX_REMEMBER_PAGES)
-            _prevPages.RemoveAt(0);
-        _prevPages.Add(page);
+        _prevPages.Push(page);
     }
 
-    private void AddNextPage(IBasePageViewModel page)
-    {
-        if (_nextPages.Count >= MAX_REMEMBER_PAGES)
-            _nextPages.RemoveAt(0);
-        _nextPages.Add(page);
-    }
-
-    /// TODO: Poprawic ustawianie stron
     public void SetPrevPage()
     {
         if (_prevPages.Any())
         {
-            var prevPage = _prevPages.Last();
-            SetPage(prevPage);
-            _prevPages.RemoveAt(_prevPages.Count - 1);
-            AddNextPage(prevPage);
+            var prevPage = _prevPages.Pop();
+            _nextPages.Push(Page);
+            SetPage(prevPage, false);
         }
-
-        CanSetNextPage = _nextPages.Any();
-        CanSetPrevPage = _prevPages.Any();
     }
 
     public void SetNextPage()
     {
         if (_nextPages.Any())
         {
-            var nextPage = _nextPages.Last();
-            SetPage(nextPage);
-            _nextPages.RemoveAt(_nextPages.Count - 1);
-            AddPrevPage(nextPage);
+            var nextPage = _nextPages.Pop();
+            _prevPages.Push(Page);
+            SetPage(nextPage, false);
         }
-
-        CanSetNextPage = _nextPages.Any();
-        CanSetPrevPage = _prevPages.Any();
     }
 
 

@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:design="clr-namespace:Warehouse.ViewModel.Design;assembly=Warehouse.ViewModels"
              xmlns:enumPage="clr-namespace:Warehouse.Models.Page;assembly=Warehouse.Models"
-             xmlns:conventers="clr-namespace:Warehouse.Theme.Conventers;assembly=Warehouse.Theme"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}">
@@ -151,24 +151,44 @@
             </Grid>
 
             <StackPanel  Orientation="Vertical">
-
-
                 <controls:ItemMenuButton IconPath="{StaticResource HomeGeometry}"
                                          IsMenuSelected="False"
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.DashBoard}"
-                                         Header="{x:Static resources:Resources.Home}"/>
+                                         Header="{x:Static resources:Resources.Home}">
+                    <controls:ItemMenuButton.PathFill>
+                        <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                            <Binding Source="{x:Static enumPage:EApplicationPage.DashBoard}" />
+                            <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </controls:ItemMenuButton.PathFill>
+                </controls:ItemMenuButton>
+
                 <controls:ItemMenuButton IconPath="{StaticResource Order}"
                                          IsMenuSelected="False"
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.Order}"
-                                         Header="Orders"/>
-                
+                                         Header="Orders">
+                    <controls:ItemMenuButton.PathFill>
+                        <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                            <Binding Source="{x:Static enumPage:EApplicationPage.Order}" />
+                            <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </controls:ItemMenuButton.PathFill>
+                </controls:ItemMenuButton>
+
                 <controls:ItemMenuButton IconPath="{StaticResource WarehouseItems}"
                                          IsMenuSelected="False"
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseItems}"
-                                         Header="{x:Static resources:Resources.WareHouseItems}"/>
+                                         Header="{x:Static resources:Resources.WareHouseItems}">
+                    <controls:ItemMenuButton.PathFill>
+                        <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                            <Binding Source="{x:Static enumPage:EApplicationPage.WareHouseItems}" />
+                            <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </controls:ItemMenuButton.PathFill>
+                </controls:ItemMenuButton>
 
                 <controls:ItemMenuButton IconPath="{StaticResource ProductsGeometry}"
                                          ContainsSubMenu="True"
@@ -176,28 +196,62 @@
                                          Header="{x:Static resources:Resources.Products}"
                                          Command="{Binding SetPageCommand}"
                                          CommandParameter="{x:Static enumPage:EApplicationPage.Products}">
+                    <controls:ItemMenuButton.PathFill>
+                        <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                            <Binding Source="{x:Static enumPage:EApplicationPage.Products}" />
+                            <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </controls:ItemMenuButton.PathFill>
                     <StackPanel Orientation="Vertical" >
                         <controls:ItemMenuButton IconPath="{StaticResource SupplierHeometry}"
                                                  Header="{x:Static resources:Resources.Suppliers}"
                                                  IsMenuSelected="True"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Suppliers}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Suppliers}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.Suppliers}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                         <controls:ItemMenuButton IconPath="{StaticResource CategoryGeometry}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.Group}"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductGroups}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductGroups}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.ProductGroups}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
 
                         <controls:ItemMenuButton IconPath="{StaticResource ProductStatus}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.ProductStates}"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductStatuses}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ProductStatuses}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.ProductStatuses}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                         <controls:ItemMenuButton IconPath="{StaticResource ItemState}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.ItemState}"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ItemStates}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.ItemStates}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.ItemStates}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                     </StackPanel>
 
                 </controls:ItemMenuButton>
@@ -211,17 +265,38 @@
                                                  Header="{x:Static resources:Resources.StorageUnits}"
                                                  IsMenuSelected="True"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.StorageUnits}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.StorageUnits}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.StorageUnits}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                         <controls:ItemMenuButton IconPath="{StaticResource Rack}"
                                                  Header="{x:Static resources:Resources.Racks}"
                                                  IsMenuSelected="False"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Racks}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.Racks}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.Racks}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                         <controls:ItemMenuButton IconPath="{StaticResource Creator}"
                                                  IsMenuSelected="True"
                                                  Header="{x:Static resources:Resources.Creator}"
                                                  Command="{Binding SetPageCommand}"
-                                                 CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseCreator}"/>
+                                                 CommandParameter="{x:Static enumPage:EApplicationPage.WareHouseCreator}">
+                            <controls:ItemMenuButton.PathFill>
+                                <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                                    <Binding Source="{x:Static enumPage:EApplicationPage.WareHouseCreator}" />
+                                    <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                                </MultiBinding>
+                            </controls:ItemMenuButton.PathFill>
+                        </controls:ItemMenuButton>
                     </StackPanel>
 
                 </controls:ItemMenuButton>
@@ -232,7 +307,14 @@
                                          IsMenuSelected="True"
                                          Header="{x:Static resources:Resources.Settings}"
                                          Command="{Binding SetPageCommand}"
-                                         CommandParameter="{x:Static enumPage:EApplicationPage.Settings}"/>
+                                         CommandParameter="{x:Static enumPage:EApplicationPage.Settings}">
+                    <controls:ItemMenuButton.PathFill>
+                        <MultiBinding Converter="{conv:SelectValueByFirstBoolConventer}">
+                            <Binding Source="{x:Static enumPage:EApplicationPage.Settings}" />
+                            <Binding Path="Page.Page" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </controls:ItemMenuButton.PathFill>
+                </controls:ItemMenuButton>
 
             </StackPanel>
         </StackPanel>

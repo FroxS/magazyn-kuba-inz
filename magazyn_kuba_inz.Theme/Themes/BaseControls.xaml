@@ -801,12 +801,18 @@
         </Setter>
     </Style>
 
-
     <Style x:Key="FormDatePicker" TargetType="{x:Type DatePicker}"
            BasedOn="{StaticResource {x:Type DatePicker}}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10"/>
     </Style>
 
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{DynamicResource SecondBackgroundColorBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="Padding" Value="10"/>
+    </Style>
 
 </ResourceDictionary>

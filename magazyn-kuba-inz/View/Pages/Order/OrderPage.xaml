@@ -7,9 +7,9 @@
                          xmlns:local="clr-namespace:Warehouse.View.Pages"
                          xmlns:service="clr-namespace:Warehouse.View.Service"
                          xmlns:conv="clr-namespace:Warehouse.Conventers"
-                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+                         xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+                         xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
                          mc:Ignorable="d" 
-                         CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:OrderPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000">
 
@@ -22,21 +22,32 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!--#region Top Panel-->
 
-        <StackPanel Grid.Row="0"
+        <Grid Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Margin="0,5">
-            <Button Content="Add Order"
-                    Width="200"
-                    Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Command="{Binding AddItemCommand}"/>
-        </StackPanel>
+            <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1"
+                                   IconPath="{StaticResource FilterSet}"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource FormTextBoxImage}"
+                                   Tag="Szukaj"/>
+
+            <controls:ButtonPath IconPath="{StaticResource Add}"
+                                 Text="Dodaj"
+                                 HorizontalAlignment="Right"
+                                 Height="40"
+                                 PathPadding="5"
+                                 Foreground="{DynamicResource PrimaryColorBrush}"
+                                 Command="{Binding AddItemCommand}"
+                                 Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
+
+        </Grid>
 
         <!--#endregion-->
 
@@ -46,8 +57,6 @@
               Grid.Column="0">
             <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
                       SelectionMode="Extended"
-                      AutoGenerateColumns="False"
-                      CanUserDeleteRows="False"
                       SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True">
                 <DataGrid.Columns>

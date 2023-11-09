@@ -6,6 +6,8 @@ using System.Windows.Input;
 using Warehouse.Core.Helpers;
 using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -26,9 +28,13 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
     private bool _prepared;
 
+    protected string _searchString;
+
     #endregion
 
     #region Public Properties
+
+    public ICollectionView Collection { get; private set; }
 
     [Required(ErrorMessage = "Name is required.")]
     public string? Name
@@ -73,7 +79,16 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     public ObservableCollection<OrderProduct> Items
     {
         get => _items;
-        set { SetProperty(ref _items, value, nameof(Items)); }
+        set { SetProperty(ref _items, value, nameof(Items),
+                () =>
+                {
+                    if (Collection != null)
+                        Collection.Filter -= FilterCollection;
+                    Collection = CollectionViewSource.GetDefaultView(value);
+                    Collection.Filter += FilterCollection;
+                }
+            ); 
+        }
     }
 
     public OrderProduct SelectedItem
@@ -92,6 +107,17 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     {
         get => _prepared;
         set { SetProperty(ref _prepared, value, nameof(Prepared)); }
+    }
+
+    public virtual string SearchString
+    {
+        get => _searchString;
+        set
+        {
+            _searchString = value;
+            OnPropertyChanged(nameof(SearchString));
+            Collection.Refresh();
+        }
     }
 
     #endregion
@@ -122,12 +148,25 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         ReservCommand = new RelayCommand(Reserv, () => Enabled && !Reserved && !Prepared);
         SetAsPreapredCommand = new RelayCommand(SetAsPreapred, () => Enabled && !Prepared);
         LoadProducts();
+        Enabled = true;
     }
 
     #endregion
 
     #region Protected methods
 
+    private bool FilterCollection(object value)
+    {
+        if (value is OrderProduct item && item != null && !string.IsNullOrEmpty(SearchString))
+        {
+            if (item.Name?.ToLower().Contains(SearchString.ToLower()) ?? true)
+                return true;
+            else
+                return false;
+        }
+        else
+            return true;
+    }
     protected override string[] GetpropsNameToFireOnSave()
     {
         return new string[] {
@@ -213,14 +252,16 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         else
             return hallObj.GetPath(Items.Select(x => x.Product).ToList());
 
-
     }
 
     private void LoadProducts()
     {
-        Items = new ObservableCollection<OrderProduct>(_orderService.GetProducts(_entity?.ID ?? Guid.Empty));
-        Reserved = _orderService.IsReserved(_entity.ID);
-        Prepared = _orderService.IsPrepared(_entity.ID);
+        if(_orderService != null)
+        {
+            Items = new ObservableCollection<OrderProduct>(_orderService.GetProducts(_entity?.ID ?? Guid.Empty));
+            Reserved = _orderService.IsReserved(_entity.ID);
+            Prepared = _orderService.IsPrepared(_entity.ID);
+        }
     }
 
     private void DeleteProduct(OrderProduct item)

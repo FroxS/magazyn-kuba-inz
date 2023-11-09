@@ -68,7 +68,7 @@ public class RegisterViewModel : BaseViewModel
     {
         RegisterCommand = new RelayCommand<IWindow>(register);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
-        ExitCommand = new RelayCommand(exit);
+        ExitCommand = new RelayCommand<IWindow>(exit);
         this.app = app;
     }
 
@@ -109,9 +109,9 @@ public class RegisterViewModel : BaseViewModel
         window.WindowState = WindowState.Minimized;
     }
 
-    private void exit()
+    private void exit(IWindow obj)
     {
-        app.Exit();
+        obj.DialogResult = false;
     }
 
     #endregion

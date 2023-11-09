@@ -1,7 +1,6 @@
 ﻿using Warehouse.Repository.Interfaces;
 using Warehouse.Core.Interface;
 using Warehouse.Models;
-using Warehouse.Models.Interfaces;
 using Warehouse.Core.Resources;
 using Warehouse.Core.Helpers;
 using Warehouse.Core.Exeptions;
@@ -70,5 +69,6 @@ internal class UserService : IUserService
         return user;
     }
 
+    
     #endregion
 }

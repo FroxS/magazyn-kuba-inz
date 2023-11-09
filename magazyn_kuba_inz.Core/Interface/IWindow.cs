@@ -9,4 +9,5 @@ public interface IWindow
     void Close();
     void Show();
     bool? ShowDialog();
+    Window Owner { get; set; }
 }
