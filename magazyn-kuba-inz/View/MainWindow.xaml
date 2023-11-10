@@ -71,8 +71,7 @@
 
                             <Grid Visibility="{Binding MessageService.Message,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}}"
-                          >
+                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}}">
 
                                 <Border Background="{Binding MessageService.Type,
                                                          Source={x:Static helpers:AppHelper.Instance}, 

@@ -57,7 +57,8 @@
                                 BorderThickness="1"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
-                                CornerRadius="2"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="{TemplateBinding Radius}"
                                 Background="{TemplateBinding Background}"
                                SnapsToDevicePixels="True">
                             <Grid Margin="5">

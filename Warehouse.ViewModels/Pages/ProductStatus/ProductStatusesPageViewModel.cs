@@ -54,7 +54,7 @@ public class ProductStatusesPageViewModel :
                 return lastVm;
             }
         }
-        ProductStatusViewModel newVM = new ProductStatusViewModel(_service, item);
+        ProductStatusViewModel newVM = new ProductStatusViewModel(_service, item, Application);
         return newVM;
     }
 

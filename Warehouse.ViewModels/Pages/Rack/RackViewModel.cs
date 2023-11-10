@@ -125,7 +125,7 @@ public class RackViewModel : BaseEntityViewModel<Rack>
     #endregion
 
     #region Constructors
-    public RackViewModel(IRackService service, Rack rack) : base(service, rack)
+    public RackViewModel(IRackService service, Rack rack, IApp app) : base(service, rack, app)
     {
         Saved = true;
     }

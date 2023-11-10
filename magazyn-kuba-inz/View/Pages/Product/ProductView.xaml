@@ -4,27 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance vm:ProductViewModel}">
     <Border BorderThickness="1"
             BorderBrush="{DynamicResource BorderColorBrush}">
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        >
 
-                <Button Command="{Binding EditCommand}"
-                        Content="Edit"
-                        Padding="10,5"/>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0">
 
                 <Button Content="Save" 
                         Padding="10,5"
@@ -32,6 +27,8 @@
                         Command="{Binding SaveCommand}"/>
 
             </StackPanel>
+            
+            
             <Grid Margin="10"
                   Grid.Row="1"
                   IsEnabled="{Binding Enabled}">
@@ -39,8 +36,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-
 
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
@@ -69,66 +64,48 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0"
-                      Margin="5">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Nazwa"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Nazwa" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Nazwa"/>
 
                     </Grid>
 
-                    <Grid Grid.Row="1"
-                      Margin="5">
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Opis"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Opis" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Nazwa"/>
 
                     </Grid>
 
-                    <Grid Grid.Row="2"
-                      Margin="5">
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Cena"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Cena" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Price, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Price, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Nazwa"/>
 
                     </Grid>
 
@@ -207,27 +184,22 @@
 
                     </Grid>
 
-                    <Grid Grid.Row="6"
-                      Margin="5">
+                    <Grid Grid.Row="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Lp"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Lp" Style="{DynamicResource FormLabel}"/>
 
-                        <TextBox Text="{Binding Lp, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
+                        <controls:TextBoxImage Text="{Binding Lp, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="Nazwa"/>
 
                     </Grid>
 
+                    
                     <Grid Grid.Row="7"
                       Margin="5">
                         <Grid.ColumnDefinitions>

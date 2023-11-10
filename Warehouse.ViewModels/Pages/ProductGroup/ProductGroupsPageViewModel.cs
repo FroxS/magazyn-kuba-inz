@@ -57,7 +57,7 @@ public class ProductGroupsPageViewModel :
                 return lastVm;
             }
         }
-        ProductGroupViewModel newVM = new ProductGroupViewModel(_service,item);
+        ProductGroupViewModel newVM = new ProductGroupViewModel(_service,item, Application);
         return newVM;
     }
 

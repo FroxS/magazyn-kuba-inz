@@ -160,8 +160,9 @@ public class ProductViewModel : BaseEntityViewModel<Product>
         Product product,
         List<ProductGroup> productGroups, 
         List<Supplier> suppliers, 
-        List<ProductStatus> productStatuses
-        ) : base(service, product)
+        List<ProductStatus> productStatuses,
+        IApp app
+        ) : base(service, product, app)
     {
         Saved = true;
         LoadImageCommand = new AsyncRelayCommand(loadImage);

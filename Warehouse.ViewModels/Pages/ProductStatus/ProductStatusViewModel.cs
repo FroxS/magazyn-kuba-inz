@@ -26,7 +26,7 @@ public class ProductStatusViewModel : BaseEntityViewModel<ProductStatus>
     #endregion
 
     #region Constructors
-    public ProductStatusViewModel(IBaseService<ProductStatus> service, ProductStatus status):base(service, status)
+    public ProductStatusViewModel(IBaseService<ProductStatus> service, ProductStatus status, IApp app) :base(service, status, app)
     {
         _CanValidate = true;
         Saved = true;

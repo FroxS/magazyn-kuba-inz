@@ -10,16 +10,18 @@
                          xmlns:tab="clr-namespace:Warehouse.ViewModel.Service;assembly=Warehouse.ViewModels"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
-                         d:DataContext="{d:DesignInstance Type=pageVM:WareHousePageViewModel}"
+                         d:DataContext="{x:Static local:DesignWareHouseItemsPageViewModel.Instance}"
                          d:DesignHeight="500" d:DesignWidth="1000">
 
     <Grid Margin="10">
-        <Grid >
-            <TabControl ItemsSource="{Binding States}"
+        <Border BorderThickness="1"
+                BorderBrush="{DynamicResource BorderColorBrush}">
+            <TabControl ItemContainerStyle="{DynamicResource TabControlItemContainerStyle1}" ItemsSource="{Binding States}"
                         SelectedItem="{Binding SelectedState, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Background="Transparent"
-                        BorderThickness="0,1,0,0"
-                        BorderBrush="{DynamicResource BorderColorBrush}">
+                        BorderThickness="0"
+                        BorderBrush="{DynamicResource BorderColorBrush}"
+                        >
                 <TabControl.Resources>
                     <!--View for Warehouse product with status tab  -->
                     <DataTemplate DataType="{x:Type pageVM:ProtuctStateTabViewModel}">
@@ -29,13 +31,13 @@
 
                 <TabControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type tab:ITab}">
-                        <TextBlock >
+                        <TextBlock  >
                             <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </TextBlock>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
             </TabControl>
-        </Grid>
+        </Border>
 
         <!--#endregion-->
 

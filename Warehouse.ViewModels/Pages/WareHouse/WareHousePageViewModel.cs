@@ -9,10 +9,10 @@ public class WareHousePageViewModel : BasePageViewModel
 {
     #region Private fields
 
-    private readonly IWareHouseService _service;
-    private readonly IItemStateService _itemStateService;
-    private ObservableCollection<ProtuctStateTabViewModel> _states;
-    private ProtuctStateTabViewModel? _selectedState;
+    protected readonly IWareHouseService _service;
+    protected readonly IItemStateService _itemStateService;
+    protected ObservableCollection<ProtuctStateTabViewModel> _states;
+    protected ProtuctStateTabViewModel? _selectedState;
 
     #endregion
 
@@ -21,7 +21,7 @@ public class WareHousePageViewModel : BasePageViewModel
     public ObservableCollection<ProtuctStateTabViewModel> States
     {
         get => _states;
-        private set
+        protected set
         {
             _states = value;
             OnPropertyChanged(nameof(States));
@@ -49,6 +49,12 @@ public class WareHousePageViewModel : BasePageViewModel
         Page = Models.Page.EApplicationPage.WareHouseItems;
         _itemStateService = itemStateService;
         _service = service;
+    }
+
+    public WareHousePageViewModel() : base()
+    {
+        Page = Models.Page.EApplicationPage.WareHouseItems;
+        
     }
 
     #endregion

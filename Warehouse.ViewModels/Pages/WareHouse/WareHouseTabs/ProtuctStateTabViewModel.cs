@@ -89,6 +89,15 @@ namespace Warehouse.ViewModel.Pages
             Load();
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ProtuctStateTabViewModel(ItemState state)
+        {
+            Title = state?.Name ?? "";
+            _state = state;
+        }
+
         #endregion
 
         #region Command methods

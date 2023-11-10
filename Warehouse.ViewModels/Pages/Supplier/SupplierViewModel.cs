@@ -30,7 +30,7 @@ public class SupplierViewModel : BaseEntityViewModel<Supplier>
     #endregion
 
     #region Constructors
-    public SupplierViewModel(ISupplierService service, Supplier product) : base(service, product)
+    public SupplierViewModel(ISupplierService service, Supplier product, IApp app) : base(service, product, app)
     {
         Saved = true;
     }

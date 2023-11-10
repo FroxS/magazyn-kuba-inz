@@ -45,6 +45,18 @@ public class ProductsPageViewModel :
 
     #endregion
 
+    #region Filter
+
+    protected override bool Filter(Product value, string search)
+    {
+        if (value?.Name?.ToLower().Contains(search?.ToLower()) ?? true)
+            return true;
+        else
+            return false;
+    }
+
+    #endregion
+
     #region Public methods
 
     public override ProductViewModel GetVM(ref Product? item, ProductViewModel? lastVm = null)
@@ -75,7 +87,8 @@ public class ProductsPageViewModel :
             item,
             _productgroupService.GetAll(),
             _supplierService.GetAll(),
-            _productStatusService.GetAll());
+            _productStatusService.GetAll(),
+            Application);
         return newVM;
     }
 

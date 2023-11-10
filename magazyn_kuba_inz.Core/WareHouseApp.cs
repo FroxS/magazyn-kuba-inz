@@ -10,11 +10,8 @@ using Warehouse.Core.Helpers;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.EF;
-using Microsoft.EntityFrameworkCore.Internal;
 using System.Diagnostics;
 using System.ComponentModel;
-using Warehouse.Core;
-using System.Threading;
 
 namespace Warehouse;
 
@@ -81,9 +78,8 @@ public class WareHouseApp : ObservableObject, IApp
 
     public async Task Run()
     {
-        await Task.Delay(5000);
         bool? flag = false;
-        bool test = false;
+        bool test = true;
         if (System.Diagnostics.Debugger.IsAttached && test)
         {
             flag = true;

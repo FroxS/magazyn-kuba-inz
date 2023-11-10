@@ -91,7 +91,7 @@ internal class WareHouseService : IWareHouseService
 
     public bool CanAddProduct(Guid product, EState state)
     {
-        if(((state & (EState.Delivery | EState.Received)) != 0))
+        if((state & (EState.Delivery | EState.Received)) != 0)
             return true;
         return false;
     }

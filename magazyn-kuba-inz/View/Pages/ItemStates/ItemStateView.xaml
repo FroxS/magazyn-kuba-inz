@@ -10,7 +10,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             Background="White"
+             Background="{DynamicResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance vm:ItemStateViewModel}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -31,13 +31,9 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            
+
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0">
-
-                <Button Command="{Binding EditCommand}"
-                        Content="Edit"
-                        Padding="10,5"/>
 
                 <Button Content="Save" 
                         Padding="10,5"

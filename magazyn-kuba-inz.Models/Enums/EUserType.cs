@@ -2,8 +2,8 @@
 
 public enum EUserType
 {
-    Admin = 1,             
-    Employee_WareHouse =2, 
-    Boss = 4,              
-    Employee_Office = 8,   
+    Admin = 1024,
+    Boss = 512,
+    Employee_Office = 256,
+    Employee_WareHouse = 128,
 }

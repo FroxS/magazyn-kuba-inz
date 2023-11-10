@@ -12,7 +12,6 @@
                          mc:Ignorable="d" 
                          d:DataContext="{d:DesignInstance Type=pageVM:OrderPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000">
-
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -32,18 +31,14 @@
                     Margin="0,5">
             <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="1"
-                                   IconPath="{StaticResource FilterSet}"
+                                   IconPath="{StaticResource Search}"
                                    Width="200"
                                    HorizontalAlignment="Left"
                                    Style="{StaticResource FormTextBoxImage}"
                                    Tag="Szukaj"/>
 
-            <controls:ButtonPath IconPath="{StaticResource Add}"
-                                 Text="Dodaj"
-                                 HorizontalAlignment="Right"
-                                 Height="40"
-                                 PathPadding="5"
-                                 Foreground="{DynamicResource PrimaryColorBrush}"
+            <controls:ButtonPath Text="Dodaj"
+                                 Style="{StaticResource AddButton}"
                                  Command="{Binding AddItemCommand}"
                                  Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
 
@@ -80,7 +75,6 @@
 
         <!--#endregion-->
 
-
         <GridSplitter Grid.Row="1" 
                       Grid.Column="1"
                       Width="2"
@@ -88,8 +82,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Stretch"
                       ShowsPreview="False"
-                      Background="{DynamicResource BackgroundColorBrush}"
-                      />
+                      Background="{DynamicResource BackgroundColorBrush}"/>
 
         <!--#region Selected item-->
 

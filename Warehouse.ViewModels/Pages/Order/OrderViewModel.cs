@@ -138,7 +138,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         IOrderService service,
         Order order,
         IApp app
-        ) : base(service, order)
+        ) : base(service, order,app)
     {
         _app = app;
         Saved = true;
@@ -148,7 +148,6 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         ReservCommand = new RelayCommand(Reserv, () => Enabled && !Reserved && !Prepared);
         SetAsPreapredCommand = new RelayCommand(SetAsPreapred, () => Enabled && !Prepared);
         LoadProducts();
-        Enabled = true;
     }
 
     #endregion

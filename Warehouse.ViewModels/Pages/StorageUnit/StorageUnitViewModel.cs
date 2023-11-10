@@ -44,7 +44,7 @@ public class StorageUnitViewModel : BaseEntityViewModel<StorageUnit>
     #endregion
 
     #region Constructors
-    public StorageUnitViewModel(IStorageUnitService service, StorageUnit product) : base(service, product)
+    public StorageUnitViewModel(IStorageUnitService service, StorageUnit product, IApp app) : base(service, product, app)
     {
         Saved = true;
     }

@@ -7,6 +7,7 @@
                          xmlns:local="clr-namespace:Warehouse.View.Pages"
                          xmlns:service="clr-namespace:Warehouse.View.Service"
                          xmlns:conv="clr-namespace:Warehouse.Conventers"
+                         xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
@@ -26,18 +27,25 @@
         </Grid.ColumnDefinitions>
 
         <!--#region Top Panel-->
-        
-        <StackPanel Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Margin="0,5">
-            <Button Content="Add productGroup"
-                    Width="200"
-                    Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Command="{Binding AddItemCommand}"/>
-        </StackPanel>
-        
+
+        <Grid Grid.Row="0"
+              Grid.ColumnSpan="2"
+              Margin="0,5">
+            <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1"
+                                   IconPath="{StaticResource Search}"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource FormTextBoxImage}"
+                                   Tag="Szukaj"/>
+
+            <controls:ButtonPath Text="Dodaj"
+                                 Style="{DynamicResource AddButton}"
+                                 Command="{Binding AddItemCommand}"
+                                 Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
+
+        </Grid>
+
         <!--#endregion-->
         
         <!--#region Items -->

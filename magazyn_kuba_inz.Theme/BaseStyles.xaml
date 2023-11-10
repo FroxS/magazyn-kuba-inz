@@ -12,6 +12,7 @@
         <ResourceDictionary Source="Themes/DataGrid.xaml" />
         <ResourceDictionary Source="Themes/BaseControls.xaml"/>
         <ResourceDictionary Source="Themes/FormsControls.xaml"/>
+        <ResourceDictionary Source="Themes/TabStyle.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 

@@ -43,7 +43,7 @@ public class ItemStateViewModel : BaseEntityViewModel<ItemState>
     #endregion
 
     #region Constructors
-    public ItemStateViewModel(IItemStateService service, ItemState product) : base(service, product)
+    public ItemStateViewModel(IItemStateService service, ItemState product, IApp app) : base(service, product, app)
     {
         Saved = true;
     }

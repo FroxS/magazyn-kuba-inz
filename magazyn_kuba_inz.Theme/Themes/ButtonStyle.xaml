@@ -281,7 +281,7 @@
                                           HorizontalAlignment="Center"
                                           />
                     </Grid>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -297,17 +297,20 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="AddButton" TargetType="{x:Type controls:ButtonPath}" BasedOn="{StaticResource {x:Type controls:ButtonPath}}">
-        <Setter Property="IconPath" Value="{StaticResource Add}"/>
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="CornerRadius" Value="5"/>
-        <Setter Property="PathPadding" Value="5"/>
-    </Style>
-
     <Style TargetType="{x:Type Button}" x:Key="WindowsAppButtonExit" BasedOn="{StaticResource WindowsAppButton}">
         <Setter Property="Foreground" Value="{DynamicResource WrongColorBrush}"/>
+    </Style>
+
+    <Style x:Key="AddButton" 
+           TargetType="{x:Type controls:ButtonPath}"
+           BasedOn="{StaticResource {x:Type controls:ButtonPath}}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="0 0 10 0"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="PathPadding" Value="8"/>
+        <Setter Property="IconPath" Value="{DynamicResource Add}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryColorBrush}"/>
     </Style>
 
     <!--#endregion-->

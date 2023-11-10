@@ -47,7 +47,7 @@ public class ItemStatesPageViewModel :
                 return lastVm;
             }
         }
-        ItemStateViewModel newVM = new ItemStateViewModel(_service, item);
+        ItemStateViewModel newVM = new ItemStateViewModel(_service, item, Application);
         return newVM;
     }
 

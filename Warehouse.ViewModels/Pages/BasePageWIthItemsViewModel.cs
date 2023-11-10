@@ -157,8 +157,6 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
                 return;
             else
             {
-                if(_selectedItemViewModel.Enabled)
-                    _selectedItemViewModel.SetEnabled();
                 var message = _selectedItemViewModel.Valid();
                 if(message != null)
                 {

@@ -48,7 +48,7 @@ public class SuppliersPageViewModel :
                 return lastVm;
             }
         }
-        SupplierViewModel newVM = new SupplierViewModel(_service, item);
+        SupplierViewModel newVM = new SupplierViewModel(_service, item, Application);
         return newVM;
     }
 

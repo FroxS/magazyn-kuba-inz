@@ -47,7 +47,7 @@ public class StorageUnitsPageViewModel :
                 return lastVm;
             }
         }
-        StorageUnitViewModel newVM = new StorageUnitViewModel(_service, item);
+        StorageUnitViewModel newVM = new StorageUnitViewModel(_service, item, Application);
         return newVM;
     }
 

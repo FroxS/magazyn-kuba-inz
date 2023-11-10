@@ -2,6 +2,7 @@
 using Warehouse.Core.Interface;
 using Warehouse.Models;
 using System.Windows.Input;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.ViewModel.Service;
 
@@ -16,9 +17,9 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
 
     protected bool _saved = true;
 
-    private bool _enabled = false;
-
     protected string? message;
+
+    protected IApp _app;
 
     #endregion
 
@@ -70,15 +71,7 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
         }
     }
 
-    public bool Enabled
-    {
-        get => _enabled;
-        protected set
-        {
-            _enabled = value;
-            OnPropertyChanged(nameof(Enabled));
-        }
-    }
+    public bool Enabled => CanEdit();
 
     #endregion
 
@@ -86,19 +79,16 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
 
     public ICommand SaveCommand { get; protected set; }
 
-    public ICommand EditCommand { get; protected set; }
-
     #endregion
 
     #region Constructor
 
-    public BaseEntityViewModel(IBaseService<T> service,T entity)
+    public BaseEntityViewModel(IBaseService<T> service,T entity, IApp app)
     {
         _service = service;
         _entity = entity;
-        Enabled = false;
+        _app = app;
         SaveCommand = new AsyncRelayCommand<bool>((o) => SaveAsync(), o => Enabled && !Saved);
-        EditCommand = new RelayCommand(() => SetEnabled(true), () => !Enabled);
     }
 
     #endregion
@@ -106,6 +96,17 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
     #region Protected methods
 
     protected virtual string[] GetpropsNameToFireOnSave() { return null; }
+
+    protected bool CanEdit()
+    {
+        User? user = _app?.User;
+        if(user != null)
+        {
+            if ((user.Type & (EUserType.Admin | EUserType.Boss | EUserType.Employee_Office)) != 0)
+                return true;
+        }
+        return false;
+    }
 
     #endregion
 
@@ -117,18 +118,6 @@ public class BaseEntityViewModel<T> : BaseViewModel where T: BaseEntity
     /// </summary>
     /// <returns></returns>
     public virtual string? Valid() => null;
-
-    public virtual void SetEnabled(bool enable = false)
-    {
-        if (_service == null)
-            return;
-
-        if (enable)
-            _service.RunTransaction();
-        else
-            _service.EndTransaction();
-        Enabled = enable;
-    }
 
     public virtual async Task<bool> SaveAsync()
     {

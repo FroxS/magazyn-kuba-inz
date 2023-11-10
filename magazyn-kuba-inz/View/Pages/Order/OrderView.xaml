@@ -109,7 +109,7 @@
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
                     <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
-                                           IconPath="{StaticResource FilterSet}"
+                                           IconPath="{StaticResource Search}"
                                            Width="200"
                                            HorizontalAlignment="Left"
                                            Style="{StaticResource FormTextBoxImage}"

@@ -15,12 +15,21 @@ namespace Warehouse.Theme.Controls
             set { SetValue(IconPathProperty, value); }
         }
 
+        public CornerRadius Radius
+        {
+            get { return (CornerRadius)GetValue(RadiusProperty); }
+            set { SetValue(RadiusProperty, value); }
+        }
+
         #endregion
 
         #region Dependency
 
         public static readonly DependencyProperty IconPathProperty =
             DependencyProperty.Register(nameof(IconPath), typeof(Geometry), typeof(TextBoxImage), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty RadiusProperty =
+            DependencyProperty.Register(nameof(Radius), typeof(CornerRadius), typeof(TextBoxImage), new PropertyMetadata(new CornerRadius(2)));
 
         #endregion
 

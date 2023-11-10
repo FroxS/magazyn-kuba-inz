@@ -62,8 +62,10 @@
                                                 HorizontalAlignment="Center"
                                                 ToolTip="Szukaj">
                                         
-                                        <controls:TextBoxImage IconPath="{StaticResource Search}"
-                                                               Width="250"/>
+                                        <controls:TextBoxImage Width="250"
+                                                               Tag="Szukaj"
+                                                               Padding="5,0"
+                                                               Radius="15"/>
                                         <controls:ButtonPath IconPath="{StaticResource Search}"
                                                              Margin="5,0,0,0"/>
                                     </StackPanel>

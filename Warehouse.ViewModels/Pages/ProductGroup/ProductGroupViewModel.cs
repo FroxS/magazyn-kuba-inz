@@ -41,7 +41,7 @@ public class ProductGroupViewModel : BaseEntityViewModel<ProductGroup>
     #endregion
 
     #region Constructors
-    public ProductGroupViewModel(IBaseService<ProductGroup> service, ProductGroup product):base(service,product)
+    public ProductGroupViewModel(IBaseService<ProductGroup> service, ProductGroup product, IApp app) : base(service, product, app)
     {
         _CanValidate = true;
         Saved = true;

@@ -22,6 +22,11 @@ public class BasePageViewModel : BaseViewModel, IBasePageViewModel
         Application = application;
     }
 
+    public BasePageViewModel()
+    {
+        
+    }
+
     #endregion
 
     #region Public methods
