@@ -7,13 +7,13 @@ namespace Warehouse.View.Pages;
 /// <summary>
 /// Logika interakcji dla klasy ItemStatesPage.xaml
 /// </summary>
-public partial class OrderPage : BaseControlPage<OrderPageViewModel>
+public partial class OrdersPage : BaseControlPage<OrdersPageViewModel>
 {
-    public OrderPage(OrderPageViewModel? vm) : base(vm)
+    public OrdersPage(OrdersPageViewModel? vm) : base(vm)
     {
         InitializeComponent();
     }
-    public OrderPage(IBasePageViewModel? vm):base(vm)
+    public OrdersPage(IBasePageViewModel? vm):base(vm)
     {
         InitializeComponent();
     }

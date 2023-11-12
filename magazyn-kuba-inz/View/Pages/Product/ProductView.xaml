@@ -20,12 +20,10 @@
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0">
-
                 <Button Content="Save" 
                         Padding="10,5"
                         Visibility="{Binding Saved, Converter={StaticResource BoolToVisible}}"
                         Command="{Binding SaveCommand}"/>
-
             </StackPanel>
             
             
@@ -116,21 +114,14 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Grupa"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Grupa" Style="{DynamicResource FormLabel}"/>
 
-                        <ComboBox Width="200"
-                                  Margin="10,0"
-                                  ItemsSource="{Binding ProductGroups}"
+                        <ComboBox ItemsSource="{Binding ProductGroups}"
                                   DisplayMemberPath="Name"
                                   SelectedValuePath="ID"
-                                  SelectedItem="{Binding Group, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                  SelectedItem="{Binding Group}"
                                   IsSynchronizedWithCurrentItem="True"
-                                  SelectedIndex="0"
-                                  HorizontalAlignment="Left"
+                                  Style="{StaticResource FormComboBox}"
                                   Grid.Column="1"/>
 
                     </Grid>
@@ -142,44 +133,32 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Dostawca"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Dostawca" Style="{DynamicResource FormLabel}"/>
 
-                        <ComboBox Width="200"
-                                  Margin="10,0"
-                                  ItemsSource="{Binding Suppliers}"
+                        <ComboBox ItemsSource="{Binding Suppliers}"
                                   DisplayMemberPath="Name"
                                   SelectedValuePath="ID"
-                                  SelectedItem="{Binding Supplier, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                  SelectedItem="{Binding Supplier}"
                                   IsSynchronizedWithCurrentItem="True"
-                                  HorizontalAlignment="Left"
+                                  Style="{StaticResource FormComboBox}"
                                   Grid.Column="1"/>
 
                     </Grid>
                     <Grid Grid.Row="5"
-                      Margin="5">
+                          Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Status"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Status" Style="{DynamicResource FormLabel}"/>
 
-                        <ComboBox Width="200"
-                                  Margin="10,0"
-                                  ItemsSource="{Binding ProductStatuses}"
+                        <ComboBox ItemsSource="{Binding ProductStatuses}"
                                   DisplayMemberPath="Name"
                                   SelectedValuePath="ID"
-                                  SelectedItem="{Binding Status, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                  SelectedItem="{Binding Status}"
                                   IsSynchronizedWithCurrentItem="True"
-                                  HorizontalAlignment="Left"
+                                  Style="{StaticResource FormComboBox}"
                                   Grid.Column="1"/>
 
                     </Grid>
@@ -207,18 +186,15 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Zdjęcie"/>
-                        <Run Text=":"/>
-                        </TextBlock>
+                        <Label Grid.Column="0" Content="Zdjęcie" Style="{DynamicResource FormLabel}"/>
 
                         <Button Content="..."
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
+                                HorizontalContentAlignment="Center"
+                                Padding="0"
+                                Height="20"
+                                HorizontalAlignment="Stretch"
                                 Command="{Binding LoadImageCommand}"
-                             Grid.Column="1"/>
+                                Grid.Column="1"/>
 
                     </Grid>
                 </Grid>

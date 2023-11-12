@@ -7,7 +7,7 @@
                          xmlns:local="clr-namespace:Warehouse.View.Pages"
                          xmlns:service="clr-namespace:Warehouse.View.Service"
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
-                         xmlns:tab="clr-namespace:Warehouse.ViewModel.Service;assembly=Warehouse.ViewModels"
+                         xmlns:tab="clr-namespace:Warehouse.Core.Interface;assembly=Warehouse.Core"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{x:Static local:DesignWareHouseItemsPageViewModel.Instance}"
@@ -16,14 +16,12 @@
     <Grid Margin="10">
         <Border BorderThickness="1"
                 BorderBrush="{DynamicResource BorderColorBrush}">
-            <TabControl ItemContainerStyle="{DynamicResource TabControlItemContainerStyle1}" ItemsSource="{Binding States}"
+            <TabControl ItemsSource="{Binding States}"
                         SelectedItem="{Binding SelectedState, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Background="Transparent"
                         BorderThickness="0"
-                        BorderBrush="{DynamicResource BorderColorBrush}"
-                        >
+                        BorderBrush="{DynamicResource BorderColorBrush}">
                 <TabControl.Resources>
-                    <!--View for Warehouse product with status tab  -->
                     <DataTemplate DataType="{x:Type pageVM:ProtuctStateTabViewModel}">
                         <local:ProtuctStateTabView Padding="10"/>
                     </DataTemplate>
@@ -33,13 +31,11 @@
                     <DataTemplate DataType="{x:Type tab:ITab}">
                         <TextBlock  >
                             <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            
                         </TextBlock>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
             </TabControl>
         </Border>
-
-        <!--#endregion-->
-
     </Grid>
 </service:BaseControlPage>

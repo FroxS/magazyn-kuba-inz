@@ -31,7 +31,8 @@
                                     </Grid.RowDefinitions>
 
                                     <!--Title section-->
-                                    <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                    <StackPanel Grid.Column="0" 
+                                                Orientation="Horizontal"
                                                 Margin="10,0,0,0">
                                         <Path Data="{StaticResource WareHouse}"
                                               Width="30"
@@ -60,6 +61,7 @@
                                     <StackPanel Grid.Column="1"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
+                                                Orientation="Horizontal"
                                                 ToolTip="Szukaj">
                                         
                                         <controls:TextBoxImage Width="250"

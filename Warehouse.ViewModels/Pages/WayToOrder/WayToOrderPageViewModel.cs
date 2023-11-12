@@ -42,11 +42,13 @@ public class WayToOrderPageViewModel : BasePageViewModel
 
     #region Constructors
 
-    public WayToOrderPageViewModel(IApp app, IHallService hallService) : base(app)
+    public WayToOrderPageViewModel(IApp app, IHallService hallService, WayResult way, Order order) : base(app)
     {
         _hallService = hallService;
+        Way = way;
+        Order = order;
         Page = Models.Page.EApplicationPage.WayToOrder;
-        
+        Title = $"Droga - {order.Name}";
     }
 
     #endregion

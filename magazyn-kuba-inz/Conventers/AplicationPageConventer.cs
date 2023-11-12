@@ -44,7 +44,7 @@ public static class AplicationPageConventer
             case EApplicationPage.Racks:
                 return new RacksPage(pagevm);
             case EApplicationPage.Order:
-                return new OrderPage(pagevm);
+                return new OrdersPage(pagevm);
             case EApplicationPage.WayToOrder:
                 return new WayToOrderPage(pagevm);
             default:

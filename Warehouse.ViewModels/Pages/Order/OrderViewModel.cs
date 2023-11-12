@@ -134,6 +134,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     #endregion
 
     #region Constructors
+
     public OrderViewModel(
         IOrderService service,
         Order order,
@@ -229,7 +230,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
                 _app.ShowSilentMessage("Nie udało się wygererować drogi");
             else
             {
-                _app.Navigation.SetPage(new WayToOrderPageViewModel(_app, _app.GetService<IHallService, Hall>()) { Way = result, Order = _entity });
+                _app.Navigation.AddPage(new WayToOrderPageViewModel(_app, _app.GetService<IHallService, Hall>(), result, _entity));
             }
         }
         catch(Exception ex)

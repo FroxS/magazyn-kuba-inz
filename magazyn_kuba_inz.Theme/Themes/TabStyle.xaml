@@ -16,16 +16,23 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <LinearGradientBrush x:Key="TabItem.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="{DynamicResource HoverBackgroundColor}" Offset="0.0"/>
         <GradientStop Color="{DynamicResource HoverBackgroundColor }" Offset="1.0"/>
     </LinearGradientBrush>
+    
     <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="{DynamicResource HoverBackgroundColor}"/>
+    
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="{DynamicResource PrimaryColor}"/>
+    
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="Transparent"/>
+    
     <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="{DynamicResource HoverBackgroundColor}"/>
+    
     <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="{DynamicResource BorderColor}"/>
-    <Style x:Key="TabControlItemContainerStyle1" TargetType="{x:Type TabItem}">
+    
+    <Style TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
         <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>

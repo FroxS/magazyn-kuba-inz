@@ -3,10 +3,6 @@
                     xmlns:attat="clr-namespace:Warehouse.Theme.AttachedProperty"
                     xmlns:conv="clr-namespace:Warehouse.Theme.Conventers">
 
-    <Style TargetType="{x:Type StackPanel}">
-        <Setter Property="Orientation" Value="Horizontal"/>
-    </Style>
-
     <Style TargetType="{x:Type CalendarDayButton}" x:Key="CalendarDayButtonStyle">
         <Setter Property="MinWidth" Value="5" />
         <Setter Property="MinHeight" Value="5" />

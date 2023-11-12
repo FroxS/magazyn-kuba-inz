@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Warehouse.Models.Page;
 using Warehouse.ViewModel.Service;
 using Warehouse.Core.Interface;
+using System;
 
 namespace Warehouse.Controls
 {
@@ -37,9 +38,6 @@ namespace Warehouse.Controls
                     null, 
                     CurrentPagePropertyChanged)
                 );
-
-
-
 
         #endregion
 

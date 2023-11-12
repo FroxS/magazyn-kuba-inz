@@ -12,6 +12,8 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:design="clr-namespace:Warehouse.ViewModel.Design;assembly=Warehouse.ViewModels" 
         xmlns:innermessage="clr-namespace:Warehouse.View.InnerDialog"
+        xmlns:interface="clr-namespace:Warehouse.Core.Interface;assembly=Warehouse.Core"
+        xmlns:tab="clr-namespace:Warehouse.Core.Interface;assembly=Warehouse.Core"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Width="1200"
@@ -54,10 +56,8 @@
                     <!--#region  Menu-->
 
                     <controls:LeftMenuView Grid.Column="0" DataContext="{Binding Navigation,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged}"
-                                            d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}"/>
-
+                                                                                 Source={x:Static helpers:AppHelper.Instance}, 
+                                                                                 UpdateSourceTrigger=PropertyChanged}"/>
                     <!--#endregion-->
 
                     <Grid Grid.Column="1">
@@ -71,7 +71,7 @@
 
                             <Grid Visibility="{Binding MessageService.Message,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}}">
+                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}, FallbackValue=True}">
 
                                 <Border Background="{Binding MessageService.Type,
                                                          Source={x:Static helpers:AppHelper.Instance}, 
@@ -81,29 +81,79 @@
 
                                 <TextBlock VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
+                                           TextWrapping="Wrap"
                                            Padding="10,2"
                                            Text="{Binding MessageService.Message,
                                                           Source={x:Static helpers:AppHelper.Instance}, 
                                                           UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, 
                                                           FallbackValue=Testowa wiadomość}"/>
-                                <Button Content="X"
-                                        Width="20"
-                                        Height="20"
-                                        VerticalAlignment="Top"
-                                        Command="{Binding MessageService.HideMessageCommand,
-                                                                 Source={x:Static helpers:AppHelper.Instance}, 
-                                                                 UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-                                        HorizontalAlignment="Right"/>
+ 
+                                <controls2:ButtonPath IconPath="{StaticResource Exit}"
+                                                      Width="20"
+                                                      Height="20"
+                                                      VerticalAlignment="Top"
+                                                      HorizontalAlignment="Right"
+                                                      Command="{Binding MessageService.HideMessageCommand,
+                                                                        Source={x:Static helpers:AppHelper.Instance}, 
+                                                                        UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"/>
+
                             </Grid>
-                            <controls:PageHost Grid.Row="1"
+
+                            <Border BorderThickness="1"
+                                    Grid.Row="1"
+                                    BorderBrush="{DynamicResource BorderColorBrush}">
+                                <TabControl ItemsSource="{Binding Navigation.Pages,
+                                                                  Source={x:Static helpers:AppHelper.Instance}, 
+                                                                  UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                            SelectedItem="{Binding Navigation.ActivePage,
+                                                                   Source={x:Static helpers:AppHelper.Instance}, 
+                                                                   UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            BorderBrush="{DynamicResource BorderColorBrush}">
+ 
+                                    <TabControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type tab:IBasePageViewModel}">
+                                            <Grid>
+                                                <TextBlock Margin="0 0 10 0">
+                                                    <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </TextBlock>
+
+                                                <TextBlock HorizontalAlignment="Right"
+                                                           VerticalAlignment="Top"
+                                                           Visibility="{Binding IsMain,Converter={conventers:BoolToVisibleConventer}}"
+                                                           Margin="-5">
+                                                    <Hyperlink Command="{Binding CloseTabCommand}"
+                                                               
+                                                           Foreground="{DynamicResource FontColorBrush}">X</Hyperlink>
+                                                </TextBlock>
+                                                
+
+                                            </Grid>
+                                            
+                                            
+                                        </DataTemplate>
+                                    </TabControl.ItemTemplate>
+                                    <TabControl.ContentTemplate>
+                                        <DataTemplate DataType="{x:Type interface:IBasePageViewModel}">
+                                            <controls:PageHost Grid.Row="1"
+                                                               IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
+                                                               CurrentPage="{Binding }">
+                                            </controls:PageHost>
+                                        </DataTemplate>
+                                    </TabControl.ContentTemplate>
+                                </TabControl>
+                            </Border>
+
+                            <!--<controls:PageHost Grid.Row="1"
                                                x:Name="Test"
                                                IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
                                                CurrentPage="{Binding Navigation.Page,
-                                                         Source={x:Static helpers:AppHelper.Instance}, 
-                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                                                     Source={x:Static helpers:AppHelper.Instance}, 
+                                                                     UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
                                    
                                               d:DataContext="{x:Static design:DesignNavigationViewModel.Instance}">
-                            </controls:PageHost>
+                            </controls:PageHost>-->
                         </Grid>
                         <!--#endregion-->
                     </Grid>

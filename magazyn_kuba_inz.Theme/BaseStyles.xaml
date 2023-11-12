@@ -13,6 +13,7 @@
         <ResourceDictionary Source="Themes/BaseControls.xaml"/>
         <ResourceDictionary Source="Themes/FormsControls.xaml"/>
         <ResourceDictionary Source="Themes/TabStyle.xaml"/>
+        <ResourceDictionary Source="Themes/ComboboxStyle.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 

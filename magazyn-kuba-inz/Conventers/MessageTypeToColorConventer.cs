@@ -15,7 +15,7 @@ public class MessageTypeToColorConventer : BaseValueConventer<MessageTypeToColor
     public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
 
-        string colorresourceName = "WaringColorBrush";
+        string colorresourceName = "WarningColorBrush";
         if(value is EMessageType mt)
         {
             switch (mt)
@@ -24,7 +24,7 @@ public class MessageTypeToColorConventer : BaseValueConventer<MessageTypeToColor
                     colorresourceName = "GoodColorBrush";
                     break;
                 case EMessageType.Warning:
-                    colorresourceName = "WaringColorBrush";
+                    colorresourceName = "WarningColorBrush";
                     break;
                 case EMessageType.Error:
                     colorresourceName = "WrongColorBrush";

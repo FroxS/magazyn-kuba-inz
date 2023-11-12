@@ -1,17 +1,10 @@
 ﻿using Warehouse.Core.Helpers;
 using System.Windows.Input;
-using Warehouse.Models;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Service
 {
-    public interface ITab
-    {
-        string Title { get; }
-        ICommand CloseTab { get; }
-        event EventHandler CloseRequest;
-        void Load();
-    }
-
+   
     public abstract class Tab : BaseViewModel, ITab
     {
         #region Private fields
@@ -24,7 +17,7 @@ namespace Warehouse.ViewModel.Service
 
         #region Public Properties
 
-        public string Title
+        public virtual string Title
         {
             get => _title;
             set { _title = value; OnPropertyChanged(nameof(Title)); }
@@ -33,14 +26,14 @@ namespace Warehouse.ViewModel.Service
         public bool IsEmpty
         {
             get => _isEmpty;
-            set { _isEmpty = value; OnPropertyChanged(nameof(IsEmpty)); }
+            protected set { _isEmpty = value; OnPropertyChanged(nameof(IsEmpty)); }
         }
 
         #endregion
 
         #region Commands
 
-        public ICommand CloseTab { get; set; }
+        public ICommand CloseTabCommand { get; set; }
         public ICommand OpenTabCommand { get; set; }
 
         #endregion
@@ -58,7 +51,10 @@ namespace Warehouse.ViewModel.Service
         /// </summary>
         public Tab()
         {
-            CloseTab = new RelayCommand(() => CloseRequest?.Invoke(this, EventArgs.Empty));
+            CloseTabCommand = new RelayCommand(
+                () => 
+                CloseRequest?.Invoke(this, EventArgs.Empty)
+                );
         }
 
         #endregion
