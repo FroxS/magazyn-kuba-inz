@@ -108,7 +108,8 @@
                     </Grid>
 
                     <Grid Grid.Row="3"
-                      Margin="5">
+                          Margin="5"
+                          >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                             <ColumnDefinition/>
@@ -195,6 +196,19 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding LoadImageCommand}"
                                 Grid.Column="1"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="8"
+                      Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <Border Grid.Column="1" Width="300"/>
 
                     </Grid>
                 </Grid>

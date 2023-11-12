@@ -108,8 +108,7 @@
         <Grid Grid.Row="0"
               Grid.RowSpan="2"
               Grid.Column="2"
-              Visibility="{Binding SelectedItemViewModel, Converter={StaticResource NullToVisible}}"
-              Width="200">
+              Visibility="{Binding SelectedItemViewModel, Converter={StaticResource NullToVisible}}">
             <local:ProductView DataContext="{Binding SelectedItemViewModel}"/>
         </Grid>
         
