@@ -112,7 +112,7 @@ public class WareHouseApp : ObservableObject, IApp
             if (window == null)
                 throw new Exception("Brak okna głównego");
             MainWindow = app.MainWindow = window as Window;
-            Navigation.SetPage(Warehouse.Models.Page.EApplicationPage.WareHouseCreator);
+            Navigation.SetPage(Warehouse.Models.Page.EApplicationPage.DashBoard);
 
             CloseSplashForm();
             window.Show();

@@ -26,7 +26,12 @@ namespace Warehouse.Dialog
             if (window == null)
                 throw new ArgumentException("Dialog now found");
             //window.Parent = IApp.MainWindow;
-            window.Owner = _service.GetService<IApp>().MainWindow;
+            try
+            {
+                window.Owner = _service.GetService<IApp>().MainWindow;
+            }
+            catch { }
+            
             window.ShowDialog();
             return wm.DialogResult;
         }

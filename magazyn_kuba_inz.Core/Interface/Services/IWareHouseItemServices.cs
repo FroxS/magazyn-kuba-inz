@@ -13,6 +13,8 @@ public interface IUserService
 {
     Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
+
+    Task<List<User>> GetUsers(CancellationToken cancellationToken = default);
 }
 
 public interface IProductService : IBaseService<Product> 

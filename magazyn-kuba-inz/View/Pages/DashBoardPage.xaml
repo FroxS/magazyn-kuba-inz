@@ -11,12 +11,156 @@
                   CanResize="CanResizeWithGrip"
                   d:DataContext="{d:DesignInstance Type=pageVM:DashBoardPageViewModel}"
                   d:DesignHeight="500" d:DesignWidth="1000">
+    <service:BaseControlPage.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="TopTile">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </service:BaseControlPage.Resources>
 
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <Grid Margin="50,40" Background="#99a4a8">
+        <WrapPanel Grid.Row="1"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left">
+
+            <Button Background="#FFF1D30B" 
+                    Style="{StaticResource TopTile}"
+                    Command="{Binding AddNewOrderCommand}">
+                <Grid Margin="0 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0"
+                               FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Content="Order"/>
+
+                        <Label Grid.Column="0" Grid.Row="1"
+                               Content="Nowe zamówienie"/>
+                    </Grid>
+
+                    <Path Grid.Column="1"
+                          Data="{DynamicResource Add}"
+                          Stretch="Uniform"
+                          Fill="{DynamicResource FontColorBrush}"/>
+
+                </Grid>
+            </Button>
+
+            <Button Background="#FF53D30B" 
+                    Style="{StaticResource TopTile}">
+                <Grid Margin="0 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0"
+                               FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Content="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
+
+                        <Label Grid.Column="0" Grid.Row="1"
+                               Content="Produkty"/>
+                    </Grid>
+
+                    <Path Grid.Column="1"
+                          Data="{DynamicResource ProductsGeometry}"
+                          Stretch="Uniform"
+                          Fill="{DynamicResource FontColorBrush}"/>
+
+                </Grid>
+            </Button>
+
+            <Button Background="#FF537d0B" 
+                    Style="{StaticResource TopTile}">
+                <Grid Margin="0 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0"
+                               FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Content="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
+
+                        <Label Grid.Column="0" Grid.Row="1"
+                               Content="Użytkownicy"/>
+                    </Grid>
+
+                    <Path Grid.Column="1"
+                          Data="{DynamicResource UserGeometry}"
+                          Stretch="Uniform"
+                          Fill="{DynamicResource FontColorBrush}"/>
+
+                </Grid>
+            </Button>
+
+            <Button Background="#FF537d0B" 
+                    Style="{StaticResource TopTile}">
+                <Grid Margin="0 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0"
+                               FontSize="24" FontWeight="Bold"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left"
+                               Content="{Binding CountOfOrders, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
+
+                        <Label Grid.Column="0" Grid.Row="1"
+                               Content="Zamówienia"/>
+                    </Grid>
+
+                    <Path Grid.Column="1"
+                          Data="{DynamicResource Order}"
+                          Stretch="Uniform"
+                          Fill="{DynamicResource FontColorBrush}"/>
+
+                </Grid>
+            </Button>
+
+        </WrapPanel>
         
-        <Button Content="Test" FontSize="16"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"/>
     </Grid>
+    
 </service:BaseControlPage>

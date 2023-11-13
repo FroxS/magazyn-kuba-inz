@@ -69,6 +69,11 @@ internal class UserService : IUserService
         return user;
     }
 
-    
+    public Task<List<User>> GetUsers(CancellationToken cancellationToken = default)
+    {
+        return _repozitory.GetAllAsync();
+    }
+
+
     #endregion
 }

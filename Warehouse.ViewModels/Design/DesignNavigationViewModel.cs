@@ -21,7 +21,7 @@ namespace Warehouse.ViewModel.Design
         /// </summary>
         public DesignNavigationViewModel()
         {
-            SetPage(new DashBoardPageViewModel(null));// EApplicationPage.DashBoard;
+            SetPage(new DashBoardPageViewModel(null,null,null,null));// EApplicationPage.DashBoard;
         }
 
         #endregion
