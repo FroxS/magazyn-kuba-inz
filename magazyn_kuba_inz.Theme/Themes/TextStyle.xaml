@@ -91,7 +91,7 @@
                                            Padding="5,0,0,0"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                           Foreground="{TemplateBinding Foreground}"
+                                           Foreground="{DynamicResource BorderColorBrush}"
                                            >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">

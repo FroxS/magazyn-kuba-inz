@@ -8,6 +8,8 @@ using System.Windows.Input;
 using Warehouse.ViewModel.Service;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Reflection;
+using Warehouse.Models.Attribute;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -140,7 +142,29 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
 
     protected virtual bool Filter(Item value, string search)
     {
-        return true;
+        if(value != null && !string.IsNullOrEmpty(search))
+        {
+            PropertyInfo[] properties = typeof(Item).GetProperties();
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (Attribute.IsDefined(property, typeof(FilterColumnAttribute)))
+                {
+                    string? val = property.GetValue(value)?.ToString();
+                    if(!string.IsNullOrEmpty(val))
+                    {
+                        return val.ToLower().Contains(search.ToLower());
+                    }
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+        
     }
 
     #endregion
@@ -151,7 +175,6 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
     {
         try
         {
-            
             CanChangePage = true;
             if (_selectedItemViewModel == null)
                 return;

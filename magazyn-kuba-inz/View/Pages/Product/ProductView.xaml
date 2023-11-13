@@ -6,233 +6,189 @@
              xmlns:local="clr-namespace:Warehouse.View.Pages"
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance vm:ProductViewModel}">
-    <Border BorderThickness="1"
-            BorderBrush="{DynamicResource BorderColorBrush}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+    <Grid Margin="10"
+          Grid.Row="1"
+          IsEnabled="{Binding Enabled}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="0">
-                <Button Content="Save" 
-                        Padding="10,5"
-                        Visibility="{Binding Saved, Converter={StaticResource BoolToVisible}}"
-                        Command="{Binding SaveCommand}"/>
-            </StackPanel>
-            
-            
-            <Grid Margin="10"
-                  Grid.Row="1"
-                  IsEnabled="{Binding Enabled}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0"
+        <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
-                    <Image MaxWidth="50" MaxHeight="50"
+            <Image MaxWidth="50" MaxHeight="50"
                            Margin="10"
                            Source="{Binding MainImage, Converter={StaticResource ArrayByteToImage}}"/>
 
-                        <TextBlock Text="{Binding Name, FallbackValue=Test}"
+            <TextBlock Text="{Binding Name, FallbackValue=Test}"
                                FontSize="14"
                                VerticalAlignment="Center"
                                FontWeight="Bold"/>
-                </StackPanel>
+        </StackPanel>
 
-                <Grid Grid.IsSharedSizeScope="True"
+        <Grid Grid.IsSharedSizeScope="True"
                       Grid.Row="1"
                       Margin="10"
                       VerticalAlignment="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Content="Nazwa" Style="{DynamicResource FormLabel}"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Name}" Style="{DynamicResource FormLabel}"/>
 
-                        <controls:TextBoxImage Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                               Grid.Column="1"
-                                               Style="{StaticResource FormTextBoxImage}"
-                                               Tag="Nazwa"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Opis" Style="{DynamicResource FormLabel}"/>
-
-                        <controls:TextBoxImage Text="{Binding Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                               Grid.Column="1"
-                                               Style="{StaticResource FormTextBoxImage}"
-                                               Tag="Nazwa"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Cena" Style="{DynamicResource FormLabel}"/>
-
-                        <controls:TextBoxImage Text="{Binding Price, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                               Grid.Column="1"
-                                               Style="{StaticResource FormTextBoxImage}"
-                                               Tag="Nazwa"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="3"
-                          Margin="5"
-                          >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Grupa" Style="{DynamicResource FormLabel}"/>
-
-                        <ComboBox ItemsSource="{Binding ProductGroups}"
-                                  DisplayMemberPath="Name"
-                                  SelectedValuePath="ID"
-                                  SelectedItem="{Binding Group}"
-                                  IsSynchronizedWithCurrentItem="True"
-                                  Style="{StaticResource FormComboBox}"
-                                  Grid.Column="1"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="4"
-                      Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Dostawca" Style="{DynamicResource FormLabel}"/>
-
-                        <ComboBox ItemsSource="{Binding Suppliers}"
-                                  DisplayMemberPath="Name"
-                                  SelectedValuePath="ID"
-                                  SelectedItem="{Binding Supplier}"
-                                  IsSynchronizedWithCurrentItem="True"
-                                  Style="{StaticResource FormComboBox}"
-                                  Grid.Column="1"/>
-
-                    </Grid>
-                    <Grid Grid.Row="5"
-                          Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Status" Style="{DynamicResource FormLabel}"/>
-
-                        <ComboBox ItemsSource="{Binding ProductStatuses}"
-                                  DisplayMemberPath="Name"
-                                  SelectedValuePath="ID"
-                                  SelectedItem="{Binding Status}"
-                                  IsSynchronizedWithCurrentItem="True"
-                                  Style="{StaticResource FormComboBox}"
-                                  Grid.Column="1"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Lp" Style="{DynamicResource FormLabel}"/>
-
-                        <controls:TextBoxImage Text="{Binding Lp, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                                               Grid.Column="1"
-                                               Style="{StaticResource FormTextBoxImage}"
-                                               Tag="Nazwa"/>
-
-                    </Grid>
-
-                    
-                    <Grid Grid.Row="7"
-                      Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Content="Zdjęcie" Style="{DynamicResource FormLabel}"/>
-
-                        <Button Content="..."
-                                HorizontalContentAlignment="Center"
-                                Padding="0"
-                                Height="20"
-                                HorizontalAlignment="Stretch"
-                                Command="{Binding LoadImageCommand}"
-                                Grid.Column="1"/>
-
-                    </Grid>
-
-                    <Grid Grid.Row="8"
-                      Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-
-
-                        <Border Grid.Column="1" Width="300"/>
-
-                    </Grid>
-                </Grid>
+                <controls:TextBoxImage Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Name}"/>
             </Grid>
 
-            <Grid Visibility="{Binding Message, Converter={StaticResource NullToVisible}}"
-                  Grid.Row="2">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <Border Background="Red"
-                                Panel.ZIndex="-2"
-                                Opacity=".7"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Description}" Style="{DynamicResource FormLabel}"/>
 
-                <TextBlock VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   Padding="10,2"
-                                   Text="{Binding Message,
-                                                  UpdateSourceTrigger=PropertyChanged, 
-                                                  NotifyOnSourceUpdated=True,
-                                                    NotifyOnTargetUpdated=True, 
-                                                FallbackValue=Testowa wiadomość}"/>
+                <controls:TextBoxImage Text="{Binding Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Description}"/>
+
             </Grid>
 
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Price}" Style="{DynamicResource FormLabel}"/>
+
+                <controls:TextBoxImage Text="{Binding Price, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Price}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Group}" Style="{DynamicResource FormLabel}"/>
+
+                <ComboBox ItemsSource="{Binding ProductGroups}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="ID"
+                          SelectedItem="{Binding Group}"
+                          IsSynchronizedWithCurrentItem="True"
+                          Style="{StaticResource FormComboBox}"
+                          Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Suppliers}" Style="{DynamicResource FormLabel}"/>
+
+                <ComboBox ItemsSource="{Binding Suppliers}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="ID"
+                          SelectedItem="{Binding Supplier}"
+                          IsSynchronizedWithCurrentItem="True"
+                          Style="{StaticResource FormComboBox}"
+                          Grid.Column="1"/>
+
+            </Grid>
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Status}" Style="{DynamicResource FormLabel}"/>
+
+                <ComboBox ItemsSource="{Binding ProductStatuses}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="ID"
+                          SelectedItem="{Binding Status}"
+                          IsSynchronizedWithCurrentItem="True"
+                          Style="{StaticResource FormComboBox}"
+                          Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Lp}" Style="{DynamicResource FormLabel}"/>
+
+                <controls:TextBoxImage Text="{Binding Lp, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                               Grid.Column="1"
+                                               Style="{StaticResource FormTextBoxImage}"
+                                               Tag="{x:Static res:Resources.Lp}"/>
+
+            </Grid>
+
+
+            <Grid Grid.Row="7"
+                      Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Image}" Style="{DynamicResource FormLabel}"/>
+
+                <Button Content="..."
+                        HorizontalContentAlignment="Center"
+                        Padding="0"
+                        Height="20"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding LoadImageCommand}"
+                        Grid.Column="1"/>
+
+            </Grid>
+
+            <Grid Grid.Row="8"
+                      Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+
+
+                <Border Grid.Column="1" Width="300"/>
+
+            </Grid>
         </Grid>
-        
-        
-    </Border>
+    </Grid>
 </UserControl>

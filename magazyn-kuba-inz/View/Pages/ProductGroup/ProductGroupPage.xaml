@@ -13,7 +13,6 @@
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:ProductGroupsPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000">
-
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,23 +27,7 @@
 
         <!--#region Top Panel-->
 
-        <Grid Grid.Row="0"
-              Grid.ColumnSpan="2"
-              Margin="0,5">
-            <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
-                                   Grid.Column="1"
-                                   IconPath="{StaticResource Search}"
-                                   Width="200"
-                                   HorizontalAlignment="Left"
-                                   Style="{StaticResource FormTextBoxImage}"
-                                   Tag="Szukaj"/>
-
-            <controls:ButtonPath Text="Dodaj"
-                                 Style="{DynamicResource AddButton}"
-                                 Command="{Binding AddItemCommand}"
-                                 Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
-
-        </Grid>
+        <local:PageItemsTopBar Grid.Row="0" Grid.ColumnSpan="2"/>
 
         <!--#endregion-->
         
@@ -83,7 +66,6 @@
         
         <!--#endregion-->
 
-
         <GridSplitter Grid.Row="1" 
                       Grid.Column="1"
                       Width="2"
@@ -99,9 +81,13 @@
         <Grid Grid.Row="1"
               Visibility="{Binding SelectedItemViewModel, Converter={StaticResource NullToVisible}}"
               Grid.Column="2">
-            <local:ProductGroupView DataContext="{Binding SelectedItemViewModel}"/>
+            <local:PageItemHost DataContext="{Binding SelectedItemViewModel}">
+                <local:PageItemHost.Child>
+                    <local:ProductGroupView />
+                </local:PageItemHost.Child>
+            </local:PageItemHost>
         </Grid>
-        
+
         <!--#endregion-->
 
     </Grid>

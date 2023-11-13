@@ -3,11 +3,11 @@
 namespace Warehouse.View.Pages
 {
     /// <summary>
-    /// Interaction logic for OrderView.xaml
+    /// Interaction logic for OrderDetailsView.xaml
     /// </summary>
-    public partial class OrderView : UserControl
+    public partial class OrderDetailsView : UserControl
     {
-        public OrderView()
+        public OrderDetailsView()
         {
             InitializeComponent();
         }

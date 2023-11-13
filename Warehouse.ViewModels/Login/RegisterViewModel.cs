@@ -3,7 +3,7 @@ using Warehouse.Core.Helpers;
 using Warehouse.Core.Resources;
 using Warehouse.ViewModel.Service;
 using Warehouse.Models.Interfaces;
-using Warehouse.Models.Validaton.Attribute;
+using Warehouse.Models.Attribute;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Input;

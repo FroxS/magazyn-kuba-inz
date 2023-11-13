@@ -50,6 +50,7 @@ namespace Warehouse.Core.Helpers
 
         public RelayCommand(Action execute, Func<bool> canExecute) : base((o) => execute(), (o) => canExecute())
         {
+            
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Attribute;
 
 namespace Warehouse.Models;
 
@@ -9,6 +10,7 @@ public class OrderProduct : BaseEntity
     [Key]
     [Required]
     public override Guid ID { get; set; }
+    [FilterColumn]
     public string? Name { get; set; }
     public Guid ID_Order { get; set; }
     public Order? Order { get; set; }

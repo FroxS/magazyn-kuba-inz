@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Attribute;
 
 namespace Warehouse.Models;
 
@@ -10,6 +11,7 @@ public class ProductGroup :BaseEntity
     [Required]
     public override Guid ID { get; set; }
 
+    [FilterColumn]
     public virtual string? Name { get; set; }
 
     public virtual string? Description { get; set; }

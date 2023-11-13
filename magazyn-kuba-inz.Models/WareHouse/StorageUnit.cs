@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Attribute;
 
 namespace Warehouse.Models;
 
@@ -9,6 +10,7 @@ public class StorageUnit : BaseEntity
     [Key]
     [Required]
     public override Guid ID { get; set; }
+    [FilterColumn]
     public string? Name { get; set; }
     public double MaxWeight { get; set; }
     public double MaxHeight { get; set; }

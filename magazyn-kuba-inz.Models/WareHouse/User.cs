@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Warehouse.Models.Attribute;
 using Warehouse.Models.Enums;
 using Warehouse.Models.Interfaces;
 
@@ -10,6 +11,7 @@ public sealed class User : BaseEntity, IUser
 {
     public override Guid ID { get; set; }
     public string? Login { get; set; }
+    [FilterColumn]
     public string? Name { get; set; }
     public bool Active { get; set; }
     public string? PasswordSalt { get; set; }

@@ -13,7 +13,6 @@ namespace Warehouse.ViewModel.Pages;
 
 public class OrderViewModel : BaseEntityViewModel<Order>
 {
-
     #region Private fields
 
     private ObservableCollection<OrderProduct> _items;
