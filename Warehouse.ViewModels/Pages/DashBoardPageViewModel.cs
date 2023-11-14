@@ -16,6 +16,8 @@ public class DashBoardPageViewModel : BasePageViewModel
 
     private int _countOfOrders = 0;
 
+    private double[,] _orderLineChart = null;
+
     private readonly IOrderService _orderService;
 
     private readonly IProductService _productService;
@@ -42,6 +44,12 @@ public class DashBoardPageViewModel : BasePageViewModel
     {
         get => _countOfOrders;
         set { SetProperty(ref _countOfOrders, value, nameof(CountOfOrders)); }
+    }
+
+    public double[,] OrderLineChart
+    {
+        get => _orderLineChart;
+        set { SetProperty(ref _orderLineChart, value, nameof(OrderLineChart)); }
     }
 
     #endregion
@@ -75,6 +83,15 @@ public class DashBoardPageViewModel : BasePageViewModel
             CountOfProducts = (await _productService.GetAllAsync()).Count;
             CountOfOrders = (await _orderService.GetAllAsync()).Count;
             CountOfUsers = (await _userService.GetUsers()).Count;
+
+            OrderLineChart = new double[,] {
+                { 1, 8 },   //pon
+                { 2, 15 },  //wt
+                { 3, 25 },  //śr
+                { 4, 20 },  //czw
+                { 5, 14 },  //pt
+            };
+
             IsTaskRunning = false;
         }
         catch(Exception ex) 

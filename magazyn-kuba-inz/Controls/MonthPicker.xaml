@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Warehouse.Controls.MonthPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.Controls"
+             mc:Ignorable="d"
+             Width="200"
+             Name="mpControl">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ComboBox Grid.Column="0" Margin="5 2" x:Name="YearsCB"
+                  ScrollViewer.ScrollChanged="ComboBox_ScrollChanged"
+                  ItemsSource="{Binding Years,ElementName=mpControl, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Year,ElementName=mpControl, UpdateSourceTrigger=PropertyChanged}"
+                  ToolTip="Wybierz rok"/>
+        <ComboBox Grid.Column="1" Margin="5 2" x:Name="MonthCB"
+                  ItemsSource="{Binding Months,ElementName=mpControl, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedIndex="{Binding Month,ElementName=mpControl, UpdateSourceTrigger=PropertyChanged}"
+                  ToolTip="Wybierz miesiąc"/>
+    </Grid>
+</UserControl>

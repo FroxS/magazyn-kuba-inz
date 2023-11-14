@@ -1,23 +1,30 @@
 ﻿<service:BaseControlPage x:TypeArguments="pageVM:DashBoardPageViewModel"
-                  x:Class="Warehouse.View.Pages.DashBoardPage"
-                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                  xmlns:local="clr-namespace:Warehouse.View.Pages"
-                  xmlns:service="clr-namespace:Warehouse.View.Service"
-                  xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
-                  mc:Ignorable="d" 
-                  CanResize="CanResizeWithGrip"
-                  d:DataContext="{d:DesignInstance Type=pageVM:DashBoardPageViewModel}"
-                  d:DesignHeight="500" d:DesignWidth="1000">
+                         x:Class="Warehouse.View.Pages.DashBoardPage"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                         xmlns:local="clr-namespace:Warehouse.View.Pages"
+                         xmlns:service="clr-namespace:Warehouse.View.Service"
+                         xmlns:controls="clr-namespace:Warehouse.Controls"
+                         xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+                         mc:Ignorable="d" 
+                         CanResize="CanResizeWithGrip"
+                         d:DataContext="{x:Static local:DesignDashBoardPageViewModel.Instance }"
+                         d:DesignHeight="800" d:DesignWidth="1000">
     <service:BaseControlPage.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="TopTile">
+        <Style TargetType="{x:Type Button}" x:Key="TopTileButton">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Height" Value="80"/>
+        </Style>
+        <Style TargetType="{x:Type Border}" x:Key="TopTileBorder">
             <Setter Property="Width" Value="200"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Height" Value="80"/>
             <Setter Property="Padding" Value="0"/>
         </Style>
+        
     </service:BaseControlPage.Resources>
 
     <Grid Margin="10">
@@ -26,12 +33,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <WrapPanel Grid.Row="1"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Left">
+        <Grid Grid.Row="0"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
             <Button Background="#FFF1D30B" 
-                    Style="{StaticResource TopTile}"
+                    Grid.Column="0"
+                    Style="{StaticResource TopTileButton}"
                     Command="{Binding AddNewOrderCommand}">
                 <Grid Margin="0 5">
                     <Grid.ColumnDefinitions>
@@ -63,8 +76,9 @@
                 </Grid>
             </Button>
 
-            <Button Background="#FF53D30B" 
-                    Style="{StaticResource TopTile}">
+            <Border Background="#FF53D30B" 
+                    Grid.Column="1"
+                    Style="{StaticResource TopTileBorder}">
                 <Grid Margin="0 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -93,10 +107,11 @@
                           Fill="{DynamicResource FontColorBrush}"/>
 
                 </Grid>
-            </Button>
+            </Border>
 
-            <Button Background="#FF537d0B" 
-                    Style="{StaticResource TopTile}">
+            <Border Background="#FF537d0B" 
+                    Grid.Column="2"
+                    Style="{StaticResource TopTileBorder}">
                 <Grid Margin="0 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -125,10 +140,11 @@
                           Fill="{DynamicResource FontColorBrush}"/>
 
                 </Grid>
-            </Button>
+            </Border>
 
-            <Button Background="#FF537d0B" 
-                    Style="{StaticResource TopTile}">
+            <Border Background="#FF537d0B" 
+                    Grid.Column="3"
+                    Style="{StaticResource TopTileBorder}">
                 <Grid Margin="0 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -157,8 +173,27 @@
                           Fill="{DynamicResource FontColorBrush}"/>
 
                 </Grid>
-            </Button>
+            </Border>
 
+        </Grid>
+
+        <WrapPanel Grid.Row="1">
+
+
+            <StackPanel>
+                <controls:MonthPicker/>
+                <controls:Chart Width="300"
+                            Margin="10"
+                            Height="300"
+                            LinesCount="5"
+                            Title="Zamówenia do realizcji w tygodniu"
+                            Model="{Binding OrderLineChart, UpdateSourceTrigger=PropertyChanged}"
+                            Background="{DynamicResource ButtonBackgroundColorBrush}"
+                            LineNetColor="{DynamicResource BorderColorBrush}"
+                            LineColor="{DynamicResource PrimaryColorBrush}">
+                </controls:Chart>
+            </StackPanel>
+            
         </WrapPanel>
         
     </Grid>
