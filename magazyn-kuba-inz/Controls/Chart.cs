@@ -227,17 +227,12 @@ public class Chart : Canvas
                 if (maxValX > 0)
                     xValue = (maxValX / LinesCount) * ((xPoint - yAxisStart) / intervalX);
 
-                if((100d / intervalX) < 1 )
-                {
-                    var textBlock = new TextBlock { Text = $"{xValue.ToString("n2")}", };
+                var textBlock = new TextBlock { Text = $"{xValue.ToString("n2")}", };
 
-                    Children.Add(textBlock);
-                    Canvas.SetLeft(textBlock, xPoint - 12.5);
-                    Canvas.SetTop(textBlock, line.Y2 + 5);
-                }
-
+                Children.Add(textBlock);
+                Canvas.SetLeft(textBlock, xPoint - 12.5);
+                Canvas.SetTop(textBlock, line.Y2 + 5);
                 
-
                 xPoint += intervalX;
                 xValue += intervalX;
             }

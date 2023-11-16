@@ -28,174 +28,96 @@
     </service:BaseControlPage.Resources>
 
     <Grid Margin="10">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-              VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <controls:FlexiblePanel Grid.Row="0" Margin="10">
 
-            <Button Background="#FFF1D30B" 
-                    Grid.Column="0"
-                    Style="{StaticResource TopTileButton}"
-                    Command="{Binding AddNewOrderCommand}">
-                <Grid Margin="0 5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+                <controls:TopTileControl Background="#FFF1D30B"
+                                         Height="100"
+                                         Padding="10"
+                                         Command="{Binding AddNewOrderCommand}"
+                                         TopText="Order"
+                                         Description="Nowe zamówienie"
+                                         Icon="{DynamicResource Add}"
+                                         Foreground="{DynamicResource FontColorBrush}"/>
+            </controls:FlexibleItem>
+            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+                <controls:TopTileControl Background="#FF53D30B"
+                                         Height="100"
+                                         Padding="10"
+                                         TopText="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                         Description="Produkty"
+                                         Icon="{DynamicResource ProductsGeometry}"
+                                         Foreground="{DynamicResource FontColorBrush}"/>
+            </controls:FlexibleItem>
+            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+                <controls:TopTileControl Background="#FF537d0B"
+                                         Height="100"
+                                         Padding="10"
+                                         TopText="{Binding CountOfUsers, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                         Description="Użytkownicy"
+                                         Icon="{DynamicResource UserGeometry}"
+                                         Foreground="{DynamicResource FontColorBrush}"/>
+            </controls:FlexibleItem>
+            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+                <controls:TopTileControl Background="#FF53D30B"
+                                         Height="100"
+                                         Padding="10"
+                                         TopText="{Binding CountOfOrders, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                         Description="Produkty"
+                                         Icon="{DynamicResource Order}"
+                                         Foreground="{DynamicResource FontColorBrush}"/>
+            </controls:FlexibleItem>
+        </controls:FlexiblePanel>
 
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <controls:MonthPicker/>
+        </StackPanel>
 
-                        <Label Grid.Column="0" Grid.Row="0"
-                               FontSize="24" FontWeight="Bold"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               Content="Order"/>
+        <controls:FlexiblePanel Grid.Row="2" Margin="10">
 
-                        <Label Grid.Column="0" Grid.Row="1"
-                               Content="Nowe zamówienie"/>
-                    </Grid>
+            <controls:FlexibleItem Margin="10" 
+                                   MDSize="Eight" />
+            <controls:FlexibleItem Margin="10" 
+                                   MDSize="Four" >
+                <controls:Chart Margin="10"
+                                LinesCount="10"
+                                Height="300"
+                                Title="Zamówenia do realizcji w tygodniu"
+                                Model="{Binding OrderLineChart, UpdateSourceTrigger=PropertyChanged}"
+                                Background="{DynamicResource ButtonBackgroundColorBrush}"
+                                LineNetColor="{DynamicResource BorderColorBrush}"
+                                LineColor="{DynamicResource PrimaryColorBrush}"/>
+            </controls:FlexibleItem>
 
-                    <Path Grid.Column="1"
-                          Data="{DynamicResource Add}"
-                          Stretch="Uniform"
-                          Fill="{DynamicResource FontColorBrush}"/>
+        </controls:FlexiblePanel>
 
-                </Grid>
-            </Button>
+        
+        <!--<controls:FlexiblePanel Grid.Row="2">
+            <controls:FlexibleItem />
 
-            <Border Background="#FF53D30B" 
-                    Grid.Column="1"
-                    Style="{StaticResource TopTileBorder}">
-                <Grid Margin="0 5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+        </controls:FlexiblePanel>-->
+        <!--<WrapPanel Grid.Row="2">
+            
+        </WrapPanel>-->
+        
+    </Grid>
+    
+</service:BaseControlPage>
 
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Column="0" Grid.Row="0"
-                               FontSize="24" FontWeight="Bold"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               Content="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
-
-                        <Label Grid.Column="0" Grid.Row="1"
-                               Content="Produkty"/>
-                    </Grid>
-
-                    <Path Grid.Column="1"
-                          Data="{DynamicResource ProductsGeometry}"
-                          Stretch="Uniform"
-                          Fill="{DynamicResource FontColorBrush}"/>
-
-                </Grid>
-            </Border>
-
-            <Border Background="#FF537d0B" 
-                    Grid.Column="2"
-                    Style="{StaticResource TopTileBorder}">
-                <Grid Margin="0 5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Column="0" Grid.Row="0"
-                               FontSize="24" FontWeight="Bold"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               Content="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
-
-                        <Label Grid.Column="0" Grid.Row="1"
-                               Content="Użytkownicy"/>
-                    </Grid>
-
-                    <Path Grid.Column="1"
-                          Data="{DynamicResource UserGeometry}"
-                          Stretch="Uniform"
-                          Fill="{DynamicResource FontColorBrush}"/>
-
-                </Grid>
-            </Border>
-
-            <Border Background="#FF537d0B" 
-                    Grid.Column="3"
-                    Style="{StaticResource TopTileBorder}">
-                <Grid Margin="0 5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Column="0" Grid.Row="0"
-                               FontSize="24" FontWeight="Bold"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Left"
-                               Content="{Binding CountOfOrders, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"/>
-
-                        <Label Grid.Column="0" Grid.Row="1"
-                               Content="Zamówienia"/>
-                    </Grid>
-
-                    <Path Grid.Column="1"
-                          Data="{DynamicResource Order}"
-                          Stretch="Uniform"
-                          Fill="{DynamicResource FontColorBrush}"/>
-
-                </Grid>
-            </Border>
-
-        </Grid>
-
-        <WrapPanel Grid.Row="1">
-
-
-            <StackPanel>
-                <controls:MonthPicker/>
-                <controls:Chart Width="300"
+<!--<controls:Chart Width="300"
                             Margin="10"
                             Height="300"
-                            LinesCount="5"
+                            LinesCount="10"
                             Title="Zamówenia do realizcji w tygodniu"
                             Model="{Binding OrderLineChart, UpdateSourceTrigger=PropertyChanged}"
                             Background="{DynamicResource ButtonBackgroundColorBrush}"
                             LineNetColor="{DynamicResource BorderColorBrush}"
                             LineColor="{DynamicResource PrimaryColorBrush}">
-                </controls:Chart>
-            </StackPanel>
-            
-        </WrapPanel>
-        
-    </Grid>
-    
-</service:BaseControlPage>
+</controls:Chart>-->

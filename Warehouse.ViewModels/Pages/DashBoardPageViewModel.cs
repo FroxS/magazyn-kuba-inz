@@ -1,6 +1,5 @@
 ﻿using Warehouse.Core.Helpers;
 using Warehouse.ViewModel.Service;
-using System.Windows;
 using System.Windows.Input;
 using Warehouse.Core.Interface;
 
