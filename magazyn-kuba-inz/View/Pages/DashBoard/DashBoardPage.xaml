@@ -28,18 +28,16 @@
     </service:BaseControlPage.Resources>
 
     <Grid Margin="10">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <controls:FlexiblePanel Grid.Row="0" Margin="10">
-
-            <controls:FlexibleItem SMSize="Three"  Margin="10 5" >
+        <controls:FlexiblePanel Grid.Row="0" Margin="10" ItemHeight="100" >
+            
+            <controls:FlexibleItem XLSize="Three" LGSize="Three" MDSize="Half" Margin="10 5" >
                 <controls:TopTileControl Background="#FFF1D30B"
-                                         Height="100"
                                          Padding="10"
                                          Command="{Binding AddNewOrderCommand}"
                                          TopText="Order"
@@ -47,27 +45,24 @@
                                          Icon="{DynamicResource Add}"
                                          Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
-            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+            <controls:FlexibleItem XLSize="Three" LGSize="Three" MDSize="Half" Margin="10 5">
                 <controls:TopTileControl Background="#FF53D30B"
-                                         Height="100"
-                                         Padding="10"
-                                         TopText="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
-                                         Description="Produkty"
-                                         Icon="{DynamicResource ProductsGeometry}"
-                                         Foreground="{DynamicResource FontColorBrush}"/>
+                                     Padding="10"
+                                     TopText="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                     Description="Produkty"
+                                     Icon="{DynamicResource ProductsGeometry}"
+                                     Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
-            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+            <controls:FlexibleItem XLSize="Three" LGSize="Three" MDSize="Half"  Margin="10 5" >
                 <controls:TopTileControl Background="#FF537d0B"
-                                         Height="100"
                                          Padding="10"
                                          TopText="{Binding CountOfUsers, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
                                          Description="Użytkownicy"
                                          Icon="{DynamicResource UserGeometry}"
                                          Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
-            <controls:FlexibleItem MDSize="Three" Margin="10 5" >
+            <controls:FlexibleItem XLSize="Three" LGSize="Three" MDSize="Half"  Margin="10 5"  >
                 <controls:TopTileControl Background="#FF53D30B"
-                                         Height="100"
                                          Padding="10"
                                          TopText="{Binding CountOfOrders, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
                                          Description="Produkty"
@@ -83,13 +78,13 @@
         <controls:FlexiblePanel Grid.Row="2" Margin="10">
 
             <controls:FlexibleItem Margin="10" 
-                                   MDSize="Eight" />
+                                   LGSize="Eight" />
             <controls:FlexibleItem Margin="10" 
-                                   MDSize="Four" >
+                                   LGSize="Four" >
                 <controls:Chart Margin="10"
                                 LinesCount="10"
                                 Height="300"
-                                Title="Zamówenia do realizcji w tygodniu"
+                                Title="Zamówenia do realizcji w miesiącu"
                                 Model="{Binding OrderLineChart, UpdateSourceTrigger=PropertyChanged}"
                                 Background="{DynamicResource ButtonBackgroundColorBrush}"
                                 LineNetColor="{DynamicResource BorderColorBrush}"
@@ -99,13 +94,13 @@
         </controls:FlexiblePanel>
 
         
-        <!--<controls:FlexiblePanel Grid.Row="2">
+        <controls:FlexiblePanel Grid.Row="2">
             <controls:FlexibleItem />
 
-        </controls:FlexiblePanel>-->
-        <!--<WrapPanel Grid.Row="2">
+        </controls:FlexiblePanel>
+        <WrapPanel Grid.Row="2">
             
-        </WrapPanel>-->
+        </WrapPanel>
         
     </Grid>
     

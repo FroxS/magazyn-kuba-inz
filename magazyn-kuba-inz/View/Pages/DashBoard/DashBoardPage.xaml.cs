@@ -1,4 +1,5 @@
-﻿using Warehouse.Core.Interface;
+﻿using Warehouse.Controls;
+using Warehouse.Core.Interface;
 using Warehouse.View.Service;
 using Warehouse.ViewModel.Pages;
 
@@ -17,7 +18,4 @@ public partial class DashBoardPage : BaseControlPage<DashBoardPageViewModel>
     {
         InitializeComponent();
     }
-
-
-
 }

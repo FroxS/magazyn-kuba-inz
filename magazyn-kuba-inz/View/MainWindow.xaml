@@ -111,7 +111,6 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             BorderBrush="{DynamicResource BorderColorBrush}">
- 
                                     <TabControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type tab:IBasePageViewModel}">
                                             <Grid>
@@ -127,19 +126,17 @@
                                                                
                                                            Foreground="{DynamicResource FontColorBrush}">X</Hyperlink>
                                                 </TextBlock>
-                                                
-
                                             </Grid>
-                                            
-                                            
                                         </DataTemplate>
                                     </TabControl.ItemTemplate>
                                     <TabControl.ContentTemplate>
                                         <DataTemplate DataType="{x:Type interface:IBasePageViewModel}">
+                                            
                                             <controls:PageHost Grid.Row="1"
-                                                               IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
-                                                               CurrentPage="{Binding }">
+                                                                IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
+                                                                CurrentPage="{Binding }">
                                             </controls:PageHost>
+                                            
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>
                                 </TabControl>

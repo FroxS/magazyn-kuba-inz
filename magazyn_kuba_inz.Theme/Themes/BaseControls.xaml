@@ -311,7 +311,7 @@
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
         </Grid>
     </ControlTemplate>
-    
+
     <Style x:Key="CalendarItemStyle" TargetType="{x:Type CalendarItem}">
         <Setter Property="Margin" Value="0,3,0,3" />
         <Setter Property="Template">

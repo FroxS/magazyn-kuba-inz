@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics;
 using Warehouse.Models.Page;
 using Warehouse.Service.Interface;
-using Warehouse.ViewModel.Service;
-using Warehouse.ViewModel.Pages;
 using Warehouse.Core.Interface;
 
 namespace Warehouse.Conventers;
@@ -47,42 +45,11 @@ public static class AplicationPageConventer
                 return new OrdersPage(pagevm);
             case EApplicationPage.WayToOrder:
                 return new WayToOrderPage(pagevm);
+            case EApplicationPage.EditAddOrder:
+                return new OrderEditAddPage(pagevm);
             default:
                 Debugger.Break();
                 return null;
         }
-    }
-
-    /// <summary>
-    /// Takes a <see cref="BasePageViewModel"/>
-    /// </summary>
-    /// <param name="page"></param>
-    /// <returns></returns>
-    public static EApplicationPage GetPageFromViewModel(this BasePageViewModel vm)
-    {
-
-        if (vm is DashBoardPageViewModel)
-            return EApplicationPage.DashBoard;
-        if (vm is ProductsPageViewModel)
-            return EApplicationPage.Products;
-        if (vm is SuppliersPageViewModel)
-            return EApplicationPage.Suppliers;
-        if (vm is ProductStatusesPageViewModel)
-            return EApplicationPage.ProductGroups;
-        if (vm is SettingsPageViewModel)
-            return EApplicationPage.Settings;
-        if (vm is ProductStatusesPageViewModel)
-            return EApplicationPage.ProductStatuses;
-        if (vm is ItemStatesPageViewModel)
-            return EApplicationPage.ItemStates;
-        if (vm is WareHousePageViewModel)
-            return EApplicationPage.WareHouseItems;
-        if (vm is StorageUnitsPageViewModel)
-            return EApplicationPage.StorageUnits;
-        if (vm is RacksPageViewModel)
-            return EApplicationPage.Racks;
-
-        Debugger.Break();
-        return default(EApplicationPage);
     }
 }

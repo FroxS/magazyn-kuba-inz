@@ -93,14 +93,14 @@ namespace Warehouse.Controls
 
         private void TopTileControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Command.CanExecute(CommandParameter)){
+            if (Command != null && Command.CanExecute(CommandParameter)){
                 Command.Execute(CommandParameter);
             }
         }
 
         private static void CommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is TopTileControl topTile)
+            if(d is TopTileControl topTile && topTile.Command != null)
             {
                 topTile.IsEnabled = topTile.Command.CanExecute(topTile.CommandParameter);
                 topTile.Command.CanExecuteChanged += Command_CanExecuteChanged;
@@ -109,7 +109,7 @@ namespace Warehouse.Controls
 
         private static void Command_CanExecuteChanged(object? sender, EventArgs e)
         {
-            if (sender is TopTileControl topTile)
+            if (sender is TopTileControl topTile && topTile.Command != null)
             {
 
                 

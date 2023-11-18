@@ -49,6 +49,7 @@
                         <controls:ButtonPath IconPath="{StaticResource Reserved}"
                                          Foreground="{DynamicResource WrongColorBrush}"
                                          Command="{Binding ReservCommand}"
+                                             SnapsToDevicePixels="True"
                                          Width="50"
                                          ToolTip="{x:Static res:Resources.ReserveProducts}"
                                          IsEnabled="{Binding Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
@@ -60,6 +61,10 @@
                                          ToolTip="{x:Static res:Resources.SetAsDone}"
                                          Width="80"
                                          Visibility="{Binding Reserved,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <controls:ButtonPath IconPath="{StaticResource Edit}"
+                                             Command="{Binding EditCommand}"
+                                             ToolTip="{x:Static res:Resources.Edit}"/>
                     </StackPanel>
 
                 </Grid>

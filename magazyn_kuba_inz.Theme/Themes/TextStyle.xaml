@@ -22,6 +22,11 @@
 
     <Style TargetType="{x:Type Label}" >
         <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource BorderColorBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type controls:TextBoxImage}" >

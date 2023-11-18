@@ -8,11 +8,12 @@
              xmlns:service="clr-namespace:Warehouse.View.Service"
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
              xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance models:RackObject}"
-             xmlns:controls="clr-namespace:Warehouse.Controls"
              d:DesignHeight="450" d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -26,161 +27,179 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=Nazwa}"
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                FontSize="14"
+               Grid.Row="0"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"/>
 
-        <Grid Grid.IsSharedSizeScope="True">
+        <Grid Grid.IsSharedSizeScope="True"
+              Grid.Row="1"
+              Margin="10"
+              VerticalAlignment="Top"
+              MinWidth="250">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                
             </Grid.RowDefinitions>
-
-            <Grid.Resources>
-                <Style TargetType="{x:Type Label}">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-
-                <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="100"/>
-                </Style>
-                <Style TargetType="{x:Type ComboBox}">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="100"/>
-                </Style>
-            </Grid.Resources>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Pozycja" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Position}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <StackPanel Grid.Column="1"
-                            Orientation="Horizontal">
-                    <Label Content="x:"/>
-                    <TextBox Text="{Binding X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=0}"
-                                                 Width="50"/>
-                    <Label Content="y:"/>
-                    <TextBox Text="{Binding Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=0}"
-                                                 Width="50"/>
-                </StackPanel>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:TextBoxImage Text="{Binding X, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                            Grid.Column="0"
+                                            Style="{StaticResource FormTextBoxImage}"
+                                            Margin="10 10 2 10"
+                                            Tag="X"/>
+                    <controls:TextBoxImage Text="{Binding Y, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                            Grid.Column="1"
+                                            Margin="2 10 10 10"
+                                            Style="{StaticResource FormTextBoxImage}"
+                                            Tag="Y"/>
+                </Grid>
+
+
             </Grid>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Kolor" Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Color}" 
+                        Style="{DynamicResource FormLabel}"/>
 
                 <controls:ColorPicker SelectedColor="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                       Grid.Column="1"
+                                      Margin="5 0"
+                                      Height="40"
                                       VerticalAlignment="Center"
-                                      HorizontalAlignment="Left"/>
+                                      HorizontalAlignment="Stretch"/>
+
 
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Szerokość" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Width}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <TextBox Text="{Binding Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1"/>
-
+                <controls:TextBoxImage Text="{Binding Width, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Width}"/>
             </Grid>
 
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Wysokość" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Height}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <TextBox Text="{Binding Heigth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1"/>
-
+                <controls:TextBoxImage Text="{Binding Heigth, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Height}"/>
             </Grid>
 
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Piętra" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Flors}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <TextBox Text="{Binding Flors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1"/>
-
+                <controls:TextBoxImage Text="{Binding Flors, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Flors}"/>
             </Grid>
 
             <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Korytaż" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Corridor}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <TextBox Text="{Binding Corridor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1"/>
-
+                <controls:TextBoxImage Text="{Binding Corridor, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Corridor}"/>
             </Grid>
 
             <Grid Grid.Row="6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Rząd" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Row}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <TextBox Text="{Binding Row, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1"/>
-
+                <controls:TextBoxImage Text="{Binding Row, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Row}"/>
             </Grid>
 
             <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Kierunek" 
-                       Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Direction}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <ComboBox ItemsSource="{Binding Source={StaticResource DirTypes}, Converter={conv:SortListConventer}}"
-                          SelectedItem="{Binding Direction, UpdateSourceTrigger=PropertyChanged}"
-                          Grid.Column="1"/>
-
+                <ComboBox Style="{StaticResource FormComboBox}"
+                          SelectedItem="{Binding Direction, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                          ItemsSource="{Binding Source={StaticResource DirTypes}, Converter={conv:SortListConventer}}"
+                          Grid.Column="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={conv:EnumToTextConventer}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
 
             <Grid Grid.Row="8">
@@ -190,16 +209,18 @@
                           CanUserDeleteRows="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Piętro" 
+                        <DataGridTextColumn Header="{x:Static res:Resources.Flor}" 
                                             Width="Auto"
                                             Binding="{Binding Package.Flor}"/>
 
-                        <DataGridTextColumn Header="Nazwa" 
+                        <DataGridTextColumn Header="{x:Static res:Resources.Name}" 
                                             Binding="{Binding Product.Name}"
                                             Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
+
         </Grid>
-    </StackPanel>
+
+    </Grid>
 </UserControl>

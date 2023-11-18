@@ -7,10 +7,32 @@ namespace Warehouse.Controls
 {
     public class FlexiblePanel : Panel, IAddChild
     {
-        private const double _xs = 576;
-        private const double _sm = 720;
-        private const double _md = 960;
-        private const double _lg = 1140;
+        #region Const size value
+
+        private const double _sm = 576;
+        private const double _md = 720;
+        private const double _lg = 960;
+        private const double _xl = 1140;
+
+        #endregion
+
+        #region Properties
+
+        public double ItemHeight
+        {
+            get { return (double)GetValue(ItemHeightProperty); }
+            set { SetValue(ItemHeightProperty, value); }
+        }
+
+        #endregion
+
+        #region Dependency 
+
+        public static readonly DependencyProperty ItemHeightProperty =
+            DependencyProperty.Register(nameof(ItemHeight), typeof(double), typeof(FlexiblePanel), new PropertyMetadata(-1d));
+
+        #endregion
+
 
         #region Constructors
 
@@ -26,79 +48,134 @@ namespace Warehouse.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            Size panelDesiredSize = new Size();
+            double x = 0;
+            double y = 0;
+            double maxHeight = 0;
+            double finalSizeWidth = 0;
 
-            // In our example, we just have one child.
-            // Report that our panel requires just the size of its only child.
             foreach (UIElement child in InternalChildren)
             {
-                child.Measure(availableSize);
-                panelDesiredSize = new Size(
-                    Math.Max(panelDesiredSize.Width, child.DesiredSize.Width),
-                    Math.Max(panelDesiredSize.Height, child.DesiredSize.Height)
-                );
+                double childAvailableWidth = double.IsInfinity(availableSize.Width) ? double.PositiveInfinity : availableSize.Width;
+                double childAvailableHeight = double.IsInfinity(availableSize.Height) ? double.PositiveInfinity : availableSize.Height;
+
+                child.Measure(new Size(childAvailableWidth, childAvailableHeight));
+
+                Size siz = Getsize(child, availableSize);
+
+                if (x + siz.Width > availableSize.Width)
+                {
+                    x = 0;
+                    y += maxHeight;
+                    maxHeight = 0;
+                }
+
+                double childHeight = ItemHeight > 0 ? ItemHeight : child.DesiredSize.Height;
+
+                x += siz.Width;
+                maxHeight = Math.Max(maxHeight, childHeight);
+                finalSizeWidth = Math.Max(finalSizeWidth, x);
             }
 
-            return panelDesiredSize;
+            double finalSizeHeight = y + maxHeight;
+
+            finalSizeWidth = double.IsInfinity(availableSize.Width) ? finalSizeWidth : Math.Min(finalSizeWidth, availableSize.Width);
+            finalSizeHeight = double.IsInfinity(availableSize.Height) ? finalSizeHeight : Math.Min(finalSizeHeight, availableSize.Height);
+
+            return new Size(finalSizeWidth, finalSizeHeight);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
             double x = 0;
             double y = 0;
-            double maxWidth = 0;
+            double maxHeight = 0;
 
+            double finalSizeHeight = 0;
+            double finalSizeWidth = 0;
             foreach (UIElement child in InternalChildren)
             {
                 Size siz = Getsize(child, finalSize);
                 if (x + siz.Width > finalSize.Width)
                 {
-                    // If adding the current child would exceed the available width,
-                    // start a new row and reset x to 0.
+                    finalSizeHeight += maxHeight;
                     x = 0;
-                    y += maxWidth; // move y down by the height of the tallest element in the current row
-                    maxWidth = 0; // reset the maximum width for the new row
+                    y += maxHeight;
+                    maxHeight = 0;
                 }
-                child.Arrange(new Rect(new Point(x, y), siz));
+
+                double childHeight = ItemHeight > 0 ? ItemHeight : child.DesiredSize.Height;
+
+                child.Arrange(new Rect(new Point(x, y), new Size(siz.Width, childHeight)));
                 x += siz.Width;
-                maxWidth = Math.Max(maxWidth, siz.Height);
+                maxHeight = Math.Max(maxHeight, childHeight);
+                finalSizeWidth = Math.Max(finalSizeWidth, x);
             }
+
+            finalSizeHeight += maxHeight;
 
             return finalSize;
         }
 
         protected Size Getsize(UIElement child, Size finalSize)
         {
+            Func<int,Size> result = (size) =>
+            {
+                return new Size((size * finalSize.Width) / 12, child.DesiredSize.Height);
+            };
             int size = 12;
 
-            if(child is FlexibleItem item)
+            if (child is FlexibleItem item)
             {
-                if (finalSize.Width <= _xs)
-                    size = FlexibleItem.GetSize(item, UnitWidthType.XS);
-                else if (finalSize.Width <= _sm)
-                    size = FlexibleItem.GetSize(item, UnitWidthType.SM);
-                else if (finalSize.Width <= _md)
-                    size = FlexibleItem.GetSize(item, UnitWidthType.MD);
-                else if (finalSize.Width <= _lg)
-                    size = FlexibleItem.GetSize(item, UnitWidthType.LG);
-            }
-            finalSize = new Size((size * finalSize.Width) / 12, child.DesiredSize.Height > finalSize.Height ? child.DesiredSize.Height : finalSize.Height);
+                if(finalSize.Width > _xl)
+                {
+                    for (UnitWidthType i = UnitWidthType.XL; i >= UnitWidthType.SM; i--)
+                    {
+                        size = FlexibleItem.GetSize(item, i);
+                        if(size != 0) 
+                            return result.Invoke(size);
+                    }
+                }
 
-            return finalSize;
+                if (finalSize.Width > _lg)
+                {
+                    for (UnitWidthType i = UnitWidthType.LG; i >= UnitWidthType.SM; i--)
+                    {
+                        size = FlexibleItem.GetSize(item, i);
+                        if (size != 0)
+                            return result.Invoke(size);
+                    }
+                }
+
+                if (finalSize.Width > _md)
+                {
+                    for (UnitWidthType i = UnitWidthType.MD; i >= UnitWidthType.SM; i--)
+                    {
+                        size = FlexibleItem.GetSize(item, i);
+                        if (size != 0)
+                            return result.Invoke(size);
+                    }
+                }
+
+                if (finalSize.Width > _sm)
+                {
+                    for (UnitWidthType i = UnitWidthType.SM; i >= UnitWidthType.SM; i--)
+                    {
+                        size = FlexibleItem.GetSize(item, i);
+                        if (size != 0)
+                            return result.Invoke(size);
+                    }
+                }
+                
+            }
+            return new Size((size * finalSize.Width) / 12, child.DesiredSize.Height);
 
         }
 
     }
 
-    public class FlexibleItem : StackPanel
+    public class FlexibleItem : Decorator, IAddChild
     {
         #region Properties
-
-        public FlexUnitType XSSize
-        {
-            get { return (FlexUnitType)GetValue(XSSizeProperty); }
-            set { SetValue(XSSizeProperty, value); }
-        }
 
         public FlexUnitType SMSize
         {
@@ -118,22 +195,36 @@ namespace Warehouse.Controls
             set { SetValue(LGSizeProperty, value); }
         }
 
+        public FlexUnitType XLSize
+        {
+            get { return (FlexUnitType)GetValue(XLSizeProperty); }
+            set { SetValue(XLSizeProperty, value); }
+        }
+
+        public UnitWidthType SizeType
+        {
+            get { return (UnitWidthType)GetValue(SizeTypeProperty); }
+            set { SetValue(SizeTypeProperty, value); }
+        }
+
         #endregion
 
         #region Dependency 
+
+        public static readonly DependencyProperty SMSizeProperty =
+            DependencyProperty.Register(nameof(SMSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
 
         public static readonly DependencyProperty MDSizeProperty =
             DependencyProperty.Register(nameof(MDSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
 
         public static readonly DependencyProperty LGSizeProperty =
-            DependencyProperty.Register(nameof(LGSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
+           DependencyProperty.Register(nameof(LGSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
 
-        public static readonly DependencyProperty XSSizeProperty =
-            DependencyProperty.Register(nameof(XSSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
+        public static readonly DependencyProperty XLSizeProperty =
+            DependencyProperty.Register(nameof(XLSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
 
-        public static readonly DependencyProperty SMSizeProperty =
-            DependencyProperty.Register(nameof(SMSize), typeof(FlexUnitType), typeof(FlexibleItem), new PropertyMetadata(FlexUnitType.All, propSizeChange));
-
+        public static readonly DependencyProperty SizeTypeProperty =
+            DependencyProperty.Register(nameof(SizeType), typeof(UnitWidthType), typeof(FlexibleItem), new PropertyMetadata(UnitWidthType.XL));
 
         #endregion
 
@@ -149,6 +240,25 @@ namespace Warehouse.Controls
 
         #endregion
 
+        protected override Size MeasureOverride(Size constraint)
+        {
+            // Ustaw maksymalną wysokość dziecka na wysokość kontrolki
+            
+
+            // Kontynuuj standardową procedurę pomiaru
+            Size baseSize = base.MeasureOverride(constraint);
+
+            if (Child is FrameworkElement childElement && Parent is FlexiblePanel fp)
+            {
+                if(fp.ItemHeight > 0)
+                    childElement.MaxHeight = fp.ItemHeight;
+            }
+
+            // ... (dodatkowy kod pomiaru, jeśli jest wymagany)
+
+            return baseSize;
+        }
+
         private static void propSizeChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is FlexibleItem item)
@@ -162,12 +272,10 @@ namespace Warehouse.Controls
 
         public static int GetSize(FlexibleItem element, UnitWidthType widthType  )
         {
-            FlexUnitType type = FlexUnitType.All;
+            element.SizeType = widthType;
+            FlexUnitType type = FlexUnitType.Unset;
             switch (widthType)
             {
-                case UnitWidthType.XS:
-                    type = (FlexUnitType)element.GetValue(XSSizeProperty);
-                    break;
                 case UnitWidthType.SM:
                     type = (FlexUnitType)element.GetValue(SMSizeProperty);
                     break;
@@ -177,21 +285,21 @@ namespace Warehouse.Controls
                 case UnitWidthType.LG:
                     type = (FlexUnitType)element.GetValue(LGSizeProperty);
                     break;
+                case UnitWidthType.XL:
+                    type = (FlexUnitType)element.GetValue(XLSizeProperty);
+                    break;
             }
-
             return (int)type;
         }
-
     }
 
     public enum UnitWidthType
     {
-        XS,
-        SM,
-        MD,
-        LG
+        SM = 0,
+        MD = 1,
+        LG = 2,
+        XL = 3,
     }
-
 
     public enum FlexUnitType
     {

@@ -15,7 +15,8 @@
                     <conv:MessageTypeToColorConventer x:Key="MessageTypeToColor"/>
                     <conv:ArrayByteToImageConventer x:Key="ArrayByteToImage"/>
                 </ResourceDictionary>
-                <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/DarkTheme.xaml"/>
+                <!-- <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/LightTheme.xaml"/>  -->
+                 <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/DarkTheme.xaml"/>   
                 <ResourceDictionary Source="View/WindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -123,11 +123,23 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="CompletionDate" xml:space="preserve">
     <value>CompletionDate</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
+  </data>
+  <data name="Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="Corridor" xml:space="preserve">
+    <value>Corridor</value>
   </data>
   <data name="Creator" xml:space="preserve">
     <value>Creator</value>
@@ -141,14 +153,38 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Elements" xml:space="preserve">
+    <value>Elements</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="ErrorWhileSaving" xml:space="preserve">
+    <value>Error while saving</value>
+  </data>
+  <data name="FailedToRemove" xml:space="preserve">
+    <value>Failed to remove</value>
+  </data>
+  <data name="Flor" xml:space="preserve">
+    <value>Flor</value>
+  </data>
+  <data name="Flors" xml:space="preserve">
+    <value>Flors</value>
   </data>
   <data name="GenerateMap" xml:space="preserve">
     <value>Generate map</value>
   </data>
   <data name="Group" xml:space="preserve">
     <value>Group</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
@@ -186,8 +222,17 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Orders</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
@@ -198,14 +243,23 @@
   <data name="ProductStates" xml:space="preserve">
     <value>Product states</value>
   </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
   <data name="Racks" xml:space="preserve">
     <value>Racks</value>
+  </data>
+  <data name="RealizationDate" xml:space="preserve">
+    <value>Realization date</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
   <data name="ReserveProducts" xml:space="preserve">
     <value>Reserve products</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Row</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -228,6 +282,9 @@
   <data name="StorageUnits" xml:space="preserve">
     <value>Storage units</value>
   </data>
+  <data name="SuccessfulRemoved" xml:space="preserve">
+    <value>Successful removed</value>
+  </data>
   <data name="Supplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
@@ -237,7 +294,13 @@
   <data name="WareHouse" xml:space="preserve">
     <value>Ware house</value>
   </data>
+  <data name="WarehouseItem" xml:space="preserve">
+    <value>Warehouse item</value>
+  </data>
   <data name="WareHouseItems" xml:space="preserve">
     <value>WareHouse items</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
   </data>
 </root>

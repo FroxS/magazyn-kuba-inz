@@ -130,6 +130,8 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
     public ICommand SetAsPreapredCommand { get; protected set; }
 
+    public ICommand EditCommand { get; protected set; }
+
     #endregion
 
     #region Constructors
@@ -147,12 +149,26 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         GenerateWayCommand = new RelayCommand(GenerateWay, () => Enabled);
         ReservCommand = new RelayCommand(Reserv, () => Enabled && !Reserved && !Prepared);
         SetAsPreapredCommand = new RelayCommand(SetAsPreapred, () => Enabled && !Prepared);
+        EditCommand = new RelayCommand(Edit,() => Enabled);
         LoadProducts();
     }
 
     #endregion
 
     #region Protected methods
+
+    private void Edit()
+    {
+        try
+        {
+            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(_app, _entity);
+            _app.Navigation.AddPage(orderPage);
+        }
+        catch(Exception ex)
+        {
+            _app.CatchExeption(ex); 
+        }
+    }
 
     private bool FilterCollection(object value)
     {
@@ -166,6 +182,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         else
             return true;
     }
+
     protected override string[] GetpropsNameToFireOnSave()
     {
         return new string[] {

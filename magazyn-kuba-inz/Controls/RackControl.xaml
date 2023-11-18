@@ -48,6 +48,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="2"
+                                                VerticalAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
                                                 Background="{Binding BoxBrush, RelativeSource={RelativeSource AncestorType=local:RackControl}}"
                                                 MouseDown="Box_MouseDown"/>
                                     </DataTemplate>

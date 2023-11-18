@@ -67,9 +67,7 @@ public partial class App : System.Windows.Application
     private void PrepareApplication(IServiceCollection services)
     {
         services.AddSingleton<System.Windows.Application>((o) => { return this; });
-        services.AddSingleton<INavigation, NavigationViewModel>((o) => {
-            return new NavigationViewModel() { AppHost = AppHost };
-        });
+        services.AddSingleton<INavigation, NavigationViewModel>();
         services.AddSingleton<IApp, WareHouseApp>();
         services.AddSingleton<IInnerDialogService,InnerDialogService>();
     }

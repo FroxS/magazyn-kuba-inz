@@ -19,7 +19,7 @@ public class WareHouseApp : ObservableObject, IApp
 {
     #region Private Properties
 
-    private readonly INavigation nav;
+    private INavigation nav => GetService<INavigation>();
 
     private readonly System.Windows.Application app;
 
@@ -61,9 +61,8 @@ public class WareHouseApp : ObservableObject, IApp
 
     #region Constructors
 
-    public WareHouseApp(INavigation nav, System.Windows.Application app, IServiceProvider services)
+    public WareHouseApp(System.Windows.Application app, IServiceProvider services)
     {
-        this.nav = nav;
         this.app = app;
         _services = services;
         _databaseFactory = services.GetRequiredService<IDbContextFactory<WarehouseDbContext>>();

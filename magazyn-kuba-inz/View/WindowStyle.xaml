@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Grid MouseDown="Window_MouseDown" Background="{StaticResource SecondBackgroundColorBrush}">
+                    <Grid Background="{DynamicResource SecondBackgroundColorBrush}">
                         <Border BorderThickness="1">
                             <!--Title header-->
                             <Grid>
@@ -19,7 +19,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0" >
+                                <Grid Grid.Row="0" MouseDown="Window_MouseDown" >
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>

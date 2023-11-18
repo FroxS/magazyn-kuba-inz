@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Warehouse.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Frame x:Name="NewPage" NavigationUIVisibility="Hidden"/>
-    </Grid>
+    <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" >
+            <Frame x:Name="NewPage" NavigationUIVisibility="Hidden"/>
+        </Grid>
+   
 </UserControl>

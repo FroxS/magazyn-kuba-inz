@@ -6,90 +6,104 @@
              xmlns:local="clr-namespace:Warehouse.View.Pages"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              mc:Ignorable="d" 
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance models:WayPointObject}"
-             xmlns:controls="clr-namespace:Warehouse.Controls"
              d:DesignHeight="450" d:DesignWidth="400">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Punkt"
-                   FontSize="14"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
-            <Label Content="(S)"
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Visibility="{Binding IsStartPoint, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Punkt"
+                       FontSize="14"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+                <Label Content="(S)"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Visibility="{Binding IsStartPoint, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+            </StackPanel>
         </StackPanel>
 
-        <Grid Grid.IsSharedSizeScope="True">
+        <Grid Grid.IsSharedSizeScope="True"
+              Grid.Row="1"
+              Margin="10"
+              VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
-            <Grid.Resources>
-                <Style TargetType="{x:Type Label}">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-
-                <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="100"/>
-                </Style>
-            </Grid.Resources>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Pozycja" Grid.Column="0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Position}" 
+                        Style="{DynamicResource FormLabel}"/>
 
-                <StackPanel Grid.Column="1"
-                            Orientation="Horizontal">
-                    <Label Content="x:"/>
-                    <TextBox Text="{Binding X, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=0}"
-                             Width="50"/>
-                    <Label Content="y:"/>
-                    <TextBox Text="{Binding Y, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=0}"
-                             Width="50"/>
-                </StackPanel>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:TextBoxImage Text="{Binding X, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                            Grid.Column="0"
+                                            Style="{StaticResource FormTextBoxImage}"
+                                            Margin="0 5 2 5"
+                                            Tag="X"/>
+                    <controls:TextBoxImage Text="{Binding Y, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                            Grid.Column="1"
+                                            Margin="2 5 0 5"
+                                            Style="{StaticResource FormTextBoxImage}"
+                                            Tag="Y"/>
+                </Grid>
+
+
             </Grid>
 
+            <Grid Grid.Row="1" Visibility="{Binding Connections, Converter={conv:NullVisibleConventer}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="1">
-                <Label Content="Połączenia"
-                       FontWeight="Bold"
-                       Margin="5,0,0,0"/>
+                <Label Grid.Column="0" Content="{x:Static res:Resources.Connections}" Style="{DynamicResource FormLabel}"
+                       VerticalAlignment="Top"/>
+
                 <ListBox HorizontalContentAlignment="Stretch"
-                         ItemsSource="{Binding Connections, UpdateSourceTrigger=PropertyChanged}"
-                         BorderThickness="0">
+                         Grid.Column="1"
+                         ItemsSource="{Binding Connections, UpdateSourceTrigger=PropertyChanged}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="x:"/>
-                                <TextBox Text="{Binding X, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
-                                         Width="50"
-                                         IsReadOnly="True"/>
-                                <Label Content="y:"/>
-                                <TextBox Text="{Binding Y, UpdateSourceTrigger=PropertyChanged,FallbackValue=0}"
-                                         Width="50"
-                                         IsReadOnly="True"/>
+                            <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                                <Label Content="x:"
+                                    VerticalAlignment="Center"/>
+                                <Label Content="{Binding X, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                    VerticalAlignment="Center"
+                                    Width="50"/>
+                                <Label Content="y:"
+                                    VerticalAlignment="Center"/>
+                                <Label Content="{Binding Y, UpdateSourceTrigger=PropertyChanged,FallbackValue=0}"
+                                    VerticalAlignment="Center"
+                                    Width="50"/>
                             </StackPanel>
+                            
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
 
+            </Grid>
         </Grid>
-    </StackPanel>
+    </Grid>
 </UserControl>

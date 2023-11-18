@@ -27,6 +27,7 @@ public class OrdersPageViewModel :
         : base(app, service)
     {
         Page = Models.Page.EApplicationPage.Order;
+        
     }
 
     #endregion
@@ -88,6 +89,9 @@ public class OrdersPageViewModel :
         else
             SelectedItem = Items.FirstOrDefault();
         CanChangePage = true;
+
+        CanAddNew = Application.User.Type >= EUserType.Employee_Office;
+
         OnPropertyChanged(nameof(Items));
         OnPropertyChanged(nameof(SelectedItemViewModel));
         Application.IsTaskRunning = false;
@@ -107,18 +111,15 @@ public class OrdersPageViewModel :
 
             if (!flag)
             {
-                Application.ShowSilentMessage($"Nie można zapisać");
+                Application.ShowSilentMessage(Warehouse.Core.Properties.Resources.ErrorWhileSaving);
                 return;
             }
-            IsTaskRunning = true;
-            string newName = _service.GetNewOrderName();
-            var newvm = new Order() { Name = newName, RealizationDate = DateTime.Now.AddDays(10), ID_User = Application.User.ID };
-            await _service.AddAsync(newvm);
-            await _service.SaveAsync();
-            Application.GetDispather().Invoke(() => { Items.Add(newvm); });
-            SelectedItem = newvm;
-            OnPropertyChanged(nameof(SelectedItemViewModel));
-            Application.ShowSilentMessage($"Udało się dodać nową ofertę {_selectedItemViewModel.Name}", EMessageType.Ok);
+
+            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(Application, null);
+
+            Application.Navigation.AddPage(orderPage);
+
+
         }
         catch (Exception ex)
         {
@@ -133,7 +134,8 @@ public class OrdersPageViewModel :
             return;
         try
         {  
-            if (MessageBox.Show("Czy jesteś pewien ?","Pytanie", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            
+            if (MessageBox.Show($"{Warehouse.Core.Properties.Resources.AreYouSure} ?", Warehouse.Core.Properties.Resources.Question, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 IsTaskRunning = true;
                 bool flag = true;
@@ -154,13 +156,13 @@ public class OrdersPageViewModel :
                 if (!flag)
                 {
                     if(index.Count == 0)
-                        Application.ShowSilentMessage("Nie udało się usunąć", EMessageType.Warning);
+                        Application.ShowSilentMessage(Core.Properties.Resources.FailedToRemove, EMessageType.Warning);
                     else
-                        Application.ShowSilentMessage($"Nie udało się usunąć {items.Count - index.Count} z {items.Count} elementów", EMessageType.Warning);
+                        Application.ShowSilentMessage($"{Core.Properties.Resources.FailedToRemove} {items.Count - index.Count} z {items.Count} {Core.Properties.Resources.FailedToRemove.ToLower()}", EMessageType.Warning);
                 }
                 else
                 {
-                    Application.ShowSilentMessage("Udało się usunąć", EMessageType.Ok);
+                    Application.ShowSilentMessage(Core.Properties.Resources.FailedToRemove, EMessageType.Ok);
                     _selectedItemViewModel = null;
                     OnPropertyChanged(nameof(Items));
                 }

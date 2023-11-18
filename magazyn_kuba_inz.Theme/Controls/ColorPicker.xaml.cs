@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Warehouse.Controls
+namespace Warehouse.Theme.Controls
 {
     /// <summary>
     /// Interaction logic for ColorPicker.xaml
@@ -10,12 +10,12 @@ namespace Warehouse.Controls
     {
         public static readonly DependencyProperty SelectedColorProperty =
             DependencyProperty.Register(
-                nameof(SelectedColor), 
-                typeof(System.Windows.Media.Brush), 
-                typeof(ColorPicker), 
+                nameof(SelectedColor),
+                typeof(System.Windows.Media.Brush),
+                typeof(ColorPicker),
                 new UIPropertyMetadata(
                     System.Windows.Media.Brushes.White,
-                    (obj,args) => { if (args.NewValue is System.Windows.Media.Brush brush && obj is ColorPicker colorPickerControl) colorPickerControl.SetColor(brush);  },
+                    (obj, args) => { if (args.NewValue is System.Windows.Media.Brush brush && obj is ColorPicker colorPickerControl) colorPickerControl.SetColor(brush); },
                     null));
 
         public System.Windows.Media.Brush SelectedColor
@@ -53,7 +53,7 @@ namespace Warehouse.Controls
             }
         }
 
-        private void SetColor(System.Windows.Media.Brush color) 
+        private void SetColor(System.Windows.Media.Brush color)
         {
             SelectedColor = btnPicker.Background = color;
         }

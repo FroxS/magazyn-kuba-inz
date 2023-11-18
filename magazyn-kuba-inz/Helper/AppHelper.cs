@@ -18,7 +18,7 @@ public class AppHelper
     /// <summary>
     /// The aplication view model
     /// </summary>
-    public static INavigation Navigation => App.AppHost.Services.GetRequiredService<INavigation>();
+    public static INavigation Navigation => App.AppHost?.Services?.GetRequiredService<INavigation>();
 
     /// <summary>
     /// The aplication view model

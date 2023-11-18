@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:attat="clr-namespace:Warehouse.Theme.AttachedProperty"
+                    xmlns:conv="clr-namespace:Warehouse.Theme.Conventers"
+                    xmlns:controls="clr-namespace:Warehouse.Theme.Controls">
+
+
+    <Style TargetType="{x:Type MenuItem}" >
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}" >
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+</ResourceDictionary>
