@@ -18,7 +18,7 @@ internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, I
     /// <summary>
     /// Default constructor
     /// </summary>
-    public RackService(IRackRepository repository, IHallRepository hallRepository) :base(repository)
+    public RackService(IRackRepository repozitory, IHallRepository hallRepository, IApp app) : base(repozitory, app)
     {
         _hallRepository = hallRepository;
     }

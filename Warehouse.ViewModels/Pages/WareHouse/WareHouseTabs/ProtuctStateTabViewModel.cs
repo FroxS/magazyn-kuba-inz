@@ -106,7 +106,7 @@ namespace Warehouse.ViewModel.Pages
         {
             if (!CanAddNew)
                 return;
-            Product p = _app.GetDialogService().GetProduct("Wybierz Produkt");
+            Product p = _app.GetDialogService().GetProduct();
             if (p == null)
                 return;
             double? count = await _app.GetInnerDialogService().GetCountAsync();

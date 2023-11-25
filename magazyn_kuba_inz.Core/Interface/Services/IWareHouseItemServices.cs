@@ -22,6 +22,7 @@ public interface IProductService : IBaseService<Product>
     Task<Product> AddAsync(Product item);
     Task<Product> SetImage(Product product, byte[] imgBytes);
     bool ExistOnWareHouse(Guid id);
+    double GetPrice(Guid id);
 }
 
 public interface IProductStatusService : IBaseService<ProductStatus> 
@@ -71,6 +72,8 @@ public interface IOrderService : IBaseService<Order>
     bool SetAsPrepared(Order order, IWareHouseService service);
 
     bool IsPrepared(Guid id);
+    double TotalPrice(Order order);
+    double TotalPrice(Guid id);
 }
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }

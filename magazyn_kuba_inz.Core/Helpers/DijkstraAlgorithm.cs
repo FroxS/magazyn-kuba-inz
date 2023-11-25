@@ -163,12 +163,16 @@ namespace Warehouse.Core.Helpers
 
             WayPointObject lastWayPoint = null;
             int i = 1;
-            while (lastWayPoint == null)
+            if(trace.Count> 0)
             {
-                lastWayPoint = trace[trace.Count - i] as WayPointObject;
-                i++;
+                while (lastWayPoint == null)
+                {
+                    lastWayPoint = trace[trace.Count - i] as WayPointObject;
+                    i++;
+                }
             }
-            var dttohome = GetDictryTable(lastWayPoint, _hall.WayPoints);
+            
+            var dttohome = GetDictryTable(lastWayPoint ?? _p_start, _hall.WayPoints);
             var toHome = GetWayFromTableDictry(dttohome, _p_start);
             trace.AddRange(toHome);
             return new WayResult(trace);

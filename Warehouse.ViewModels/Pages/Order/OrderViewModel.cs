@@ -125,12 +125,8 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
     public ICommand AddCommand { get; protected set; }
     public ICommand DeleteCommand { get; protected set; }
-    public ICommand GenerateWayCommand { get; protected set; }
     public ICommand ReservCommand { get; protected set; }
-
     public ICommand SetAsPreapredCommand { get; protected set; }
-
-    public ICommand EditCommand { get; protected set; }
 
     #endregion
 
@@ -146,29 +142,14 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         Saved = true;
         AddCommand = new RelayCommand(AddProduct, () => Enabled && !Reserved && !Prepared);
         DeleteCommand = new RelayCommand<OrderProduct>(DeleteProduct, (o) => o != null && Enabled && !Reserved && !Prepared);
-        GenerateWayCommand = new RelayCommand(GenerateWay, () => Enabled);
         ReservCommand = new RelayCommand(Reserv, () => Enabled && !Reserved && !Prepared);
         SetAsPreapredCommand = new RelayCommand(SetAsPreapred, () => Enabled && !Prepared);
-        EditCommand = new RelayCommand(Edit,() => Enabled);
         LoadProducts();
     }
 
     #endregion
 
     #region Protected methods
-
-    private void Edit()
-    {
-        try
-        {
-            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(_app, _entity);
-            _app.Navigation.AddPage(orderPage);
-        }
-        catch(Exception ex)
-        {
-            _app.CatchExeption(ex); 
-        }
-    }
 
     private bool FilterCollection(object value)
     {
@@ -237,24 +218,6 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         }
     }
 
-    private void GenerateWay()
-    {
-        try
-        {
-            WayResult result = GetWay();
-            if (result == null)
-                _app.ShowSilentMessage("Nie udało się wygererować drogi");
-            else
-            {
-                _app.Navigation.AddPage(new WayToOrderPageViewModel(_app, _app.GetService<IHallService, Hall>(), result, _entity));
-            }
-        }
-        catch(Exception ex)
-        {
-            _app.CatchExeption(ex);
-        }
-    }
-
     private WayResult GetWay()
     {
         IHallService hallService = _app.GetService<IHallService, Hall>();
@@ -284,7 +247,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     {
         try
         {
-            if(_app.GetDialogService().GetYesNoDialog($"Czy na pewno usunąć produkt {item.Name}?", "Usuwanie") == Models.Enums.EDialogResult.Yes)
+            if(_app.GetDialogService().AskUser($"Czy na pewno usunąć produkt {item.Name}?", "Usuwanie") == Models.Enums.EDialogResult.Yes)
             {
                 _entity.Items.Remove(item);
                 _service.Update(_entity);
@@ -304,7 +267,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     {
         try
         {
-            Product product = _app.GetDialogService().GetProduct("Wyszukaj produkt");
+            Product product = _app.GetDialogService().GetProduct();
             if(product != null)
             {
                 //_service.RefreshDbContext();

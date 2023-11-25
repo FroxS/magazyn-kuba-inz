@@ -11,7 +11,7 @@ internal class StorageUnitService : BaseServiceWithRepository<IStorageUnitReposi
     /// <summary>
     /// Default constructor
     /// </summary>
-    public StorageUnitService(IStorageUnitRepository ripository) :base(ripository)
+    public StorageUnitService(IStorageUnitRepository repozitory, IApp app) : base(repozitory, app)
     {
     }
 

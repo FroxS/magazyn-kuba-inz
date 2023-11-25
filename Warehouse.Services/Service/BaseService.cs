@@ -22,7 +22,7 @@ internal class BaseServiceWithRepository<R, M> : BaseService<M> where M : BaseEn
     /// <summary>
     /// Default constructor
     /// </summary>
-    public BaseServiceWithRepository(R repozitory) : base(repozitory)
+    public BaseServiceWithRepository(R repozitory, IApp app) : base(repozitory, app)
     {
         _repozitory = repozitory;
     }
@@ -35,6 +35,8 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
 
     protected readonly IBaseRepository<Model> _repozitory;
 
+    protected readonly IApp _app;
+
     #endregion
 
     #region Constructors
@@ -42,14 +44,17 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
     /// <summary>
     /// Default constructor
     /// </summary>
-    public BaseService(IBaseRepository<Model> repozitory)
+    public BaseService(IBaseRepository<Model> repozitory, IApp app)
     {
         _repozitory = repozitory;
+        _app = app;
     }
 
     #endregion
 
     #region Helper Method
+
+    public IApp GetApp() => _app;
 
     protected virtual byte[] GetData<T>(T obj, Action<JsonSerializer> onSerialize = null)
     {
@@ -169,6 +174,8 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
         actionInTransact.Invoke(_repozitory);
         EndTransaction();
     }
+
+
 
     
 

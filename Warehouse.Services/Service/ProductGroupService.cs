@@ -12,7 +12,7 @@ internal class ProductGroupService : BaseServiceWithRepository<IProductGroupRepo
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ProductGroupService(IProductGroupRepository productgrouprepozitory):base(productgrouprepozitory)
+    public ProductGroupService(IProductGroupRepository repozitory, IApp app) : base(repozitory, app)
     {
         
     }

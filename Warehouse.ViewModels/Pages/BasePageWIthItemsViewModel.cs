@@ -77,33 +77,21 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
     public virtual bool CanAddNew
     {
         get => _canAddNew;
-        protected set
-        {
-            _canAddNew = value;
-            OnPropertyChanged(nameof(CanAddNew));
-        }
+        protected set { SetProperty(ref _canAddNew, value, nameof(CanAddNew)); }
     }
 
     public virtual bool CanDelete
     {
         get => _canDelete;
-        protected set
-        {
-            _canDelete = value;
-            OnPropertyChanged(nameof(CanDelete));
-        }
+        protected set { SetProperty(ref _canDelete, value, nameof(CanDelete)); }
     }
 
     public virtual string SearchString
     {
         get => _searchString;
-        set
-        {
-            _searchString = value;
-            OnPropertyChanged(nameof(SearchString));
-            Collection.Refresh();
-        }
+        set { SetProperty(ref _searchString, value, nameof(SearchString), () => Collection.Refresh()); }
     }
+
     #endregion
 
     #region Command

@@ -11,7 +11,7 @@ internal class ImageService : BaseServiceWithRepository<IImageRepository,WareHou
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ImageService(IImageRepository ripository) :base(ripository)
+    public ImageService(IImageRepository repozitory, IApp app) : base(repozitory, app)
     {
     }
 

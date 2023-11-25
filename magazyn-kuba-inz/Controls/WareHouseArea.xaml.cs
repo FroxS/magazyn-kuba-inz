@@ -315,6 +315,9 @@ public partial class WareHouseArea : UserControl
     {
         if (d is WareHouseArea wha)
         {
+            if (wha.Racks == null)
+                return;
+
             wha.UpdateConnections();
 
             if (e.NewValue is INotifyCollectionChanged coll)

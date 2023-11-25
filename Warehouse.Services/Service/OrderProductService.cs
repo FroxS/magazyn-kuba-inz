@@ -11,7 +11,7 @@ internal class OrderProductService : BaseServiceWithRepository<IOrderProductRepo
     /// <summary>
     /// Default constructor
     /// </summary>
-    public OrderProductService(IOrderProductRepository ripository) :base(ripository)
+    public OrderProductService(IOrderProductRepository repozitory, IApp app) : base(repozitory, app)
     {
     }
 

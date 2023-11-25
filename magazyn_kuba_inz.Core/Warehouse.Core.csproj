@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\magazyn-kuba-inz.EF\Warehouse.EF.csproj" />
     <ProjectReference Include="..\magazyn-kuba-inz.Models\Warehouse.Models.csproj" />
+    <ProjectReference Include="..\magazyn_kuba_inz.Theme\Warehouse.Theme.csproj" />
   </ItemGroup>
 
   <ItemGroup>

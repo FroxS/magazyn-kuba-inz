@@ -7,13 +7,75 @@
                          xmlns:local="clr-namespace:Warehouse.View.Pages"
                          xmlns:service="clr-namespace:Warehouse.View.Service"
                          xmlns:conv="clr-namespace:Warehouse.Conventers"
+                         xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
                          xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+                         xmlns:tab="clr-namespace:Warehouse.Core.Interface;assembly=Warehouse.Core"
+                         xmlns:controls2="clr-namespace:Warehouse.Controls"
                          mc:Ignorable="d" 
-                         d:DataContext="{d:DesignInstance Type=pageVM:OrderEditAddPageViewModel}"
+                         d:DataContext="{x:Static local:DesignOrderEditAddPageViewModel.Instance}"
                          d:DesignHeight="500" d:DesignWidth="1000">
-    <Grid Margin="10"
-          Width="100"
-          Height="105"
-          Background="{DynamicResource WarningColorBrush}"/>
+    <TabControl Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="{DynamicResource BorderColorBrush}" 
+                TabStripPlacement="Left" 
+                IsSynchronizedWithCurrentItem="False"
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl.Resources>
+            
+            <!--#region Data-->
+            
+            <DataTemplate DataType="{x:Type pageVM:OrderDataTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <local:OrderDataTabView/>
+                </Border>
+            </DataTemplate>
+            
+            <!--#endregion-->
+
+            <!--#region Products-->
+            <DataTemplate DataType="{x:Type pageVM:OrderProductsTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <local:OrderProductsTabView/>
+                </Border>
+            </DataTemplate>
+            <!--#endregion-->
+
+            <!--#region Way-->
+            
+            <DataTemplate DataType="{x:Type pageVM:OrderWayTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <controls2:WareHouseArea CanEdit="False"
+                                         HallBackground="#99a4a8"
+                                         PointDiameter="15"
+                                         AreaHeight="{Binding Hall.Height, UpdateSourceTrigger=PropertyChanged}"
+                                         AreaWidth="{Binding Hall.Width, UpdateSourceTrigger=PropertyChanged}"
+                                         Racks="{Binding Hall.Racks, UpdateSourceTrigger=PropertyChanged}"
+                                         WayPoints="{Binding Hall.WayPoints, UpdateSourceTrigger=PropertyChanged}"
+                                         Way="{Binding Way, UpdateSourceTrigger=PropertyChanged}">
+                    </controls2:WareHouseArea>
+                </Border>
+                
+            </DataTemplate>
+            
+            <!--#endregion-->
+
+        </TabControl.Resources>
+
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type tab:ITab}">
+                <TextBlock  >
+                            <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                </TextBlock>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        
+        
+
+    </TabControl>
 </service:BaseControlPage>

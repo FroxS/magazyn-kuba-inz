@@ -12,7 +12,7 @@ internal class ItemStateService : BaseServiceWithRepository<IItemStateRepository
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ItemStateService(IItemStateRepository repository):base(repository)
+    public ItemStateService(IItemStateRepository repozitory, IApp app) : base(repozitory, app)
     {
         
     }

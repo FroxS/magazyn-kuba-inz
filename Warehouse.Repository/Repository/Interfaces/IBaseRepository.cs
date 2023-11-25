@@ -1,4 +1,6 @@
-﻿namespace Warehouse.Repository.Interfaces;
+﻿using Warehouse.Core.Interface;
+
+namespace Warehouse.Repository.Interfaces;
 
 public interface IBaseRepository<T> where T : class
 {

@@ -12,7 +12,7 @@ internal class StorageItemPackageService : BaseServiceWithRepository<IStorageIte
     /// <summary>
     /// Default constructor
     /// </summary>
-    public StorageItemPackageService(IStorageItemPackageRepository ripository) :base(ripository)
+    public StorageItemPackageService(IStorageItemPackageRepository repozitory, IApp app) : base(repozitory, app)
     {
     }
 

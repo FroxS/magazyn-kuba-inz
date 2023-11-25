@@ -59,7 +59,7 @@ public class HallObject : ObservableObject
     public ObservableCollection<RackObject> Racks
     {
         get => _rackObjects;
-        set { SetProperty(ref _rackObjects, value, nameof(Racks)); }
+        set { SetProperty(ref _rackObjects, value, nameof(Racks));  }
     }
 
     #endregion

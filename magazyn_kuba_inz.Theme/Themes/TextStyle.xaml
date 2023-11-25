@@ -93,7 +93,7 @@
                                            Text="{TemplateBinding Tag}"
                                            x:Name="placeholder"
                                            Grid.Column="1"
-                                           Padding="5,0,0,0"
+                                           Padding="10,0,0,0"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                            Foreground="{DynamicResource BorderColorBrush}"

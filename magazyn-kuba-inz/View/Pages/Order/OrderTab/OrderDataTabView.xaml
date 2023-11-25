@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="Warehouse.View.Pages.OrderDataTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0" Grid.Column="0" IsEnabled="{Binding Parent.Enabled}"
+                          MaxWidth="300"
+                          HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label Content="{Binding Name, FallbackValue=Test}"
+                                       FontSize="14"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.IsSharedSizeScope="True" Grid.Row="1"
+                              Margin="10"
+                              VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Name}" Style="{DynamicResource FormLabel}"/>
+
+                    <controls:TextBoxImage Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                                       Grid.Column="1"
+                                                       Style="{StaticResource FormTextBoxImage}"
+                                                       Tag="{x:Static res:Resources.Name}"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Price}" Style="{DynamicResource FormLabel}"/>
+
+                    <controls:TextBoxImage Text="{Binding TotalPrice, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                                       Grid.Column="1"
+                                                       IsReadOnly="True"
+                                                       Style="{StaticResource FormTextBoxImage}"
+                                                       Tag="{x:Static res:Resources.Price}"/>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.CompletionDate}" Style="{DynamicResource FormLabel}"/>
+
+                    <DatePicker SelectedDate="{Binding RealizationDate, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                            Grid.Column="1"
+                                            Height="40"
+                                            Style="{StaticResource FormDatePicker}"/>
+
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Margin}" Style="{DynamicResource FormLabel}"/>
+
+                    <controls:TextBoxImage Text="{Binding Margin, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                                   Grid.Column="1"
+                                                   Style="{StaticResource FormTextBoxImage}"
+                                                   Tag="{x:Static res:Resources.Margin}"/>
+
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Column="1">
+            <controls:ButtonPath IconPath="{StaticResource Map}"
+                                             Text="{x:Static res:Resources.GenerateMap}"
+                                             Padding="0"
+                                             Margin="10 5"
+                                             ToolTip="{x:Static res:Resources.GenerateMap}"
+                                             Foreground="{DynamicResource PrimaryColorBrush}"
+                                             Command="{Binding GenerateWayCommand}"/>
+
+            <controls:ButtonPath IconPath="{StaticResource Reserved}"
+                                             Foreground="{DynamicResource WrongColorBrush}"
+                                             Command="{Binding ReservCommand}"
+                                             SnapsToDevicePixels="True"
+                                             Text="{x:Static res:Resources.ReserveProducts}"
+                                             Padding="0"
+                                             Margin="10 5"
+                                             ToolTip="{x:Static res:Resources.ReserveProducts}"
+                                             IsEnabled="{Binding Parent.Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
+                                             Visibility="{Binding Parent.Prepared,Converter={conv:BoolToVisibleConventer}, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <controls:ButtonPath IconPath="{StaticResource Prepared}"
+                                             Text="{x:Static res:Resources.SetAsDone}"
+                                             Foreground="{DynamicResource GoodColorBrush}"
+                                             Command="{Binding SetAsPreapredCommand}"
+                                             Padding="0"
+                                             Margin="10 5"
+                                             ToolTip="{x:Static res:Resources.SetAsDone}"
+                                             Visibility="{Binding Parent.Reserved,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

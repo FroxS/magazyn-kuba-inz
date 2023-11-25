@@ -5,7 +5,6 @@ using Warehouse.Core.Interface;
 using Warehouse.Dialog.View;
 using Warehouse.Models;
 using Warehouse.Models.Enums;
-using Warehouse.Service.Interface;
 
 namespace Warehouse.Dialog
 {
@@ -25,7 +24,6 @@ namespace Warehouse.Dialog
 
             if (window == null)
                 throw new ArgumentException("Dialog now found");
-            //window.Parent = IApp.MainWindow;
             try
             {
                 window.Owner = _service.GetService<IApp>().MainWindow;
@@ -76,19 +74,19 @@ namespace Warehouse.Dialog
             OpenDialog(new AlertDialogViewModel(message,title));
         }
 
-        public EDialogResult GetYesNoDialog(string message, string title = "")
+        public EDialogResult AskUser(string message, string title = "")
         {
-            return OpenDialog(new YesNoDialogViewModel( title, message));
+            return OpenDialog(new YesNoDialogViewModel(title, message));
         }
 
-        public Product GetProduct(string message)
+        public Product GetProduct()
         {
-            return OpenDialog(new ProductDialogViewModel(_service.GetService<IProductService>() ,message));
+            return OpenDialog(new ProductDialogViewModel(_service.GetService<IProductService>() ,Warehouse.Core.Properties.Resources.SearchProduct));
         }
 
         public void ShowError(Exception ex)
         {
-            OpenDialog(new AlertDialogViewModel(ex.Message, "Bład aplikacji"));
+            OpenDialog(new AlertDialogViewModel(ex.Message, Core.Properties.Resources.ApplicationError));
         }
 
         public StorageUnit GetStorageUnit(string message)

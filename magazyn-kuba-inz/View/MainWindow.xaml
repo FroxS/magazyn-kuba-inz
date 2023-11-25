@@ -99,48 +99,55 @@
 
                             </Grid>
 
-                            <Border BorderThickness="1"
-                                    Grid.Row="1"
-                                    BorderBrush="{DynamicResource BorderColorBrush}">
-                                <TabControl ItemsSource="{Binding Navigation.Pages,
-                                                                  Source={x:Static helpers:AppHelper.Instance}, 
-                                                                  UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-                                            SelectedItem="{Binding Navigation.ActivePage,
-                                                                   Source={x:Static helpers:AppHelper.Instance}, 
-                                                                   UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
-                                            Background="Transparent"
-                                            BorderThickness="0"
-                                            BorderBrush="{DynamicResource BorderColorBrush}">
-                                    <TabControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type tab:IBasePageViewModel}">
-                                            <Grid>
-                                                <TextBlock Margin="0 0 10 0">
-                                                    <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                </TextBlock>
 
-                                                <TextBlock HorizontalAlignment="Right"
-                                                           VerticalAlignment="Top"
-                                                           Visibility="{Binding IsMain,Converter={conventers:BoolToVisibleConventer}}"
-                                                           Margin="-5">
-                                                    <Hyperlink Command="{Binding CloseTabCommand}"
-                                                               
-                                                           Foreground="{DynamicResource FontColorBrush}">X</Hyperlink>
-                                                </TextBlock>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </TabControl.ItemTemplate>
-                                    <TabControl.ContentTemplate>
-                                        <DataTemplate DataType="{x:Type interface:IBasePageViewModel}">
-                                            
+                            <TabControl ItemsSource="{Binding Navigation.Pages,
+                                                              Source={x:Static helpers:AppHelper.Instance}, 
+                                                              UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                        SelectedItem="{Binding Navigation.ActivePage,
+                                                               Source={x:Static helpers:AppHelper.Instance}, 
+                                                               UpdateSourceTrigger=PropertyChanged, 
+                                                               NotifyOnSourceUpdated=True,
+                                                               NotifyOnTargetUpdated=True}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Margin="5"
+                                        Grid.Row="1"
+                                        BorderBrush="{DynamicResource BorderColorBrush}">
+                                <TabControl.ContentTemplate>
+                                    <DataTemplate DataType="{x:Type interface:IBasePageViewModel}">
+                                        <Border BorderThickness="1 1 1 1"
+                                                BorderBrush="{DynamicResource BorderColorBrush}">
                                             <controls:PageHost Grid.Row="1"
-                                                                IsEnabled="{Binding Application.IsTaskRunning, Source={x:Static helpers:AppHelper.Instance}, Converter={conventers:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
-                                                                CurrentPage="{Binding }">
+                                                               IsEnabled="{Binding Application.IsTaskRunning, 
+                                                                                   Source={x:Static helpers:AppHelper.Instance}, 
+                                                                                   Converter={conventers:InverseBoolConventer}, 
+                                                                                   UpdateSourceTrigger=PropertyChanged}"
+                                                               CurrentPage="{Binding }">
                                             </controls:PageHost>
-                                            
-                                        </DataTemplate>
-                                    </TabControl.ContentTemplate>
-                                </TabControl>
-                            </Border>
+                                        </Border>
+                                    </DataTemplate>
+                                </TabControl.ContentTemplate>
+                                <TabControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type tab:IBasePageViewModel}">
+                                        <Grid>
+                                            <TextBlock Margin="0 0 10 0">
+                                                <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </TextBlock>
+
+                                            <TextBlock HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        Visibility="{Binding IsMain,Converter={conventers:BoolToVisibleConventer}}"
+                                                        Margin="-5">
+                                                <Hyperlink Command="{Binding CloseTabCommand}"
+                                                               
+                                                        Foreground="{DynamicResource FontColorBrush}">X</Hyperlink>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </TabControl.ItemTemplate>
+
+                            </TabControl>
+
 
                             <!--<controls:PageHost Grid.Row="1"
                                                x:Name="Test"

@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Warehouse.Dialog.View"
         xmlns:vm="clr-namespace:Warehouse.Dialog"
         d:DataContext="{d:DesignInstance Type=vm:StorageUnitDialogViewModel}"
+        Background="{DynamicResource BackgroundColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
         mc:Ignorable="d" 
         Height="450" Width="800">
     <Window.InputBindings>

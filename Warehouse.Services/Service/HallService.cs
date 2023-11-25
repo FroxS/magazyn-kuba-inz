@@ -19,9 +19,9 @@ internal class HallService : BaseServiceWithRepository<IHallRepository,Hall>, IH
     #region Constructors
 
     /// <summary>
-    /// Default constructor
+    /// Default constructo
     /// </summary>
-    public HallService(IHallRepository repository, IRackService rackService) :base(repository)
+    public HallService(IHallRepository repozitory, IRackService rackService, IApp app) : base(repozitory, app)
     {
         _rackService = rackService;
     }

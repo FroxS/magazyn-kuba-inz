@@ -11,7 +11,7 @@ internal class SupplierService : BaseServiceWithRepository<ISupplierRepository,S
     /// <summary>
     /// Default constructor
     /// </summary>
-    public SupplierService(ISupplierRepository supplierpozitory) :base(supplierpozitory)
+    public SupplierService(ISupplierRepository repozitory, IApp app) : base(repozitory, app)
     {
     }
 

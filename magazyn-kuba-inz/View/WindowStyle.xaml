@@ -3,6 +3,7 @@
                     xmlns:conv="clr-namespace:Warehouse.Conventers"
                     xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
                     xmlns:help="clr-namespace:Warehouse.Helper"
+                    xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
                     x:Class="Warehouse.View.WindowStyle">
     <Style TargetType="{x:Type Window}" 
            x:Key="CustomWindowsStyle" >
@@ -11,7 +12,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Grid Background="{DynamicResource SecondBackgroundColorBrush}">
-                        <Border BorderThickness="1">
+                        <Border BorderThickness="1"  >
                             <!--Title header-->
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -19,7 +20,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0" MouseDown="Window_MouseDown" >
+                                <Grid Grid.Row="0" Background="{DynamicResource SecondBackgroundColorBrush}"  MouseDown="Window_MouseDown" >
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -46,7 +47,7 @@
                                                          Source={x:Static help:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
                                                           Height="40"
-                                                             ToolTip="Strona poprzednia"/>
+                                                             ToolTip="{x:Static res:Resources.NextPage}"/>
 
                                         <controls:ButtonPath IconPath="{StaticResource Next}"
                                                              Margin="2"
@@ -54,7 +55,7 @@
                                                          Source={x:Static help:AppHelper.Instance}, 
                                                          UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
                                                           Height="40"
-                                                             ToolTip="Strona następna"/>
+                                                             ToolTip="{x:Static res:Resources.PrevPage}"/>
 
                                     </StackPanel>
 
@@ -62,10 +63,10 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Orientation="Horizontal"
-                                                ToolTip="Szukaj">
+                                                ToolTip="{x:Static res:Resources.Search}">
                                         
                                         <controls:TextBoxImage Width="250"
-                                                               Tag="Szukaj"
+                                                               Tag="{x:Static res:Resources.Search}"
                                                                Padding="5,0"
                                                                Radius="15"/>
                                         <controls:ButtonPath IconPath="{StaticResource Search}"
@@ -116,8 +117,7 @@
 
                                     </StackPanel>
                                 </Grid>
-                                
-                                
+
                                 <Border Grid.Row="1">
                                     <ContentPresenter Content="{TemplateBinding Content}" />
                                 </Border>

@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Warehouse.Dialog.View"
+        xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
         xmlns:vm="clr-namespace:Warehouse.Dialog"
         d:DataContext="{d:DesignInstance Type=vm:YesNoDialogViewModel}"
-        mc:Ignorable="d" SizeToContent="WidthAndHeight"
+        mc:Ignorable="d" 
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource BackgroundColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
         MaxWidth="600">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding OKCommand}"/>
@@ -19,39 +24,34 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"
-                    Margin="20,5">
-            <TextBlock Text="{Binding Message}" 
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   TextWrapping="Wrap"
-                   Foreground="Black"/>
+              Margin="20,5"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <TextBlock Text="{Binding Message, FallbackValue=Test message}" 
+                       Grid.Row="0"
+                       TextWrapping="Wrap"/>
 
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Kopjuj" 
-                              Command="{Binding CoppyCommand}"
-                              Foreground="{StaticResource FontColorBrush}"/>
+                    <MenuItem Header="{x:Static res:Resources.Coppy}" 
+                              Command="{Binding CoppyCommand}"/>
                 </ContextMenu>
             </Grid.ContextMenu>
 
         </Grid>
 
-
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
-            <Button Content="Tak" 
-                VerticalAlignment="Center"
-                Command="{Binding OKCommand}"
-                Margin="5,30,5,10"
-                Width="200"/>
-            <Button Content="Nie" 
-                VerticalAlignment="Center"
-                Command="{Binding NoCommand}"
-                Margin="5,30,5,10"
-                Width="200"/>
+            <Button Content="{x:Static res:Resources.Yes}" 
+                    VerticalAlignment="Center"
+                    Command="{Binding OKCommand}"
+                    Width="100"/>
+            <Button Content="{x:Static res:Resources.No}" 
+                    VerticalAlignment="Center"
+                    Command="{Binding NoCommand}"
+                    Width="100"/>
         </StackPanel>
     </Grid>
 </Window>

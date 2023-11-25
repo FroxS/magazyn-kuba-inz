@@ -19,41 +19,39 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
         <!--#region Top Panel-->
 
-        <local:PageItemsTopBar Grid.Row="0" Grid.ColumnSpan="2"/>
+        <local:PageItemsTopBar Grid.Row="0" />
 
         <!--#endregion-->
 
         <!--#region Items -->
 
-        <Grid Grid.Row="1"
-              Grid.Column="0">
+        <Grid Grid.Row="1">
             <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
                       SelectionMode="Extended"
                       SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static res:Resources.State}" 
+                                        Width="100"/>
                     <DataGridTextColumn Header="{x:Static res:Resources.Name}" 
                                         Binding="{Binding Name}"
                                         Width="*"/>
-
                     <DataGridTemplateColumn Header="{x:Static res:Resources.RealizationDate}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding RealizationDate, StringFormat={}{0:dd/MM/yyyy HH:mm:ss}}" />
+                                <TextBlock Text="{Binding RealizationDate, StringFormat={}{0:dd/MM/yyyy}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
 
                 <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"
+                                  Command="{Binding EditCommand}"
+                                  CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                    
                     <KeyBinding Key="Delete" 
                                 Command="{Binding DeleteItemsCommand}"
                                 CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
@@ -61,29 +59,5 @@
             </DataGrid>
 
         </Grid>
-
-        <!--#endregion-->
-
-        <GridSplitter Grid.Row="0" 
-                      Grid.Column="1"
-                      Grid.RowSpan="2"
-                      Width="2"
-                      Margin="2,0"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch"
-                      ShowsPreview="False"
-                      Background="{DynamicResource BackgroundColorBrush}"/>
-
-        <!--#region Selected item-->
-
-        <Grid Grid.Row="0"
-              Grid.RowSpan="2"
-              Visibility="{Binding SelectedItemViewModel, Converter={StaticResource NullToVisible}}"
-              Grid.Column="2">
-            <local:OrderDetailsView DataContext="{Binding SelectedItemViewModel}"/>
-        </Grid>
-
-        <!--#endregion-->
-
     </Grid>
 </service:BaseControlPage>

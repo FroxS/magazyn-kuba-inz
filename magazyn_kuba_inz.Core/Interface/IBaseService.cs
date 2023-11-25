@@ -56,4 +56,6 @@ public interface IBaseService<Model> where Model : BaseEntity
     Model GetById(Guid id);
     void EndTransaction();
     void RunTransaction();
+
+    IApp GetApp();
 }

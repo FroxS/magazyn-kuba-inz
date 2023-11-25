@@ -20,6 +20,12 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
             names.ToList().ForEach((o) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(o) ));
     }
 
+    protected void OnPropertyChanged(params string[] names)
+    {
+        if (names != null)
+            names.ToList().ForEach((o) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(o)));
+    }
+
     protected void OnPropertyChanging([CallerMemberName] string? name = null)
     {
         PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));

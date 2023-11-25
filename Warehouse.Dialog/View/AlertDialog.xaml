@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Warehouse.Dialog.View"
         xmlns:vm="clr-namespace:Warehouse.Dialog"
+        xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+        Background="{DynamicResource BackgroundColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding OKCommand}"/>
@@ -18,29 +22,26 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"
-                    Margin="20,5">
+              Margin="20,10"
+              MinWidth="200"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
             <TextBlock Text="{Binding Message}" 
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   TextWrapping="Wrap"
-                   Foreground="Black"/>
+                       Grid.Row="0"
+                       TextWrapping="Wrap"/>
 
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Kopjuj" 
-                              Command="{Binding CoppyCommand}"
-                              Foreground="{StaticResource FontColorBrush}"/>
+                    <MenuItem Header="{x:Static res:Resources.Coppy}" 
+                              Command="{Binding CoppyCommand}"/>
                 </ContextMenu>
             </Grid.ContextMenu>
 
         </Grid>
 
-
         <Button Content="OK" Grid.Row="1"
                 VerticalAlignment="Center"
                 Command="{Binding OKCommand}"
-                Margin="5,30,5,10"
-                MaxWidth="200"/>
+                MaxWidth="100"/>
     </Grid>
 </Window>

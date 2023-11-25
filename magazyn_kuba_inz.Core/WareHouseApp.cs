@@ -10,7 +10,6 @@ using Warehouse.Core.Helpers;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.EF;
-using System.Diagnostics;
 using System.ComponentModel;
 
 namespace Warehouse;
@@ -199,33 +198,17 @@ public class WareHouseApp : ObservableObject, IApp
 
     public void SetTheme(bool dark = true)
     {
-        string resThemeName = "DarkTheme";
-        if (!dark)
-            resThemeName = "LightTheme";
-
-        string dictionaryNameToChange = "Theme";
-        ResourceDictionary targetDictionary = null;
-        foreach (var mergedDictionary in app.Resources.MergedDictionaries)
+        try
         {
-            if (mergedDictionary is ResourceDictionary dictionary && dictionary.Source != null)
-            {
-                if (dictionary.Source.OriginalString.Contains(dictionaryNameToChange))
-                {
-                    targetDictionary = dictionary;
-                    break;
-                }
-            }
-        }
-
-        // Sprawdź, czy istnieje słownik o nazwie "Themes"
-        if (targetDictionary != null)
+            Theme.ColorsNavigation.ChangeColor(
+                app,
+                dark ? 
+                    Theme.ColorScheme.Dark :
+                    Theme.ColorScheme.Light
+            );
+        }catch(Exception ex)
         {
-            // Teraz możesz podmienić ten słownik na inny, na przykład "DarkTheme.xaml"
-            targetDictionary.Source = new Uri($"/Warehouse.Theme;component/{resThemeName}.xaml", UriKind.Relative);
-        }
-        else
-        {
-            Debugger.Break();
+            CatchExeption(ex);
         }
     }
 

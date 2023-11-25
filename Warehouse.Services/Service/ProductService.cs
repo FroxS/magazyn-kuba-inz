@@ -27,9 +27,9 @@ internal class ProductService : BaseServiceWithRepository<IProductRepository,Pro
         IProductGroupService productgroupService,
         IProductStatusService productStatusService,
         IImageService imageService,
-        IWareHouseService wareHouseItemService
-        ) 
-        : base(repozitory)
+        IWareHouseService wareHouseItemService, 
+        IApp app) 
+        : base(repozitory, app)
     {
         _supplierService = supplierService;
         _productgroupService = productgroupService;
@@ -100,6 +100,14 @@ internal class ProductService : BaseServiceWithRepository<IProductRepository,Pro
     }
 
     public bool ExistOnWareHouse(Guid id) => _wareHouseItemService.ExistProduct(id);
+
+    public double GetPrice(Guid id) 
+    {
+        Product product = _repozitory.GetById(id);
+        if (product == null)
+            return 0;
+        return product.Price;
+    }
 
     #endregion
 }

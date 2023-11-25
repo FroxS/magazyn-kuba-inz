@@ -11,7 +11,7 @@ internal class ProductStatusService : BaseServiceWithRepository<IProductStatusRe
     /// <summary>
     /// Default constructor
     /// </summary>
-    public ProductStatusService(IProductStatusRepository repository):base(repository)
+    public ProductStatusService(IProductStatusRepository repozitory, IApp app) : base(repozitory, app)
     {
         
     }

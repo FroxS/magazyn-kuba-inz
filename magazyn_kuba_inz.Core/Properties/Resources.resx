@@ -123,8 +123,23 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="ApplicationError" xml:space="preserve">
+    <value>Application error</value>
+  </data>
   <data name="AreYouSure" xml:space="preserve">
     <value>Are you sure</value>
+  </data>
+  <data name="AskAddOrder" xml:space="preserve">
+    <value>Add an order</value>
+  </data>
+  <data name="AskRemoveOrder" xml:space="preserve">
+    <value>Remove the order</value>
+  </data>
+  <data name="AskRemoveProduct" xml:space="preserve">
+    <value>Remove the product</value>
   </data>
   <data name="Color" xml:space="preserve">
     <value>Color</value>
@@ -138,14 +153,23 @@
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
   </data>
+  <data name="Coppy" xml:space="preserve">
+    <value>Coppy</value>
+  </data>
   <data name="Corridor" xml:space="preserve">
     <value>Corridor</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
   </data>
   <data name="Creator" xml:space="preserve">
     <value>Creator</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -167,6 +191,9 @@
   </data>
   <data name="ErrorWhileSaving" xml:space="preserve">
     <value>Error while saving</value>
+  </data>
+  <data name="FailedToGenerateWay" xml:space="preserve">
+    <value>Failed to generate way</value>
   </data>
   <data name="FailedToRemove" xml:space="preserve">
     <value>Failed to remove</value>
@@ -222,6 +249,12 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>Next page</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>
   </data>
@@ -231,8 +264,14 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
+  </data>
+  <data name="PrevPage" xml:space="preserve">
+    <value>Prev page</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
@@ -255,6 +294,9 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="RemovedOrder" xml:space="preserve">
+    <value>Removed rder</value>
+  </data>
   <data name="ReserveProducts" xml:space="preserve">
     <value>Reserve products</value>
   </data>
@@ -266,6 +308,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SearchProduct" xml:space="preserve">
+    <value>Search product</value>
   </data>
   <data name="SetAsDone" xml:space="preserve">
     <value>Set as done</value>
@@ -281,6 +326,9 @@
   </data>
   <data name="StorageUnits" xml:space="preserve">
     <value>Storage units</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="SuccessfulRemoved" xml:space="preserve">
     <value>Successful removed</value>
@@ -300,7 +348,13 @@
   <data name="WareHouseItems" xml:space="preserve">
     <value>WareHouse items</value>
   </data>
+  <data name="Way" xml:space="preserve">
+    <value>Way</value>
+  </data>
   <data name="Width" xml:space="preserve">
     <value>Width</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

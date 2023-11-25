@@ -16,6 +16,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     private readonly IStorageItemRepository _storageItemRepo;
 
+
     #endregion
 
     #region Constructors
@@ -23,7 +24,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
     /// <summary>
     /// Default constructor
     /// </summary>
-    public OrderService(IOrderRepository repository, IStorageItemRepository storageItemRepo) :base(repository)
+    public OrderService(IOrderRepository repozitory, IStorageItemRepository storageItemRepo, IApp app) : base(repozitory, app)
     {
         _storageItemRepo = storageItemRepo;
     }
@@ -34,7 +35,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     private IEnumerable<OrderProduct> GetAllProductsWithItems(Guid orderID)
     {
-        return _repozitory.GetById(x => x.Include(i => i.Items).ThenInclude(i => i.StorageItem).ThenInclude(i => i.State), orderID).Items;
+        return _repozitory.GetById(x => x.Include(i => i.Items).ThenInclude(i => i.StorageItem).ThenInclude(i => i.State), orderID)?.Items ?? new List<OrderProduct>();
     }
 
     #endregion
@@ -159,7 +160,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
     private List<OrderProduct> GetProducts(Order order)
     {
         if (order.Items == null)
-            return _repozitory.GetById(x => x.Include(i => i.Items), order.ID).Items;
+            return _repozitory.GetById(x => x.Include(i => i.Items), order.ID)?.Items ?? new List<OrderProduct>();
         else
             return order.Items;
     }
@@ -190,6 +191,28 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
     {
         IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
         return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < EState.Prepared);
+    }
+
+    public double TotalPrice(Order order)
+    {
+        if (order == null)
+            return 0;
+
+        IProductService productService = GetApp().GetService<IProductService>();
+        double price = 0;
+        price = GetProducts(order).Select(x => productService.GetPrice(x.ID_Product)).Sum();
+
+        price += price * (order.Margin / 100);
+        return price;
+    }
+
+    public double TotalPrice(Guid id)
+    {
+        Order? order = _repozitory.GetById(x => x.Include(o => o.Items).ThenInclude(o => o.Product), id);;
+        if (order == null)
+            return 0;
+
+        return TotalPrice(order);
     }
 
     protected override T GetData<T>(byte[] data)
