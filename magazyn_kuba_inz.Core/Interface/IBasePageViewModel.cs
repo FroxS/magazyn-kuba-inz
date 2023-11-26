@@ -11,5 +11,4 @@ public interface IBasePageViewModel : ITab
     bool IsMain { get; set; }
 
     void OnPageClose();
-    void OnPageOpen();
 }

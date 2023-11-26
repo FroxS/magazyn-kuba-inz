@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Warehouse.View.Pages.GlobalSettingsTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.View.Pages"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
+             d:DataContext="{d:DesignInstance Type=vm:SettingsPageViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <GroupBox Header="{x:Static res:Resources.Wayfinding}"
+                                  BorderBrush="{DynamicResource BorderColorBrush}">
+            <Grid Grid.IsSharedSizeScope="True" Grid.Row="2"
+                              Margin="10"
+                              VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition MinWidth="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.WeightDiscrepancy}" Style="{DynamicResource FormLabel}"/>
+
+                    <controls:TextBoxImage Text="{Binding  GlobalSettings.WeightDiscrepancy, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                           Grid.Column="1"
+                                           Style="{StaticResource FormTextBoxImage}"
+                                           Tag=""/>
+                </Grid>
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

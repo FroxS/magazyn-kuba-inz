@@ -43,7 +43,7 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
     protected void SetProperty<T>(
         Expression<Func<T>> field,
         T value,
-        Action onChanged = null)
+        Action? onChanged = null)
     {
         Func<T> compiledExpression = field.Compile();
         T result = compiledExpression();
@@ -67,8 +67,8 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
     protected void SetProperty<T>(
         ref T field,
         T value,
-        string propName,
-        Action onChanged = null)
+        [CallerMemberName] string? propName = null,
+        Action? onChanged = null)
     {
         field = value;
         OnPropertyChanged(propName);

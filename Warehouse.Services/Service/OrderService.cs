@@ -16,7 +16,6 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     private readonly IStorageItemRepository _storageItemRepo;
 
-
     #endregion
 
     #region Constructors
@@ -42,6 +41,19 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     #region Public Method
 
+    public override async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        Order order = await GetByIdAsync(id);
+
+        if (order == null)
+            return false;
+
+        if (GetState(id) > EOrderState.Created)
+            return false;
+
+        return await base.DeleteAsync(id, cancellationToken);
+    }
+
     public List<OrderProduct> GetProducts(Guid id)
     {
         return _repozitory.GetById(i => i.Include(i => i.Items).ThenInclude(x => x.Product), id)?.Items;
@@ -58,7 +70,6 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         int najwiekszyNumer = 0;
         int rok = DateTime.Now.Year;
 
-        // Przeszukaj istniejące nazwy w celu znalezienia największego numeru w danym roku
         foreach (string nazwa in listaNazw)
         {
             if (Regex.Match(nazwa, $@"ORD/{rok}/(\d+)").Success)
@@ -71,7 +82,6 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
             }
         }
 
-        // Wygeneruj nową nazwę zwiększając numer o 1
         string nowaNazwa = $"ORD/{rok}/{najwiekszyNumer + 1}";
 
         return nowaNazwa;
@@ -133,6 +143,8 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
             }
             product.StorageItem = ass;
             product.ID_StorageItem = ass.ID;
+            ass.ID_OrderItem = product.ID;
+            ass.OrderItem = product;
         }
         Update(order);
         if (Save())
@@ -227,6 +239,24 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         string json = JsonConvert.SerializeObject(obj);
         byte[] bytes = Encoding.UTF8.GetBytes(json);
         return bytes;
+    }
+
+    public EOrderState GetState(Guid id)
+    {
+        EOrderState state = EOrderState.Created;
+
+        if (IsReserved(id))
+        {
+            state = EOrderState.Reserved;
+            if (IsPrepared(id))
+                state = EOrderState.Prepared;
+        }
+        Order order = GetById(id);
+        if (order == null)
+            return EOrderState.Created;
+        order.State = state;
+        Update(order);
+        return state;
     }
 
     #endregion

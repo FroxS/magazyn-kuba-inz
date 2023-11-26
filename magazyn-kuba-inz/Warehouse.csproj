@@ -66,6 +66,12 @@
     <Compile Update="View\Pages\Order\OrderTab\OrderProductsTabView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Pages\Settings\Tab\UserSettingsTabView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\Settings\Tab\GlobalSettingsTabView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\SplashScreen\SplashScreen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

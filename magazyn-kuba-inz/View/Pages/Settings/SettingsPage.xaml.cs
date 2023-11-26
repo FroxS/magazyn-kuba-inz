@@ -9,15 +9,13 @@ namespace Warehouse.View.Pages;
 /// </summary>
 public partial class SettingsPage : BaseControlPage<SettingsPageViewModel>
 {
-
     public SettingsPage(SettingsPageViewModel? vm) : base(vm)
     {
         InitializeComponent();
     }
+
     public SettingsPage(IBasePageViewModel? vm):base(vm)
     {
         InitializeComponent();
     }
-
-    
 }

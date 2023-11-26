@@ -91,7 +91,7 @@ public class OrderProductsTabViewModel : BasePageViewModel
 
     #region Load
 
-    public override void Load()
+    public override void OnPageOpen()
     {
         if (_service != null)
         {
@@ -137,7 +137,7 @@ public class OrderProductsTabViewModel : BasePageViewModel
                 IOrderProductService opService = Application.GetService<IOrderProductService, OrderProduct>();
                 opService.Add(orderProduct);
                 opService.Save();
-                Load();
+                OnPageOpen();
                 Application.ShowSilentMessage(Warehouse.Core.Properties.Resources.Added, Models.Enums.EMessageType.Ok);
 
             }
@@ -154,11 +154,11 @@ public class OrderProductsTabViewModel : BasePageViewModel
         {
             if (Application.GetDialogService().AskUser($"{Warehouse.Core.Properties.Resources.AskRemoveProduct} {item.Name}?", Warehouse.Core.Properties.Resources.Question) == Models.Enums.EDialogResult.Yes)
             {
-                _order.Items.Remove(item);
-                _service.Update(_order);
-                _service.Save();
-                Load();
-                Application.ShowSilentMessage(Core.Properties.Resources.RemovedOrder, Models.Enums.EMessageType.Ok);
+                IOrderProductService opService = Application.GetService<IOrderProductService, OrderProduct>();
+                opService.Delete(item.ID);
+                opService.Save();
+                OnPageOpen();
+                Application.ShowSilentMessage(Core.Properties.Resources.RemovedProduct, Models.Enums.EMessageType.Ok);
             }
 
         }

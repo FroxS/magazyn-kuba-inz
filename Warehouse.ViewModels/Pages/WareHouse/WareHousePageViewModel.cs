@@ -35,7 +35,7 @@ public class WareHousePageViewModel : BasePageViewModel
         {
             _selectedState = value;
             if (_selectedState != null)
-                _selectedState.Load();
+                _selectedState.OnPageOpen();
             OnPropertyChanged(nameof(SelectedState));
         }
     }

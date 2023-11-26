@@ -10,6 +10,7 @@
         mc:Ignorable="d" 
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
         Background="{DynamicResource BackgroundColorBrush}"
         Foreground="{DynamicResource FontColorBrush}"
         MaxWidth="600">
@@ -24,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0"
-              Margin="20,5"
+              Margin="20,25"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
             <TextBlock Text="{Binding Message, FallbackValue=Test message}" 
@@ -47,11 +48,14 @@
             <Button Content="{x:Static res:Resources.Yes}" 
                     VerticalAlignment="Center"
                     Command="{Binding OKCommand}"
-                    Width="100"/>
+                    IsDefault="True"
+                    Width="50"
+                    Height="30"/>
             <Button Content="{x:Static res:Resources.No}" 
                     VerticalAlignment="Center"
                     Command="{Binding NoCommand}"
-                    Width="100"/>
+                    Width="50"
+                    Height="30"/>
         </StackPanel>
     </Grid>
 </Window>

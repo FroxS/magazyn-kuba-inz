@@ -10,7 +10,6 @@ using Warehouse.Core.Helpers;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.EF;
-using System.ComponentModel;
 
 namespace Warehouse;
 
@@ -66,6 +65,7 @@ public class WareHouseApp : ObservableObject, IApp
         _services = services;
         _databaseFactory = services.GetRequiredService<IDbContextFactory<WarehouseDbContext>>();
         ReloadDatabase();
+        RelayCommand.DefaultActionOnError = (ex) => CatchExeption(ex);
     }
 
     #endregion
@@ -88,7 +88,7 @@ public class WareHouseApp : ObservableObject, IApp
             _services.GetRequiredService<ILoginWindow>();
             ILoginWindow login = _services.GetRequiredService<ILoginWindow>();
             if (login == null)
-                throw new Exception("Brak okna login");
+                throw new Exception(Core.Properties.Resources.ErrorLoginWindowNotExist);
 
             MainWindow = login as Window;
             CloseSplashForm();
@@ -108,7 +108,7 @@ public class WareHouseApp : ObservableObject, IApp
         {
             IMainWindow window = _services.GetRequiredService<IMainWindow>();
             if (window == null)
-                throw new Exception("Brak okna głównego");
+                throw new Exception(Core.Properties.Resources.ErrorMainWindowNotExist);
             MainWindow = app.MainWindow = window as Window;
             Navigation.SetPage(Warehouse.Models.Page.EApplicationPage.DashBoard);
 
@@ -130,10 +130,7 @@ public class WareHouseApp : ObservableObject, IApp
 
     public S GetService<S>() => _services.GetRequiredService<S>();
 
-    public bool IsUserLogin()
-    {
-        throw new NotImplementedException();
-    }
+    public bool IsUserLogin() => User != null;
 
     public void Exit()
     {
@@ -151,7 +148,7 @@ public class WareHouseApp : ObservableObject, IApp
         if (!User.Active)
         {
             User = null;
-            throw new DataException("This user is not active");
+            throw new DataException(Core.Properties.Resources.ErrorUserIsNotActive);
         }
         return User;
     }
@@ -159,20 +156,20 @@ public class WareHouseApp : ObservableObject, IApp
     public async Task Register(RegisterResource user)
     {
         if (user == null)
-            throw new ArgumentException("User is empty");
+            throw new ArgumentException(Core.Properties.Resources.UserIsEmpty);
 
         if (user.Login.Length < 5)
-            throw new DataException("Minimalna liczba to 5", user, "Login");
+            throw new DataException($"{Core.Properties.Resources.ErrorMaxLength} 5", user, nameof(User.Login));
 
         if (!UserHelper.IsValidEmail(user?.Email ?? ""))
-            throw new DataException("Email jest nieprawidłowy", user, "Email");
+            throw new DataException(Core.Properties.Resources.EmailisIncorrect, user, nameof(User.Email));
 
         await userService.Register(user);
     }
 
-    public void CatchExeption(System.Exception ex)
+    public void CatchExeption(Exception ex)
     {
-        ShowSilentMessage("Wystąpił bład aplikacji", EMessageType.Error);
+        ShowSilentMessage(Core.Properties.Resources.ApplicationErrorMessage, EMessageType.Error);
 
 #if DEBUG
         GetDialogService().ShowError(ex);
@@ -181,16 +178,18 @@ public class WareHouseApp : ObservableObject, IApp
 
     public void ReloadDatabase()
     {
-        _database = _databaseFactory.CreateDbContext();
-    }
+        if(_database == null)
+        {
+            _database = _databaseFactory.CreateDbContext();
+        }
+        //_database = _databaseFactory.CreateDbContext();  /// TODO: na razie wyłaczono ponieważ gdy już istniało jakieś powiązanie na innej karcie to nie mogło zostać zapisane 
 
-    private BackgroundWorker waitingWorker = new BackgroundWorker();
+    }
 
     private void CloseSplashForm()
     {
         if (_splashScreen != null)
         {
-            // Zamknij splash screen
             _splashScreen.Close();
             _splashScreen = null;
         }

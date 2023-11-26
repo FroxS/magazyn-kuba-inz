@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
 using System.Threading;
+using System.Windows.Controls;
 using Warehouse.Core.Interface;
 using Warehouse.EF.Migrations;
 using Warehouse.Models;
@@ -125,8 +128,14 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
 
     public T? GetById(Func<IQueryable<T>, IQueryable<T>> include, Guid id)
     {
+
+        //T item = _context.Set<T>().Find(id);
+
+        //_context.Entry(item);
         return GetItemsInclude(include).FirstOrDefault(x => x.ID == id);
+
     }
+
 
     /// <summary>
     /// Method to get one Tenity from databae by Id

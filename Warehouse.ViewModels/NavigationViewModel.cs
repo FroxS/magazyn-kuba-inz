@@ -12,6 +12,7 @@ using Warehouse.Core.Exeptions;
 using System.Collections.ObjectModel;
 using Warehouse.ViewModels.Navigation;
 using Warehouse.Models.Interfaces;
+using Warehouse.Models;
 
 namespace Warehouse.ViewModel;
 
@@ -24,6 +25,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
     private readonly IApp _app;
     private bool _canSetPrevPage = false;
     private bool _canSetNextPage = false;
+    private IBasePageViewModel _activePage;
 
     #endregion
 
@@ -48,7 +50,19 @@ public class NavigationViewModel : BaseViewModel, INavigation
         get => Pages?.FirstOrDefault(x => x.IsMain);
     }
 
-    public IBasePageViewModel ActivePage { get; set; }
+    public IBasePageViewModel ActivePage
+    {
+        get => _activePage;
+        set
+        {
+            if(_activePage != value && value != null)
+            {
+                _activePage = value;
+                _activePage.OnPageOpen();
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public ObservableCollection<IBasePageViewModel> Pages { get; protected set; } = new ObservableCollection<IBasePageViewModel>();
 
@@ -89,11 +103,22 @@ public class NavigationViewModel : BaseViewModel, INavigation
     {
         if (sender is IBasePageViewModel page && !page.IsMain)
         {
+            ClosePage(page);
+        }
+    }
+
+    private void ClosePage(IBasePageViewModel page)
+    {
+        if (!page.IsMain)
+        {
             page.OnPageClose();
 
             if (!page.CanChangePage)
                 return;
-            Pages.Remove(page);
+            int indeksPage = Pages.IndexOf(page);
+            ActivePage = Pages.FirstOrDefault(x => x.IsMain);
+            if (indeksPage > 0)
+                Pages.RemoveAt(indeksPage);
         }
     }
 
@@ -124,15 +149,13 @@ public class NavigationViewModel : BaseViewModel, INavigation
                         Pages[indeksPage] = pageVM;
                     }
                     ActivePage = Page;
-
                     Page.CloseRequest += Page_CloseRequest;
 
                     if (Page is IPageReloadViewModel reload)
                         reload.Reload();
                     OnPropertyChanged(nameof(Page));
                     OnPropertyChanged(nameof(Pages));
-                    OnPropertyChanged(nameof(ActivePage));
-                    Page?.OnPageOpen();
+                    
                     PageChanged?.Invoke(Page.Page);
                 }
             }
@@ -266,20 +289,40 @@ public class NavigationViewModel : BaseViewModel, INavigation
         var prevPage = Page;
         try
         {
-            _app.ReloadDatabase();
             page.IsMain = false;
             Pages.Add(page);
-            ActivePage = page;
             page.CloseRequest += Page_CloseRequest;
             if (Page is IPageReloadViewModel reload)
                 reload.Reload();
             OnPropertyChanged(nameof(Page));
             OnPropertyChanged(nameof(Pages));
             OnPropertyChanged(nameof(ActivePage));
-            page?.OnPageOpen();
+            ActivePage = page;
             PageChanged?.Invoke(page.Page);
             CanSetNextPage = _nextPages.Any();
             CanSetPrevPage = _prevPages.Any();
+        }
+        catch (Exception ex)
+        {
+            _app.CatchExeption(ex);
+        }
+    }
+
+    public void ChangePage(IBasePageViewModel page)
+    {
+        try 
+        { 
+            if (Pages.Contains(page) && ActivePage != page)
+            {
+                page.IsMain = false;
+                ActivePage = page;
+                PageChanged?.Invoke(page.Page);
+                OnPropertyChanged(nameof(Page));
+                OnPropertyChanged(nameof(Pages));
+                OnPropertyChanged(nameof(ActivePage));
+                CanSetNextPage = _nextPages.Any();
+                CanSetPrevPage = _prevPages.Any();
+            }
         }
         catch (Exception ex)
         {
@@ -316,6 +359,36 @@ public class NavigationViewModel : BaseViewModel, INavigation
             _prevPages.Push(Page);
             SetPage(nextPage, false);
         }
+    }
+
+    public void OpenOrder(Order order)
+
+    {
+        IBasePageViewModel? opend = Pages.FirstOrDefault(x => x is OrderEditAddPageViewModel openedOrder && openedOrder.Get().ID == order.ID);
+
+        if (opend == null)
+        {
+            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(_app, order);
+            AddPage(orderPage);
+        }
+        else
+            ChangePage(opend);
+    }
+
+    public IBasePageViewModel? GetOpenedOrder(Guid order)
+    {
+        return Pages.FirstOrDefault(x => x is OrderEditAddPageViewModel openedOrder && openedOrder.Get().ID == order); ;
+    }
+
+    public bool ExistOpenedOrder(Guid order) => GetOpenedOrder(order) != null;
+
+    public void CloseOrder(Order order)
+    {
+        IBasePageViewModel? page = GetOpenedOrder(order.ID);
+        if (page == null)
+            return;
+
+        ClosePage(page);
     }
 
     #endregion

@@ -1,12 +1,10 @@
 ﻿using Warehouse.Core.Interface;
-using Warehouse.ViewModel.Pages;
 using Warehouse.ViewModel.Service;
 using Warehouse.Models;
 using System.ComponentModel.DataAnnotations;
 using Warehouse.Models.Enums;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
-using System.Windows;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -23,7 +21,7 @@ public class OrderDataTabViewModel : BasePageViewModel
 
     #region Public properties
 
-    [Required(ErrorMessage = "Name is required.")]
+    [Required(ErrorMessageResourceName = "NameIsRequired")]
     public string? Name
     {
         get => _order.Name;
@@ -61,6 +59,8 @@ public class OrderDataTabViewModel : BasePageViewModel
         }
     }
 
+    public EOrderState State => _service.GetState(_order.ID);
+
     public double TotalPrice
     {
         get => _totalPrice;
@@ -69,6 +69,8 @@ public class OrderDataTabViewModel : BasePageViewModel
 
     public OrderEditAddPageViewModel Parent { get; }
 
+    public bool ToAdd { get; private set; }
+
     #endregion
 
     #region Commands
@@ -76,7 +78,7 @@ public class OrderDataTabViewModel : BasePageViewModel
     public ICommand GenerateWayCommand { get; protected set; }
     public ICommand ReservCommand { get; protected set; }
     public ICommand SetAsPreapredCommand { get; protected set; }
-
+    public ICommand SaveCommand { get; protected set; }
     #endregion
 
     #region Constructors
@@ -87,10 +89,11 @@ public class OrderDataTabViewModel : BasePageViewModel
     public OrderDataTabViewModel(OrderEditAddPageViewModel parent , IApp app): base(app)
     {
         Parent = parent;
-        Title = Warehouse.Core.Properties.Resources.Data;
-        GenerateWayCommand = new RelayCommand(() => GenerateWay());
-        ReservCommand = new RelayCommand(() => Parent.Reserv(), () => Parent.State == EOrderState.Created);
-        SetAsPreapredCommand = new RelayCommand(() => Parent.SetAsPreapred(), () => Parent.State == EOrderState.Reserved);
+        Title = Core.Properties.Resources.Data;
+        GenerateWayCommand = new RelayCommand(() => GenerateWay(), () => !ToAdd);
+        ReservCommand = new RelayCommand(() => Parent.Reserv(), () => Parent.State == EOrderState.Created && !ToAdd);
+        SetAsPreapredCommand = new RelayCommand(() => Parent.SetAsPreapred(), () => Parent.State == EOrderState.Reserved && !ToAdd);
+        SaveCommand = new RelayCommand(() => Parent.SaveAdded(), () => ToAdd);
     }
 
     #endregion
@@ -101,6 +104,9 @@ public class OrderDataTabViewModel : BasePageViewModel
     {
         try
         {
+            if (ToAdd)
+                return;
+
             ITab? tabOrderway = Parent.Items.FirstOrDefault(x => x.GetType() == typeof(OrderWayTabViewModel));
             WayResult result = Parent.GetWay();
             if (result == null)
@@ -132,9 +138,11 @@ public class OrderDataTabViewModel : BasePageViewModel
         catch (Exception ex) { Application.CatchExeption(ex); }
     }
 
-    public override void Load()
+    public override void OnPageOpen()
     {
         UpdatePrice();
+        ToAdd = Parent.ToAdd;
+        OnPropertyChanged(nameof(ToAdd));
     }
 
     #endregion

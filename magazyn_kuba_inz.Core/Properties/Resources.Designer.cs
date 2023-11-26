@@ -88,11 +88,29 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        public static string Application {
+            get {
+                return ResourceManager.GetString("Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application error.
         /// </summary>
         public static string ApplicationError {
             get {
                 return ResourceManager.GetString("ApplicationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An application error has occurred.
+        /// </summary>
+        public static string ApplicationErrorMessage {
+            get {
+                return ResourceManager.GetString("ApplicationErrorMessage", resourceCulture);
             }
         }
         
@@ -277,11 +295,65 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is incorrect.
+        /// </summary>
+        public static string EmailisIncorrect {
+            get {
+                return ResourceManager.GetString("EmailisIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login window not exist.
+        /// </summary>
+        public static string ErrorLoginWindowNotExist {
+            get {
+                return ResourceManager.GetString("ErrorLoginWindowNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main window not exist.
+        /// </summary>
+        public static string ErrorMainWindowNotExist {
+            get {
+                return ResourceManager.GetString("ErrorMainWindowNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum length is .
+        /// </summary>
+        public static string ErrorMaxLength {
+            get {
+                return ResourceManager.GetString("ErrorMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User is not active.
+        /// </summary>
+        public static string ErrorUserIsNotActive {
+            get {
+                return ResourceManager.GetString("ErrorUserIsNotActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while saving.
         /// </summary>
         public static string ErrorWhileSaving {
             get {
                 return ResourceManager.GetString("ErrorWhileSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to add order.
+        /// </summary>
+        public static string FailedToAddOrder {
+            get {
+                return ResourceManager.GetString("FailedToAddOrder", resourceCulture);
             }
         }
         
@@ -295,11 +367,38 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to prepared.
+        /// </summary>
+        public static string FailedToPrepared {
+            get {
+                return ResourceManager.GetString("FailedToPrepared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to remove.
         /// </summary>
         public static string FailedToRemove {
             get {
                 return ResourceManager.GetString("FailedToRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to reserved.
+        /// </summary>
+        public static string FailedToReserved {
+            get {
+                return ResourceManager.GetString("FailedToReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save.
+        /// </summary>
+        public static string FailedToSave {
+            get {
+                return ResourceManager.GetString("FailedToSave", resourceCulture);
             }
         }
         
@@ -376,6 +475,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string Log_in {
@@ -399,6 +507,15 @@ namespace Warehouse.Core.Properties {
         public static string Lp {
             get {
                 return ResourceManager.GetString("Lp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main settings.
+        /// </summary>
+        public static string MainSettings {
+            get {
+                return ResourceManager.GetString("MainSettings", resourceCulture);
             }
         }
         
@@ -457,6 +574,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name is required.
+        /// </summary>
+        public static string NameIsRequired {
+            get {
+                return ResourceManager.GetString("NameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next page.
         /// </summary>
         public static string NextPage {
@@ -480,6 +606,15 @@ namespace Warehouse.Core.Properties {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order is opened.
+        /// </summary>
+        public static string OrderIsOpened {
+            get {
+                return ResourceManager.GetString("OrderIsOpened", resourceCulture);
             }
         }
         
@@ -592,11 +727,20 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removed rder.
+        ///   Looks up a localized string similar to Removed order.
         /// </summary>
         public static string RemovedOrder {
             get {
                 return ResourceManager.GetString("RemovedOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed product.
+        /// </summary>
+        public static string RemovedProduct {
+            get {
+                return ResourceManager.GetString("RemovedProduct", resourceCulture);
             }
         }
         
@@ -691,11 +835,38 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Style.
+        /// </summary>
+        public static string Style {
+            get {
+                return ResourceManager.GetString("Style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Succesfull prepared.
+        /// </summary>
+        public static string SuccesfullPrepared {
+            get {
+                return ResourceManager.GetString("SuccesfullPrepared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Succesfull reserved.
+        /// </summary>
+        public static string SuccesfullReserved {
+            get {
+                return ResourceManager.GetString("SuccesfullReserved", resourceCulture);
             }
         }
         
@@ -723,6 +894,24 @@ namespace Warehouse.Core.Properties {
         public static string Suppliers {
             get {
                 return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User is empty.
+        /// </summary>
+        public static string UserIsEmpty {
+            get {
+                return ResourceManager.GetString("UserIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User settings.
+        /// </summary>
+        public static string UserSettings {
+            get {
+                return ResourceManager.GetString("UserSettings", resourceCulture);
             }
         }
         
@@ -759,6 +948,24 @@ namespace Warehouse.Core.Properties {
         public static string Way {
             get {
                 return ResourceManager.GetString("Way", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wayfinding.
+        /// </summary>
+        public static string Wayfinding {
+            get {
+                return ResourceManager.GetString("Wayfinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight discrepancy.
+        /// </summary>
+        public static string WeightDiscrepancy {
+            get {
+                return ResourceManager.GetString("WeightDiscrepancy", resourceCulture);
             }
         }
         

@@ -86,7 +86,7 @@ namespace Warehouse.ViewModel.Pages
             MoveToStateCommand = new RelayCommand<object[]>(MoveToState, (o) => SelectedItem != null && CanMove);
             AddNewCommand = new AsyncRelayCommand(AddItem, (o) => CanAddNew);
             CanAddNew = _service.CanAddProduct(Guid.Empty, state.State);
-            Load();
+            OnPageOpen();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Warehouse.ViewModel.Pages
                 _app.ShowSilentMessage($"Udało się dodać produkt", EMessageType.Ok);
             else
                 _app.ShowSilentMessage($"Nie udało sie dodac produktu", EMessageType.Error);
-            Load();
+            OnPageOpen();
         }
 
         private void MoveToState(object[] elements)
@@ -153,14 +153,14 @@ namespace Warehouse.ViewModel.Pages
                 _service.Save();
             else
                 _app.ShowSilentMessage(message);
-            Load();
+            OnPageOpen();
         }
 
         #endregion
 
         #region Public methods
 
-        public override void Load()
+        public override void OnPageOpen()
         {
             if (_state == null)
                 throw new ArgumentException("State is null");

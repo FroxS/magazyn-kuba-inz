@@ -34,4 +34,14 @@
     <Color x:Key="HoverBackgroundColor">#4a4a46</Color>
     <SolidColorBrush x:Key="HoverBackgroundColorBrush" Color="{DynamicResource HoverBackgroundColor}"/>
 
+
+    <Color x:Key="OrderCreatedColor">#FF4AE813</Color>
+    <SolidColorBrush x:Key="OrderCreatedColorBrush" Color="{DynamicResource OrderCreatedColor}"/>
+
+    <Color x:Key="OrderPreparedColor">#FF0384FB</Color>
+    <SolidColorBrush x:Key="OrderPreparedColorBrush" Color="{DynamicResource OrderPreparedColor}"/>
+
+    <Color x:Key="OrderReservedColor">#ed761a</Color>
+    <SolidColorBrush x:Key="OrderReservedColorBrush" Color="{DynamicResource OrderReservedColor}"/>
+
 </ResourceDictionary>

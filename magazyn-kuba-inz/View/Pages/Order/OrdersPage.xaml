@@ -11,7 +11,7 @@
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
                          xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
                          mc:Ignorable="d" 
-                         d:DataContext="{d:DesignInstance Type=pageVM:OrdersPageViewModel}"
+                         d:DataContext="{x:Static local:DesignOrdersPageViewModel.Instance}"
                          d:DesignHeight="500" d:DesignWidth="1000">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -33,8 +33,20 @@
                       SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static res:Resources.State}" 
-                                        Width="100"/>
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.State}" 
+                                            Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="3 0 0 0" Height="30"
+                                            ToolTip="{Binding State, UpdateSourceTrigger=PropertyChanged}">
+                                    <Path Data="{Binding State, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={conv:OrderStateToIconConventer}}"
+                                          Stretch="Uniform"
+                                          Margin="0 0 10 0"
+                                          Fill="{Binding State, Mode=OneWay,UpdateSourceTrigger=PropertyChanged, Converter={conv:OrderStateToColorConventer}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="{x:Static res:Resources.Name}" 
                                         Binding="{Binding Name}"
                                         Width="*"/>

@@ -1,4 +1,5 @@
-﻿using Warehouse.Core.Interface;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Repository.Interfaces;
 

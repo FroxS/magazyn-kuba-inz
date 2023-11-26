@@ -61,7 +61,7 @@ namespace Warehouse.ViewModel.Service
 
         #region Abstract methods
 
-        public abstract void Load();
+        public abstract void OnPageOpen();
 
         #endregion
     }

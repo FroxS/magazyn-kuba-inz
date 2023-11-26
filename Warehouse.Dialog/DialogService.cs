@@ -76,6 +76,8 @@ namespace Warehouse.Dialog
 
         public EDialogResult AskUser(string message, string title = "")
         {
+            if (string.IsNullOrEmpty(title))
+                title = Core.Properties.Resources.Question;
             return OpenDialog(new YesNoDialogViewModel(title, message));
         }
 

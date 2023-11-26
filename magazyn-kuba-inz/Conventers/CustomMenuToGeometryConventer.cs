@@ -26,41 +26,52 @@ public class CustomMenuToGeometryConventer : BaseValueConventer<CustomMenuToGeom
                 if (iconfromname != null && iconfromname is Geometry)
                     return iconfromname;
             }
-
-            switch (page) 
-            {
-                case EApplicationPage.DashBoard:
-                    return Application.Current.TryFindResource("HomeGeometry");
-                case EApplicationPage.Order:
-                    return Application.Current.TryFindResource("Order");
-                case EApplicationPage.WareHouseItems:
-                    return Application.Current.TryFindResource("WarehouseItems");
-                case EApplicationPage.Products:
-                    return Application.Current.TryFindResource("ProductsGeometry");
-                case EApplicationPage.Suppliers:
-                    return Application.Current.TryFindResource("SupplierHeometry");
-                case EApplicationPage.ProductGroups:
-                    return Application.Current.TryFindResource("CategoryGeometry");
-                case EApplicationPage.ProductStatuses:
-                    return Application.Current.TryFindResource("ProductStatus");
-                case EApplicationPage.ItemStates:
-                    return Application.Current.TryFindResource("ItemState");
-                case EApplicationPage.StorageUnits:
-                    return Application.Current.TryFindResource("Box");
-                case EApplicationPage.Racks:
-                    return Application.Current.TryFindResource("Rack");
-                case EApplicationPage.WareHouseCreator:
-                    return Application.Current.TryFindResource("Creator");
-                case EApplicationPage.Settings:
-                    return Application.Current.TryFindResource("SettingsGeometry");
-            }
+            return GetResourceFromPageType(page);
         }
+        if(value is EApplicationPage pg)
+            return GetResourceFromPageType(pg);
+
         return value;
     }
 
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value;
+    }
+
+    private object GetResourceFromPageType(EApplicationPage page)
+    {
+        switch (page)
+        {
+            case EApplicationPage.DashBoard:
+                return Application.Current.TryFindResource("HomeGeometry");
+            case EApplicationPage.Order:
+                return Application.Current.TryFindResource("Order");
+            case EApplicationPage.WareHouseItems:
+                return Application.Current.TryFindResource("WarehouseItems");
+            case EApplicationPage.Products:
+                return Application.Current.TryFindResource("ProductsGeometry");
+            case EApplicationPage.Suppliers:
+                return Application.Current.TryFindResource("SupplierHeometry");
+            case EApplicationPage.ProductGroups:
+                return Application.Current.TryFindResource("CategoryGeometry");
+            case EApplicationPage.ProductStatuses:
+                return Application.Current.TryFindResource("ProductStatus");
+            case EApplicationPage.ItemStates:
+                return Application.Current.TryFindResource("ItemState");
+            case EApplicationPage.StorageUnits:
+                return Application.Current.TryFindResource("Box");
+            case EApplicationPage.Racks:
+                return Application.Current.TryFindResource("Rack");
+            case EApplicationPage.WareHouseCreator:
+                return Application.Current.TryFindResource("Creator");
+            case EApplicationPage.Settings:
+                return Application.Current.TryFindResource("SettingsGeometry");
+            case EApplicationPage.EditAddOrder:
+                return Application.Current.TryFindResource("EditAddOrder");
+            default:
+                return null;
+        }
     }
 
 }

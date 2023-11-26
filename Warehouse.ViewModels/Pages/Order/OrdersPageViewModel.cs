@@ -139,10 +139,16 @@ public class OrdersPageViewModel : BasePageViewModel
     {
         try
         {
+            if (!_service.Save())
+            {
+                Application.ShowSilentMessage(Warehouse.Core.Properties.Resources.FailedToSave);
+                return;
+            }
             if (item == null)
                 return;
-            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(Application, item.Get());
-            Application.Navigation.AddPage(orderPage);
+
+
+            Application.Navigation.OpenOrder(item.Get());
         }
         catch (Exception ex)
         {
@@ -160,15 +166,11 @@ public class OrdersPageViewModel : BasePageViewModel
 
             if (!flag)
             {
-                Application.ShowSilentMessage(Warehouse.Core.Properties.Resources.ErrorWhileSaving);
+                Application.ShowSilentMessage(Core.Properties.Resources.ErrorWhileSaving);
                 return;
             }
-
             OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(Application, null);
-
             Application.Navigation.AddPage(orderPage);
-
-
         }
         catch (Exception ex)
         {
@@ -183,14 +185,18 @@ public class OrdersPageViewModel : BasePageViewModel
             return;
         try
         {  
-            
-            if (MessageBox.Show($"{Core.Properties.Resources.AreYouSure} ?", Core.Properties.Resources.Question, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (Application.GetDialogService().AskUser($"{Core.Properties.Resources.AreYouSure} ?") == EDialogResult.Yes)
             {
                 IsTaskRunning = true;
                 bool flag = true;
-                List<Order> index = new List<Order>();
-                foreach (Order pg in items)
+                List<OrderViewModel> index = new List<OrderViewModel>();
+                foreach (OrderViewModel pg in items)
                 {
+                    if (Application.Navigation.ExistOpenedOrder(pg.ID))
+                    {
+                        Application.ShowSilentMessage($"{Core.Properties.Resources.OrderIsOpened} : {pg.Name}", EMessageType.Warning);
+                        return;
+                    }
                     if (await _service.DeleteAsync(pg.ID))
                         index.Add(pg);
                     else
@@ -211,7 +217,7 @@ public class OrdersPageViewModel : BasePageViewModel
                 }
                 else
                 {
-                    Application.ShowSilentMessage(Core.Properties.Resources.FailedToRemove, EMessageType.Ok);
+                    Application.ShowSilentMessage(Core.Properties.Resources.SuccessfulRemoved, EMessageType.Ok);
                     _selectedItem = null;
                     OnPropertyChanged(nameof(Items));
                 }

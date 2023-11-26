@@ -8,6 +8,7 @@ using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
 using System.ComponentModel;
 using System.Windows.Data;
+using Warehouse.Models.Enums;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -106,6 +107,11 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     {
         get => _prepared;
         set { SetProperty(ref _prepared, value, nameof(Prepared)); }
+    }
+
+    public EOrderState State
+    {
+        get => _entity.State;
     }
 
     public virtual string SearchString
@@ -240,6 +246,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
             Items = new ObservableCollection<OrderProduct>(_orderService.GetProducts(_entity?.ID ?? Guid.Empty));
             Reserved = _orderService.IsReserved(_entity.ID);
             Prepared = _orderService.IsPrepared(_entity.ID);
+            _entity.State = _orderService.GetState(_entity.ID);
         }
     }
 

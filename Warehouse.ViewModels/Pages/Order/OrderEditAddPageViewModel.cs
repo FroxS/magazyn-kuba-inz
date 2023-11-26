@@ -1,7 +1,6 @@
 ﻿using Warehouse.Models;
 using Warehouse.Core.Interface;
 using Warehouse.ViewModel.Service;
-using System.Windows.Input;
 using Warehouse.Core.Helpers;
 using Warehouse.Core.Models;
 using Warehouse.Models.Enums;
@@ -44,6 +43,8 @@ public class OrderEditAddPageViewModel : BasePageViewModel
 
     public bool Enabled => CanEdit();
 
+    public bool ToAdd => _toAdd;
+
     public ObservableCollection<ITab> Items
     {
         get => _items;
@@ -53,7 +54,7 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     public ITab SelectedItem
     {
         get => _selectedItem;
-        set { SetProperty(ref _selectedItem, value, nameof(SelectedItem), () => value?.Load()); }
+        set { SetProperty(ref _selectedItem, value, nameof(SelectedItem), () => value?.OnPageOpen()); }
     }
 
     #endregion
@@ -97,7 +98,7 @@ public class OrderEditAddPageViewModel : BasePageViewModel
         CanChangePage = true;
         if (_toAdd )
         {
-            if(Application.GetDialogService().AskUser(Warehouse.Core.Properties.Resources.AskAddOrder + "?", Core.Properties.Resources.Question) == Models.Enums.EDialogResult.Yes)
+            if(Application.GetDialogService().AskUser(Core.Properties.Resources.AskAddOrder + "?", Core.Properties.Resources.Question) == EDialogResult.Yes)
             {
                 if (!_service.Add(_order))
                 {
@@ -106,28 +107,30 @@ public class OrderEditAddPageViewModel : BasePageViewModel
                 }
             }
             else
-            {
                 return;
-            }
         }
         else
-        {
             _service.Update(_order);
-        }
         _service.Save();
+        if (_toAdd)
+            Application.ReloadDatabase(); //
     }
 
     public override void OnPageOpen()
     {
         Items = new ObservableCollection<ITab>();
         Items.Add(new OrderDataTabViewModel(this, Application));
-        Items.Add(new OrderProductsTabViewModel(this, Application));
-        if (_order.OrderWay != null)
+        if (!_toAdd)
         {
-            var way = GetWay();
-            Items.Add(new OrderWayTabViewModel(this, Application, way));
-        }
-        SelectedItem = Items.FirstOrDefault();
+            Items.Add(new OrderProductsTabViewModel(this, Application));
+            if (_order.OrderWay != null)
+            {
+                var way = GetWay();
+                Items.Add(new OrderWayTabViewModel(this, Application, way));
+            }
+        } 
+        if(SelectedItem == null)
+            SelectedItem = Items.FirstOrDefault();
         
     }
 
@@ -142,10 +145,10 @@ public class OrderEditAddPageViewModel : BasePageViewModel
             IWareHouseService whSer = Application.GetService<IWareHouseService>();
             string? message = null;
             if (!_service.Reserv(_order, whSer, ref message))
-                Application.ShowSilentMessage(message ?? "Nie udało się zarezerować");
+                Application.ShowSilentMessage(message ?? Core.Properties.Resources.FailedToReserved);
             else
             {
-                Application.ShowSilentMessage("Udało się zarezerowwać", Models.Enums.EMessageType.Ok);
+                Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullReserved, EMessageType.Ok);
             }
             UpdateState();
         }
@@ -162,13 +165,13 @@ public class OrderEditAddPageViewModel : BasePageViewModel
             IWareHouseService whSer = Application.GetService<IWareHouseService>();
             WayResult wayResult = GetWay();
             if (!_service.SetAsPrepared(_order, whSer))
-                Application.ShowSilentMessage("Nie udało się przygotować");
+                Application.ShowSilentMessage(Core.Properties.Resources.FailedToPrepared);
             else
             {
                 _service.SetWay(wayResult.GetPath(), _order);
                 whSer.Save();
                 _service.Save();
-                Application.ShowSilentMessage("Udało się przygotować", Models.Enums.EMessageType.Ok);
+                Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullPrepared, EMessageType.Ok);
             }
             UpdateState();
         }
@@ -218,6 +221,33 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     }
 
     public Order Get() => _order;
+
+    internal void SaveAdded()
+    {
+        try
+        {
+            if (_toAdd)
+            {
+                if (!_service.Add(_order))
+                {
+                    Application.ShowSilentMessage(Core.Properties.Resources.FailedToAddOrder);
+                    return;
+                }
+                if (_service.Save())
+                {
+                    Title = _order?.Name;
+                    _toAdd = false;
+                    OnPageOpen();
+                }
+                else
+                    Application.ShowSilentMessage(Core.Properties.Resources.FailedToSave);
+            }
+        }catch(Exception ex)
+        {
+            Application.CatchExeption(ex);
+        }
+        
+    }
 
     #endregion
 }

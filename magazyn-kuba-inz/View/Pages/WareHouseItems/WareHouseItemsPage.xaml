@@ -14,28 +14,28 @@
                          d:DesignHeight="500" d:DesignWidth="1000">
 
     <Grid Margin="10">
-        <Border BorderThickness="1"
-                BorderBrush="{DynamicResource BorderColorBrush}">
-            <TabControl ItemsSource="{Binding States}"
+        <TabControl ItemsSource="{Binding States}"
                         SelectedItem="{Binding SelectedState, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Background="Transparent"
                         BorderThickness="0"
                         BorderBrush="{DynamicResource BorderColorBrush}">
-                <TabControl.Resources>
-                    <DataTemplate DataType="{x:Type pageVM:ProtuctStateTabViewModel}">
-                        <local:ProtuctStateTabView Padding="10"/>
-                    </DataTemplate>
-                </TabControl.Resources>
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type pageVM:ProtuctStateTabViewModel}">
+                    <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                        <local:ProtuctStateTabView Padding="5"/>
+                    </Border>
+                </DataTemplate>
+            </TabControl.Resources>
 
-                <TabControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type tab:ITab}">
-                        <TextBlock  >
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type tab:ITab}">
+                    <TextBlock  >
                             <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            
-                        </TextBlock>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-            </TabControl>
-        </Border>
+
+                    </TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
     </Grid>
 </service:BaseControlPage>

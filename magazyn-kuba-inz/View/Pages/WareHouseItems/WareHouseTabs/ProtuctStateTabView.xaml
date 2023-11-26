@@ -22,6 +22,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa produktu"
                                     MinWidth="200"
+                                    Width="*"
                                     Binding="{Binding Product.Name}"/>
             </DataGrid.Columns>
 
@@ -29,7 +30,7 @@
                 <ContextMenu >
                     <MenuItem Header="Przenieś do" ItemsSource="{Binding StatusesToMove, UpdateSourceTrigger=PropertyChanged}" >
                         <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}" >
                                 <Setter Property="Header" Value="{Binding Name}"/>
                                 <Setter Property="Command" Value="{Binding DataContext.MoveToStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
                                 <!--<Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>-->

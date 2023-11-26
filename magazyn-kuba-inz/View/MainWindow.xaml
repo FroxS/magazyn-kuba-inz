@@ -87,7 +87,7 @@
                                                           Source={x:Static helpers:AppHelper.Instance}, 
                                                           UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, 
                                                           FallbackValue=Testowa wiadomość}"/>
- 
+
                                 <controls2:ButtonPath IconPath="{StaticResource Exit}"
                                                       Width="20"
                                                       Height="20"
@@ -98,7 +98,6 @@
                                                                         UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"/>
 
                             </Grid>
-
 
                             <TabControl ItemsSource="{Binding Navigation.Pages,
                                                               Source={x:Static helpers:AppHelper.Instance}, 
@@ -130,9 +129,19 @@
                                 <TabControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type tab:IBasePageViewModel}">
                                         <Grid>
-                                            <TextBlock Margin="0 0 10 0">
-                                                <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            </TextBlock>
+                                            <StackPanel Orientation="Horizontal"
+                                                        Height="20">
+
+                                                <Path Data="{Binding Page, Converter={conventers:CustomMenuToGeometryConventer}}"
+                                                     Fill="{DynamicResource FontColorBrush}"
+                                                      Stretch="Uniform"/>
+
+                                                <TextBlock Margin="10 0 10 0"
+                                                           VerticalAlignment="Center">
+                                                    <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            
 
                                             <TextBlock HorizontalAlignment="Right"
                                                         VerticalAlignment="Top"

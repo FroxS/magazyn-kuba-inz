@@ -1,12 +1,11 @@
 ﻿using Warehouse.Repository.Interfaces;
 using Warehouse.EF;
 using Warehouse.Models;
-using Microsoft.EntityFrameworkCore;
 using Warehouse.Core.Interface;
 
 namespace Warehouse.Repository;
 
-internal class OrderProductRepository : BaseRepository<OrderProduct,WarehouseDbContext>, IOrderProductRepository
+internal class OrderRepository : BaseRepository<Order, WarehouseDbContext>, IOrderRepository
 {
     #region Constructros
 
@@ -14,7 +13,7 @@ internal class OrderProductRepository : BaseRepository<OrderProduct,WarehouseDbC
     /// Default constructro
     /// </summary>
     /// <param name="context">Context of database</param>
-    public OrderProductRepository(IApp app) : base(app)
+    public OrderRepository(IApp app) : base(app)
     {
 
     }
@@ -22,7 +21,6 @@ internal class OrderProductRepository : BaseRepository<OrderProduct,WarehouseDbC
     #endregion
 
     #region Public methods
-
 
     #endregion
 }

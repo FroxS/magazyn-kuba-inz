@@ -12,6 +12,12 @@ namespace Warehouse.Core.Helpers
 
         #endregion
 
+        #region Helpers
+
+        internal static Action<Exception>? DefaultActionOnError { get; set; }
+
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
@@ -31,11 +37,34 @@ namespace Warehouse.Core.Helpers
             _canExecute = canExecute;
         }
 
-        public virtual bool CanExecute(object? parameter) => _canExecute == null || _canExecute((T)parameter);
+        public virtual bool CanExecute(object? parameter) 
+        {
+            try
+            {
+                return _canExecute == null || _canExecute((T)parameter);
+            }
+            catch(Exception ex)
+            {
+                DefaultActionOnError?.Invoke(ex);
+                return false;
+            }
+            
+        }
 
-        public virtual void Execute(object? parameter) => _execute((T)parameter);
+        public virtual void Execute(object? parameter) 
+        {
+            //try
+            //{
+                _execute((T)parameter);
+            //}
+            //catch (Exception ex)
+            //{
+            //    DefaultActionOnError?.Invoke(ex);
+            //}
+            
+        }
 
-        public event EventHandler CanExecuteChanged
+        public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
@@ -64,7 +93,7 @@ namespace Warehouse.Core.Helpers
 
         private readonly Func<Task> _callback;
 
-        protected readonly Predicate<object> _canExecute;
+        protected readonly Predicate<object>? _canExecute;
 
         #endregion
 
@@ -80,7 +109,7 @@ namespace Warehouse.Core.Helpers
             }
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
         #endregion
 
@@ -103,7 +132,7 @@ namespace Warehouse.Core.Helpers
 
         #region Private methods
 
-        protected async Task ExecuteAsync(object parameter)
+        protected async Task ExecuteAsync(object? parameter)
         {
             await _callback();
         }
@@ -112,9 +141,25 @@ namespace Warehouse.Core.Helpers
 
         #region Public methods
 
-        public bool CanExecute(object parameter) => !IsExecuting && (_canExecute == null || _canExecute.Invoke(parameter));
+        public bool CanExecute(object? parameter)
+        {
+            try
+            {
+                return !IsExecuting && (_canExecute == null || _canExecute.Invoke(parameter));
 
-        public async void Execute(object parameter)
+            }catch(Exception ex)
+            {
+                if (_onException != null)
+                    _onException?.Invoke(ex);
+                else
+                    RelayCommand.DefaultActionOnError?.Invoke(ex);
+
+                return false;
+            }
+            
+        }
+
+        public async void Execute(object? parameter)
         {
             IsExecuting = true;
             try
@@ -123,7 +168,10 @@ namespace Warehouse.Core.Helpers
             }
             catch (Exception ex)
             {
-                _onException?.Invoke(ex);
+                if (_onException != null)
+                    _onException?.Invoke(ex);
+                else
+                    RelayCommand.DefaultActionOnError?.Invoke(ex);
             }
 
             IsExecuting = false;
@@ -159,7 +207,7 @@ namespace Warehouse.Core.Helpers
             }
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 
         #endregion
 
@@ -175,25 +223,32 @@ namespace Warehouse.Core.Helpers
 
         #region Private methods
 
-        protected async Task ExecuteAsync(object parameter)
+        protected async Task ExecuteAsync(object? parameter)
         {
-            if(parameter is T par)
+            try
             {
-                await _callback(par);
+                if (parameter is T par)
+                    await _callback(par);
+                else
+                    await _callback(default(T));
             }
-            else
+            catch(Exception ex)
             {
-                await _callback(default(T));
+                if (_onException != null)
+                    _onException?.Invoke(ex);
+                else
+                    RelayCommand.DefaultActionOnError?.Invoke(ex);
             }
+            
         }
 
         #endregion
 
         #region Public methods
 
-        public bool CanExecute(object parameter) => !IsExecuting;
+        public bool CanExecute(object? parameter) => !IsExecuting;
 
-        public async void Execute(object parameter)
+        public async void Execute(object? parameter)
         {
             IsExecuting = true;
 
@@ -203,7 +258,10 @@ namespace Warehouse.Core.Helpers
             }
             catch (Exception ex)
             {
-                _onException?.Invoke(ex);
+                if (_onException != null)
+                    _onException?.Invoke(ex);
+                else
+                    RelayCommand.DefaultActionOnError?.Invoke(ex);
             }
 
             IsExecuting = false;

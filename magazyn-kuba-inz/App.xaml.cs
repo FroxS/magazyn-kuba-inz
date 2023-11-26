@@ -13,6 +13,7 @@ using Warehouse.Dialog;
 using Warehouse.ViewModel;
 using Warehouse.ViewModel.Pages;
 using Warehouse.ViewModel.Login;
+using Warehouse.Core.Models.Settings;
 
 namespace Warehouse;
 
@@ -62,6 +63,10 @@ public partial class App : System.Windows.Application
         
         services.AddSingleton<IDialogService, DialogService>();
         services.AddTransient((o) => { return Dispatcher; });
+
+        /// Settings
+        services.AddSingleton<UserSettings>();
+        services.AddSingleton<GlobalSettings>();
     }
 
     private void PrepareApplication(IServiceCollection services)

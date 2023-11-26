@@ -10,7 +10,10 @@
         Foreground="{DynamicResource FontColorBrush}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        MaxWidth="600"
+        MaxHeight="600">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding OKCommand}"/>
         <KeyBinding Key="Esc" Command="{Binding ExitCommand}"/>
@@ -21,27 +24,27 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
+        <ScrollViewer Grid.Row="0"
               Margin="20,10"
-              MinWidth="200"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
-            <TextBlock Text="{Binding Message}" 
+            <TextBlock Text="{Binding Message, UpdateSourceTrigger=PropertyChanged, FallbackValue=Tes}" 
                        Grid.Row="0"
                        TextWrapping="Wrap"/>
 
-            <Grid.ContextMenu>
+            <ScrollViewer.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="{x:Static res:Resources.Coppy}" 
                               Command="{Binding CoppyCommand}"/>
                 </ContextMenu>
-            </Grid.ContextMenu>
+            </ScrollViewer.ContextMenu>
 
-        </Grid>
+        </ScrollViewer>
 
         <Button Content="OK" Grid.Row="1"
                 VerticalAlignment="Center"
                 Command="{Binding OKCommand}"
-                MaxWidth="100"/>
+                Width="50"
+                Height="30"/>
     </Grid>
 </Window>

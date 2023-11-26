@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Warehouse.Core.Delegate;
+using Warehouse.Models;
 using Warehouse.Models.Page;
 
 namespace Warehouse.Core.Interface;
@@ -13,9 +14,12 @@ public interface INavigation
     IBasePageViewModel ActivePage { get; set; }
     event PageChanged PageChanged;
     void SetPage(EApplicationPage page);
-    //void SetPage(IBasePageViewModel pageVM);
     void SetNextPage();
     void SetPrevPage();
     void AddPage(IBasePageViewModel pag);
-    //void UpdateViewModel(IBasePageViewModel vm);
+    void ChangePage(IBasePageViewModel page);
+    void OpenOrder(Order order);
+    IBasePageViewModel? GetOpenedOrder(Guid order);
+    bool ExistOpenedOrder(Guid order);
+    void CloseOrder(Order order);
 }

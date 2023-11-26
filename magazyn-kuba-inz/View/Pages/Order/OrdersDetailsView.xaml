@@ -46,8 +46,8 @@
                     
                     <StackPanel HorizontalAlignment="Right"
                                 Orientation="Horizontal">
-                        <controls:ButtonPath IconPath="{StaticResource Reserved}"
-                                         Foreground="{DynamicResource WrongColorBrush}"
+                        <controls:ButtonPath IconPath="{StaticResource OrderReserved}"
+                                         Foreground="{DynamicResource OrderReservedColorBrush}"
                                          Command="{Binding ReservCommand}"
                                              SnapsToDevicePixels="True"
                                          Width="50"
@@ -55,8 +55,8 @@
                                          IsEnabled="{Binding Reserved,Converter={conv:InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
                                          Visibility="{Binding Prepared,Converter={conv:BoolToVisibleConventer}, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <controls:ButtonPath IconPath="{StaticResource Prepared}"
-                                         Foreground="{DynamicResource GoodColorBrush}"
+                        <controls:ButtonPath IconPath="{StaticResource OrderPrepared}"
+                                         Foreground="{DynamicResource OrderPreparedColorBrush}"
                                          Command="{Binding SetAsPreapredCommand}"
                                          ToolTip="{x:Static res:Resources.SetAsDone}"
                                          Width="80"

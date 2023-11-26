@@ -8,5 +8,5 @@ public interface ITab
     string Title { get; }
     ICommand CloseTabCommand { get; }
     event EventHandler CloseRequest;
-    void Load();
+    void OnPageOpen();
 }

@@ -51,13 +51,7 @@ public class BasePageViewModel : Tab, IBasePageViewModel
 
     public virtual void OnPageClose() { }
 
-    public virtual void OnPageOpen() { }
-
-    public override void Load()
-    {
-        
-    }
-
+    public override void OnPageOpen() { }
 
     #endregion
 

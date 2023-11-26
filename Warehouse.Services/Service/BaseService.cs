@@ -107,8 +107,11 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
         try
         {
             _repozitory.Update(model);
+        }catch(Exception ex)
+        {
+            _app.CatchExeption(ex);
         }
-        catch (Exception ex) {  }
+        
     }
 
     public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -174,10 +177,6 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
         actionInTransact.Invoke(_repozitory);
         EndTransaction();
     }
-
-
-
-    
 
     #endregion
 }

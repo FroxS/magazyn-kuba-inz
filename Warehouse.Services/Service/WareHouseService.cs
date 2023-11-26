@@ -58,11 +58,15 @@ internal class WareHouseService : IWareHouseService
         if ((newStateValue & (oldStateValue * 2)) == newStateValue)
             return true;
         else if ((oldStateValue & (newStateValue * 2)) == oldStateValue)
-        {
             return true;
-        }  
         else
-            return false;
+        {
+            if (newState > oldState)
+                return true;
+
+            return true; /*false*/ /// Pominęto sprawdzanie czy jest to poprzeni san. Zostawiono to tylko dla podnoszenia stanów; 
+        }
+
     }
 
     #endregion
@@ -122,7 +126,7 @@ internal class WareHouseService : IWareHouseService
         if (targetStateType >= EState.Reserved)
         {
             if (item.ID_OrderItem == null || !_orderProductRepo.Exist(item.ID_OrderItem.Value))
-                return $"Produkt powinein mieć przypisany produkt z oferty z stanem {targetState.Name}";
+                return $"Produkt nie ma przypsanego prduktu z oferty {targetState.Name}";
         }
         else
         {
@@ -216,7 +220,6 @@ internal class WareHouseService : IWareHouseService
         foreach (Guid packageId in removedPackage)
         {
             StorageItemPackage? package = _pagkageRepo.GetById(x => x.Include(i => i.Items), packageId);
-
             if (package != null && package.Items.Count == 0)
                 _pagkageRepo.Delete(packageId);
         }

@@ -70,10 +70,10 @@ public interface IOrderService : IBaseService<Order>
     bool Reserv(Order order, IWareHouseService service, ref string message);
     bool IsReserved(Guid id);
     bool SetAsPrepared(Order order, IWareHouseService service);
-
     bool IsPrepared(Guid id);
     double TotalPrice(Order order);
     double TotalPrice(Guid id);
+    EOrderState GetState(Guid id);
 }
 public interface IOrderProductService : IBaseService<OrderProduct> { }
 public interface IStorageUnitService : IBaseService<StorageUnit> { }
