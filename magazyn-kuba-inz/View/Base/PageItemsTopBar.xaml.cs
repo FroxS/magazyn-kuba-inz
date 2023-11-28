@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Warehouse.View.Pages
 {
@@ -7,9 +8,24 @@ namespace Warehouse.View.Pages
     /// </summary>
     public partial class PageItemsTopBar : UserControl
     {
+        #region Properties
+
+        
+
+        #endregion
+
+        #region Dependecy
+
+       
+        #endregion
+
+        #region Constructor
+
         public PageItemsTopBar()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
 }

@@ -24,6 +24,7 @@ namespace Warehouse.Repository
             services.AddTransient<IStorageItemPackageRepository, StorageItemPackageRepository>();
             services.AddTransient<IStorageItemRepository, StorageItemRepository>();
             services.AddTransient<IHallRepository, HallRepository>();
+            services.AddTransient<IAppSettingsRepository, AppSettingsRepository>();
             return services;
         }
 

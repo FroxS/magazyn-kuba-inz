@@ -10,6 +10,8 @@ using Warehouse.Core.Helpers;
 using Warehouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.EF;
+using Warehouse.Theme;
+using Warehouse.Core.Models.Settings;
 
 namespace Warehouse;
 
@@ -59,23 +61,32 @@ public class WareHouseApp : ObservableObject, IApp
 
     #region Constructors
 
-    public WareHouseApp(System.Windows.Application app, IServiceProvider services)
+    public WareHouseApp(Application app, IServiceProvider services)
     {
         this.app = app;
         _services = services;
         _databaseFactory = services.GetRequiredService<IDbContextFactory<WarehouseDbContext>>();
         ReloadDatabase();
         RelayCommand.DefaultActionOnError = (ex) => CatchExeption(ex);
+
     }
 
     #endregion
 
     #region Public Methods
 
+    public UserSettings GetUserSettings()
+    {
+        var settings = GetService<UserSettings>();
+        settings.Load();
+        return settings;
+    }
+
     public Dispatcher GetDispather() => _services.GetRequiredService<Dispatcher>();
 
     public async Task Run()
     {
+        SetTheme(GetUserSettings()?.ColorScheme ?? ColorScheme.Dark);
         bool? flag = false;
         bool test = true;
         if (System.Diagnostics.Debugger.IsAttached && test)
@@ -83,7 +94,9 @@ public class WareHouseApp : ObservableObject, IApp
             flag = true;
             await LoginAsync(new LoginResource("admin", "admin"));
         }
-        else
+
+
+        if (!IsUserLogin())
         {
             _services.GetRequiredService<ILoginWindow>();
             ILoginWindow login = _services.GetRequiredService<ILoginWindow>();
@@ -106,6 +119,7 @@ public class WareHouseApp : ObservableObject, IApp
         }
         else
         {
+            ClearSilentMessage();
             IMainWindow window = _services.GetRequiredService<IMainWindow>();
             if (window == null)
                 throw new Exception(Core.Properties.Resources.ErrorMainWindowNotExist);
@@ -120,6 +134,11 @@ public class WareHouseApp : ObservableObject, IApp
     public void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning)
     {
         _services.GetRequiredService<IMessageService>().AddMessage(message, type);
+    }
+
+    public void ClearSilentMessage()
+    {
+        _services.GetRequiredService<IMessageService>().Clear() ;
     }
 
     public IDialogService GetDialogService() => _services.GetRequiredService<IDialogService>();
@@ -144,12 +163,20 @@ public class WareHouseApp : ObservableObject, IApp
 
     public async Task<IUser> LoginAsync(LoginResource user)
     {
-        User = await userService.Login(user);
-        if (!User.Active)
+        try
+        {
+            User = await userService.Login(user);
+            if (!User.Active)
+            {
+                User = null;
+                throw new DataException(Core.Properties.Resources.ErrorUserIsNotActive);
+            }
+        }catch(System.Exception ex)
         {
             User = null;
-            throw new DataException(Core.Properties.Resources.ErrorUserIsNotActive);
+            CatchExeption(ex);
         }
+        
         return User;
     }
 
@@ -195,16 +222,14 @@ public class WareHouseApp : ObservableObject, IApp
         }
     }
 
-    public void SetTheme(bool dark = true)
+    public void SetTheme(ColorScheme corloScheme = ColorScheme.Dark)
     {
         try
         {
-            Theme.ColorsNavigation.ChangeColor(
-                app,
-                dark ? 
-                    Theme.ColorScheme.Dark :
-                    Theme.ColorScheme.Light
-            );
+            UserSettings settings = GetUserSettings();
+            settings.ColorScheme = corloScheme;
+            settings.Save();
+            Theme.ColorsNavigation.ChangeColor( app, corloScheme );
         }catch(Exception ex)
         {
             CatchExeption(ex);

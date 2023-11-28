@@ -65,6 +65,11 @@ public class MessageService : ObservableObject, IMessageService
         Message = message;
     }
 
+    public void Clear()
+    {
+        HideMessageCommand.Execute(null);
+    }
+
     #endregion
 
 }

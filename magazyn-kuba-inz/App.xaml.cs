@@ -102,6 +102,8 @@ public partial class App : System.Windows.Application
         services.AddSingleton<WareHouseCreatorPageViewModel>();
         services.AddSingleton<RacksPageViewModel>();
         services.AddSingleton<OrdersPageViewModel>();
+        services.AddSingleton<UserPageViewModel>();
+        services.AddSingleton<UsersPageViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)

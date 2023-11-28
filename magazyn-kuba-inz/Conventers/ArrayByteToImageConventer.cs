@@ -1,9 +1,7 @@
-﻿using Warehouse.Core.Models;
-using Warehouse.Helper;
+﻿using Warehouse.Helper;
 using Warehouse.Theme.Conventers;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -17,7 +15,10 @@ public class ArrayByteToImageConventer : BaseValueConventer<ArrayByteToImageConv
 {
     public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        ImageSource image = null;
+        ImageSource? image = null;
+
+        if (value is ImageSource)
+            return value;
 
         if(value is byte[] byt)
         {
@@ -36,7 +37,7 @@ public class ArrayByteToImageConventer : BaseValueConventer<ArrayByteToImageConv
                     {
                         if(t.Value is Geometry g)
                         {
-                            image = new DrawingImage(new GeometryDrawing(Brushes.Black, new Pen(), g));
+                            image = g.GetImage(); 
                         }
                     }
                 }
@@ -44,6 +45,7 @@ public class ArrayByteToImageConventer : BaseValueConventer<ArrayByteToImageConv
         }
         return image;
     }
+
 
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {

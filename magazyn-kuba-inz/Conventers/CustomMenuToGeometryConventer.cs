@@ -70,7 +70,7 @@ public class CustomMenuToGeometryConventer : BaseValueConventer<CustomMenuToGeom
             case EApplicationPage.EditAddOrder:
                 return Application.Current.TryFindResource("EditAddOrder");
             default:
-                return null;
+                return Application.Current.TryFindResource(page.ToString());
         }
     }
 

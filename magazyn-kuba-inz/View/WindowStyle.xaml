@@ -79,7 +79,9 @@
                                                 Orientation="Horizontal">
 
                                         <!--User-->
-                                        <StackPanel Margin="0 5 20 0">
+                                        <StackPanel Margin="0 5 20 0"
+                                                    Background="{DynamicResource SecondBackgroundColorBrush}"
+                                                    Orientation="Horizontal">
                                             <TextBlock Text="{Binding Application.User.Name,
                                                               Source={x:Static help:AppHelper.Instance}, 
                                                               UpdateSourceTrigger=PropertyChanged,
@@ -87,15 +89,32 @@
                                                         VerticalAlignment="Center"
                                                         Margin="10"/>
 
-                                            <Border Margin="10,0"
+                                            <Border Margin="10,5"
                                                     BorderThickness="1"
+                                                    x:Name="border"
                                                     BorderBrush="{DynamicResource BorderColorBrush}"
                                                     CornerRadius="20">
                                                 <Image Source="{Binding Application.User.Image,
                                                        Source={x:Static help:AppHelper.Instance}, 
                                                        UpdateSourceTrigger=PropertyChanged,
-                                                       Converter={conv:ArrayByteToImageConventer}}"/>
+                                                       Converter={conv:ArrayByteToImageConventer}}"
+                                                       Stretch="Uniform"/>
                                             </Border>
+
+                                            <StackPanel.Style>
+                                                <Style TargetType="{x:Type StackPanel}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Cursor" Value="Hand"/>
+                                                            <Setter Property="Background" Value="{DynamicResource HoverBackgroundColorBrush}"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <StackPanel.InputBindings>
+                                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditUserCommand}"/>
+                                            </StackPanel.InputBindings>
+
                                         </StackPanel>
 
           

@@ -16,6 +16,11 @@ public class IsEmailAttribute : ValidationAttribute
 
     }
 
+    public IsEmailAttribute() : base()
+    {
+
+    }
+
     #endregion
 
 

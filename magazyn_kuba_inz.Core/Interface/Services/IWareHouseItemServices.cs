@@ -1,20 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using Warehouse.Core.Helpers;
-using Warehouse.Core.Interface;
 using Warehouse.Core.Models;
+using Warehouse.Core.Models.Settings;
 using Warehouse.Core.Resources;
 using Warehouse.Models;
 using Warehouse.Models.Enums;
-using Warehouse.Models.Interfaces;
 
 namespace Warehouse.Core.Interface;
 
-public interface IUserService
+public interface IUserService : IBaseService<User>
 {
     Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
-
     Task<List<User>> GetUsers(CancellationToken cancellationToken = default);
+    bool ChangePassword(ChangePassworldResource resource);
 }
 
 public interface IProductService : IBaseService<Product> 
@@ -38,7 +37,6 @@ public interface IProductGroupService : IBaseService<ProductGroup>
 
 public interface ISupplierService : IBaseService<Supplier>
 {
-    Supplier Add(Supplier supplier);
 }
 
 public interface IItemStateService : IBaseService<ItemState>
@@ -99,5 +97,12 @@ public interface IHallService : IBaseService<Hall>
     bool UpdatehHllObject(HallObject obj);
 
     Hall GetHall(HallObject obj);
+}
+
+public interface IAppSettingsService
+{
+    GlobalSettings GetSettings();
+
+    void SaveSettings(GlobalSettings settings);
 }
 

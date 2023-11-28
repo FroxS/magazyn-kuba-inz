@@ -70,6 +70,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -151,6 +160,24 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check data.
+        /// </summary>
+        public static string CheckData {
+            get {
+                return ResourceManager.GetString("CheckData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color.
         /// </summary>
         public static string Color {
@@ -160,7 +187,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CompletionDate.
+        ///   Looks up a localized string similar to Completion date.
         /// </summary>
         public static string CompletionDate {
             get {
@@ -174,6 +201,24 @@ namespace Warehouse.Core.Properties {
         public static string Confirm {
             get {
                 return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password is required.
+        /// </summary>
+        public static string ConfirmPasswordIsRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordIsRequired", resourceCulture);
             }
         }
         
@@ -304,6 +349,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is required.
+        /// </summary>
+        public static string EmailIsRequired {
+            get {
+                return ResourceManager.GetString("EmailIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login window not exist.
         /// </summary>
         public static string ErrorLoginWindowNotExist {
@@ -327,6 +381,15 @@ namespace Warehouse.Core.Properties {
         public static string ErrorMaxLength {
             get {
                 return ResourceManager.GetString("ErrorMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passwords are not the same.
+        /// </summary>
+        public static string ErrorPasswordsAreNotTheSame {
+            get {
+                return ResourceManager.GetString("ErrorPasswordsAreNotTheSame", resourceCulture);
             }
         }
         
@@ -502,6 +565,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login is required.
+        /// </summary>
+        public static string LoginIsRequired {
+            get {
+                return ResourceManager.GetString("LoginIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lp.
         /// </summary>
         public static string Lp {
@@ -561,6 +633,15 @@ namespace Warehouse.Core.Properties {
         public static string MaxWidth {
             get {
                 return ResourceManager.GetString("MaxWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password changed successfully.
+        /// </summary>
+        public static string MessagePasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("MessagePasswordChangedSuccessfully", resourceCulture);
             }
         }
         
@@ -637,11 +718,29 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password is required.
+        /// </summary>
+        public static string PasswordIsRequired {
+            get {
+                return ResourceManager.GetString("PasswordIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string Paste {
             get {
                 return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal data.
+        /// </summary>
+        public static string PersonalData {
+            get {
+                return ResourceManager.GetString("PersonalData", resourceCulture);
             }
         }
         
@@ -750,6 +849,24 @@ namespace Warehouse.Core.Properties {
         public static string ReserveProducts {
             get {
                 return ResourceManager.GetString("ReserveProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string Roles {
+            get {
+                return ResourceManager.GetString("Roles", resourceCulture);
             }
         }
         
@@ -907,6 +1024,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User settings.
         /// </summary>
         public static string UserSettings {
@@ -975,6 +1101,15 @@ namespace Warehouse.Core.Properties {
         public static string Width {
             get {
                 return ResourceManager.GetString("Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong email.
+        /// </summary>
+        public static string WrongEmail {
+            get {
+                return ResourceManager.GetString("WrongEmail", resourceCulture);
             }
         }
         

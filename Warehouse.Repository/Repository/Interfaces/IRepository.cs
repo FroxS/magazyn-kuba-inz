@@ -25,7 +25,8 @@ public interface IProductRepository : IBaseRepository<Product>
 }
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<User> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+    Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+    User? GetByName(string name);
 }
 public interface IImageRepository : IBaseRepository<WareHouseImage>
 {
@@ -37,3 +38,4 @@ public interface IStorageItemPackageRepository : IBaseRepository<StorageItemPack
 public interface IRackRepository : IBaseRepository<Rack> { }
 public interface IStorageItemRepository : IBaseRepository<StorageItem> { }
 public interface IHallRepository : IBaseRepository<Hall> { }
+public interface IAppSettingsRepository : IBaseRepository<AppSettings> { }

@@ -15,4 +15,6 @@ public enum EApplicationPage
     StorageUnits,
     Order,
     EditAddOrder,
+    User,
+    Users
 }

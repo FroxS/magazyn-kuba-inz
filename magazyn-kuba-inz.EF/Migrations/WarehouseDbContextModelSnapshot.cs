@@ -37,6 +37,29 @@ namespace Warehouse.EF.Migrations
                     b.ToTable("ProductWareHouseImage");
                 });
 
+            modelBuilder.Entity("Warehouse.Models.AppSettings", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Lp")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AppSettings");
+                });
+
             modelBuilder.Entity("Warehouse.Models.Hall", b =>
                 {
                     b.Property<Guid>("ID")

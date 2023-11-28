@@ -24,10 +24,10 @@ public class LoginViewModel : BaseViewModel
 
     public IUser? User { get; private set; }
 
-    [Required(ErrorMessage = "Login is required.")]
+    [Required(ErrorMessageResourceName = "LoginIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources) )]
     public string? Login { get => login; set { login = value; OnPropertyChanged(nameof(Login)); } }
 
-    [Required(ErrorMessage = "Password is required.")]
+    [Required(ErrorMessageResourceName = "PasswordIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     public string? Password { get => password; set { password = value; OnPropertyChanged(nameof(Password)); } }
 
     #endregion

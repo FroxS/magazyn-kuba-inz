@@ -26,6 +26,7 @@ namespace Warehouse.Service
             services.AddTransient<IStorageItemService, StorageItemService>();
             services.AddTransient<IHallService, HallService>();
             services.AddSingleton<IMessageService,MessageService>();
+            services.AddSingleton<IAppSettingsService, AppSettingsService>();
             return services;
         }
 

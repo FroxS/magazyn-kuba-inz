@@ -123,6 +123,7 @@
         </Style.Triggers>
     </Style>
 
+
     <Style x:Key="FormTextBoxImage" 
            TargetType="{x:Type controls:TextBoxImage}" 
            BasedOn="{StaticResource {x:Type controls:TextBoxImage}}">
@@ -276,7 +277,7 @@
                                            VerticalAlignment="Center"
                                            Visibility="{TemplateBinding attat:HasTextProperty.Value, Converter={conv:BoolToVisibleConventer}}"
                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                           Foreground="{TemplateBinding Foreground}">
+                                           Foreground="{DynamicResource BorderColorBrush}">
                                 </TextBlock>
                             </Grid>
                         </Border>

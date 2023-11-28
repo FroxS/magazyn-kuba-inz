@@ -139,7 +139,7 @@
                                     <PasswordBox Grid.Column="1"
                                                  Height="40"
                                                  Width="300"
-                                                 Tag="{x:Static res:Resources.Login}"
+                                                 Tag="{x:Static res:Resources.Password}"
                                                  Style="{StaticResource InputPasswordBox}"
                                                  attat:PasswordBoxAssistant.BindPassword="True"
                                                  attat:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
@@ -149,13 +149,13 @@
                                                                                                     ValidatesOnExceptions=True}"/>
                                 </Grid>
 
-                                <Grid Grid.Row="2" Margin="0,20">
+                                <Grid Grid.Row="3" Margin="0,20">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Content="{x:Static res:Resources.Password}"
+                                    <Label Content="{x:Static res:Resources.ConfirmPassword}"
                                            FontSize="14"
                                            VerticalAlignment="Center"
                                            Margin="5 0 20 0"
@@ -163,7 +163,7 @@
                                     <PasswordBox Grid.Column="1"
                                                  Height="40"
                                                  Width="300"
-                                                 Tag="{x:Static res:Resources.Login}"
+                                                 Tag="{x:Static res:Resources.ConfirmPassword}"
                                                  Style="{StaticResource InputPasswordBox}"
                                                  attat:PasswordBoxAssistant.BindPassword="True"
                                                  attat:PasswordBoxAssistant.BoundPassword="{Binding Path=PasswordConfirm,

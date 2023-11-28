@@ -13,7 +13,7 @@ using Warehouse.Core.Helpers;
 
 namespace Warehouse.ViewModel.Pages;
 
-public class OrderProductsTabViewModel : BasePageViewModel
+public class OrderProductsTabViewModel : BasePageSearchItemsViewModel<OrderProduct>
 {
     #region Private properties
 
@@ -21,46 +21,10 @@ public class OrderProductsTabViewModel : BasePageViewModel
 
     private IOrderService _service => Application.GetService<IOrderService>();
 
-    protected string _searchString;
-
-    private ObservableCollection<OrderProduct> _items;
-
-    private OrderProduct _selectedItem;
 
     #endregion
 
     #region Public properties
-
-    public ICollectionView Collection { get; private set; }
-
-    public string SearchString
-    {
-        get => _searchString;
-        set { SetProperty(ref _searchString, value, nameof(SearchString), () => Collection.Refresh()); }
-    }
-
-    public ObservableCollection<OrderProduct> Items
-    {
-        get => _items;
-        set
-        {
-            SetProperty(ref _items, value, nameof(Items),
-                () =>
-                {
-                    if (Collection != null)
-                        Collection.Filter -= FilterCollection;
-                    Collection = CollectionViewSource.GetDefaultView(value);
-                    Collection.Filter += FilterCollection;
-                }
-            );
-        }
-    }
-
-    public OrderProduct SelectedItem
-    {
-        get => _selectedItem;
-        set { SetProperty(ref _selectedItem, value, nameof(SelectedItem)); }
-    }
 
     public OrderEditAddPageViewModel Parent { get; }
 
@@ -105,17 +69,13 @@ public class OrderProductsTabViewModel : BasePageViewModel
 
     #region Command methods
 
-    private bool FilterCollection(object value)
+
+    protected override bool Filter(OrderProduct value, string search)
     {
-        if (value is OrderProduct item && item != null && !string.IsNullOrEmpty(SearchString))
-        {
-            if (item.Name?.ToLower().Contains(SearchString.ToLower()) ?? true)
-                return true;
-            else
-                return false;
-        }
-        else
+        if (value.Name?.ToLower().Contains(SearchString?.ToLower() ?? "") ?? true)
             return true;
+        else
+            return base.Filter(value, search);
     }
 
     private void AddProduct()

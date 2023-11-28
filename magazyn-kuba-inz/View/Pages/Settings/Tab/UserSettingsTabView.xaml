@@ -49,14 +49,6 @@
 
                     <Label Grid.Column="0" Content="{x:Static res:Resources.Style}" Style="{DynamicResource FormLabel}"/>
 
-                    <ComboBox ItemsSource="{Binding ProductGroups}"
-                              DisplayMemberPath="Name"
-                              SelectedValuePath="ID"
-                              SelectedItem="{Binding Group}"
-                              IsSynchronizedWithCurrentItem="True"
-                              Style="{StaticResource FormComboBox}"
-                              Grid.Column="1"/>
-
                     <ComboBox Style="{StaticResource FormComboBox}"
                               SelectedItem="{Binding UserSettings.ColorScheme, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
                               ItemsSource="{Binding Source={StaticResource ColorSchemes}, Converter={conv:SortListConventer}}"

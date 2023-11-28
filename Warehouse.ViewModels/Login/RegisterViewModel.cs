@@ -32,22 +32,22 @@ public class RegisterViewModel : BaseViewModel
 
     public IUser? User { get; private set; }
 
-    [Required(ErrorMessage = "Name is required.")]
+    [Required(ErrorMessageResourceName = "LoginIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     [MinLength(5, ErrorMessage = "Name is to short (5)")]
     [MaxLength(50, ErrorMessage = "No more than 50 characters")]
     public string? Login { get => login; set { login = value; OnPropertyChanged(nameof(Login)); } }
 
-    [Required(ErrorMessage = "Name is required.")]
-    [IsEmail("In not email.")]
+    [Required(ErrorMessageResourceName = "EmailIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
+    [IsEmail(ErrorMessageResourceName = "WrongEmail", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     public string? Email { get => email; set { email = value; OnPropertyChanged(nameof(Email)); } }
 
 
-    [Required(ErrorMessage = "Password is required.")]
+    [Required(ErrorMessageResourceName = "PasswordIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     [MinLength(5, ErrorMessage = "Minimum length is 5")]
     [MaxLength(150, ErrorMessage = "Minimum length is 150")]
     public string? Password { get => password; set { password = value; OnPropertyChanged(nameof(Password)); } }
 
-    [Required(ErrorMessage = "Confirm password is requied")]
+    [Required(ErrorMessageResourceName = "ConfirmPasswordIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     [MinLength(5, ErrorMessage = "Minimum length is 5")]
     [MaxLength(150, ErrorMessage = "Minimum length is 150")]
     public string? PasswordConfirm { get => passwordConfirm; set { passwordConfirm = value; OnPropertyChanged(nameof(PasswordConfirm)); } }

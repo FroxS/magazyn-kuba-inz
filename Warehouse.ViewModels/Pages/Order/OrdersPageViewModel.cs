@@ -12,64 +12,19 @@ using Warehouse.Core.Helpers;
 
 namespace Warehouse.ViewModel.Pages;
 
-public class OrdersPageViewModel : BasePageViewModel
+public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
 {
     #region Fields
 
     protected readonly IOrderService _service;
-    protected ObservableCollection<OrderViewModel> _items;
-    protected string _searchString;
-    protected OrderViewModel _selectedItem;
-    protected bool _canAddNew = true;
 
     #endregion
 
     #region Properties
 
-    public ICollectionView Collection { get; private set; }
-
-    public virtual ObservableCollection<OrderViewModel> Items
-    {
-        get => _items;
-        protected set
-        {
-            SetProperty(ref _items, value, nameof(Items),
-                () =>
-                {
-                    if (Collection != null)
-                        Collection.Filter -= FilterCollection;
-                    Collection = CollectionViewSource.GetDefaultView(value);
-                    Collection.Filter += FilterCollection;
-                }
-            );
-        }
-    }
-
-    public OrderViewModel SelectedItem
-    {
-        get => _selectedItem;
-        set { SetProperty(ref _selectedItem, value, nameof(SelectedItem)); }
-    }
-
-    public virtual string SearchString
-    {
-        get => _searchString;
-        set { SetProperty(ref _searchString, value, nameof(SearchString), () => Collection.Refresh()); }
-    }
-
-    public bool CanAddNew
-    {
-        get => _canAddNew;
-        protected set { SetProperty(ref _canAddNew, value, nameof(CanAddNew)); }
-    }
-
     #endregion
 
     #region Commands
-
-    public ICommand AddItemCommand { get; private set; }
-
-    public ICommand DeleteItemsCommand { get; private set; }
 
     public ICommand EditCommand { get; private set; }
 
@@ -98,15 +53,7 @@ public class OrdersPageViewModel : BasePageViewModel
 
     #region Filter 
 
-    private bool FilterCollection(object value)
-    {
-        if (value is OrderViewModel item && item != null && !string.IsNullOrEmpty(SearchString))
-            return Filter(item, SearchString);
-        else
-            return true;
-    }
-
-    protected bool Filter(OrderViewModel value, string search)
+    protected override bool Filter(OrderViewModel value, string search)
     {
         if (value?.Name?.ToLower().Contains(search?.ToLower()) ?? true)
             return true;

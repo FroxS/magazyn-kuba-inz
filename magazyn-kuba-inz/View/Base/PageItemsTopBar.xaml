@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance vm:ItemStateViewModel}">
@@ -17,12 +18,15 @@
                                    Width="200"
                                    HorizontalAlignment="Left"
                                    Style="{StaticResource FormTextBoxImage}"
-                                   Tag="Szukaj"/>
+                                   Tag="{x:Static res:Resources.Search}"/>
 
-        <controls:ButtonPath Text="Dodaj"
-                                 Style="{DynamicResource AddButton}"
-                                 Command="{Binding AddItemCommand}"
-                                 Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
+        
+        <controls:ButtonPath Text="{x:Static res:Resources.Add}"
+                            Style="{DynamicResource AddButton}"
+                            Command="{Binding AddItemCommand}"
+                            Visibility="{Binding CanAddNew, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
+        
+        
 
     </Grid>
 </UserControl>

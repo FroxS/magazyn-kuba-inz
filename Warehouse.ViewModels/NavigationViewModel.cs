@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using Warehouse.ViewModels.Navigation;
 using Warehouse.Models.Interfaces;
 using Warehouse.Models;
+using System.Windows.Controls;
 
 namespace Warehouse.ViewModel;
 
@@ -227,7 +228,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
 
             if (user.Type >= Models.Enums.EUserType.Boss)
             {
-
+                menu.Add(new CustomMenuItem(this, EApplicationPage.Users, Warehouse.Core.Properties.Resources.Users));
             }
 
             if (user.Type >= Models.Enums.EUserType.Admin)
@@ -278,6 +279,10 @@ public class NavigationViewModel : BaseViewModel, INavigation
                 return _app.GetService<RacksPageViewModel>();
             case EApplicationPage.Order:
                 return _app.GetService<OrdersPageViewModel>();
+            case EApplicationPage.User:
+                return _app.GetService<UserPageViewModel>();
+            case EApplicationPage.Users:
+                return _app.GetService<UsersPageViewModel>();
             default:
                 Debugger.Break();
                 return null;
@@ -362,7 +367,6 @@ public class NavigationViewModel : BaseViewModel, INavigation
     }
 
     public void OpenOrder(Order order)
-
     {
         IBasePageViewModel? opend = Pages.FirstOrDefault(x => x is OrderEditAddPageViewModel openedOrder && openedOrder.Get().ID == order.ID);
 
@@ -387,8 +391,18 @@ public class NavigationViewModel : BaseViewModel, INavigation
         IBasePageViewModel? page = GetOpenedOrder(order.ID);
         if (page == null)
             return;
-
         ClosePage(page);
+    }
+
+    public void OpenUser()
+    {
+        IBasePageViewModel? opend = Pages.FirstOrDefault(x => x.Page == EApplicationPage.User);
+        if (opend == null)
+        {
+            AddPage(ToBasePage(EApplicationPage.User));
+        }
+        else
+            ChangePage(opend);
     }
 
     #endregion

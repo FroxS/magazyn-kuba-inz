@@ -1,9 +1,15 @@
-﻿using System.Globalization;
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.Globalization;
 using System.IO;
+using System.Reflection;
+using Warehouse.Models.Attribute;
 using Warehouse.Theme;
+using Warehouse.Core.Helpers;
 
 namespace Warehouse.Core.Models.Settings;
 
+[Serializable]
 public class UserSettings : BaseSettings
 {
     #region Private properties
@@ -24,6 +30,7 @@ public class UserSettings : BaseSettings
         set { SetProperty(ref _colorScheme, value); }
     }
 
+    
     public CultureInfo? Language
     {
         get => _language;
@@ -44,12 +51,30 @@ public class UserSettings : BaseSettings
 
     #endregion
 
+    #region Helpers
+
+    private string GetFile()
+    {
+        string file = Path.Combine(GetApplicationPath(), FILENAME);
+        if (!File.Exists(file))
+        {
+            using(FileStream fs = File.Create(file))
+            {
+
+            }
+        }
+            
+        return file;
+    }
+
+    #endregion
+
     #region Saving
 
     public override void Save()
     {
         string json = GetJson();
-        string filePath = Path.Combine(GetApplicationPath(), FILENAME);
+        string filePath = GetFile();
         File.WriteAllText(filePath, json);
         using (StreamWriter writer = new StreamWriter(filePath))
         {
@@ -57,5 +82,16 @@ public class UserSettings : BaseSettings
         }
     }
 
+    public override void Load()
+    {
+        string filePath = GetFile();
+        UserSettings? obj = GetData<UserSettings>(File.ReadAllText(filePath) );
+        if (obj == null)
+            return;
+        CopyProperties(obj);
+    }
+
     #endregion
 }
+
+

@@ -45,6 +45,10 @@ public static class AplicationPageConventer
                 return new OrdersPage(pagevm);
             case EApplicationPage.EditAddOrder:
                 return new OrderEditAddPage(pagevm);
+            case EApplicationPage.User:
+                return new UserPage(pagevm);
+            case EApplicationPage.Users:
+                return new UsersPage(pagevm);
             default:
                 Debugger.Break();
                 return null;

@@ -7,11 +7,10 @@ using Warehouse.Core.Exeptions;
 
 namespace Warehouse.Service;
 
-internal class UserService : IUserService
+internal class UserService :  BaseServiceWithRepository<IUserRepository, User>,  IUserService
 {
     #region Private properties
 
-    private readonly IUserRepository _repozitory;
     private readonly string _pepper;
     private readonly int _iteration = 3;
 
@@ -26,10 +25,26 @@ internal class UserService : IUserService
     /// <summary>
     /// Default constructor
     /// </summary>
-    public UserService(IUserRepository repozitory)
+    public UserService(IUserRepository repozitory, IApp app): base(repozitory, app)
     {
-        _repozitory = repozitory;
         _pepper = Environment.GetEnvironmentVariable("PasswordHashExamplePepper");
+    }
+
+    #endregion
+
+    #region Helpers
+
+    private bool PassValid(string pass)
+    {
+
+        if(string.IsNullOrEmpty(pass))
+            return false;
+
+        if (pass.Length < 5 || pass.Length > 50)
+            return false;
+
+        return true;
+
     }
 
     #endregion
@@ -38,6 +53,9 @@ internal class UserService : IUserService
 
     public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken))
     {
+        if (!PassValid(resource.Password))
+            throw new DataException("Invalid passworld", resource, nameof(resource.Password));
+
         var user = new User
         {
             ID = Guid.NewGuid(),
@@ -74,6 +92,20 @@ internal class UserService : IUserService
         return _repozitory.GetAllAsync();
     }
 
+    public bool ChangePassword(ChangePassworldResource resource )
+    {
+        if (!PassValid(resource.Password))
+            throw new DataException("Invalid passworld", resource, nameof(resource.Password));
+
+        User? user = _repozitory.GetByName(resource.Login);
+        if (user == null)
+            throw new DataException($"Not found User {resource.Login}") ;
+        user.PasswordSalt = PasswordHelper.GenerateSalt();
+        user.PasswordHash = PasswordHelper.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
+        _repozitory.Update(user);
+        _repozitory.Save();
+        return true;
+    }
 
     #endregion
 }

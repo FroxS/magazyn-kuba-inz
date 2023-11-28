@@ -1,5 +1,5 @@
-﻿using Warehouse.Core.Interface;
-using Warehouse.EF;
+﻿using System.Text.Json.Serialization;
+using Warehouse.Core.Interface;
 
 namespace Warehouse.Core.Models.Settings;
 
@@ -7,10 +7,9 @@ public class GlobalSettings : BaseSettings
 {
     #region Private properties
 
-    private IApp _app;
-    private WarehouseDbContext _database => _app.Database as WarehouseDbContext;
+    private IAppSettingsService _service;
 
-    public int _weightDiscrepancy;
+    private int _weightDiscrepancy;
     
 
     #endregion
@@ -30,9 +29,25 @@ public class GlobalSettings : BaseSettings
     /// <summary>
     /// Default constructor
     /// </summary>
-    public GlobalSettings(IApp app)
+    public GlobalSettings(IAppSettingsService service)
     {
-        _app = app;
+        _service = service;
+    }
+
+    [JsonConstructor]
+    public GlobalSettings()
+    {
+        
+    }
+
+    public GlobalSettings (IAppSettingsService service, string? json): this(service)
+    {
+        if (!string.IsNullOrEmpty(json))
+        {
+            GlobalSettings? settings = GetData<GlobalSettings>(json);
+            if (settings != null)
+                CopyProperties(settings);
+        }
     }
 
     #endregion
@@ -41,7 +56,16 @@ public class GlobalSettings : BaseSettings
 
     public override void Save()
     {
-        
+        _service.SaveSettings(this);
+    }
+
+    public override void Load()
+    {
+        GlobalSettings? obj = _service.GetSettings();
+        if (obj == null)
+            return;
+
+        CopyProperties(obj);
     }
 
     #endregion

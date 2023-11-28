@@ -29,6 +29,7 @@ namespace Warehouse.Theme
 
     public static class ColorsNavigation
     {
+        static ColorScheme _actualColorScheme = ColorScheme.Dark;
         static Dictionary<ColorType, string> ActualColor;
         private static Dictionary<ColorType, string> DarkColor { get; }
         private static Dictionary<ColorType, string> LightColor { get; }
@@ -79,6 +80,8 @@ namespace Warehouse.Theme
             }
         }
 
+        public static ColorScheme GetColorScheme() => _actualColorScheme;
+
         public static void ChangeColor(Application app, ColorScheme scheme)
         {
             Dictionary<ColorType, string>? colorsDict = GetColorScheme(scheme);
@@ -92,11 +95,11 @@ namespace Warehouse.Theme
             {
                 try
                 {
-                    Color newColor = (Color)ColorConverter.ConvertFromString(colorDict.Value);
+                    Color newColor = GetColor(colorDict.Value);
                     SolidColorBrush newColorBrush = new SolidColorBrush(newColor);
                     app.Resources[colorDict.Key.ToString()] = newColor;
                     app.Resources[colorDict.Key + "Brush"] = newColorBrush;
-
+                    _actualColorScheme = scheme;
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +107,11 @@ namespace Warehouse.Theme
                 }
 
             }
-
+            ActualColor = colorsDict;
         }
+
+        public static SolidColorBrush GetColorBrush(ColorType type) => new SolidColorBrush(GetColor(ActualColor[type]));
+
+        private static Color GetColor(string hex) => (Color)ColorConverter.ConvertFromString(hex);
     }
 }

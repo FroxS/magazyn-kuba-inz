@@ -1,6 +1,7 @@
-﻿
-using System.IO;
+﻿using System.IO;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Warehouse.Theme;
 
 namespace Warehouse.Helper;
 
@@ -23,5 +24,8 @@ public static class ImageHelper
         image.Freeze();
         return image;
     }
+
+    public static ImageSource GetImage(this Geometry gm) => new DrawingImage(new GeometryDrawing(Brushes.Transparent, new Pen(ColorsNavigation.GetColorBrush(ColorType.FontColor), 1), gm));
+
 }
 

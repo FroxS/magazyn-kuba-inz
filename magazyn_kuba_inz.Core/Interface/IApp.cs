@@ -6,6 +6,8 @@ using Warehouse.Models;
 using System.Windows;
 using Warehouse.EF;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.Theme;
+using Warehouse.Core.Models.Settings;
 
 namespace Warehouse.Core.Interface;
 
@@ -21,6 +23,8 @@ public interface IApp
     bool IsUserLogin();
     void LogOut();
     void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning);
+
+    void ClearSilentMessage();
     IDialogService GetDialogService();
     IInnerDialogService GetInnerDialogService();
     Task<IUser> LoginAsync(LoginResource user);
@@ -33,6 +37,7 @@ public interface IApp
     void CatchExeption(System.Exception ex);
     void ReloadDatabase();
 
-    void SetTheme(bool dark = true);
+    void SetTheme(ColorScheme corloScheme = ColorScheme.Dark);
+    UserSettings GetUserSettings();
 
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Warehouse.Models;
@@ -71,6 +72,45 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
         Action? onChanged = null)
     {
         field = value;
+        OnPropertyChanged(propName);
+        onChanged?.Invoke();
+    }
+
+    protected void SetPropertyOut<T>(
+        out T field,
+        T value,
+        [CallerMemberName] string? propName = null,
+        Action? onChanged = null)
+    {
+        field = value;
+        OnPropertyChanged(propName);
+        onChanged?.Invoke();
+    }
+
+    protected void SetPropertyVal<T>(
+        T field,
+        object? value,
+        [CallerMemberName] string? propName = null,
+        Action? onChanged = null)
+    {
+        if (propName == null)
+            throw new ArgumentException("Set propert name");
+
+        PropertyInfo? property = typeof(T).GetProperty(propName);
+
+        if (property == null)
+            throw new ArgumentException($"Property {propName} not found in object {field.ToString()}");
+        property.SetValue(field, value);
+        OnPropertyChanged(propName);
+        onChanged?.Invoke();
+    }
+
+    protected void SetPropert<T>(
+        Action act,
+        [CallerMemberName] string? propName = null,
+        Action? onChanged = null)
+    {
+        act.Invoke();
         OnPropertyChanged(propName);
         onChanged?.Invoke();
     }

@@ -4,6 +4,7 @@ using Warehouse.Models.Page;
 using System.Windows.Input;
 using Warehouse.Core.Interface;
 using System.Windows;
+using Warehouse.Theme;
 
 namespace Warehouse.ViewModel;
 
@@ -11,7 +12,7 @@ public class MainViewModel : BaseViewModel
 {
     #region Private Properties
 
-    private readonly INavigation _nav;
+    private INavigation _nav => _app.GetService<INavigation>();
 
     private readonly IApp _app;
 
@@ -37,28 +38,30 @@ public class MainViewModel : BaseViewModel
 
     public ICommand CloseCommand { get; private set; }
 
+    public ICommand EditUserCommand { get; private set; }
+
     #endregion
 
     #region Constructors
 
-    public MainViewModel(INavigation nav, IApp app)
+    public MainViewModel(IApp app)
     {
-        _nav = nav;
         _app = app;
         NextPageCommand = new RelayCommand(() =>
         {
-            nav.SetPage(EApplicationPage.DashBoard);
+            _nav.SetPage(EApplicationPage.DashBoard);
         });
 
         ChangeThemeCommand = new RelayCommand(() =>
         {
-            app.SetTheme(flag);
-            flag = !flag;
+            ColorScheme actual = ColorsNavigation.GetColorScheme();
+            app.SetTheme(actual == ColorScheme.Dark ? ColorScheme.Light : ColorScheme.Dark);
         });
 
         MinimizeCommand = new RelayCommand<IWindow>((o) => { o.WindowState = WindowState.Minimized; });
         MaximizeCommand = new RelayCommand<IWindow>(maximizeWindow);
         CloseCommand = new RelayCommand(closeWindows);
+        EditUserCommand = new RelayCommand(EditUser);
         HelpCommand = new RelayCommand(() => {
             MessageBox.Show("TODO: Help");
         });
@@ -66,11 +69,9 @@ public class MainViewModel : BaseViewModel
 
     #endregion
 
+
     #region Top bar methods
 
-    // <summary>
-    /// Method to maxmimize winodws
-    /// </summary>
     private void maximizeWindow(IWindow o)
     {
         if (o == null)
@@ -81,14 +82,17 @@ public class MainViewModel : BaseViewModel
             o.WindowState = WindowState.Maximized;
     }
 
-    /// <summary>
-    /// Method activate when windows is closing
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void closeWindows()
     {
         _app.Exit();
+    }
+
+    private void EditUser()
+    {
+        if(_app.IsUserLogin())
+        {
+            _nav.OpenUser();
+        }
     }
 
     #endregion

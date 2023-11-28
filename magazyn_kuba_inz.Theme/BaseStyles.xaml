@@ -16,9 +16,6 @@
         <ResourceDictionary Source="Themes/ComboboxStyle.xaml"/>
         <ResourceDictionary Source="Themes/ContextMenuStyle.xaml"/>
         <ResourceDictionary Source="Themes/ListBoxStyle.xaml"/>
-        
-
-
+        <ResourceDictionary Source="Themes/CheckBoxStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

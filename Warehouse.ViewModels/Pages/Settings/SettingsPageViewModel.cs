@@ -50,16 +50,32 @@ public class SettingsPageViewModel : BasePageViewModel
 
     #endregion
 
+    #region Event helper
+
+    private void UserSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(UserSettings.ColorScheme) && sender is UserSettings us)
+        {
+            Application.SetTheme(us.ColorScheme);
+        }
+    }
+
+    #endregion
+
     #region Load
 
     public override void OnPageOpen()
     {
         GlobalSettings = Application.GetService<GlobalSettings>();
+        GlobalSettings.Load();
         UserSettings = Application.GetService<UserSettings>();
+        UserSettings.Load();
+        UserSettings.PropertyChanged += UserSettings_PropertyChanged;
     }
 
     public override void OnPageClose()
     {
+        UserSettings.PropertyChanged -= UserSettings_PropertyChanged;
         GlobalSettings.Save();
         UserSettings.Save();
     }

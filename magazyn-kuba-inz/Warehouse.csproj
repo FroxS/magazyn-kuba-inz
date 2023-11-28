@@ -48,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\ImagePicker.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\TopTileControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,6 +66,9 @@
     <Compile Update="Controls\WareHouseArea.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Pages\Order\OrderTab\OrderDataTabView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Pages\Order\OrderTab\OrderProductsTabView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +76,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Pages\Settings\Tab\GlobalSettingsTabView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\User\Tab\ChangePassworldUserTab.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Pages\User\Tab\UserHeaderControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\SplashScreen\SplashScreen.xaml.cs">

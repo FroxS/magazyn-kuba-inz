@@ -1,0 +1,88 @@
+﻿<service:BaseControlPage x:TypeArguments="pageVM:UserPageViewModel"
+                         x:Class="Warehouse.View.Pages.UserPage"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                         xmlns:local="clr-namespace:Warehouse.View.Pages"
+                         xmlns:service="clr-namespace:Warehouse.View.Service"
+                         xmlns:conv="clr-namespace:Warehouse.Conventers"
+                         xmlns:tab="clr-namespace:Warehouse.Core.Interface;assembly=Warehouse.Core"
+                         xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+                         xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+                         xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+                         mc:Ignorable="d" 
+                         d:DataContext="{d:DesignInstance Type=pageVM:UserPageViewModel}"
+                         d:DesignHeight="500" d:DesignWidth="1000">
+
+    <TabControl Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="{DynamicResource BorderColorBrush}" 
+                TabStripPlacement="Left" 
+                IsSynchronizedWithCurrentItem="False"
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding Item, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl.Resources>
+
+            <!--#region Personal data-->
+
+            <DataTemplate DataType="{x:Type pageVM:PersonalDataTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <ScrollViewer Margin="5">
+                        <local:PersonalDataTab/>
+                    </ScrollViewer>
+                </Border>
+            </DataTemplate>
+
+            <!--#endregion-->
+
+            <!--#region Products-->
+            <DataTemplate DataType="{x:Type pageVM:ChangePassworldUserTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <ScrollViewer Margin="5">
+                        <local:ChangePassworldUserTab/>
+                    </ScrollViewer>
+                </Border>
+            </DataTemplate>
+            <!--#endregion-->
+
+        </TabControl.Resources>
+
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type tab:ITab}">
+                <TextBlock >
+                    <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </TextBlock>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+
+
+
+    </TabControl>
+
+    <!--<TabControl Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="{DynamicResource BorderColorBrush}" 
+                TabStripPlacement="Left" 
+                IsSynchronizedWithCurrentItem="False">
+        <TabItem Header="{x:Static res:Resources.PersonalData}">
+            <Border BorderThickness="1"
+                    BorderBrush="{DynamicResource BorderColorBrush}">
+                <ScrollViewer Margin="5">
+                    <local:PersonalDataTab/>
+                </ScrollViewer>
+            </Border>
+        </TabItem>
+
+        <TabItem Header="{x:Static res:Resources.ChangePassowrld}">
+            <Border BorderThickness="1"
+                    BorderBrush="{DynamicResource BorderColorBrush}">
+                <ScrollViewer Margin="5">
+                    <local:ChangePassworldUserTab/>
+                </ScrollViewer>
+            </Border>
+        </TabItem>
+    </TabControl>-->
+</service:BaseControlPage>

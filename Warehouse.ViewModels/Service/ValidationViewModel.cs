@@ -74,6 +74,20 @@ public abstract class ValidationViewModel : ObservableObject, IDataErrorInfo
         return error;
     }
 
+    protected string[] GettErrors()
+    {
+        List<string> errors = new List<string>() ;
+
+        PropertyInfo[] properties = GetType().GetProperties();
+        foreach (PropertyInfo property in properties)
+        {
+            string error = GettErrors(property.Name);
+            if(!string.IsNullOrEmpty(error))
+                errors.Add(error);
+        }
+        return errors.ToArray();
+    }
+
     #endregion
 
 }

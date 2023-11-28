@@ -78,6 +78,11 @@ public class WarehouseDbContext : DbContext
     /// </summary>
     public DbSet<Hall> Halls { get; set; }
 
+    /// <summary>
+    /// Table of halles
+    /// </summary>
+    public DbSet<AppSettings> Settings { get; set; }
+
     #endregion
 
     #region Constructors

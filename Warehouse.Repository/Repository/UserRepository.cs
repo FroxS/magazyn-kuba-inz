@@ -28,9 +28,19 @@ internal class UserRepository : BaseRepository<User,WarehouseDbContext>, IUserRe
     /// </summary>
     /// <param name="id">Id of this Entity</param>
     /// <returns></returns>
-    public async virtual Task<User> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+    public async virtual Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
     {
         return await _context.Users.FirstOrDefaultAsync(x => x.Name == name);
+    }
+
+    /// <summary>
+    /// Method to get one Tenity from databae by Id
+    /// </summary>
+    /// <param name="id">Id of this Entity</param>
+    /// <returns></returns>
+    public virtual User? GetByName(string name)
+    {
+        return _context.Users.FirstOrDefault(x => x.Name == name);
     }
 
     #endregion

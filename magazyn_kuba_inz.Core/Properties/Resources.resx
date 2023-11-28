@@ -120,6 +120,9 @@
   <data name="Accept" xml:space="preserve">
     <value>Accept</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -147,14 +150,26 @@
   <data name="AskRemoveProduct" xml:space="preserve">
     <value>Remove the product</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="CheckData" xml:space="preserve">
+    <value>Check data</value>
+  </data>
   <data name="Color" xml:space="preserve">
     <value>Color</value>
   </data>
   <data name="CompletionDate" xml:space="preserve">
-    <value>CompletionDate</value>
+    <value>Completion date</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ConfirmPasswordIsRequired" xml:space="preserve">
+    <value>Confirm password is required</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
@@ -198,6 +213,9 @@
   <data name="EmailisIncorrect" xml:space="preserve">
     <value>Email is incorrect</value>
   </data>
+  <data name="EmailIsRequired" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
   <data name="ErrorLoginWindowNotExist" xml:space="preserve">
     <value>Login window not exist</value>
   </data>
@@ -206,6 +224,9 @@
   </data>
   <data name="ErrorMaxLength" xml:space="preserve">
     <value>Maximum length is </value>
+  </data>
+  <data name="ErrorPasswordsAreNotTheSame" xml:space="preserve">
+    <value>The passwords are not the same</value>
   </data>
   <data name="ErrorUserIsNotActive" xml:space="preserve">
     <value>User is not active</value>
@@ -261,6 +282,9 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="LoginIsRequired" xml:space="preserve">
+    <value>Login is required</value>
+  </data>
   <data name="Log_in" xml:space="preserve">
     <value>Log in</value>
   </data>
@@ -284,6 +308,9 @@
   </data>
   <data name="MaxWidth" xml:space="preserve">
     <value>Max width</value>
+  </data>
+  <data name="MessagePasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password changed successfully</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -309,8 +336,14 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>Personal data</value>
   </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
@@ -347,6 +380,12 @@
   </data>
   <data name="ReserveProducts" xml:space="preserve">
     <value>Reserve products</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
   </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
@@ -399,6 +438,9 @@
   <data name="UserIsEmpty" xml:space="preserve">
     <value>User is empty</value>
   </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
   <data name="UserSettings" xml:space="preserve">
     <value>User settings</value>
   </data>
@@ -422,6 +464,9 @@
   </data>
   <data name="Width" xml:space="preserve">
     <value>Width</value>
+  </data>
+  <data name="WrongEmail" xml:space="preserve">
+    <value>Wrong email</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
