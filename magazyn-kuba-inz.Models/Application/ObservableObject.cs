@@ -104,15 +104,5 @@ public class ObservableObject: INotifyPropertyChanged, INotifyPropertyChanging
         OnPropertyChanged(propName);
         onChanged?.Invoke();
     }
-
-    protected void SetPropert<T>(
-        Action act,
-        [CallerMemberName] string? propName = null,
-        Action? onChanged = null)
-    {
-        act.Invoke();
-        OnPropertyChanged(propName);
-        onChanged?.Invoke();
-    }
 }
 

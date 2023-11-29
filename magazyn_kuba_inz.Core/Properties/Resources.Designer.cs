@@ -664,6 +664,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New order.
+        /// </summary>
+        public static string NewOrder {
+            get {
+                return ResourceManager.GetString("NewOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next page.
         /// </summary>
         public static string NextPage {
@@ -705,6 +714,24 @@ namespace Warehouse.Core.Properties {
         public static string Orders {
             get {
                 return ResourceManager.GetString("Orders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orders from supplier.
+        /// </summary>
+        public static string OrdersFromSupplier {
+            get {
+                return ResourceManager.GetString("OrdersFromSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orders to realization in a given month.
+        /// </summary>
+        public static string OrdersToRealizationInGivenMonth {
+            get {
+                return ResourceManager.GetString("OrdersToRealizationInGivenMonth", resourceCulture);
             }
         }
         
@@ -984,6 +1011,15 @@ namespace Warehouse.Core.Properties {
         public static string SuccesfullReserved {
             get {
                 return ResourceManager.GetString("SuccesfullReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successful created user.
+        /// </summary>
+        public static string SuccessfulCreatedUser {
+            get {
+                return ResourceManager.GetString("SuccessfulCreatedUser", resourceCulture);
             }
         }
         

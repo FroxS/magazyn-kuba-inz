@@ -17,10 +17,17 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
     #region Fields
 
     protected readonly IOrderService _service;
+    private EOrderType _type = EOrderType.WareHouse;
 
     #endregion
 
     #region Properties
+
+    public EOrderType Type
+    {
+        get => _type;
+        set { SetProperty(ref _type, value); }
+    }
 
     #endregion
 
@@ -69,12 +76,10 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
     {
         CanChangePage = false;
         Application.IsTaskRunning = true;
-        List<Order> pgList = await _service.GetAllAsync();
+        List<Order> pgList = await _service.GetAllAsync(Type);
         Items = new ObservableCollection<OrderViewModel>(pgList.Select(o => new OrderViewModel(_service, o, Application)));
         CanChangePage = true;
-
         CanAddNew = Application.User.Type >= EUserType.Employee_Office;
-
         Application.IsTaskRunning = false;
     }
 
@@ -94,8 +99,9 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
             if (item == null)
                 return;
 
-
-            Application.Navigation.OpenOrder(item.Get());
+            Order order = item.Get();
+            order.Type = Type;
+            Application.Navigation.OpenOrder(order);
         }
         catch (Exception ex)
         {
@@ -116,7 +122,7 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
                 Application.ShowSilentMessage(Core.Properties.Resources.ErrorWhileSaving);
                 return;
             }
-            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(Application, null);
+            OrderEditAddPageViewModel orderPage = new OrderEditAddPageViewModel(Application, null,Type);
             Application.Navigation.AddPage(orderPage);
         }
         catch (Exception ex)

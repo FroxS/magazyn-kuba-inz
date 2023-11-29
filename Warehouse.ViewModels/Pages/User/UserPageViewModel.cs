@@ -10,7 +10,6 @@ public class UserPageViewModel : BasePageViewModel
 {
     #region Fields
 
-    private readonly User _user;
     private IUserService _userService => Application.GetService<IUserService>();
 
     private ObservableCollection<BasePageViewModel> _items;
@@ -33,6 +32,8 @@ public class UserPageViewModel : BasePageViewModel
         set { SetProperty(ref _item, value); }
     }
 
+    public User User { get; private set; }
+
     #endregion
 
     #region Constructors
@@ -46,14 +47,14 @@ public class UserPageViewModel : BasePageViewModel
         if (app.User == null)
             throw new Exception("User is not login");
 
-        _user = app.User;
+        User = app.User;
         Init();
     }
 
     public UserPageViewModel(IApp app, IUser user) : base(app)
     {
         Page = Models.Page.EApplicationPage.User;
-        _user = (User)user;
+        User = (User)user;
         Init();
     }
 
@@ -63,9 +64,10 @@ public class UserPageViewModel : BasePageViewModel
 
     protected void Init()
     {
+        Title = User?.Name ?? "User";
         Items = new ObservableCollection<BasePageViewModel>() {
-            new PersonalDataTabViewModel(this),
-            new ChangePassworldUserTabViewModel(this),
+            new PersonalDataTabViewModel(this, User),
+            new ChangePassworldUserTabViewModel(this, User),
         };
     }
 

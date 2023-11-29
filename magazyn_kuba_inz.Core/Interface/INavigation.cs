@@ -22,5 +22,5 @@ public interface INavigation
     IBasePageViewModel? GetOpenedOrder(Guid order);
     bool ExistOpenedOrder(Guid order);
     void CloseOrder(Order order);
-    void OpenUser();
+    void OpenUser(User user = null);
 }

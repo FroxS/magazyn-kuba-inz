@@ -19,7 +19,7 @@ public class BasePageViewModel : Tab, IBasePageViewModel
 
     public IApp Application { get; }
 
-    public EApplicationPage Page { get; protected set; }
+    public EApplicationPage Page { get; internal set; }
 
     public override string Title 
     { 
@@ -31,12 +31,17 @@ public class BasePageViewModel : Tab, IBasePageViewModel
 
     #region Constructor
 
-    public BasePageViewModel(IApp application)
+    public BasePageViewModel(IApp application, BaseViewModel parent) : base(parent)
     {
         Application = application;
     }
 
-    public BasePageViewModel()
+    public BasePageViewModel(IApp application) :this()
+    {
+        Application = application;
+    }
+
+    public BasePageViewModel() :base()
     {
         
     }

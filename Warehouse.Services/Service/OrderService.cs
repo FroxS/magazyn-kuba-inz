@@ -59,22 +59,27 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         return _repozitory.GetById(i => i.Include(i => i.Items).ThenInclude(x => x.Product), id)?.Items;
     }
 
-    public string GetNewOrderName()
+    public string GetNewOrderName(EOrderType type = EOrderType.WareHouse)
     {
-        var all = _repozitory.GetAll();
-        return FindNewOrderName(all.Select(x => x.Name));
+        List<Order> all = GetAll(type); 
+        return FindNewOrderName(all.Select(x => x.Name), type);
     }
 
-    private string FindNewOrderName(IEnumerable<string> listaNazw)
+    private string FindNewOrderName(IEnumerable<string> listaNazw, EOrderType type = EOrderType.WareHouse)
     {
         int najwiekszyNumer = 0;
         int rok = DateTime.Now.Year;
 
+        string start = "ORD";
+
+        if (type == EOrderType.Supplier)
+            start = "ZAM";
+
         foreach (string nazwa in listaNazw)
         {
-            if (Regex.Match(nazwa, $@"ORD/{rok}/(\d+)").Success)
+            if (Regex.Match(nazwa, $@"{start}/{rok}/(\d+)").Success)
             {
-                int numer = int.Parse(Regex.Match(nazwa, $@"ORD/{rok}/(\d+)").Groups[1].Value);
+                int numer = int.Parse(Regex.Match(nazwa, $@"{start}/{rok}/(\d+)").Groups[1].Value);
                 if (numer > najwiekszyNumer)
                 {
                     najwiekszyNumer = numer;
@@ -82,7 +87,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
             }
         }
 
-        string nowaNazwa = $"ORD/{rok}/{najwiekszyNumer + 1}";
+        string nowaNazwa = $"{start}/{rok}/{najwiekszyNumer + 1}";
 
         return nowaNazwa;
     }
@@ -257,6 +262,16 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         order.State = state;
         Update(order);
         return state;
+    }
+
+    public List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier)
+    {
+        return _repozitory.GetAll().Where(x => (x.Type & (type)) != 0).ToList();
+    }
+
+    public async Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default)
+    {
+        return (await _repozitory.GetAllAsync(cancellationToken: cancellationToken)).Where(x => (x.Type & (type)) != 0).ToList();
     }
 
     #endregion

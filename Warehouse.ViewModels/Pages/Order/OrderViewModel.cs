@@ -316,7 +316,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
                 return message;
         }
 
-        var taks = _service.GetAll();
+        var taks = _orderService.GetAll(Get().Type);
         if (taks.Find(o => o.Name == Name && ID != o.ID) != null)
             return $"Nazwa {Name} juz istnieje w bazie danych";
 

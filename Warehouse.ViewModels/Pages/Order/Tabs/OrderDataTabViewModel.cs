@@ -12,10 +12,11 @@ public class OrderDataTabViewModel : BasePageViewModel
 {
     #region Private properties
 
-    private Order _order => Parent.Get();
+    protected Order _order => Parent.Get();
 
-    private IOrderService _service => Application.GetService<IOrderService>();
-    private double _totalPrice = 0;
+    protected IOrderService _service => Application.GetService<IOrderService>();
+
+    protected double _totalPrice = 0;
 
     #endregion
 
@@ -67,9 +68,9 @@ public class OrderDataTabViewModel : BasePageViewModel
         protected set { SetProperty(ref _totalPrice, value, nameof(TotalPrice)); }
     }
 
-    public OrderEditAddPageViewModel Parent { get; }
+    public bool ToAdd { get; protected set; }
 
-    public bool ToAdd { get; private set; }
+    public override OrderEditAddPageViewModel Parent => base.Parent as OrderEditAddPageViewModel;
 
     #endregion
 
@@ -79,6 +80,7 @@ public class OrderDataTabViewModel : BasePageViewModel
     public ICommand ReservCommand { get; protected set; }
     public ICommand SetAsPreapredCommand { get; protected set; }
     public ICommand SaveCommand { get; protected set; }
+
     #endregion
 
     #region Constructors
@@ -86,9 +88,8 @@ public class OrderDataTabViewModel : BasePageViewModel
     /// <summary>
     /// Default constructor
     /// </summary>
-    public OrderDataTabViewModel(OrderEditAddPageViewModel parent , IApp app): base(app)
+    public OrderDataTabViewModel(OrderEditAddPageViewModel parent , IApp app): base(app, parent)
     {
-        Parent = parent;
         Title = Core.Properties.Resources.Data;
         GenerateWayCommand = new RelayCommand(() => GenerateWay(), () => !ToAdd);
         ReservCommand = new RelayCommand(() => Parent.Reserv(), () => Parent.State == EOrderState.Created && !ToAdd);
@@ -99,7 +100,7 @@ public class OrderDataTabViewModel : BasePageViewModel
     #endregion
 
     #region Command methods
-        
+
     private void GenerateWay()
     {
         try
@@ -121,8 +122,6 @@ public class OrderDataTabViewModel : BasePageViewModel
                 ((OrderWayTabViewModel)tabOrderway).UpdateWay(result);
 
             Parent.SelectedItem = tabOrderway;
-
-
         }
         catch(Exception ex) { Application.CatchExeption(ex); }
         
@@ -144,6 +143,7 @@ public class OrderDataTabViewModel : BasePageViewModel
         ToAdd = Parent.ToAdd;
         OnPropertyChanged(nameof(ToAdd));
     }
+
 
     #endregion
 }

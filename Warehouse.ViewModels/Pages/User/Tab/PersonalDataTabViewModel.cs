@@ -14,7 +14,6 @@ public class PersonalDataTabViewModel : BasePageViewModel
 {
     #region Fields
 
-    private readonly BasePageViewModel _parent;
     private readonly User _user;
     private IUserService _userService => Application.GetService<IUserService>();
 
@@ -85,10 +84,9 @@ public class PersonalDataTabViewModel : BasePageViewModel
 
     #region Constructors
 
-    public PersonalDataTabViewModel(BasePageViewModel parent): base(parent.Application)
+    public PersonalDataTabViewModel(BasePageViewModel parent): base(parent.Application, parent)
     {
         Title = Core.Properties.Resources.PersonalData;
-        _parent = parent;
         Page = Models.Page.EApplicationPage.User;
         if (!Application.IsUserLogin())
             throw new Exception("user is not login");
@@ -100,7 +98,7 @@ public class PersonalDataTabViewModel : BasePageViewModel
         Init();
     }
 
-    public PersonalDataTabViewModel(BasePageViewModel parent, User user) : base(parent.Application)
+    public PersonalDataTabViewModel(BasePageViewModel parent, User user) : base(parent.Application, parent)
     {
         
         Page = Models.Page.EApplicationPage.User;

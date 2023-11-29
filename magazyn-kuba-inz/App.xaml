@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Warehouse"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:conv="clr-namespace:Warehouse.Conventers" >
     
     <Application.Resources>
@@ -14,6 +16,15 @@
                     <conv:InverseBoolConventer x:Key="InverseBool"/>
                     <conv:MessageTypeToColorConventer x:Key="MessageTypeToColor"/>
                     <conv:ArrayByteToImageConventer x:Key="ArrayByteToImage"/>
+
+                    <ObjectDataProvider MethodName="GetValues"
+                                ObjectType="{x:Type sys:Enum}"
+                                x:Key="UserTypes">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="enum:EUserType" />
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
+
                 </ResourceDictionary>
                 <!-- <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/LightTheme.xaml"/>  -->
                  <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/DarkTheme.xaml"/>   

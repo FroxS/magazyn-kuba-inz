@@ -25,8 +25,8 @@ public interface IProductRepository : IBaseRepository<Product>
 }
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
-    User? GetByName(string name);
+    Task<User?> GetByLoginAsync(string login, CancellationToken cancellationToken = default(CancellationToken));
+    User? GetByLogin(string login);
 }
 public interface IImageRepository : IBaseRepository<WareHouseImage>
 {

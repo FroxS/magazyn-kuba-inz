@@ -17,6 +17,7 @@ public class Order : BaseEntity
     public User? User { get; set; }
     public double Margin { get; set; }
     public EOrderState State { get; set; }
+    public EOrderType Type { get; set; } = EOrderType.WareHouse;
     public byte[]? OrderWay { get; set; }
     public DateTime RealizationDate { get; set; }
     public List<OrderProduct>? Items { get; set; }

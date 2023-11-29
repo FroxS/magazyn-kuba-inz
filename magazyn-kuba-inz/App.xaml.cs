@@ -101,9 +101,9 @@ public partial class App : System.Windows.Application
         services.AddSingleton<StorageUnitsPageViewModel>();
         services.AddSingleton<WareHouseCreatorPageViewModel>();
         services.AddSingleton<RacksPageViewModel>();
-        services.AddSingleton<OrdersPageViewModel>();
         services.AddSingleton<UserPageViewModel>();
         services.AddSingleton<UsersPageViewModel>();
+        services.AddTransient<OrdersPageViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)

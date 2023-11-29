@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.InnerDialog"
              xmlns:vm="clr-namespace:Warehouse.InnerDialog;assembly=Warehouse.Dialog"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300"
              Background="{DynamicResource BackgroundColorBrush}"
@@ -12,6 +13,7 @@
     <Grid MinWidth="300"
           MinHeight="400">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -26,15 +28,46 @@
                        TextWrapping="Wrap"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"/>
-            <Button Content="X"
-                    Command="{Binding ExitCommand}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"
-                    Margin="5"
-                    Padding="5"/>
+            <controls:ButtonPath IconPath="{StaticResource Exit }" 
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Right"
+                                 Margin="5"
+                                 Padding="5"
+                                 Command="{Binding ExitCommand}"/>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Panel.ZIndex="1000"
+              VerticalAlignment="Top"
+                    
+              
+              Visibility="{Binding Message.Message,
+                                   UpdateSourceTrigger=PropertyChanged, 
+                                   Converter={StaticResource NullToVisible}}">
+
+            <Border Background="{Binding Message.Type,
+                                         UpdateSourceTrigger=PropertyChanged, 
+                                         Converter={StaticResource MessageTypeToColor}}"
+                                        Panel.ZIndex="-2"
+                                        Opacity=".7"/>
+
+            <TextBlock VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       TextWrapping="Wrap"
+                       Padding="10,2"
+                       Margin="0 0 20 0"
+                       Text="{Binding Message.Message, 
+                                       UpdateSourceTrigger=PropertyChanged, 
+                                       FallbackValue=Testowa wiadomość}"/>
+
+            <controls:ButtonPath IconPath="{StaticResource Exit}"
+                                 Width="20"
+                                 Height="20"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Right"
+                                 Command="{Binding Message.HideMessageCommand}"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type vm:AlertInnerDialogViewModel}">
                     <local:AlertInnerDialogView/>
@@ -68,6 +101,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:GetCountInnerDialogViewModel}">
                     <local:GetCountInnerDialogView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:GetUserInnerDialogViewModel}">
+                    <local:GetUserInnerDialogView/>
                 </DataTemplate>
             </Grid.Resources>
             <ContentControl Margin="5" Content="{Binding}">

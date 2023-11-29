@@ -65,18 +65,19 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     /// Default constructor
     /// </summary>
     /// <param name="app">Application service</param>
-    public OrderEditAddPageViewModel(IApp app, Order order)
+    public OrderEditAddPageViewModel(IApp app, Order order, EOrderType type = EOrderType.WareHouse)
         : base(app)
     {
         Page = Models.Page.EApplicationPage.EditAddOrder;
         if (order == null)
         {
-            string newName = _service.GetNewOrderName();
-            order = new Order() { 
-                Name = newName, 
-                RealizationDate = DateTime.Now.AddDays(10), 
-                ID_User = Application.User.ID, 
-                Items = new List<OrderProduct>() 
+            string newName = _service.GetNewOrderName(type);
+            order = new Order() {
+                Name = newName,
+                RealizationDate = DateTime.Now.AddDays(10),
+                ID_User = Application.User.ID,
+                Items = new List<OrderProduct>(),
+                Type = type
             };
             _toAdd = true;
         }
@@ -119,11 +120,15 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     public override void OnPageOpen()
     {
         Items = new ObservableCollection<ITab>();
-        Items.Add(new OrderDataTabViewModel(this, Application));
+        if(_order.Type == EOrderType.WareHouse)
+            Items.Add(new OrderDataTabViewModel(this, Application));
+        if (_order.Type == EOrderType.Supplier)
+            Items.Add(new OrderFromSupplierDataTabViewModel(this, Application));
+        
         if (!_toAdd)
         {
             Items.Add(new OrderProductsTabViewModel(this, Application));
-            if (_order.OrderWay != null)
+            if (_order.OrderWay != null && _order.Type == EOrderType.WareHouse)
             {
                 var way = GetWay();
                 Items.Add(new OrderWayTabViewModel(this, Application, way));

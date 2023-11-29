@@ -200,7 +200,15 @@ public class NavigationViewModel : BaseViewModel, INavigation
         {
             if (user.Type >= Models.Enums.EUserType.Employee_WareHouse)
             {
-                menu.Add(new CustomMenuItem(this, EApplicationPage.Order, Warehouse.Core.Properties.Resources.Orders));
+                menu.Add(new CustomMenuItem(this, EApplicationPage.Order, Warehouse.Core.Properties.Resources.Orders)
+                {
+                    Items = new ObservableCollection<CustomMenuItem>()
+                    {
+                        new CustomMenuItem(this,EApplicationPage.Order, Warehouse.Core.Properties.Resources.Orders),
+                        new CustomMenuItem(this,EApplicationPage.OrderFromSupplier, Warehouse.Core.Properties.Resources.OrdersFromSupplier),
+                    }
+                }
+                );
             }
 
             if (user.Type >= Models.Enums.EUserType.Employee_Office)
@@ -209,12 +217,12 @@ public class NavigationViewModel : BaseViewModel, INavigation
                 menu.Add(new CustomMenuItem(this, EApplicationPage.Products, Warehouse.Core.Properties.Resources.Products)
                 {
                     Items = new ObservableCollection<CustomMenuItem>()
-                {
-                    new CustomMenuItem(this,EApplicationPage.Suppliers, Warehouse.Core.Properties.Resources.Suppliers),
-                    new CustomMenuItem(this,EApplicationPage.ProductGroups, Warehouse.Core.Properties.Resources.Group),
-                    new CustomMenuItem(this,EApplicationPage.ProductStatuses, Warehouse.Core.Properties.Resources.Status),
-                    new CustomMenuItem(this,EApplicationPage.ItemStates, Warehouse.Core.Properties.Resources.ItemState),
-                }
+                    {
+                        new CustomMenuItem(this,EApplicationPage.Suppliers, Warehouse.Core.Properties.Resources.Suppliers),
+                        new CustomMenuItem(this,EApplicationPage.ProductGroups, Warehouse.Core.Properties.Resources.Group),
+                        new CustomMenuItem(this,EApplicationPage.ProductStatuses, Warehouse.Core.Properties.Resources.Status),
+                        new CustomMenuItem(this,EApplicationPage.ItemStates, Warehouse.Core.Properties.Resources.ItemState),
+                    }
                 });
 
                 warehouseMenuitem.Items.Add(new CustomMenuItem(this, EApplicationPage.StorageUnits, Warehouse.Core.Properties.Resources.StorageUnits));
@@ -278,11 +286,19 @@ public class NavigationViewModel : BaseViewModel, INavigation
             case EApplicationPage.Racks:
                 return _app.GetService<RacksPageViewModel>();
             case EApplicationPage.Order:
-                return _app.GetService<OrdersPageViewModel>();
+                OrdersPageViewModel pageVMO = _app.GetService<OrdersPageViewModel>();
+                pageVMO.Type = Models.Enums.EOrderType.WareHouse;
+                pageVMO.Page = EApplicationPage.Order;
+                return pageVMO;
             case EApplicationPage.User:
                 return _app.GetService<UserPageViewModel>();
             case EApplicationPage.Users:
                 return _app.GetService<UsersPageViewModel>();
+            case EApplicationPage.OrderFromSupplier:
+                OrdersPageViewModel pageVMOS = _app.GetService<OrdersPageViewModel>();
+                pageVMOS.Type = Models.Enums.EOrderType.Supplier;
+                pageVMOS.Page = EApplicationPage.OrderFromSupplier;
+                return pageVMOS;
             default:
                 Debugger.Break();
                 return null;
@@ -394,12 +410,17 @@ public class NavigationViewModel : BaseViewModel, INavigation
         ClosePage(page);
     }
 
-    public void OpenUser()
+    public void OpenUser(User? user = null)
     {
-        IBasePageViewModel? opend = Pages.FirstOrDefault(x => x.Page == EApplicationPage.User);
+        if (user == null) user = _app.User;
+
+        IBasePageViewModel? opend = Pages.FirstOrDefault(x => 
+                                    x.Page == EApplicationPage.User 
+                                    && x is UserPageViewModel upwm 
+                                    && upwm.User.ID == user.ID);
         if (opend == null)
         {
-            AddPage(ToBasePage(EApplicationPage.User));
+            AddPage(new UserPageViewModel(_app, user));
         }
         else
             ChangePage(opend);

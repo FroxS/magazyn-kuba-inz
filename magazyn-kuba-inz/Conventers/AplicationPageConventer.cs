@@ -41,6 +41,7 @@ public static class AplicationPageConventer
                 return new WareHouseCreatorPage(pagevm);
             case EApplicationPage.Racks:
                 return new RacksPage(pagevm);
+            case EApplicationPage.OrderFromSupplier:
             case EApplicationPage.Order:
                 return new OrdersPage(pagevm);
             case EApplicationPage.EditAddOrder:

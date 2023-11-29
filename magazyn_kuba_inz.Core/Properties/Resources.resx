@@ -318,6 +318,9 @@
   <data name="NameIsRequired" xml:space="preserve">
     <value>Name is required</value>
   </data>
+  <data name="NewOrder" xml:space="preserve">
+    <value>New order</value>
+  </data>
   <data name="NextPage" xml:space="preserve">
     <value>Next page</value>
   </data>
@@ -332,6 +335,12 @@
   </data>
   <data name="Orders" xml:space="preserve">
     <value>Orders</value>
+  </data>
+  <data name="OrdersFromSupplier" xml:space="preserve">
+    <value>Orders from supplier</value>
+  </data>
+  <data name="OrdersToRealizationInGivenMonth" xml:space="preserve">
+    <value>Orders to realization in a given month</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -425,6 +434,9 @@
   </data>
   <data name="SuccesfullReserved" xml:space="preserve">
     <value>Succesfull reserved</value>
+  </data>
+  <data name="SuccessfulCreatedUser" xml:space="preserve">
+    <value>Successful created user</value>
   </data>
   <data name="SuccessfulRemoved" xml:space="preserve">
     <value>Successful removed</value>

@@ -7,6 +7,7 @@
                          xmlns:local="clr-namespace:Warehouse.View.Pages"
                          xmlns:service="clr-namespace:Warehouse.View.Service"
                          xmlns:controls="clr-namespace:Warehouse.Controls"
+                         xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
@@ -40,8 +41,8 @@
                 <controls:TopTileControl Background="#FFF1D30B"
                                          Padding="10"
                                          Command="{Binding AddNewOrderCommand}"
-                                         TopText="Order"
-                                         Description="Nowe zamówienie"
+                                         TopText="{x:Static res:Resources.Order}"
+                                         Description="{x:Static res:Resources.NewOrder}"
                                          Icon="{DynamicResource Add}"
                                          Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
@@ -49,7 +50,7 @@
                 <controls:TopTileControl Background="#FF53D30B"
                                      Padding="10"
                                      TopText="{Binding CountOfProducts, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
-                                     Description="Produkty"
+                                     Description="{x:Static res:Resources.Products}"
                                      Icon="{DynamicResource ProductsGeometry}"
                                      Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
@@ -57,7 +58,7 @@
                 <controls:TopTileControl Background="#FF537d0B"
                                          Padding="10"
                                          TopText="{Binding CountOfUsers, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
-                                         Description="Użytkownicy"
+                                         Description="{x:Static res:Resources.Users}"
                                          Icon="{DynamicResource UserGeometry}"
                                          Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
@@ -65,7 +66,7 @@
                 <controls:TopTileControl Background="#FF53D30B"
                                          Padding="10"
                                          TopText="{Binding CountOfOrders, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
-                                         Description="Produkty"
+                                         Description="{x:Static res:Resources.Orders}"
                                          Icon="{DynamicResource Order}"
                                          Foreground="{DynamicResource FontColorBrush}"/>
             </controls:FlexibleItem>
@@ -84,7 +85,7 @@
                 <controls:Chart Margin="10"
                                 LinesCount="10"
                                 Height="300"
-                                Title="Zamówenia do realizcji w miesiącu"
+                                Title="{x:Static res:Resources.OrdersToRealizationInGivenMonth}"
                                 Model="{Binding OrderLineChart, UpdateSourceTrigger=PropertyChanged}"
                                 Background="{DynamicResource ButtonBackgroundColorBrush}"
                                 LineNetColor="{DynamicResource BorderColorBrush}"

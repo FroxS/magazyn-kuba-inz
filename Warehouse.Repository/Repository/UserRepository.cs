@@ -23,24 +23,16 @@ internal class UserRepository : BaseRepository<User,WarehouseDbContext>, IUserRe
 
     #region public methods
 
-    /// <summary>
-    /// Method to get one Tenity from databae by Id
-    /// </summary>
-    /// <param name="id">Id of this Entity</param>
-    /// <returns></returns>
-    public async virtual Task<User?> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+
+    public async virtual Task<User?> GetByLoginAsync(string login, CancellationToken cancellationToken = default(CancellationToken))
     {
-        return await _context.Users.FirstOrDefaultAsync(x => x.Name == name);
+        return await _context.Users.FirstOrDefaultAsync(x => x.Login == login);
     }
 
-    /// <summary>
-    /// Method to get one Tenity from databae by Id
-    /// </summary>
-    /// <param name="id">Id of this Entity</param>
-    /// <returns></returns>
-    public virtual User? GetByName(string name)
+
+    public virtual User? GetByLogin(string login)
     {
-        return _context.Users.FirstOrDefault(x => x.Name == name);
+        return _context.Users.FirstOrDefault(x => x.Login == login);
     }
 
     #endregion

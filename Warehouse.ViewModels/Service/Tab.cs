@@ -4,7 +4,6 @@ using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Service
 {
-   
     public abstract class Tab : BaseViewModel, ITab
     {
         #region Private fields
@@ -28,6 +27,8 @@ namespace Warehouse.ViewModel.Service
             get => _isEmpty;
             protected set { _isEmpty = value; OnPropertyChanged(nameof(IsEmpty)); }
         }
+
+        public virtual BaseViewModel Parent { get;}
 
         #endregion
 
@@ -55,6 +56,14 @@ namespace Warehouse.ViewModel.Service
                 () => 
                 CloseRequest?.Invoke(this, EventArgs.Empty)
                 );
+        }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Tab(BaseViewModel parent) : this()
+        {
+            Parent = parent;
         }
 
         #endregion

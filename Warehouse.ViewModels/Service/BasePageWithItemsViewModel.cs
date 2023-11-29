@@ -55,12 +55,24 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
     /// </summary>
     /// <param name="app">Application</param>
     /// <param name="service">Service of current item</param>
-    public BasePageWIthItemsViewModel(IApp app, ItemService service) : base(app)
+    public BasePageWIthItemsViewModel(IApp app, ItemService service) : this(app, service, null)
+    {
+        
+    }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="app">Application</param>
+    /// <param name="service">Service of current item</param>
+    public BasePageWIthItemsViewModel(IApp app, ItemService service, BaseViewModel parent) : base(app, parent)
     {
         AddItemCommand = new AsyncRelayCommand(AddItem, canExecute: (o) => CanAddNew);
         DeleteItemsCommand = new AsyncRelayCommand<IList>(DeleteItems, canExecute: (o) => CanAddNew);
         _service = service;
     }
+
+
 
     #endregion
 

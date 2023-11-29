@@ -7,6 +7,7 @@ using Warehouse.Service.Interface;
 using Warehouse.InnerDialog;
 using Warehouse.Models.Enums;
 using Warehouse.Core.Models;
+using System.Threading.Tasks;
 
 namespace Warehouse.Dialog
 {
@@ -167,7 +168,22 @@ namespace Warehouse.Dialog
                 OnResult
             );
         }
-        
+
+        public void GetUser(Action<User?> OnResult)
+        {
+            OpenInnerDialog(
+                new GetUserInnerDialogViewModel(_service.GetRequiredService<IApp>()),
+                OnResult
+            );
+        }
+       
+        public async Task<User> GetUser()
+        {
+            return await OpenInnerDialogAsync(
+                new GetUserInnerDialogViewModel(_service.GetRequiredService<IApp>())
+            );
+        }
+
         public async Task<double?> GetCountAsync( double def = 1)
         {
             return await OpenInnerDialogAsync(
@@ -195,7 +211,7 @@ namespace Warehouse.Dialog
                     _service.GetRequiredService<IApp>(), 
                     _service.GetRequiredService<IStorageUnitService>()
                     )
-                );
+            );
         }
 
         #endregion

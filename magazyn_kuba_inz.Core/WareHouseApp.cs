@@ -194,7 +194,7 @@ public class WareHouseApp : ObservableObject, IApp
         await userService.Register(user);
     }
 
-    public void CatchExeption(Exception ex)
+    public void CatchExeption(Exception ex, bool showMessage = true)
     {
         ShowSilentMessage(Core.Properties.Resources.ApplicationErrorMessage, EMessageType.Error);
 

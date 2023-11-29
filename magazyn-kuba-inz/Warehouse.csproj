@@ -66,6 +66,9 @@
     <Compile Update="Controls\WareHouseArea.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Pages\Order\OrderTab\OrderFromSupplierDataTabView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Pages\Order\OrderTab\OrderDataTabView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

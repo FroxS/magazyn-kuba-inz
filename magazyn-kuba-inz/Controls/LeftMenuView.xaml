@@ -83,7 +83,7 @@
             <Grid Height="90">
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
-                           Margin="73,-20,0,0"
+                           Margin="72,-20,0,0"
                            Text="M E N U"
                            Foreground="{DynamicResource FontColorBrush}"
                            FontSize="22"

@@ -17,7 +17,6 @@ public class ChangePassworldUserTabViewModel : BasePageViewModel
 {
     #region Fields
 
-    private readonly BasePageViewModel _parent;
     private readonly User _user;
     private IUserService _userService => Application.GetService<IUserService>();
 
@@ -97,9 +96,8 @@ public class ChangePassworldUserTabViewModel : BasePageViewModel
 
     #region Constructors
 
-    public ChangePassworldUserTabViewModel(BasePageViewModel parent): base(parent.Application)
+    public ChangePassworldUserTabViewModel(BasePageViewModel parent): base(parent.Application, parent)
     {
-        _parent = parent;
         Page = Models.Page.EApplicationPage.User;
         if (!Application.IsUserLogin())
             throw new Exception("user is not login");
@@ -111,7 +109,7 @@ public class ChangePassworldUserTabViewModel : BasePageViewModel
         Init();
     }
 
-    public ChangePassworldUserTabViewModel(BasePageViewModel parent, User user) : base(parent.Application)
+    public ChangePassworldUserTabViewModel(BasePageViewModel parent, User user) : base(parent.Application, parent)
     {
         
         Page = Models.Page.EApplicationPage.User;

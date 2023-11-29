@@ -18,7 +18,8 @@ public interface IInnerDialogService
     void OpenInnerDialog<T>(IBaseInnerDialogViewModel<T> vm, Action<T> OnClose);
     void OpenInnerDialog<T>(IBaseInnerDialogViewModel<T> vm);
     void YesNoInnerDialog(string message, Action<EDialogResult> OnResult);
-
+    void GetUser(Action<User?> OnResult);
+    Task<User> GetUser();
     void GetHallInnerDialog(Action<HallObject> OnResult, HallObject hall = null);
     Task<HallObject> GetHallInnerDialog(HallObject hall = null);
     Task<StorageUnit> AddStorageUnitInnerDialog();

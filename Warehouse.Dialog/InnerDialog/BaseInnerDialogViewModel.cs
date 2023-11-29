@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Warehouse.ViewModel.Service;
 using Warehouse.Core.Interface;
+using Warehouse.Service;
 
 namespace Warehouse.InnerDialog;
 
@@ -12,6 +13,7 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
     protected readonly IApp _app;
     protected bool _dialogResult = false;
     protected string _title;
+    protected MessageService _message;
 
     #endregion
 
@@ -22,13 +24,19 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
     public bool DialogResult
     {
         get => _dialogResult;
-        private set { _dialogResult = value; OnPropertyChanged(nameof(DialogResult)); }
+        protected set => SetProperty(ref _dialogResult, value);
+    }
+
+    public MessageService Message
+    {
+        get => _message;
+        protected set => SetProperty(ref _message, value);
     }
 
     public string Title
     {
         get => _title;
-        protected set { _title = value; OnPropertyChanged(nameof(Title)); }
+        protected set => SetProperty(ref _title, value);
     }
 
     #endregion
@@ -52,6 +60,7 @@ public abstract class BaseInnerDialogViewModel<T> : BaseViewModel, IBaseInnerDia
         _app = app;
         SubmitCommand = new RelayCommand(Submit);
         ExitCommand = new RelayCommand(Exit);
+        Message = new MessageService();
     }
 
     #endregion

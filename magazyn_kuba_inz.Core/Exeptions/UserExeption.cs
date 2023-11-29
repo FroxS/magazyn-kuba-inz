@@ -25,6 +25,4 @@ public class DataException : Exception
 
     #endregion
 
-
-
 }

@@ -32,7 +32,14 @@
                     <local:OrderDataTabView/>
                 </Border>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type pageVM:OrderFromSupplierDataTabViewModel}">
+                <Border BorderThickness="1 1 1 1"
+                        BorderBrush="{DynamicResource BorderColorBrush}">
+                    <local:OrderFromSupplierDataTabView/>
+                </Border>
+            </DataTemplate>
+
             <!--#endregion-->
 
             <!--#region Products-->

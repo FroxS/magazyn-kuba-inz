@@ -34,7 +34,7 @@ public interface IApp
     S GetService<S, T>() where T : BaseEntity where S : IBaseService<T>;
 
     S GetService<S>();
-    void CatchExeption(System.Exception ex);
+    void CatchExeption(System.Exception ex, bool showMessage = true);
     void ReloadDatabase();
 
     void SetTheme(ColorScheme corloScheme = ColorScheme.Dark);

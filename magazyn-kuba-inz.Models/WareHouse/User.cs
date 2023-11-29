@@ -20,5 +20,17 @@ public sealed class User : BaseEntity, IUser
     public EUserType Type { get; set; }
     public string? Image { get; set; }
     public List<Order>? Orders { get; set; }
+
+    public static User Get()
+    {
+        return new User()
+        {
+            ID = Guid.NewGuid(),
+            CreatedAt = DateTime.Now,
+            Active = false,
+            Type = EUserType.Employee_WareHouse,
+            Lp = 1
+        };
+    }
 }
 

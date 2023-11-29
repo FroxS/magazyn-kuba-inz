@@ -10,6 +10,17 @@ public abstract class BaseEntity : ObservableObject
     public virtual uint Lp { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime Modified { get; set; }
+
+    public BaseEntity()
+    {
+        PropertyChanged += BaseEntity_PropertyChanged; ;
+    }
+
+    private void BaseEntity_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        Modified = DateTime.Now;
+    }
+
     public override bool Equals(System.Object obj)
     {
         // Check if the object is a RecommendationDTO.

@@ -51,7 +51,7 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
 
     #region Public Method
 
-    public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken))
+    public User GetUser(RegisterResource resource)
     {
         if (!PassValid(resource.Password))
             throw new DataException("Invalid passworld", resource, nameof(resource.Password));
@@ -62,11 +62,18 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
             Login = resource.Login,
             Email = resource.Email,
             PasswordSalt = PasswordHelper.GenerateSalt(),
-            Active = false,
-            Name = resource.Login,
-            Type = Warehouse.Models.Enums.EUserType.Employee_WareHouse
+            Active = resource.IsActive,
+            Name = resource.Name ?? resource.Login,
+            Type = resource.type
         };
         user.PasswordHash = PasswordHelper.ComputeHash(resource.Password, user.PasswordSalt, _pepper, _iteration);
+        return user;
+
+    }
+
+    public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken))
+    {
+        User user = GetUser(resource);
 
         await _repozitory.AddAsync(user, cancellationToken);
 
@@ -75,7 +82,7 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
 
     public async Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken))
     {
-        User? user = await _repozitory.GetByNameAsync(resource.Login, cancellationToken);
+        User? user = await _repozitory.GetByLoginAsync(resource.Login, cancellationToken);
 
         if (user == null)
             throw new DataException("Username or password did not match.", user, "Login");
@@ -97,7 +104,7 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
         if (!PassValid(resource.Password))
             throw new DataException("Invalid passworld", resource, nameof(resource.Password));
 
-        User? user = _repozitory.GetByName(resource.Login);
+        User? user = _repozitory.GetByLogin(resource.Login);
         if (user == null)
             throw new DataException($"Not found User {resource.Login}") ;
         user.PasswordSalt = PasswordHelper.GenerateSalt();

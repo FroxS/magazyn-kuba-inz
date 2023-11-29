@@ -152,21 +152,6 @@ public class WarehouseDbContext : DbContext
             o.Property(x => x.Name).IsRequired().HasMaxLength(255);
         });
 
-        //modelBuilder.Entity<WareHouseItem>(o => {
-        //    o.LoadDefaultEntity();
-        //    o.Property(x => x.Count).IsRequired();
-        //    o.Property(x => x.Count).HasDefaultValue(0);
-        //    o.HasOne(x => x.State)
-        //        .WithMany(x => x.Items)
-        //        .HasForeignKey(x => x.ID_State);
-        //    o.HasOne(x => x.Product)
-        //        .WithMany(x => x.WareHouseItems)
-        //        .HasForeignKey(x => x.ID_Product);
-        //    o.HasMany(x => x.Items)
-        //        .WithOne(x => x.Item)
-        //        .HasForeignKey(x => x.ID_Item);
-        //});
-
         modelBuilder.Entity<ItemState>(o => {
             o.LoadDefaultEntity();
             o.Property(x => x.State).IsRequired();
@@ -257,6 +242,8 @@ public class WarehouseDbContext : DbContext
             o.LoadDefaultEntity();
             o.Property(x => x.Name).IsRequired();
             o.Property(x => x.Margin).HasDefaultValue(0);
+            o.Property(x => x.State).HasDefaultValue(EOrderState.Created);
+            o.Property(x => x.Type).HasDefaultValue(EOrderType.WareHouse);
             o.HasOne(x => x.User)
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.ID_User);

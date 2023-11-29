@@ -112,12 +112,11 @@
                             <Grid Background="Transparent"
                                   Name="StackPanelMenuItem"
                                   HorizontalAlignment="Left"
-                                  Width="200" Height="30"
+                                  Width="175" Height="30"
                                   Margin="15,10,0,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*" MaxWidth="120"/>
-                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Path Stretch="Uniform" 
@@ -133,7 +132,7 @@
 
                                 <TextBlock Text="{TemplateBinding Header}"
                                            VerticalAlignment="Center"
-                                           Margin="30,0"
+                                           Margin="20,0"
                                            TextWrapping="Wrap"
                                            Grid.Column="1"
                                            HorizontalAlignment="Left"
@@ -142,6 +141,7 @@
 
                                 <ToggleButton Background="Transparent"
                                               Grid.Column="2"
+                                              HorizontalAlignment="Right"
                                               Visibility="{Binding ContainsSubMenu, 
                                                                    RelativeSource={RelativeSource TemplatedParent}, 
                                                                    Converter={conv:BoolToVisibleConventer}, 

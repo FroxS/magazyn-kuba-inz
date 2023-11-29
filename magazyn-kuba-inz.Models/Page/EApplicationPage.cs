@@ -14,6 +14,7 @@ public enum EApplicationPage
     WareHouseCreator,
     StorageUnits,
     Order,
+    OrderFromSupplier,
     EditAddOrder,
     User,
     Users

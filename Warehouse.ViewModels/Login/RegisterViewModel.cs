@@ -8,7 +8,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Input;
 using Warehouse.Core.Interface;
-using Warehouse.Service.ErrorLog;
 
 namespace Warehouse.ViewModel.Login;
 
@@ -90,17 +89,16 @@ public class RegisterViewModel : BaseViewModel
         }
         try
         {
-            app.Register(new RegisterResource(Login, Email, Password));
-            MessageBox.Show("Udało się stworzyc użytkownika");
+            app.Register(new RegisterResource(Login, Email, Password, Login));
+            app.GetDialogService().ShowAlert(Core.Properties.Resources.SuccessfulCreatedUser);
         }
         catch (DataException ex)
         {
-            MessageBox.Show(ex.Message);
+            app.GetDialogService().ShowError(ex);
         }
         catch (Exception ex)
         {
-            ErrorLogService.ErrorLog(ex);
-            MessageBox.Show("Wystąpił bład sprawdź logi");
+            app.CatchExeption(ex);
         }
     }
 

@@ -7,25 +7,12 @@
              xmlns:controls1="clr-namespace:Warehouse.Controls"  
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
-             xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:attat="clr-namespace:Warehouse.AttachedProperty"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=pageVM:ChangePassworldUserTabViewModel}"
              d:DesignHeight="500" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ObjectDataProvider MethodName="GetValues"
-                                ObjectType="{x:Type sys:Enum}"
-                                x:Key="EnumUserTypes">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="enum:EUserType" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid Margin="25 50">
 
         <Grid.RowDefinitions>

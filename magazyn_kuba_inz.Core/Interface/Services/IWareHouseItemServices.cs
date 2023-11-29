@@ -10,6 +10,7 @@ namespace Warehouse.Core.Interface;
 
 public interface IUserService : IBaseService<User>
 {
+    User GetUser(RegisterResource resource);
     Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<List<User>> GetUsers(CancellationToken cancellationToken = default);
@@ -59,10 +60,11 @@ public interface IWareHouseService
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
+
 public interface IOrderService : IBaseService<Order> 
 {
     List<OrderProduct> GetProducts(Guid id);
-    string GetNewOrderName();
+    string GetNewOrderName(EOrderType type = EOrderType.WareHouse);
     void SetWay(List<WayObject> way, Order order);
     List<WayObject>? GetWay(Order order);
     bool Reserv(Order order, IWareHouseService service, ref string message);
@@ -72,15 +74,21 @@ public interface IOrderService : IBaseService<Order>
     double TotalPrice(Order order);
     double TotalPrice(Guid id);
     EOrderState GetState(Guid id);
+    List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier);
+    Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default);
 }
+
 public interface IOrderProductService : IBaseService<OrderProduct> { }
+
 public interface IStorageUnitService : IBaseService<StorageUnit> { }
+
 public interface IRackService : IBaseService<Rack> 
 {
     bool CanDeleteRack(Guid id);
     List<Rack> GetAllWithItems();
     List<StorageItemPackage> GetAllPackages(Guid id);
 }
+
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> 
 {
     List<StorageItem>? GetItemsByID(Guid id);

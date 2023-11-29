@@ -43,7 +43,7 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
     public virtual Item? SelectedItem
     {
         get => _selectedItem;
-        set { SetProperty(ref _selectedItem, value); }
+        set { Item? old = _selectedItem; SetProperty(ref _selectedItem, value, onChanged: () => OnItemChanged(old, value)); }
     }
 
     public virtual string? SearchString
@@ -80,8 +80,15 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
     /// Default constructor
     /// </summary>
     /// <param name="app">Application</param>
-    /// <param name="service">Service of current item</param>
     public BasePageSearchItemsViewModel(IApp app) : base(app)
+    {
+    }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="app">Application</param>
+    public BasePageSearchItemsViewModel(IApp app, BaseViewModel parent) : base(app, parent)
     {
     }
 
@@ -122,8 +129,8 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
         }
     }
 
+    protected virtual void OnItemChanged(Item? oldItem, Item? newItem) { }
+    
     #endregion
-
-
 
 }

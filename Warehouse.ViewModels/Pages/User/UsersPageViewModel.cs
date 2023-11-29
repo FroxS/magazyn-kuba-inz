@@ -22,9 +22,7 @@ public class UsersPageViewModel : BasePageSearchItemsViewModel<User>
 
     #region Command
 
-    public ICommand DeleteItemsCommand { get; private set; }
-
-    public ICommand AddItemCommand { get; private set; }
+    public ICommand EdituserCommand { get; private set; }
 
     #endregion
 
@@ -33,7 +31,9 @@ public class UsersPageViewModel : BasePageSearchItemsViewModel<User>
     public UsersPageViewModel(IApp app): base(app)
     {
         Page = Models.Page.EApplicationPage.Users;
-        AddItemCommand = new AsyncRelayCommand<IList>(DeleteItems);
+        DeleteItemsCommand = new AsyncRelayCommand<IList>(DeleteItems);
+        AddItemCommand = new AsyncRelayCommand(Add);
+        EdituserCommand = new RelayCommand<User>(Edit);
     }
 
     #endregion
@@ -75,9 +75,52 @@ public class UsersPageViewModel : BasePageSearchItemsViewModel<User>
         }
     }
 
+    private void Edit(User user)
+    {
+        try
+        {
+            if (user == null)
+                return;
+
+
+            Application.Navigation.OpenUser(user);
+
+        }
+        catch (Exception ex) { Application.CatchExeption(ex); }
+        
+    }
+
     #endregion
 
     #region Private helpers
+
+    private async Task Add()
+    {
+        try
+        {
+            User added = await Application.GetInnerDialogService().GetUser();
+
+            if (added == null)
+                return;
+
+            IUserService service = Application.GetService<IUserService>();
+
+            service.Add(added);
+            service.Save();
+            Items.Add(added);
+            SelectedItem = added;
+            Application.ClearSilentMessage();
+
+        }catch(Exception ex)
+        {
+            Application.CatchExeption(ex);
+        }
+    }
+
+    public override void OnPageClose()
+    {
+        _userService.Save();
+    }
 
     public async override void OnPageOpen()
     {
@@ -97,6 +140,11 @@ public class UsersPageViewModel : BasePageSearchItemsViewModel<User>
         {
             IsTaskRunning = false;
         }
+    }
+
+    protected override void OnItemChanged(User? oldItem, User? newItem)
+    {
+        
     }
 
     #endregion

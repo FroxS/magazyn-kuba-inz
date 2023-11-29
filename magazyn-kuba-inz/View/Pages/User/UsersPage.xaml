@@ -9,6 +9,7 @@
                          xmlns:conv="clr-namespace:Warehouse.Conventers"
                          xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
                          xmlns:pageVM="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
+                         xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
                          mc:Ignorable="d" 
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:UsersPageViewModel}"
@@ -38,31 +39,78 @@
                       SelectionMode="Extended"
                       AutoGenerateColumns="False"
                       CanUserDeleteRows="False"
-                      SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True">
+                      SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nazwa" 
-                                        Binding="{Binding Name}"
-                                        Width="*"/>
 
-                    <DataGridTextColumn Header="Login" 
-                                        Binding="{Binding Login}"
-                                        Width="*"/>
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.Name}" 
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Typ" 
-                                        Binding="{Binding Type}"
-                                        Width="*"/>
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.Login}" 
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Aktywny" 
-                                        Binding="{Binding Active}"
-                                        Width="*"/>
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.Role}" 
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedItem="{Binding Type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                          ItemsSource="{Binding Source={StaticResource UserTypes}, Converter={conv:SortListConventer}}"
+                                          Margin="-10">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={conv:EnumToTextConventer}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
 
-                    <DataGridTextColumn Header="Utworzono" 
-                                        Binding="{Binding CreatedAt}"
-                                        Width="*"/>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.Active}" 
+                                            Width="*">
+
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Active, UpdateSourceTrigger=PropertyChanged}"
+                                          Grid.Column="1"
+                                          ToolTip="{x:Static res:Resources.Active}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="{x:Static res:Resources.Created}" 
+                                            Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CreatedAt, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
                 
                 <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"
+                                  Command="{Binding EdituserCommand}"
+                                  CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                    
                     <KeyBinding Key="Delete" 
                                 Command="{Binding DeleteItemsCommand}"
                                 CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
