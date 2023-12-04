@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.Pages"
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
@@ -103,8 +104,31 @@
                                  Visibility="{Binding ToAdd,Converter={conv:BoolToVisibleConventer}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"
                                  Foreground="{DynamicResource PrimaryColorBrush}"
                                  Command="{Binding SaveCommand}"/>
-            
-            
+
+
+            <controls:ButtonPath IconPath="{StaticResource Delivery}"
+                                 Foreground="{Binding Source={x:Static enum:EOrderState.DeliveryPrepared}, Converter={conv:OrderStateToColorConventer}}"
+                                 Text="{x:Static res:Resources.SetAsDone}"
+                                 Padding="0"
+                                 Margin="10 5"
+                                 ToolTip="{x:Static res:Resources.SetAsDone}"
+                                 Visibility="{Binding CanPrepared, Converter={conv:BoolToVisibleConventer},ConverterParameter=True,  UpdateSourceTrigger=PropertyChanged}"
+                                 Command="{Binding SetStateCommand}"
+                                 CommandParameter="{x:Static enum:EOrderState.DeliveryPrepared}"/>
+
+
+            <controls:ButtonPath IconPath="{StaticResource Forklift}"
+                                 Foreground="{Binding Source={x:Static enum:EOrderState.Received}, Converter={conv:OrderStateToColorConventer}}"
+                                 Text="{x:Static res:Resources.SetAsReceived}"
+                                 Padding="0"
+                                 Margin="10 5"
+                                 ToolTip="{x:Static res:Resources.SetAsReceived}"
+                                 Visibility="{Binding CanReceived, Converter={conv:BoolToVisibleConventer},ConverterParameter=True,  UpdateSourceTrigger=PropertyChanged}"
+                                 Command="{Binding SetStateCommand}"
+                                 CommandParameter="{x:Static enum:EOrderState.Received}"/>
+
+
+
         </StackPanel>
 
     </Grid>

@@ -14,7 +14,7 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 {
     #region Private fields
 
-    private readonly IStorageItemRepository _storageItemRepo;
+    private IStorageItemRepository _storageItemRepo => _app.GetService<IStorageItemRepository>();
 
     #endregion
 
@@ -23,9 +23,9 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
     /// <summary>
     /// Default constructor
     /// </summary>
-    public OrderService(IOrderRepository repozitory, IStorageItemRepository storageItemRepo, IApp app) : base(repozitory, app)
+    public OrderService(IOrderRepository repozitory, IApp app) : base(repozitory, app)
     {
-        _storageItemRepo = storageItemRepo;
+        
     }
 
     #endregion
@@ -39,7 +39,149 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     #endregion
 
-    #region Public Method
+    #region Checking
+
+    public bool IsReserved(Guid id)
+    {
+        IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
+        return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < EState.Reserved);
+    }
+
+    public bool IsPrepared(Guid id)
+    {
+        Order order = GetById(id);
+        if (order == null)
+            return false;
+        EState minState = EState.Prepared;
+        IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
+        if (order.Type == EOrderType.Supplier)
+        {
+            minState = EState.Delivery;
+        } 
+        return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < minState);
+    }
+
+    public bool IsReceived(Guid id)
+    {
+        IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
+        return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < EState.Received);
+    }
+
+    #endregion
+
+    #region Set States metohds
+
+    public bool Reserv(Order order, IWareHouseService service, ref string message)
+    {
+        if (order == null) return false;
+        if (IsReserved(order.ID))
+        {
+            message = "Zamównienie jest juz zarezerwowane";
+            return false;
+        }
+
+
+        order.Items = GetProducts(order);
+        List<StorageItem> aviable = service.GetProductsByState(EState.Available);
+
+        if (aviable.Count < order.Items.Count)
+        {
+            message = "Brak wystarczającej ilości produktów na magazynie";
+            return false;
+        }
+
+        StorageItem[] assing = aviable.Take(order.Items.Count).ToArray();
+
+        int i = 0;
+
+        List<StorageItem> alreadyReserved = new List<StorageItem>();
+
+        foreach (OrderProduct product in order.Items)
+        {
+            StorageItem ass = assing[i++];
+            if (product.ID_StorageItem != Guid.Empty)
+            {
+                StorageItem reserved = _storageItemRepo.GetById(x => x.Include(i => i.State), product.ID_StorageItem);
+                if (reserved != null && reserved.State.State >= EState.Reserved)
+                {
+                    product.StorageItem = reserved;
+                    product.ID_StorageItem = reserved.ID;
+                    alreadyReserved.Add(reserved);
+                    continue;
+                }
+            }
+            product.StorageItem = ass;
+            product.ID_StorageItem = ass.ID;
+            ass.ID_OrderItem = product.ID;
+            ass.OrderItem = product;
+        }
+        Update(order);
+        if (Save())
+        {
+            message = service.MoveProductToState(EState.Reserved, order.Items.Select(x => x.StorageItem).Where(x => !alreadyReserved.Contains(x)).ToArray());
+            if (message != null)
+            {
+                foreach (OrderProduct product in order.Items)
+                {
+                    product.StorageItem = null;
+                    product.ID_StorageItem = Guid.Empty;
+                }
+                Update(order);
+                Save();
+                return false;
+            }
+            else
+            {
+                return service.Save();
+            }
+        }
+        return false;
+    }
+
+    public bool SetAsPrepared(Order order, IWareHouseService service)
+    {
+        if (order == null) return false;
+
+        string? message = null;
+        if (order.Type == EOrderType.WareHouse)
+        {
+            if (!IsReserved(order.ID))
+                return false;
+
+            order.Items = GetProducts(order);
+            message = service.MoveProductToState(EState.Prepared, order.Items.Select(x => x.StorageItem).ToArray());
+            if (message == null)
+                return true;
+            else
+                return false;
+        }
+        else
+            return service.AddFromSupplierOrder(order);
+
+    }
+
+    public bool SetAsReceived(Order order, IWareHouseService service)
+    {
+        if (order == null) return false;
+        if (order.Type != EOrderType.Supplier) return false;
+        if (!IsPrepared(order.ID))
+            return false;
+
+        order.Items = GetProducts(order);
+        string? message = null;
+        message = service.MoveProductToState(EState.Received, order.Items.Select(x => x.StorageItem).ToArray());
+        if (message == null)
+        {
+            order.State = EOrderState.Finish;
+            return true;
+        } 
+        else
+            return false;
+    }
+
+    #endregion
+
+    #region Base Overvrite
 
     public override async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -48,20 +190,19 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         if (order == null)
             return false;
 
-        if (GetState(id) > EOrderState.Created)
-            return false;
+        //if (GetState(id) > EOrderState.Created)
+        //    return false;
 
         return await base.DeleteAsync(id, cancellationToken);
     }
 
-    public List<OrderProduct> GetProducts(Guid id)
-    {
-        return _repozitory.GetById(i => i.Include(i => i.Items).ThenInclude(x => x.Product), id)?.Items;
-    }
+    #endregion
+
+    #region Helpers
 
     public string GetNewOrderName(EOrderType type = EOrderType.WareHouse)
     {
-        List<Order> all = GetAll(type); 
+        List<Order> all = GetAll(type);
         return FindNewOrderName(all.Select(x => x.Name), type);
     }
 
@@ -92,86 +233,9 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         return nowaNazwa;
     }
 
-    public void SetWay(List<WayObject> way, Order order)
+    public List<OrderProduct> GetProducts(Guid id)
     {
-        byte[] data = GetData(way);
-        order.OrderWay = data;
-        Update(order);
-    }
-
-    public List<WayObject>? GetWay(Order order)
-    {
-        if(order.OrderWay == null) 
-            return null;
-
-        return GetData<List<WayObject>>(order.OrderWay);
-    }
-
-    public bool Reserv(Order order, IWareHouseService service, ref string message)
-    {
-        if(order == null) return false;
-        if (IsReserved(order.ID))
-        {
-            message = "Zamównienie jest juz zarezerwowane";
-            return false;
-        }
-            
-
-        order.Items = GetProducts(order);
-        List<StorageItem> aviable = service.GetProductsByState(EState.Available);
-
-        if(aviable.Count < order.Items.Count)
-        {
-            message = "Brak wystarczającej ilości produktów na magazynie";
-            return false;
-        }
-
-        StorageItem[] assing = aviable.Take(order.Items.Count).ToArray();
-
-        int i = 0;
-
-        List<StorageItem> alreadyReserved = new List<StorageItem>();
-
-        foreach (OrderProduct product in order.Items)
-        {
-            StorageItem ass = assing[i++];
-            if (product.ID_StorageItem != Guid.Empty)
-            {
-                StorageItem reserved = _storageItemRepo.GetById(x => x.Include(i => i.State),product.ID_StorageItem);
-                if(reserved != null && reserved.State.State >= EState.Reserved)
-                {
-                    product.StorageItem = reserved;
-                    product.ID_StorageItem = reserved.ID;
-                    alreadyReserved.Add(reserved);
-                    continue;
-                }
-            }
-            product.StorageItem = ass;
-            product.ID_StorageItem = ass.ID;
-            ass.ID_OrderItem = product.ID;
-            ass.OrderItem = product;
-        }
-        Update(order);
-        if (Save())
-        {
-            message = service.MoveProductToState(EState.Reserved, order.Items.Select(x => x.StorageItem).Where(x => !alreadyReserved.Contains(x)).ToArray());
-            if(message != null)
-            {
-                foreach (OrderProduct product in order.Items)
-                {
-                    product.StorageItem = null;
-                    product.ID_StorageItem = Guid.Empty;
-                }
-                Update(order);
-                Save();
-                return false;
-            }
-            else
-            {
-                return service.Save();
-            }
-        }
-        return false;
+        return _repozitory.GetById(i => i.Include(i => i.Items).ThenInclude(x => x.Product), id)?.Items;
     }
 
     private List<OrderProduct> GetProducts(Order order)
@@ -182,33 +246,16 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
             return order.Items;
     }
 
-    public bool SetAsPrepared(Order order, IWareHouseService service)
+    public List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier)
     {
-        if (order == null) return false;
-        if (!IsReserved(order.ID))
-            return false;
-
-        order.Items = GetProducts(order);
-
-        string? message = null;
-        message = service.MoveProductToState(EState.Prepared, order.Items.Select(x => x.StorageItem).ToArray());
-        if (message == null)
-            return true;
-        else
-            return false;
+        return _repozitory.GetAll().Where(x => (x.Type & (type)) != 0).ToList();
     }
 
-    public bool IsReserved(Guid id)
+    public async Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default)
     {
-        IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
-        return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < EState.Reserved);
+        return (await _repozitory.GetAllAsync(cancellationToken: cancellationToken)).Where(x => (x.Type & (type)) != 0).ToList();
     }
 
-    public bool IsPrepared(Guid id)
-    {
-        IEnumerable<OrderProduct> items = GetAllProductsWithItems(id);
-        return items.Count() > 0 && !items.Any(x => x.StorageItem == null) && !items.Any(x => x.StorageItem?.State?.State < EState.Prepared);
-    }
 
     public double TotalPrice(Order order)
     {
@@ -225,11 +272,65 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
 
     public double TotalPrice(Guid id)
     {
-        Order? order = _repozitory.GetById(x => x.Include(o => o.Items).ThenInclude(o => o.Product), id);;
+        Order? order = _repozitory.GetById(x => x.Include(o => o.Items).ThenInclude(o => o.Product), id); ;
         if (order == null)
             return 0;
 
         return TotalPrice(order);
+    }
+
+    public EOrderState GetState(Guid id)
+    {
+        EOrderState state = EOrderState.Created;
+        Order order = GetById(id);
+        if (order == null)
+            return state;
+        if (order.Type == EOrderType.Supplier)
+        {
+            if (order.State == EOrderState.Finish)
+                return EOrderState.Finish;
+
+            state = EOrderState.DeliveryCreated;
+
+            if (IsPrepared(id))
+            {
+                state = EOrderState.DeliveryPrepared;
+                if (IsReceived(id))
+                    state = EOrderState.Received;
+            }
+        }
+        else
+        {
+            state = EOrderState.Created;
+            if (IsReserved(id))
+            {
+                state = EOrderState.Reserved;
+                if (IsPrepared(id))
+                    state = EOrderState.Prepared;
+            }
+        }
+        order.State = state;
+        Update(order);
+        return state;
+    }
+
+    #endregion
+
+    #region Way Metohds
+
+    public void SetWay(List<WayObject> way, Order order)
+    {
+        byte[] data = GetData(way);
+        order.OrderWay = data;
+        Update(order);
+    }
+
+    public List<WayObject>? GetWay(Order order)
+    {
+        if(order.OrderWay == null) 
+            return null;
+
+        return GetData<List<WayObject>>(order.OrderWay);
     }
 
     protected override T GetData<T>(byte[] data)
@@ -244,34 +345,6 @@ internal class OrderService : BaseServiceWithRepository<IOrderRepository,Order>,
         string json = JsonConvert.SerializeObject(obj);
         byte[] bytes = Encoding.UTF8.GetBytes(json);
         return bytes;
-    }
-
-    public EOrderState GetState(Guid id)
-    {
-        EOrderState state = EOrderState.Created;
-
-        if (IsReserved(id))
-        {
-            state = EOrderState.Reserved;
-            if (IsPrepared(id))
-                state = EOrderState.Prepared;
-        }
-        Order order = GetById(id);
-        if (order == null)
-            return EOrderState.Created;
-        order.State = state;
-        Update(order);
-        return state;
-    }
-
-    public List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier)
-    {
-        return _repozitory.GetAll().Where(x => (x.Type & (type)) != 0).ToList();
-    }
-
-    public async Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default)
-    {
-        return (await _repozitory.GetAllAsync(cancellationToken: cancellationToken)).Where(x => (x.Type & (type)) != 0).ToList();
     }
 
     #endregion

@@ -44,4 +44,11 @@
     <Color x:Key="OrderReservedColor">#ed761a</Color>
     <SolidColorBrush x:Key="OrderReservedColorBrush" Color="{DynamicResource OrderReservedColor}"/>
 
+
+    <Color x:Key="OrderReceivedColor">#afba18</Color>
+    <SolidColorBrush x:Key="OrderReceivedColorBrush" Color="{DynamicResource OrderReceivedColor}"/>
+
+
+    
+
 </ResourceDictionary>

@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using Warehouse.Models;
 using System.Windows.Media;
 using System.Linq;
-using System.IO.Packaging;
 
 namespace Warehouse.Controls;
 
@@ -111,38 +110,35 @@ public partial class RackControl : UserControl
 
     internal void UpdateRack(Rack ro)
     {
-        var flors = new ObservableCollection<SFlor>();
-
+        ObservableCollection<SFlor> flors = new ObservableCollection<SFlor>();
         if(ro != null)
         {
             for (int i = 0; i < ro.Flors; i++)
             {
-                var flor = new SFlor();
+                SFlor flor = new SFlor();
                 flor.Items = new ObservableCollection<SPackage>();
                 flors.Add(flor);
             }
 
             if (flors.Count > 0 && ro.StorageItems != null)
             {
-                foreach (var item in ro.StorageItems)
+                foreach (StorageItemPackage item in ro.StorageItems)
                 {
-                    int itemFlor = item.Flor;
+                    int itemFlor = flors.Count - 1 - item.Flor;//  Math.Abs(item.Flor - flors.Count -1);
 
-                    var flor = flors[0];
+                    SFlor flor = flors[flors.Count-1];
                     if (flors.Count > itemFlor)
                         flor = flors[itemFlor];
 
                     flor.Items.Add(new SPackage(item));
                 }
-                
             }
 
-            foreach(var flor in flors)
+            foreach(SFlor flor in flors)
             {
                 flor.UpdateColumns();
             }
-        }
-        
+        }     
         Flors = flors;
         rackItemsControl.ItemsSource = Flors;
     }
@@ -174,20 +170,13 @@ public partial class RackControl : UserControl
         public ObservableCollection<SPackage> Items 
         {
             get => _items;
-            set { 
-                _items = value;
-                OnPropertyChanged(nameof(Items));
-            }
+            set => SetProperty(ref _items, value);
         }
 
         public int Column
         {
             get => _column;
-            set
-            {
-                _column = value;
-                OnPropertyChanged(nameof(Column));
-            }
+            set => SetProperty(ref _column, value);
         }
 
         public SFlor() { }
@@ -211,24 +200,14 @@ public partial class RackControl : UserControl
         public bool IsSelected
         {
             get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
+            set => SetProperty(ref _isSelected, value);
         }
 
         public StorageItemPackage Package
         {
             get => _package;
-            private set
-            {
-                _package = value;
-                OnPropertyChanged(nameof(Package));
-            }
+            private set => SetProperty(ref _package, value);
         }
-
-       
 
         public SPackage(StorageItemPackage pack) 
         {
@@ -242,11 +221,7 @@ public partial class RackControl : UserControl
         public StorageItem Item
         {
             get => _item;
-            private set
-            {
-                _item = value;
-                OnPropertyChanged(nameof(Item));
-            }
+            private set => SetProperty(ref _item, value);
         }
 
         public SItem(StorageItem item)
@@ -254,8 +229,6 @@ public partial class RackControl : UserControl
             Item = item;
         }
     }
-
-
 }
 
 

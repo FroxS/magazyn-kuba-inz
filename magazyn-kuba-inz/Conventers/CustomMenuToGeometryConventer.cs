@@ -62,6 +62,7 @@ public class CustomMenuToGeometryConventer : BaseValueConventer<CustomMenuToGeom
             case EApplicationPage.StorageUnits:
                 return Application.Current.TryFindResource("Box");
             case EApplicationPage.Racks:
+            case EApplicationPage.Rack:
                 return Application.Current.TryFindResource("Rack");
             case EApplicationPage.WareHouseCreator:
                 return Application.Current.TryFindResource("Creator");

@@ -8,7 +8,7 @@ using Warehouse.ViewModel.Service;
 
 namespace Warehouse.ViewModel.Pages;
 
-public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemService> : BasePageSearchItemsViewModel<Item>, IPageReloadViewModel
+public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemService> : BasePageSearchItemsViewModel<Item>
     where Item: BaseEntity 
     where ItemViewModel : BaseEntityViewModel<Item>
     where ItemService : IBaseService<Item>
@@ -114,11 +114,6 @@ public abstract class BasePageWIthItemsViewModel<Item, ItemViewModel, ItemServic
             Application.ShowSilentMessage(ex.Message);
             CanChangePage = false;
         }
-    }
-
-    public virtual void Reload()
-    {
-        _service.RefreshDbContext();
     }
 
     #endregion

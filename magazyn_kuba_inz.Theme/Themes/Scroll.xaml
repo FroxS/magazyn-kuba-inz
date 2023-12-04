@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border x:Name="rectangle"
                                 SnapsToDevicePixels="True"
-                                Background="{DynamicResource SecondBackgroundColorBrush}"
+                                Background="{DynamicResource PrimaryColorBrush}"
                                 CornerRadius="3"
                                 Opacity="0.2"
                                 Height="{TemplateBinding Height}"
@@ -36,7 +36,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ScrollBar}">
+    <Style TargetType="{x:Type ScrollBar}" >
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
         <Setter Property="Width" Value="20"/>
@@ -45,11 +45,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid x:Name="Bg" SnapsToDevicePixels="true" Background="Transparent">
+                    <Grid x:Name="Bg" SnapsToDevicePixels="true" >
 
-                        <Border Padding="0 4">
+                        <Border Padding="2" CornerRadius="10" Background="Transparent">
                             <Track x:Name="PART_Track"
                                IsDirectionReversed="true"
+                                   
                                IsEnabled="{TemplateBinding IsMouseOver}"
                                Width="10"
                                HorizontalAlignment="Center">

@@ -9,4 +9,5 @@ public interface ITab
     ICommand CloseTabCommand { get; }
     event EventHandler CloseRequest;
     void OnPageOpen();
+    void OnPageClose();
 }

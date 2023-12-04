@@ -104,6 +104,7 @@ public partial class App : System.Windows.Application
         services.AddSingleton<UserPageViewModel>();
         services.AddSingleton<UsersPageViewModel>();
         services.AddTransient<OrdersPageViewModel>();
+        services.AddTransient<RackEditViewModel>();
     }
 
     private void PrepareDatabase(IServiceCollection services)

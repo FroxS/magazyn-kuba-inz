@@ -57,6 +57,7 @@ public interface IWareHouseService
     bool CanMove(StorageItem item, EState targetStare);
     List<StorageItem>? GetItemsByPackage(Guid id);
     void Reload();
+    bool AddFromSupplierOrder(Order order);
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
@@ -64,18 +65,20 @@ public interface IImageService : IBaseService<WareHouseImage> { }
 public interface IOrderService : IBaseService<Order> 
 {
     List<OrderProduct> GetProducts(Guid id);
-    string GetNewOrderName(EOrderType type = EOrderType.WareHouse);
+    List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier);
+    Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default);
     void SetWay(List<WayObject> way, Order order);
     List<WayObject>? GetWay(Order order);
-    bool Reserv(Order order, IWareHouseService service, ref string message);
     bool IsReserved(Guid id);
-    bool SetAsPrepared(Order order, IWareHouseService service);
     bool IsPrepared(Guid id);
+    bool IsReceived(Guid id);
+    bool SetAsPrepared(Order order, IWareHouseService service);
+    bool Reserv(Order order, IWareHouseService service, ref string message);
+    bool SetAsReceived(Order order, IWareHouseService service);
+    string GetNewOrderName(EOrderType type = EOrderType.WareHouse);
     double TotalPrice(Order order);
     double TotalPrice(Guid id);
     EOrderState GetState(Guid id);
-    List<Order> GetAll(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier);
-    Task<List<Order>> GetAllAsync(EOrderType type = EOrderType.WareHouse | EOrderType.Supplier, CancellationToken cancellationToken = default);
 }
 
 public interface IOrderProductService : IBaseService<OrderProduct> { }
@@ -87,6 +90,7 @@ public interface IRackService : IBaseService<Rack>
     bool CanDeleteRack(Guid id);
     List<Rack> GetAllWithItems();
     List<StorageItemPackage> GetAllPackages(Guid id);
+    Rack GetWithItems(Guid id);
 }
 
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> 

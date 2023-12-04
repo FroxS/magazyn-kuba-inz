@@ -205,10 +205,17 @@ public class WareHouseApp : ObservableObject, IApp
 
     public void ReloadDatabase()
     {
-        if(_database == null)
+        if (_database == null)
         {
             _database = _databaseFactory.CreateDbContext();
+
         }
+        else
+        {
+            _database.Dispose();
+            _database = _databaseFactory.CreateDbContext();
+        }
+            
         //_database = _databaseFactory.CreateDbContext();  /// TODO: na razie wyłaczono ponieważ gdy już istniało jakieś powiązanie na innej karcie to nie mogło zostać zapisane 
 
     }

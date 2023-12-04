@@ -1,14 +1,8 @@
 ﻿using Warehouse.Core.Interface;
-using Warehouse.ViewModel.Pages;
-using Warehouse.ViewModel.Service;
 using Warehouse.Models;
-using System.ComponentModel.DataAnnotations;
 using Warehouse.Models.Enums;
 using System.Windows.Input;
-using Warehouse.Service;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
 using Warehouse.Core.Helpers;
 
 namespace Warehouse.ViewModel.Pages;
@@ -26,7 +20,7 @@ public class OrderProductsTabViewModel : BasePageSearchItemsViewModel<OrderProdu
 
     #region Public properties
 
-    public OrderEditAddPageViewModel Parent { get; }
+    public override OrderEditAddPageViewModel Parent => base.Parent as OrderEditAddPageViewModel;
 
     #endregion
 
@@ -42,13 +36,11 @@ public class OrderProductsTabViewModel : BasePageSearchItemsViewModel<OrderProdu
     /// <summary>
     /// Default constructor
     /// </summary>
-    public OrderProductsTabViewModel(OrderEditAddPageViewModel parent , IApp app): base(app)
+    public OrderProductsTabViewModel(OrderEditAddPageViewModel parent , IApp app): base(app, parent)
     {
-        AddCommand = new RelayCommand(AddProduct, () => Parent.Enabled && Parent.State == EOrderState.Created);
-        DeleteCommand = new RelayCommand<OrderProduct>(DeleteProduct, (o) => o != null && Parent.Enabled && Parent.State == EOrderState.Created);
-
-        Parent = parent;
         Title = Warehouse.Core.Properties.Resources.Products;
+        AddCommand = new RelayCommand(AddProduct, () => Parent.Enabled && CanAdd());
+        DeleteCommand = new RelayCommand<OrderProduct>(DeleteProduct, (o) => o != null && Parent.Enabled && CanAdd());  
     }
 
     #endregion
@@ -59,16 +51,13 @@ public class OrderProductsTabViewModel : BasePageSearchItemsViewModel<OrderProdu
     {
         if (_service != null)
         {
-
             Items = new ObservableCollection<OrderProduct>(_service.GetProducts(_order?.ID ?? Guid.Empty) ?? new List<OrderProduct>());
-            Parent.UpdateState();
         }
     }
 
     #endregion
 
     #region Command methods
-
 
     protected override bool Filter(OrderProduct value, string search)
     {
@@ -126,6 +115,25 @@ public class OrderProductsTabViewModel : BasePageSearchItemsViewModel<OrderProdu
         {
             Application.CatchExeption(ex);
         }
+    }
+
+    #endregion
+
+    #region Helpers
+
+    private bool CanAdd()
+    {
+        if (_order == null)
+            return false;
+
+        if (_order.Type == EOrderType.WareHouse)
+            return Parent.State == EOrderState.Created;
+
+        if (_order.Type == EOrderType.Supplier)
+            return Parent.State == EOrderState.DeliveryCreated;
+
+
+        return false;
     }
 
     #endregion

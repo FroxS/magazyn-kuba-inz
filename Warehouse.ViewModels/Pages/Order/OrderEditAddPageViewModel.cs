@@ -12,7 +12,9 @@ public class OrderEditAddPageViewModel : BasePageViewModel
 {
     #region Private fields
 
-    private readonly Order _order;
+    private Guid _orderID;
+
+    private Order _order;
     private IOrderService _service => Application.GetService<IOrderService>();
 
     private bool _toAdd = false;
@@ -54,7 +56,10 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     public ITab SelectedItem
     {
         get => _selectedItem;
-        set { SetProperty(ref _selectedItem, value, nameof(SelectedItem), () => value?.OnPageOpen()); }
+        set {
+            _selectedItem?.OnPageClose();
+            SetProperty(ref _selectedItem, value, onChanged: () => value?.OnPageOpen()); 
+        }
     }
 
     #endregion
@@ -73,22 +78,22 @@ public class OrderEditAddPageViewModel : BasePageViewModel
         {
             string newName = _service.GetNewOrderName(type);
             order = new Order() {
+                ID = Guid.NewGuid(),
                 Name = newName,
                 RealizationDate = DateTime.Now.AddDays(10),
                 ID_User = Application.User.ID,
                 Items = new List<OrderProduct>(),
-                Type = type
+                Type = type,
+                State = type == EOrderType.WareHouse ? EOrderState.Created : EOrderState.DeliveryCreated,
             };
             _toAdd = true;
         }
         _order = order;
         Title = order?.Name + (_toAdd ? "*": "");
+        _orderID = order.ID;
     }
 
-    public OrderEditAddPageViewModel()
-    {
-
-    }
+    public OrderEditAddPageViewModel() { }
 
     #endregion
 
@@ -119,6 +124,9 @@ public class OrderEditAddPageViewModel : BasePageViewModel
 
     public override void OnPageOpen()
     {
+        if(!_toAdd)
+            _order = _service.GetById(_orderID);
+
         Items = new ObservableCollection<ITab>();
         if(_order.Type == EOrderType.WareHouse)
             Items.Add(new OrderDataTabViewModel(this, Application));
@@ -130,8 +138,8 @@ public class OrderEditAddPageViewModel : BasePageViewModel
             Items.Add(new OrderProductsTabViewModel(this, Application));
             if (_order.OrderWay != null && _order.Type == EOrderType.WareHouse)
             {
-                var way = GetWay();
-                Items.Add(new OrderWayTabViewModel(this, Application, way));
+                
+                Items.Add(new OrderWayTabViewModel(this, Application, GetWay()));
             }
         } 
         if(SelectedItem == null)
@@ -143,49 +151,6 @@ public class OrderEditAddPageViewModel : BasePageViewModel
 
     #region Command Methods
 
-    internal void Reserv()
-    {
-        try
-        {
-            IWareHouseService whSer = Application.GetService<IWareHouseService>();
-            string? message = null;
-            if (!_service.Reserv(_order, whSer, ref message))
-                Application.ShowSilentMessage(message ?? Core.Properties.Resources.FailedToReserved);
-            else
-            {
-                Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullReserved, EMessageType.Ok);
-            }
-            UpdateState();
-        }
-        catch (Exception ex)
-        {
-            Application.CatchExeption(ex);
-        }
-    }
-
-    internal void SetAsPreapred()
-    {
-        try
-        {
-            IWareHouseService whSer = Application.GetService<IWareHouseService>();
-            WayResult wayResult = GetWay();
-            if (!_service.SetAsPrepared(_order, whSer))
-                Application.ShowSilentMessage(Core.Properties.Resources.FailedToPrepared);
-            else
-            {
-                _service.SetWay(wayResult.GetPath(), _order);
-                whSer.Save();
-                _service.Save();
-                Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullPrepared, EMessageType.Ok);
-            }
-            UpdateState();
-        }
-        catch (Exception ex)
-        {
-            Application.CatchExeption(ex);
-        }
-    }
-
     internal WayResult GetWay()
     {
         IHallService hallService = Application.GetService<IHallService, Hall>();
@@ -193,25 +158,13 @@ public class OrderEditAddPageViewModel : BasePageViewModel
         HallObject hallObj = hallService.GetHallObject(hall.ID);
         IRackService rackService = Application.GetService<IRackService, Rack>();
         hallObj.IncludeProductToRacks(rackService);
-
         List<OrderProduct> items = _service.GetProducts(_order.ID) ?? new List<OrderProduct>();
 
-        if (State == EOrderState.Prepared)
+        if (State >= EOrderState.Reserved)
             return hallObj.GetPath(_service.GetWay(_order));
         else
             return hallObj.GetPath(items.Select(x => x.Product).ToList());
 
-    }
-
-    internal void UpdateState()
-    {
-        State = EOrderState.Created;
-        if (_service.IsReserved(_order.ID))
-        {
-            State = EOrderState.Reserved;
-            if (_service.IsPrepared(_order.ID))
-                State = EOrderState.Prepared;
-        }
     }
 
     protected bool CanEdit()

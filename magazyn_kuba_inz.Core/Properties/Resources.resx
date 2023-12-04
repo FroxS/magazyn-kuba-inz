@@ -129,6 +129,9 @@
   <data name="Added" xml:space="preserve">
     <value>Added</value>
   </data>
+  <data name="AddToPackage" xml:space="preserve">
+    <value>Add to package</value>
+  </data>
   <data name="Application" xml:space="preserve">
     <value>Application</value>
   </data>
@@ -141,6 +144,9 @@
   <data name="AreYouSure" xml:space="preserve">
     <value>Are you sure</value>
   </data>
+  <data name="AreYouSureToDelete" xml:space="preserve">
+    <value>Are you sure to delete</value>
+  </data>
   <data name="AskAddOrder" xml:space="preserve">
     <value>Add an order</value>
   </data>
@@ -149,6 +155,15 @@
   </data>
   <data name="AskRemoveProduct" xml:space="preserve">
     <value>Remove the product</value>
+  </data>
+  <data name="AvailableProducts" xml:space="preserve">
+    <value>Available products</value>
+  </data>
+  <data name="CannotRemovedPackageProductProbablyInOffer" xml:space="preserve">
+    <value>Cannot be removed from the package, this product is probably already in offer</value>
+  </data>
+  <data name="ChangeFlor" xml:space="preserve">
+    <value>Change flor</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Change password</value>
@@ -183,6 +198,9 @@
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="CreatePackage" xml:space="preserve">
+    <value>Create package</value>
+  </data>
   <data name="Creator" xml:space="preserve">
     <value>Creator</value>
   </data>
@@ -216,6 +234,9 @@
   <data name="EmailIsRequired" xml:space="preserve">
     <value>Email is required</value>
   </data>
+  <data name="ErrorDuringMovingItems" xml:space="preserve">
+    <value>Error during moving items</value>
+  </data>
   <data name="ErrorLoginWindowNotExist" xml:space="preserve">
     <value>Login window not exist</value>
   </data>
@@ -231,8 +252,14 @@
   <data name="ErrorUserIsNotActive" xml:space="preserve">
     <value>User is not active</value>
   </data>
+  <data name="ErrorWhileAssigningProductsToRack" xml:space="preserve">
+    <value>Error while assigning products to the rack</value>
+  </data>
   <data name="ErrorWhileSaving" xml:space="preserve">
     <value>Error while saving</value>
+  </data>
+  <data name="ExistInDatabase" xml:space="preserve">
+    <value>Exist in database</value>
   </data>
   <data name="FailedToAddOrder" xml:space="preserve">
     <value>Failed to add order</value>
@@ -342,6 +369,9 @@
   <data name="OrdersToRealizationInGivenMonth" xml:space="preserve">
     <value>Orders to realization in a given month</value>
   </data>
+  <data name="PackageContainsProductsRemoveThemFromRack" xml:space="preserve">
+    <value>The package contains products, remove them from the rack</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -387,6 +417,12 @@
   <data name="RemovedProduct" xml:space="preserve">
     <value>Removed product</value>
   </data>
+  <data name="RemovePackage" xml:space="preserve">
+    <value>Remove package</value>
+  </data>
+  <data name="Removing" xml:space="preserve">
+    <value>Removing</value>
+  </data>
   <data name="ReserveProducts" xml:space="preserve">
     <value>Reserve products</value>
   </data>
@@ -408,8 +444,14 @@
   <data name="SearchProduct" xml:space="preserve">
     <value>Search product</value>
   </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>Select unit</value>
+  </data>
   <data name="SetAsDone" xml:space="preserve">
     <value>Set as done</value>
+  </data>
+  <data name="SetAsReceived" xml:space="preserve">
+    <value>Set as received</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>

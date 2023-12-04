@@ -156,11 +156,6 @@ internal class BaseService<Model>: IBaseService<Model> where Model : BaseEntity
 
     public virtual bool Exist(Guid id) => _repozitory.Exist(id);
 
-    public void RefreshDbContext()
-    {
-        _repozitory.ReloadContext();
-    }
-
     public void RunTransaction()
     {
         _repozitory.RunTransaction();

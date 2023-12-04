@@ -16,6 +16,7 @@ using Warehouse.Core.Helpers;
 using Warehouse.Models;
 using Warehouse.AttachedProperty;
 using System.Windows.Controls.Primitives;
+using Warehouse.Theme;
 
 namespace Warehouse.Controls;
 
@@ -772,7 +773,7 @@ public partial class WareHouseArea : UserControl
 
             WayObject? lastRack = null;
             FrameworkElement? rackControl = null;
-            List<Product> products = null;
+            List<Product>? products = null;
             for (int i = 1; i < items.Count; i++)
             {
                 WayObject p1 = items[i - 1];
@@ -957,7 +958,7 @@ public partial class WareHouseArea : UserControl
             // Tworzenie zawartości Popup, na przykład, możesz dodać TextBlock z tekstem
             StackPanel sp = new StackPanel()
             {
-                Background = Brushes.White,
+                Background = ColorsNavigation.GetColorBrush(ColorType.ButtonBackgroundColor),
                 Orientation = Orientation.Vertical
             };
             foreach(Product prod in items)

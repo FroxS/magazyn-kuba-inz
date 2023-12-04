@@ -25,7 +25,7 @@
             <ItemsControl x:Name="rackItemsControl" ItemsSource="{Binding Flors, RelativeSource={RelativeSource AncestorType=local:RackControl}, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="{Binding Flors.Count, RelativeSource={RelativeSource AncestorType=local:RackControl}}" />
+                        <UniformGrid Rows="{Binding Flors.Count, RelativeSource={RelativeSource AncestorType=local:RackControl}}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>

@@ -1,6 +1,5 @@
 ﻿using Warehouse.ViewModel.Service;
 using System.Collections.ObjectModel;
-using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
 
 namespace Warehouse.ViewModel.Pages;
@@ -21,11 +20,7 @@ public class WareHousePageViewModel : BasePageViewModel
     public ObservableCollection<ProtuctStateTabViewModel> States
     {
         get => _states;
-        protected set
-        {
-            _states = value;
-            OnPropertyChanged(nameof(States));
-        }
+        protected set => SetProperty(ref _states, value);
     }
 
     public ProtuctStateTabViewModel? SelectedState
@@ -33,10 +28,8 @@ public class WareHousePageViewModel : BasePageViewModel
         get => _selectedState;
         set
         {
-            _selectedState = value;
-            if (_selectedState != null)
-                _selectedState.OnPageOpen();
-            OnPropertyChanged(nameof(SelectedState));
+            _selectedState?.OnPageClose();
+            SetProperty(ref _selectedState, value, onChanged: () => value?.OnPageOpen());
         }
     }
 
@@ -54,7 +47,6 @@ public class WareHousePageViewModel : BasePageViewModel
     public WareHousePageViewModel() : base()
     {
         Page = Models.Page.EApplicationPage.WareHouseItems;
-        
     }
 
     #endregion

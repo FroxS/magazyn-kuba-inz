@@ -25,6 +25,22 @@
                         </ObjectDataProvider.MethodParameters>
                     </ObjectDataProvider>
 
+                    <ObjectDataProvider MethodName="GetValues"
+                                ObjectType="{x:Type sys:Enum}"
+                                x:Key="States">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="enum:EState" />
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
+
+                    <ObjectDataProvider MethodName="GetValues"
+                                ObjectType="{x:Type sys:Enum}"
+                                x:Key="OrderStates">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="enum:EOrderState" />
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
+
                 </ResourceDictionary>
                 <!-- <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/LightTheme.xaml"/>  -->
                  <ResourceDictionary x:Name="Theme" Source="/Warehouse.Theme;component/DarkTheme.xaml"/>   

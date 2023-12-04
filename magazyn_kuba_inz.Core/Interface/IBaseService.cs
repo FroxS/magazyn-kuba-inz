@@ -49,8 +49,6 @@ public interface IBaseService<Model> where Model : BaseEntity
 
     bool Save();
 
-    void RefreshDbContext();
-
     bool Exist(Guid id);
 
     Model GetById(Guid id);

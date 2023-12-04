@@ -98,7 +98,6 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
             }
             if (item == null)
                 return;
-
             Order order = item.Get();
             order.Type = Type;
             Application.Navigation.OpenOrder(order);
@@ -154,7 +153,8 @@ public class OrdersPageViewModel : BasePageSearchItemsViewModel<OrderViewModel>
                         index.Add(pg);
                     else
                     {
-                        flag = false;
+                        if (Application.GetDialogService().AskUser($"Nie można usunąć zamówienia {pg.Name}. Kontynuować ?") != EDialogResult.Yes)
+                            return;
                     }
                     
                 };

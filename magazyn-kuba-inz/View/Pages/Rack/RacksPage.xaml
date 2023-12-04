@@ -16,18 +16,13 @@
                          d:DesignHeight="500" d:DesignWidth="1000">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!--#region Items -->
 
         <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
             <DataGrid ItemsSource="{Binding Racks, UpdateSourceTrigger=PropertyChanged}"
                       SelectionMode="Extended"
                       AutoGenerateColumns="False"
@@ -37,99 +32,27 @@
                       Grid.Column="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nazwa"
-                                        Width="*"
+                                        Width="200"
                                         Binding="{Binding Converter={conv:RackNameConventer}}">
                     </DataGridTextColumn>
                 </DataGrid.Columns>
+                
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit"
+                                      Command="{Binding OpenRackEditorCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                                 AncestorType={x:Type ContextMenu}}, 
+                                                                 Path=PlacementTarget.SelectedItem}">
+                        </MenuItem>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
-
-            <control:RackControl Rack="{Binding Rack, UpdateSourceTrigger=PropertyChanged}"
-                                 SelectedPackage="{Binding SelectedPackage,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                 Margin="5"
-                                 Grid.Column="1"/>
-
         </Grid>
 
         <Grid Grid.Column="1">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            Orientation="Vertical">
-                    <Button Content="Stwórz nowy"
-                            Command="{Binding AddNewPackageCommand}"
-                            
-                            Height="30"/>
-
-                </StackPanel>
-
-                <DataGrid ItemsSource="{Binding ItemsInPackage, UpdateSourceTrigger=PropertyChanged}"
-                          SelectionMode="Extended"
-                          AutoGenerateColumns="False"
-                          CanUserDeleteRows="False"
-                          IsReadOnly="True"
-                          Grid.Row="1">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nazwa"
-                                            Width="*"
-                                            Binding="{Binding Product.Name}">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Cena"
-                                            Width="100"
-                                            Binding="{Binding Product.Price}">
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Usuń"
-                                      Command="{Binding RemoveFromPackageCommand}"
-                                      CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                                                 AncestorType={x:Type ContextMenu}}, 
-                                                                 Path=PlacementTarget.SelectedItem}">
-                            </MenuItem>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-
-                </DataGrid>
-
-            </Grid>
-
-            <Grid Grid.Row="1" Margin="5">
-                <Button Content="Move" Command="{Binding AddToPackageCommand}"
-                            Height="30"/>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <DataGrid ItemsSource="{Binding AvailableItems, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding SelectedAvailableItem, UpdateSourceTrigger=PropertyChanged}"
-                          AutoGenerateColumns="False"
-                          CanUserDeleteRows="False"
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nazwa"
-                                            Width="*"
-                                            Binding="{Binding Product.Name}">
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Cena"
-                                            Width="100"
-                                            Binding="{Binding Product.Price}">
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <local:RackEditControl DataContext="{Binding RackViewModel, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </Grid>
 </service:BaseControlPage>

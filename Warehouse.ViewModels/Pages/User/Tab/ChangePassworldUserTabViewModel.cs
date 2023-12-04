@@ -1,15 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
-using System.Net;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
 using Warehouse.Core.Interface;
 using Warehouse.Models;
-using Warehouse.Models.Attribute;
 using Warehouse.Models.Enums;
-using Warehouse.Models.Interfaces;
 using Warehouse.ViewModel.Service;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Warehouse.ViewModel.Pages;
 

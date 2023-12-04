@@ -22,8 +22,6 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
     private IOrderService _orderService => _service as IOrderService;
 
-    private IApp _app;
-
     private bool _reserved;
 
     private bool _prepared;
@@ -36,7 +34,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
     public ICollectionView Collection { get; private set; }
 
-    [Required(ErrorMessage = "Name is required.")]
+    [Required(ErrorMessageResourceName = "NameIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     public string? Name
     {
         get => _entity.Name;
@@ -97,17 +95,9 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         set { SetProperty(ref _selectedItem, value, nameof(SelectedItem)); }
     }
 
-    public bool Reserved
-    {
-        get => _reserved;
-        set { SetProperty(ref _reserved, value, nameof(Reserved)); }
-    }
+    public bool Reserved => _orderService.IsReserved(_entity.ID);
 
-    public bool Prepared
-    {
-        get => _prepared;
-        set { SetProperty(ref _prepared, value, nameof(Prepared)); }
-    }
+    public bool Prepared => _orderService.IsPrepared(_entity.ID);
 
     public EOrderState State
     {
@@ -187,12 +177,12 @@ public class OrderViewModel : BaseEntityViewModel<Order>
             IWareHouseService whSer = _app.GetService<IWareHouseService>();
             string? message = null;
             if (!_orderService.Reserv(_entity, whSer,ref message))
-                _app.ShowSilentMessage(message ?? "Nie udało się zarezerować");
+                _app.ShowSilentMessage(message ?? Core.Properties.Resources.FailedToReserved);
             else
             {
-                _app.ShowSilentMessage("Udało się zarezerowwać", Models.Enums.EMessageType.Ok);
+                _app.ShowSilentMessage(Core.Properties.Resources.SuccesfullReserved, Models.Enums.EMessageType.Ok);
             }
-            Reserved = _orderService.IsReserved(_entity.ID);
+            OnPropertyChanged(nameof(Reserved), nameof(Prepared));
         }
         catch (Exception ex)
         {
@@ -207,16 +197,15 @@ public class OrderViewModel : BaseEntityViewModel<Order>
             IWareHouseService whSer = _app.GetService<IWareHouseService>();
             WayResult wayResult = GetWay();
             if (!_orderService.SetAsPrepared(_entity, whSer))
-                _app.ShowSilentMessage("Nie udało się przygotować");
+                _app.ShowSilentMessage( Core.Properties.Resources.FailedToPrepared);
             else
             {
                 _orderService.SetWay(wayResult.GetPath(), _entity);
                 whSer.Save();
                 _service.Save();
-                _app.ShowSilentMessage("Udało się przygotować", Models.Enums.EMessageType.Ok);
+                _app.ShowSilentMessage(Core.Properties.Resources.SuccesfullPrepared, Models.Enums.EMessageType.Ok);
             }
-            Reserved = _orderService.IsReserved(_entity.ID);
-            Prepared = _orderService.IsPrepared(_entity.ID);
+            OnPropertyChanged(nameof(Reserved), nameof(Prepared));
         }
         catch (Exception ex)
         {
@@ -244,8 +233,6 @@ public class OrderViewModel : BaseEntityViewModel<Order>
         if(_orderService != null)
         {
             Items = new ObservableCollection<OrderProduct>(_orderService.GetProducts(_entity?.ID ?? Guid.Empty));
-            Reserved = _orderService.IsReserved(_entity.ID);
-            Prepared = _orderService.IsPrepared(_entity.ID);
             _entity.State = _orderService.GetState(_entity.ID);
         }
     }
@@ -254,13 +241,13 @@ public class OrderViewModel : BaseEntityViewModel<Order>
     {
         try
         {
-            if(_app.GetDialogService().AskUser($"Czy na pewno usunąć produkt {item.Name}?", "Usuwanie") == Models.Enums.EDialogResult.Yes)
+            if(_app.GetDialogService().AskUser($"{Core.Properties.Resources.AreYouSureToDelete} {item.Name} ?", Core.Properties.Resources.Removing) == EDialogResult.Yes)
             {
                 _entity.Items.Remove(item);
                 _service.Update(_entity);
                 _service.Save();
                 LoadProducts();
-                _app.ShowSilentMessage("Pomyślnie usunięto produkt", Models.Enums.EMessageType.Ok);
+                _app.ShowSilentMessage(Core.Properties.Resources.SuccessfulRemoved, Models.Enums.EMessageType.Ok);
             }
             
         }
@@ -290,7 +277,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
                 opService.Add(orderProduct);
                 opService.Save();
                 LoadProducts();
-                _app.ShowSilentMessage("Dodano",Models.Enums.EMessageType.Ok);
+                _app.ShowSilentMessage(Core.Properties.Resources.Added, EMessageType.Ok);
 
             }
         }catch(Exception ex)
@@ -318,7 +305,7 @@ public class OrderViewModel : BaseEntityViewModel<Order>
 
         var taks = _orderService.GetAll(Get().Type);
         if (taks.Find(o => o.Name == Name && ID != o.ID) != null)
-            return $"Nazwa {Name} juz istnieje w bazie danych";
+            return $"{Core.Properties.Resources.Name} {Name} {Core.Properties.Resources.ExistInDatabase.ToLower()}";
 
         return base.Valid();
     }

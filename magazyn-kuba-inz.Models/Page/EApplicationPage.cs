@@ -7,6 +7,7 @@ public enum EApplicationPage
     Products,
     Suppliers,
     Racks,
+    Rack,
     ProductGroups,
     ProductStatuses,
     ItemStates,

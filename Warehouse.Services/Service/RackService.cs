@@ -60,5 +60,10 @@ internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, I
         return _repozitory.GetById(x => x.Include(i => i.StorageItems).ThenInclude(i => i.Items).ThenInclude(i => i.Product), id)?.StorageItems ?? new List<StorageItemPackage>();
     }
 
+    public Rack GetWithItems(Guid id)
+    {
+        return _repozitory.GetById(x => x.Include(x => x.StorageItems).ThenInclude(i => i.Items) ,id);
+    }
+
     #endregion
 }

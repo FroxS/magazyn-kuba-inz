@@ -97,6 +97,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to package.
+        /// </summary>
+        public static string AddToPackage {
+            get {
+                return ResourceManager.GetString("AddToPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application.
         /// </summary>
         public static string Application {
@@ -133,6 +142,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure to delete.
+        /// </summary>
+        public static string AreYouSureToDelete {
+            get {
+                return ResourceManager.GetString("AreYouSureToDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add an order.
         /// </summary>
         public static string AskAddOrder {
@@ -156,6 +174,33 @@ namespace Warehouse.Core.Properties {
         public static string AskRemoveProduct {
             get {
                 return ResourceManager.GetString("AskRemoveProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available products.
+        /// </summary>
+        public static string AvailableProducts {
+            get {
+                return ResourceManager.GetString("AvailableProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot be removed from the package, this product is probably already in offer.
+        /// </summary>
+        public static string CannotRemovedPackageProductProbablyInOffer {
+            get {
+                return ResourceManager.GetString("CannotRemovedPackageProductProbablyInOffer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change flor.
+        /// </summary>
+        public static string ChangeFlor {
+            get {
+                return ResourceManager.GetString("ChangeFlor", resourceCulture);
             }
         }
         
@@ -259,6 +304,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create package.
+        /// </summary>
+        public static string CreatePackage {
+            get {
+                return ResourceManager.GetString("CreatePackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creator.
         /// </summary>
         public static string Creator {
@@ -358,6 +412,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error during moving items.
+        /// </summary>
+        public static string ErrorDuringMovingItems {
+            get {
+                return ResourceManager.GetString("ErrorDuringMovingItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login window not exist.
         /// </summary>
         public static string ErrorLoginWindowNotExist {
@@ -403,11 +466,29 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while assigning products to the rack.
+        /// </summary>
+        public static string ErrorWhileAssigningProductsToRack {
+            get {
+                return ResourceManager.GetString("ErrorWhileAssigningProductsToRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while saving.
         /// </summary>
         public static string ErrorWhileSaving {
             get {
                 return ResourceManager.GetString("ErrorWhileSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exist in database.
+        /// </summary>
+        public static string ExistInDatabase {
+            get {
+                return ResourceManager.GetString("ExistInDatabase", resourceCulture);
             }
         }
         
@@ -736,6 +817,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The package contains products, remove them from the rack.
+        /// </summary>
+        public static string PackageContainsProductsRemoveThemFromRack {
+            get {
+                return ResourceManager.GetString("PackageContainsProductsRemoveThemFromRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -871,6 +961,24 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove package.
+        /// </summary>
+        public static string RemovePackage {
+            get {
+                return ResourceManager.GetString("RemovePackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removing.
+        /// </summary>
+        public static string Removing {
+            get {
+                return ResourceManager.GetString("Removing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reserve products.
         /// </summary>
         public static string ReserveProducts {
@@ -934,11 +1042,29 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select unit.
+        /// </summary>
+        public static string SelectUnit {
+            get {
+                return ResourceManager.GetString("SelectUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set as done.
         /// </summary>
         public static string SetAsDone {
             get {
                 return ResourceManager.GetString("SetAsDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set as received.
+        /// </summary>
+        public static string SetAsReceived {
+            get {
+                return ResourceManager.GetString("SetAsReceived", resourceCulture);
             }
         }
         

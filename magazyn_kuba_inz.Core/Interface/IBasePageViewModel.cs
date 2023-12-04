@@ -9,6 +9,4 @@ public interface IBasePageViewModel : ITab
     EApplicationPage Page { get; }
     bool CanChangePage { get; }
     bool IsMain { get; set; }
-
-    void OnPageClose();
 }

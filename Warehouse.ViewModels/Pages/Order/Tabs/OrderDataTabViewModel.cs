@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Warehouse.Models.Enums;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
+using Warehouse.Core.Models;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -92,14 +93,73 @@ public class OrderDataTabViewModel : BasePageViewModel
     {
         Title = Core.Properties.Resources.Data;
         GenerateWayCommand = new RelayCommand(() => GenerateWay(), () => !ToAdd);
-        ReservCommand = new RelayCommand(() => Parent.Reserv(), () => Parent.State == EOrderState.Created && !ToAdd);
-        SetAsPreapredCommand = new RelayCommand(() => Parent.SetAsPreapred(), () => Parent.State == EOrderState.Reserved && !ToAdd);
+        ReservCommand = new RelayCommand(() => Reserv(), () => Parent.State == EOrderState.Created && !ToAdd);
+        SetAsPreapredCommand = new RelayCommand(() => SetAsPreapred(), () => Parent.State == EOrderState.Reserved && !ToAdd);
         SaveCommand = new RelayCommand(() => Parent.SaveAdded(), () => ToAdd);
     }
 
     #endregion
 
     #region Command methods
+
+    private void Reserv()
+    {
+        try
+        {
+            IWareHouseService whSer = Application.GetService<IWareHouseService>();
+            string? message = null;
+            WayResult wayResult = Parent.GetWay();
+            if (!_service.Reserv(_order, whSer, ref message))
+                Application.ShowSilentMessage(message ?? Core.Properties.Resources.FailedToReserved);
+            else
+            {
+                _service.SetWay(wayResult.GetPath(), _order);
+                if(_service.Save())
+                    Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullReserved, EMessageType.Ok);
+                else
+                    Application.ShowSilentMessage(Core.Properties.Resources.FailedToSave, EMessageType.Warning);
+            }
+            UpdateState();
+        }
+        catch (Exception ex)
+        {
+            Application.CatchExeption(ex);
+        }
+    }
+
+    private void SetAsPreapred()
+    {
+        try
+        {
+            IWareHouseService whSer = Application.GetService<IWareHouseService>();
+            WayResult wayResult = Parent.GetWay();
+            if (!_service.SetAsPrepared(_order, whSer))
+                Application.ShowSilentMessage(Core.Properties.Resources.FailedToPrepared);
+            else
+            {
+                _service.SetWay(wayResult.GetPath(), _order);
+                whSer.Save();
+                _service.Save();
+                Application.ShowSilentMessage(Core.Properties.Resources.SuccesfullPrepared, EMessageType.Ok);
+            }
+            UpdateState();
+        }
+        catch (Exception ex)
+        {
+            Application.CatchExeption(ex);
+        }
+    }
+
+    private void UpdateState()
+    {
+        Parent.State = EOrderState.Created;
+        if (_service.IsReserved(_order.ID))
+        {
+            Parent.State = EOrderState.Reserved;
+            if (_service.IsPrepared(_order.ID))
+                Parent.State = EOrderState.Prepared;
+        }
+    }
 
     private void GenerateWay()
     {

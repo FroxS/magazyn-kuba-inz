@@ -58,15 +58,17 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Content="{TemplateBinding Text}"
+                            <TextBlock Text="{TemplateBinding Text}"
                                    Grid.Column="1"
+                                       Margin="10 0 0 0"
                                    VerticalAlignment="Center"
+                                   Foreground="{TemplateBinding Foreground}"
                                    Visibility="{Binding Text, Converter={conv:NullVisibleConventer}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ButtonPath}}}"/>
 
                             <Path Stretch="Uniform" 
                                   Grid.Column="0"
                                   Margin="{Binding PathPadding, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:ButtonPath}}}"
-                                  Fill="{DynamicResource FontColorBrush}" 
+                                  Fill="{TemplateBinding Foreground}" 
                                   Data="{TemplateBinding IconPath}"/>
 
                         </Grid>

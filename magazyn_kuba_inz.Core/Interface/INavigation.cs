@@ -23,4 +23,6 @@ public interface INavigation
     bool ExistOpenedOrder(Guid order);
     void CloseOrder(Order order);
     void OpenUser(User user = null);
+
+    void OpenNewTabPage(ISingleCardPage page);
 }

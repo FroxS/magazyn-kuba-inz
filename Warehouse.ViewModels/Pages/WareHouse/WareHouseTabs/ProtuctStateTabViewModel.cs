@@ -30,31 +30,31 @@ namespace Warehouse.ViewModel.Pages
         public ObservableCollection<StorageItem> Items
         {
             get => _items;
-            private set { SetProperty(ref _items, value, nameof(Items)); }
+            private set { SetProperty(ref _items, value); }
         }
 
         public ObservableCollection<ItemState> StatusesToMove
         {
             get => _statusesToMove;
-            private set { SetProperty(ref _statusesToMove, value, nameof(StatusesToMove)); }
+            private set { SetProperty(ref _statusesToMove, value); }
         }
 
         public StorageItem SelectedItem
         {
             get => _selectedItem;
-            set { SetProperty(ref _selectedItem, value, nameof(SelectedItem)); }
+            set { SetProperty(ref _selectedItem, value); }
         }
 
         public bool CanMove
         {
             get => _canMove;
-            set { SetProperty(ref _canMove, value, nameof(CanMove)); }
+            set { SetProperty(ref _canMove, value); }
         }
 
         public bool CanAddNew
         {
             get => _canAddNew;
-            set { SetProperty(ref _canAddNew, value, nameof(CanAddNew)); }
+            set { SetProperty(ref _canAddNew, value); }
         }
 
         #endregion
@@ -139,7 +139,7 @@ namespace Warehouse.ViewModel.Pages
             if (targetState == null)
                 return;
 
-            string message = null;
+            string? message = null;
 
             foreach(var item in items)
             {

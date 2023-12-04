@@ -6,7 +6,7 @@ namespace Warehouse.EF;
 
 public class WarehouseDbContext : DbContext
 {
-    #region Public properties
+    #region Tables
 
     /// <summary>
     /// Table of user
@@ -90,24 +90,17 @@ public class WarehouseDbContext : DbContext
     /// <summary>
     /// Deafult constructor
     /// </summary>
-    public WarehouseDbContext() : base()
-    {
-        
-    }
+    public WarehouseDbContext() : base(){}
 
     /// <summary>
     /// Constructor with option
     /// </summary>
     /// <param name="options">Option od db context</param>
-    public WarehouseDbContext(DbContextOptions options) : base(options)
-    {
-        
-    }
+    public WarehouseDbContext(DbContextOptions options) : base(options){}
 
     #endregion
 
     #region Override methods 
-
 
     /// <summary>
     /// Method to run on model createing

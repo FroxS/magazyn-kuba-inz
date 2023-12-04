@@ -24,6 +24,14 @@ public class OrderStateToIconConventer : BaseValueConventer<OrderStateToIconConv
                     return Application.Current.TryFindResource("OrderPrepared");
                 case EOrderState.Reserved:
                     return Application.Current.TryFindResource("OrderReserved");
+                case EOrderState.DeliveryCreated:
+                    return Application.Current.TryFindResource("Delivery");
+                case EOrderState.DeliveryPrepared:
+                    return Application.Current.TryFindResource("DeliveryPrepared");
+                case EOrderState.Received:
+                    return Application.Current.TryFindResource("Forklift");
+                case EOrderState.Finish:
+                    return Application.Current.TryFindResource("OrderFinish"); 
                 default:
                     return Application.Current.TryFindResource($"Order{state.ToString()}");
             }
@@ -47,14 +55,19 @@ public class OrderStateToColorConventer : BaseValueConventer<OrderStateToColorCo
             switch (state)
             {
                 case EOrderState.Created:
+                case EOrderState.DeliveryCreated:
                     return Application.Current.TryFindResource("OrderCreatedColorBrush");
                 case EOrderState.Prepared:
+                case EOrderState.DeliveryPrepared:
                     return Application.Current.TryFindResource("OrderPreparedColorBrush");
+                case EOrderState.Received:
+                    return Application.Current.TryFindResource("OrderReceivedColorBrush");
                 case EOrderState.Reserved:
                     return Application.Current.TryFindResource("OrderReservedColorBrush");
+                case EOrderState.Finish:
+                    return Application.Current.TryFindResource("GoodColorBrush");
                 default:
                     return Application.Current.TryFindResource($"Order{state.ToString()}ColorBrush");
-
             }
         }
         return value;

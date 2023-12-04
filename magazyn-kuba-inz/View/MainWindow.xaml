@@ -58,6 +58,8 @@
                     <controls:LeftMenuView Grid.Column="0" DataContext="{Binding Navigation,
                                                                                  Source={x:Static helpers:AppHelper.Instance}, 
                                                                                  UpdateSourceTrigger=PropertyChanged}"/>
+
+                    
                     <!--#endregion-->
 
                     <Grid Grid.Column="1">

@@ -35,16 +35,14 @@ public class NavigationViewModel : BaseViewModel, INavigation
     public bool CanSetNextPage
     {
         get => _canSetNextPage;
-        set { SetProperty(ref _canSetNextPage, value, nameof(CanSetNextPage)); }
+        set { SetProperty(ref _canSetNextPage, value); }
     }
 
     public bool CanSetPrevPage
     {
         get => _canSetPrevPage;
-        set { SetProperty(ref _canSetPrevPage, value, nameof(CanSetPrevPage)); }
+        set { SetProperty(ref _canSetPrevPage, value); }
     }
-
-    //public IHost? AppHost { get; set; }
 
     public IBasePageViewModel Page
     {
@@ -58,8 +56,13 @@ public class NavigationViewModel : BaseViewModel, INavigation
         {
             if(_activePage != value && value != null)
             {
-                _activePage = value;
-                _activePage.OnPageOpen();
+                _activePage?.OnPageClose();
+                if(_activePage == null || _activePage.CanChangePage)
+                {
+                    _activePage = value;
+                    _activePage.OnPageOpen();
+                }
+                
                 OnPropertyChanged();
             }
         }
@@ -112,8 +115,6 @@ public class NavigationViewModel : BaseViewModel, INavigation
     {
         if (!page.IsMain)
         {
-            page.OnPageClose();
-
             if (!page.CanChangePage)
                 return;
             int indeksPage = Pages.IndexOf(page);
@@ -152,8 +153,6 @@ public class NavigationViewModel : BaseViewModel, INavigation
                     ActivePage = Page;
                     Page.CloseRequest += Page_CloseRequest;
 
-                    if (Page is IPageReloadViewModel reload)
-                        reload.Reload();
                     OnPropertyChanged(nameof(Page));
                     OnPropertyChanged(nameof(Pages));
                     
@@ -285,6 +284,8 @@ public class NavigationViewModel : BaseViewModel, INavigation
                 return _app.GetService<WareHouseCreatorPageViewModel>();
             case EApplicationPage.Racks:
                 return _app.GetService<RacksPageViewModel>();
+            case EApplicationPage.Rack:
+                return _app.GetService<RackEditViewModel>();
             case EApplicationPage.Order:
                 OrdersPageViewModel pageVMO = _app.GetService<OrdersPageViewModel>();
                 pageVMO.Type = Models.Enums.EOrderType.WareHouse;
@@ -313,13 +314,12 @@ public class NavigationViewModel : BaseViewModel, INavigation
             page.IsMain = false;
             Pages.Add(page);
             page.CloseRequest += Page_CloseRequest;
-            if (Page is IPageReloadViewModel reload)
-                reload.Reload();
-            OnPropertyChanged(nameof(Page));
-            OnPropertyChanged(nameof(Pages));
-            OnPropertyChanged(nameof(ActivePage));
+            _app.GetService<IApp>().ReloadDatabase();
+            
             ActivePage = page;
+
             PageChanged?.Invoke(page.Page);
+            OnPropertyChanged(nameof(Page), nameof(Pages), nameof(ActivePage));
             CanSetNextPage = _nextPages.Any();
             CanSetPrevPage = _prevPages.Any();
         }
@@ -336,14 +336,22 @@ public class NavigationViewModel : BaseViewModel, INavigation
             if (Pages.Contains(page) && ActivePage != page)
             {
                 page.IsMain = false;
+                _app.GetService<IApp>().ReloadDatabase();
                 ActivePage = page;
+                OnPropertyChanged(nameof(Page), nameof(Pages), nameof(ActivePage));
+
                 PageChanged?.Invoke(page.Page);
-                OnPropertyChanged(nameof(Page));
-                OnPropertyChanged(nameof(Pages));
-                OnPropertyChanged(nameof(ActivePage));
-                CanSetNextPage = _nextPages.Any();
-                CanSetPrevPage = _prevPages.Any();
             }
+            CanSetNextPage = _nextPages.Any();
+            CanSetPrevPage = _prevPages.Any();
+        }
+        catch (PageExeption ex)
+        {
+            _app.GetService<IApp>().CatchExeption(ex);
+            if (ex.PageVM == null)
+                SetPage(ex.Page);
+            else
+                SetPage(ex.PageVM);
         }
         catch (Exception ex)
         {
@@ -426,5 +434,26 @@ public class NavigationViewModel : BaseViewModel, INavigation
             ChangePage(opend);
     }
 
+
+    public void OpenNewTabPage(ISingleCardPage page)
+    {
+        
+        IBasePageViewModel? opend = Pages.FirstOrDefault(x =>
+                                    x.Page == page.Page
+                                    && x is ISingleCardPage upwm
+                                    && upwm.ExistPage(page));
+        if (opend == null)
+        {
+            AddPage(page);
+        }
+        else
+            ChangePage(opend);
+    }
+
     #endregion
 }
+
+
+
+
+

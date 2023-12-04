@@ -91,7 +91,6 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         EditCommand = new RelayCommand(() => { CanEdit = true; ToSave = true; }, () => !CanEdit) ;
         CanDeleteRack = (rack) => {
             bool flag = rackService.CanDeleteRack(rack.ID);
-            flag = false;
             if (!flag)
                 Application.ShowSilentMessage("Nie można usunąć stojaka, Prawdopodobnie posiada jakieś elementy");
 

@@ -19,13 +19,13 @@ namespace Warehouse.ViewModel.Service
         public virtual string Title
         {
             get => _title;
-            set { _title = value; OnPropertyChanged(nameof(Title)); }
+            set => SetProperty(ref _title, value);
         }
 
         public bool IsEmpty
         {
             get => _isEmpty;
-            protected set { _isEmpty = value; OnPropertyChanged(nameof(IsEmpty)); }
+            protected set => SetProperty(ref _isEmpty, value);
         }
 
         public virtual BaseViewModel Parent { get;}
@@ -34,8 +34,8 @@ namespace Warehouse.ViewModel.Service
 
         #region Commands
 
-        public ICommand CloseTabCommand { get; set; }
-        public ICommand OpenTabCommand { get; set; }
+        public ICommand CloseTabCommand { get; protected set; }
+        public ICommand OpenTabCommand { get; protected set; }
 
         #endregion
 
@@ -70,7 +70,9 @@ namespace Warehouse.ViewModel.Service
 
         #region Abstract methods
 
-        public abstract void OnPageOpen();
+        public virtual void OnPageOpen() { }
+
+        public virtual void OnPageClose() { }
 
         #endregion
     }
