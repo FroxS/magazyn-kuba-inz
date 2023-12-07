@@ -152,6 +152,7 @@
                     VerticalAlignment="Center">
             <Button Content="{x:Static res:Resources.Submit}"
                     Command="{Binding SubmitCommand}"
+                    IsDefault="True"
                     Width="200"
                     Height="30"/>
         </StackPanel>

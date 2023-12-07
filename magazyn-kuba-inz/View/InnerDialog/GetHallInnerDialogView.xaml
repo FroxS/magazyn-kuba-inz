@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.InnerDialog"
              xmlns:vm="clr-namespace:Warehouse.InnerDialog;assembly=Warehouse.Dialog"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
              d:DataContext="{d:DesignInstance Type=vm:GetHallInnerDialogViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -23,14 +25,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-
-
             <StackPanel Grid.Row="0">
                 <TextBlock Text="{Binding Hall.Name, FallbackValue=Test}"
                            FontSize="14"
                            FontWeight="Bold"/>
             </StackPanel>
-
             <Grid Grid.IsSharedSizeScope="True"
                       Grid.Row="1"
                       Margin="10"
@@ -39,80 +38,70 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0"
-                      Margin="5">
+                <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Nazwa"/>
-                        <Run Text=":"/>
-                    </TextBlock>
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Name}" Style="{DynamicResource FormLabel}"/>
 
-                    <TextBox Text="{Binding Hall.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
-
+                    <controls:TextBoxImage Text="{Binding Hall.Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Name}"/>
                 </Grid>
 
-                <Grid Grid.Row="1"
-                      Margin="5">
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Wysokość"/>
-                        <Run Text=":"/>
-                    </TextBlock>
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Width}" Style="{DynamicResource FormLabel}"/>
 
-                    <TextBox Text="{Binding Hall.Width, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
-
+                    <controls:TextBoxImage Text="{Binding Hall.Width, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Width}"/>
                 </Grid>
 
-                <Grid Grid.Row="2"
-                      Margin="5">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Szerokość"/>
-                        <Run Text=":"/>
-                    </TextBlock>
+                    <Label Grid.Column="0" Content="{x:Static res:Resources.Height}" Style="{DynamicResource FormLabel}"/>
 
-                    <TextBox Text="{Binding Hall.Height, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
-
+                    <controls:TextBoxImage Text="{Binding Hall.Height, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Style="{StaticResource FormTextBoxImage}"
+                                       Tag="{x:Static res:Resources.Height}"/>
                 </Grid>
 
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="1" Width="300"/>
+
+                </Grid>
 
             </Grid>
+
         </Grid>
 
         <StackPanel Grid.Row="1">
-            <Button Content="Ok"
+            <Button Content="{x:Static res:Resources.Submit}"
+                    IsDefault="True"
                     Command="{Binding SubmitCommand}"
-                    Width="200"
-                    />
+                    Width="200"/>
         </StackPanel>
 
     </Grid>

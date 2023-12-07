@@ -5,6 +5,7 @@ using Warehouse.Core.Interface;
 
 namespace Warehouse.InnerDialog;
 
+
 public class AddItemStateInnerDialogViewModel : BaseInnerDialogViewModel<ItemState>
 {
     #region Private properties

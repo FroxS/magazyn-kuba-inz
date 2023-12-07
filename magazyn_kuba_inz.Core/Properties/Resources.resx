@@ -195,6 +195,9 @@
   <data name="Corridor" xml:space="preserve">
     <value>Corridor</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>

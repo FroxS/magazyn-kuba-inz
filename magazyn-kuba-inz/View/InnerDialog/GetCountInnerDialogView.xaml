@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.InnerDialog"
              xmlns:vm="clr-namespace:Warehouse.InnerDialog;assembly=Warehouse.Dialog"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              d:DataContext="{d:DesignInstance Type=vm:GetCountInnerDialogViewModel}"
              mc:Ignorable="d" 
              Width="200"
@@ -18,15 +20,14 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBox Text="{Binding Count, FallbackValue=0}"
-                     FontSize="14"
-                     Width="150"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center"/>
+            
+            <controls:TextBoxImage Text="{Binding Count, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                                   Grid.Column="1"
+                                   Style="{StaticResource FormTextBoxImage}"
+                                   Tag="{x:Static res:Resources.Count}"/>
         </Grid>
 
-        <Button Content="Yes"
+        <Button Content="{x:Static res:Resources.Submit}"
                 Grid.Row="1"
                 IsDefault="True"
                 Command="{Binding SubmitCommand}"

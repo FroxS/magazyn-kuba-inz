@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Warehouse.View.InnerDialog"
+             xmlns:pages="clr-namespace:Warehouse.View.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="{DynamicResource BackgroundColorBrush}"
@@ -14,76 +15,13 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Margin="10"
-              Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-
-
-            <StackPanel Grid.Row="0">
-                <TextBlock Text="{Binding Name, FallbackValue=Test}"
-                           FontSize="14"
-                           FontWeight="Bold"/>
-            </StackPanel>
-
-            <Grid Grid.IsSharedSizeScope="True"
-                      Grid.Row="1"
-                      Margin="10"
-                      VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0"
-                      Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Nazwa"/>
-                        <Run Text=":"/>
-                    </TextBlock>
-
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
-
-                </Grid>
-
-                <Grid Grid.Row="1"
-                      Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" SharedSizeGroup="FieldName"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0"
-                               HorizontalAlignment="Right">
-                        <Run Text="Lp"/>
-                        <Run Text=":"/>
-                    </TextBlock>
-
-                    <TextBox Text="{Binding Lp, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
-                             Width="200"
-                             Margin="10,0"
-                             HorizontalAlignment="Left"
-                             Grid.Column="1"/>
-
-                </Grid>
-            </Grid>
-        </Grid>
+        <ScrollViewer Margin="10">
+            <pages:ProductStatusView/>
+        </ScrollViewer>
 
         <StackPanel Grid.Row="1">
             <Button Content="Ok"
+                    IsDefault="True"
                     Command="{Binding SubmitCommand}"
                     Width="200"
                     />

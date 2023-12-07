@@ -129,6 +129,7 @@
 
         <StackPanel Grid.Row="1">
             <Button Content="Ok"
+                    IsDefault="True"
                     Command="{Binding SubmitCommand}"
                     Width="200"
                     />
