@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Warehouse.Models;
 using Warehouse.Models.Enums;
 
@@ -278,8 +279,11 @@ public class WarehouseDbContext : DbContext
     /// <param name="optionsBuilder">Option of builder</param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        object value = optionsBuilder.UseSqlServer("Server=.; Database=magazyn1; Trusted_Connection=True;TrustServerCertificate=True");
-        base.OnConfiguring(optionsBuilder);
+		IConfigurationRoot configuration = new ConfigurationBuilder()
+			.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+			.AddJsonFile("appsettings.json")
+			.Build();
+		optionsBuilder.UseSqlServer(configuration.GetConnectionString("DBConnection"));
     }
 
     #endregion

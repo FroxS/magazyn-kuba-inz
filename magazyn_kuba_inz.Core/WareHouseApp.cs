@@ -192,6 +192,7 @@ public class WareHouseApp : ObservableObject, IApp
             throw new DataException(Core.Properties.Resources.EmailisIncorrect, user, nameof(User.Email));
 
         await userService.Register(user);
+        await userService.SaveAsync();
     }
 
     public void CatchExeption(Exception ex, bool showMessage = true)

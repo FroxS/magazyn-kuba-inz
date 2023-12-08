@@ -65,7 +65,7 @@ public class RegisterViewModel : BaseViewModel
 
     public RegisterViewModel(IApp app) : base()
     {
-        RegisterCommand = new RelayCommand<IWindow>(register);
+        RegisterCommand = new AsyncRelayCommand<IWindow>(register);
         MinimizeCommand = new RelayCommand<IWindow>(minimize);
         ExitCommand = new RelayCommand<IWindow>(exit);
         this.app = app;
@@ -76,7 +76,7 @@ public class RegisterViewModel : BaseViewModel
 
     #region Commands methods
 
-    private void register(IWindow obj)
+    private async Task register(IWindow obj)
     {
         _CanValidate = true;
         NotifyPropChanged(nameof(Login), nameof(Email), nameof(Password), nameof(PasswordConfirm));
@@ -89,17 +89,23 @@ public class RegisterViewModel : BaseViewModel
         }
         try
         {
-            app.Register(new RegisterResource(Login, Email, Password, Login));
-            app.GetDialogService().ShowAlert(Core.Properties.Resources.SuccessfulCreatedUser);
+            IsTaskRunning = true;
+            await app.Register(new RegisterResource(Login, Email, Password, Login));
+            
+			IsTaskRunning = false;
+			app.GetDialogService().ShowAlert(Core.Properties.Resources.SuccessfulCreatedUser);
         }
         catch (DataException ex)
         {
-            app.GetDialogService().ShowError(ex);
+			IsTaskRunning = false;
+			app.GetDialogService().ShowError(ex);
         }
         catch (Exception ex)
         {
-            app.CatchExeption(ex);
+			IsTaskRunning = false;
+			app.CatchExeption(ex);
         }
+        finally { IsTaskRunning = false; }
     }
 
     private void minimize(IWindow window)

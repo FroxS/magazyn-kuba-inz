@@ -180,14 +180,24 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     /// </summary>
     /// <param name="id">Id of this entity</param>
     /// <returns></returns>
-    public async virtual Task<T> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken)) => (await _context.Set<T>().AddAsync(entity, cancellationToken)).Entity;
+    //public async virtual Task<T> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken)) => (await _context.Set<T>().AddAsync(entity, cancellationToken)).Entity;
+    public async virtual Task<T> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+    {
+        var ent = _context.Set<T>();
+        var res = await ent.AddAsync(entity, cancellationToken);
 
-    /// <summary>
-    /// Method to delete entity from database
-    /// </summary>
-    /// <param name="id">Id of this entity</param>
-    /// <returns></returns>
-    public virtual void Insert(T entity)
+        return res.Entity;
+
+
+		//(await _context.Set<T>().AddAsync(entity, cancellationToken)).Entity;
+    }
+
+	/// <summary>
+	/// Method to delete entity from database
+	/// </summary>
+	/// <param name="id">Id of this entity</param>
+	/// <returns></returns>
+	public virtual void Insert(T entity)
     {
         entity.CreatedAt = entity.Modified = DateTime.Now;
         _context.Entry(entity).State = EntityState.Added;
