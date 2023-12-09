@@ -18,4 +18,15 @@ public class StorageUnit : BaseEntity
     public double MaxDepth { get; set; }
     public double SizeOfRack { get; set; }
     public List<StorageItemPackage>? Packages { get; set; }
+
+	public static StorageUnit Get()
+	{
+		return new StorageUnit()
+		{
+			ID = Guid.NewGuid(),
+			CreatedAt = DateTime.Now,
+			Name = "",
+			Lp = 1
+		};
+	}
 }

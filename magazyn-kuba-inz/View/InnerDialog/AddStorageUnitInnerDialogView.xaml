@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Margin="10">
-            <pages:StorageUnitView/>
+            <pages:StorageUnitView DataContext="{Binding Item, UpdateSourceTrigger=PropertyChanged}" />
         </ScrollViewer>
 
         <StackPanel Grid.Row="1">

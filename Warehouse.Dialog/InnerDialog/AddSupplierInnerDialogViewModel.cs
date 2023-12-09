@@ -1,98 +1,59 @@
 ﻿using Warehouse.Models;
-using System.ComponentModel.DataAnnotations;
 using Warehouse.Core.Interface;
-using Warehouse.Service.Interface;
+using Warehouse.ViewModel.Pages;
 
 namespace Warehouse.InnerDialog;
 
 public class AddSupplierInnerDialogViewModel : BaseInnerDialogViewModel<Supplier>
 {
-    #region Private properties
+	#region Private properties
 
-    public string? _name;
+	public SupplierViewModel _item;
 
-    public uint _lp = 0;
+	#endregion
 
-    private readonly ISupplierService _service;
+	#region Public properties
 
-    #endregion
+	public SupplierViewModel Item
+	{
+		get => _item;
+		set => SetProperty(ref _item, value);
+	}
 
-    #region Public properties
+	#endregion
 
-    [Required(ErrorMessage = "Name is required.")]
-    public string? Name
+	#region Constructors
+
+	/// <summary>
+	/// Default constructor
+	/// </summary>
+	public AddSupplierInnerDialogViewModel(IApp app, ISupplierService service) : base(app)
     {
-        get => _name;
-        set
-        {
-            if (_name == value)
-                return;
-            _name = value;
-            OnPropertyChanged(nameof(Name));
-        }
+		Item = new SupplierViewModel(service, Supplier.Get(), app);
+		Result = null;
     }
 
-    public uint Lp
-    {
-        get => _lp;
-        set
-        {
-            if (_lp == value)
-                return;
-            _lp = value;
-            OnPropertyChanged(nameof(Lp));
-        }
-    }
+	#endregion
 
-    #endregion
+	#region Public Methods
 
-    #region Constructors
+	protected override void Submit()
+	{
+		Result = null;
+		Message.Clear();
+		string? message = Item.Valid();
+		_CanValidate = true;
 
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public AddSupplierInnerDialogViewModel(IApp app, ISupplierService service) : base(app)
-    {
-        _service = service;
-        Result = null;
-    }
+		if (message != null)
+		{
+			Message.AddMessage(message);
+			return;
+		}
 
-    #endregion
+		Result = Item.Get();
+		base.Submit();
+	}
 
-    #region Public Methods
-
-    protected override void Submit()
-    {
-        Result = null;
-        string message = null;
-        _CanValidate = true;
-        message = GettErrors(nameof(Name));
-        if (!string.IsNullOrWhiteSpace(message))
-        {
-            OnPropertyChanged(nameof(Name));
-            return;
-        }
-            
-
-        message = GettErrors(nameof(Lp));
-        if (!string.IsNullOrWhiteSpace(message))
-            return;
-
-        var taks = _service.GetAll();
-        if (taks.Find(o => o.Name == Name) != null)
-        {
-            CustomMessage.Add(nameof(Name), $"Nazwa {Name} juz istnieje w bazie danych");
-            OnPropertyChanged(nameof(Name));
-            return;
-        }
-
-        Result = Supplier.Get();
-        Result.Name = Name;
-        Result.Lp = Lp;
-        base.Submit();
-
-    }
-
-    #endregion
+	#endregion
 
 }

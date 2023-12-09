@@ -17,7 +17,7 @@
 
         <Grid Margin="10"
               Grid.Row="0">
-            <pages:ItemStateView/>
+            <pages:ItemStateView DataContext="{Binding Item, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <StackPanel Grid.Row="1">

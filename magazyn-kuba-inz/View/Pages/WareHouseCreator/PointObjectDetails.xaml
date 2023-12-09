@@ -20,7 +20,7 @@
 
         <StackPanel Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Punkt"
+                <Label Content="{x:Static res:Resources.Point}"
                        FontSize="14"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"/>
@@ -67,8 +67,6 @@
                                             Style="{StaticResource FormTextBoxImage}"
                                             Tag="Y"/>
                 </Grid>
-
-
             </Grid>
 
             <Grid Grid.Row="1" Visibility="{Binding Connections, Converter={conv:NullVisibleConventer}}">
@@ -89,12 +87,12 @@
                                     VerticalAlignment="Center">
                                 <Label Content="x:"
                                     VerticalAlignment="Center"/>
-                                <Label Content="{Binding X, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}"
+                                <Label Content="{Binding X, UpdateSourceTrigger=PropertyChanged, FallbackValue=0, StringFormat=N2}"
                                     VerticalAlignment="Center"
                                     Width="50"/>
                                 <Label Content="y:"
                                     VerticalAlignment="Center"/>
-                                <Label Content="{Binding Y, UpdateSourceTrigger=PropertyChanged,FallbackValue=0}"
+                                <Label Content="{Binding Y, UpdateSourceTrigger=PropertyChanged,FallbackValue=0, StringFormat=N2}"
                                     VerticalAlignment="Center"
                                     Width="50"/>
                             </StackPanel>

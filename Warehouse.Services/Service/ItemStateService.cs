@@ -26,9 +26,11 @@ internal class ItemStateService : BaseServiceWithRepository<IItemStateRepository
         if (item == null)
             throw new ArgumentException("Product group is null");
 
+
         await _repozitory.AddAsync(item);
         return item;
     }
+
 
     public ItemState GetByState(EState state)
     {

@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*" MinWidth="300" MaxWidth="400"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0"
@@ -42,19 +42,25 @@
         
         <Grid Grid.Column="1"
               Grid.Row="1"
-              IsEnabled="{Binding CanEdit}"
               Visibility="{Binding SelectedObject, Converter={conv:NullVisibleConventer}}">
-            <ContentPresenter Content="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                <ContentPresenter.Resources>
-                    <DataTemplate DataType="{x:Type models:RackObject}">
-                        <local:RackObjectDetails/>
-                    </DataTemplate>
+            <ScrollViewer >
+                <Grid IsEnabled="{Binding CanEdit}">
+                    <ContentPresenter Content="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  >
+                        <ContentPresenter.Resources>
+                            <DataTemplate DataType="{x:Type models:RackObject}">
+                                <local:RackObjectDetails/>
+                            </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type models:WayPointObject}">
-                        <local:PointObjectDetails/>
-                    </DataTemplate>
-                </ContentPresenter.Resources>
-            </ContentPresenter>
+                            <DataTemplate DataType="{x:Type models:WayPointObject}">
+                                <local:PointObjectDetails/>
+                            </DataTemplate>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
+                </Grid>
+                
+            </ScrollViewer>
+           
         </Grid>
         
         <controls:WareHouseArea Grid.Row="1"

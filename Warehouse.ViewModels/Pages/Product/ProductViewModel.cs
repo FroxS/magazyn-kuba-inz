@@ -119,32 +119,20 @@ public class ProductViewModel : BaseEntityViewModel<Product>
     public ObservableCollection<ProductGroup> ProductGroups
     {
         get => _productGroups;
-        set
-        {
-            _productGroups = value;
-            OnPropertyChanged(nameof(ProductGroups));
-        }
+        set => SetProperty(ref _productGroups, value);
     }
 
     public ObservableCollection<Supplier> Suppliers
     {
         get => _suppliers;
-        set
-        {
-            _suppliers = value;
-            OnPropertyChanged(nameof(Suppliers));
-        }
-    }
+		set => SetProperty(ref _suppliers, value);
+	}
 
     public ObservableCollection<ProductStatus> ProductStatuses
     {
         get => _productStatuses;
-        set
-        {
-            _productStatuses = value;
-            OnPropertyChanged(nameof(ProductStatuses));
-        }
-    }
+		set => SetProperty(ref _productStatuses, value);
+	}
 
     #endregion
 

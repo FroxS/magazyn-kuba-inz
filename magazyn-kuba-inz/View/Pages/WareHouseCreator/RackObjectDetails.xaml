@@ -43,8 +43,7 @@
         <Grid Grid.IsSharedSizeScope="True"
               Grid.Row="1"
               Margin="10"
-              VerticalAlignment="Top"
-              MinWidth="250">
+              VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -72,12 +71,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:TextBoxImage Text="{Binding X, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                    <controls:TextBoxImage Text="{Binding X, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay, StringFormat=N2}"
                                             Grid.Column="0"
                                             Style="{StaticResource FormTextBoxImage}"
                                             Margin="10 10 2 10"
                                             Tag="X"/>
-                    <controls:TextBoxImage Text="{Binding Y, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                    <controls:TextBoxImage Text="{Binding Y, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, Mode=TwoWay, StringFormat=N2}"
                                             Grid.Column="1"
                                             Margin="2 10 10 10"
                                             Style="{StaticResource FormTextBoxImage}"

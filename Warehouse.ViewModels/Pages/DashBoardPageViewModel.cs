@@ -63,7 +63,9 @@ public class DashBoardPageViewModel : BasePageViewModel
 
     public DashBoardPageViewModel(IApp app, IOrderService orderService, IProductService productService, IUserService userService) : base(app)
     {
-        AddNewOrderCommand = new RelayCommand(() => app.Navigation.SetPage(Models.Page.EApplicationPage.Order));
+        AddNewOrderCommand = new RelayCommand(() => {
+			Application.Navigation.AddPage(new OrderEditAddPageViewModel(Application));
+		});
         _orderService = orderService;
         _productService = productService;
         _userService = userService;

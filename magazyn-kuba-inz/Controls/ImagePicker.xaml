@@ -13,7 +13,8 @@
                 BorderThickness="1"
                 x:Name="imBorder">
             <Border.Background>
-                <ImageBrush Stretch="UniformToFill" ImageSource="C:\Users\Laptop\Pictures\WallPaper\730452.jpg"/>
+                <ImageBrush Stretch="UniformToFill" />
+                <!--<ImageBrush Stretch="UniformToFill" ImageSource="C:\Users\Laptop\Pictures\WallPaper\730452.jpg"/>-->
             </Border.Background>
         </Border>
 

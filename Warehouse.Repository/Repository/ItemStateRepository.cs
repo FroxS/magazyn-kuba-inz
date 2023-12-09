@@ -52,5 +52,22 @@ internal class ItemStateRepository : BaseRepository<ItemState, WarehouseDbContex
         return base.GetAll().FirstOrDefault(x => x.State == state);
     }
 
-    #endregion
+	public override async Task<ItemState> AddAsync(ItemState entity, CancellationToken cancellationToken = default)
+	{
+        CheckBeforeAdd(entity);
+        return await base.AddAsync(entity, cancellationToken);
+	}
+
+    private void CheckBeforeAdd(ItemState item)
+    {
+		if (item == null)
+			throw new ArgumentNullException(nameof(item));
+
+		if (GetAll().Any(x => x.State == item.State))
+		{
+			throw new ArithmeticException($"Item exist in database with the same state {item.State}");
+		}
+	}
+
+	#endregion
 }

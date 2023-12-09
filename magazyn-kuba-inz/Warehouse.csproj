@@ -9,11 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\WareHouseArea_OLD.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\cancel-icon.svg" />
     <None Remove="Images\confirm-icon.svg" />
     <None Remove="Images\warehoudebg.png" />
     <None Remove="Images\warehouse.jpg" />
     <None Remove="Images\warehouse_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Controls\WareHouseArea_OLD.xaml" />
   </ItemGroup>
 
   <ItemGroup>

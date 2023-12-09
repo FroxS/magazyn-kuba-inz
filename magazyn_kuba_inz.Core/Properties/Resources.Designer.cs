@@ -97,6 +97,33 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add point.
+        /// </summary>
+        public static string AddPoint {
+            get {
+                return ResourceManager.GetString("AddPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add rack.
+        /// </summary>
+        public static string AddRack {
+            get {
+                return ResourceManager.GetString("AddRack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add racks.
+        /// </summary>
+        public static string AddRacks {
+            get {
+                return ResourceManager.GetString("AddRacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to package.
         /// </summary>
         public static string AddToPackage {
@@ -273,6 +300,15 @@ namespace Warehouse.Core.Properties {
         public static string Connections {
             get {
                 return ResourceManager.GetString("Connections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect with.
+        /// </summary>
+        public static string ConnectWith {
+            get {
+                return ResourceManager.GetString("ConnectWith", resourceCulture);
             }
         }
         
@@ -583,6 +619,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate way.
+        /// </summary>
+        public static string GenerateWay {
+            get {
+                return ResourceManager.GetString("GenerateWay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         public static string Group {
@@ -871,6 +916,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Point.
+        /// </summary>
+        public static string Point {
+            get {
+                return ResourceManager.GetString("Point", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Position.
         /// </summary>
         public static string Position {
@@ -948,6 +1002,15 @@ namespace Warehouse.Core.Properties {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -1074,6 +1137,15 @@ namespace Warehouse.Core.Properties {
         public static string SetAsReceived {
             get {
                 return ResourceManager.GetString("SetAsReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set as startup point.
+        /// </summary>
+        public static string SetAsStartupPoint {
+            get {
+                return ResourceManager.GetString("SetAsStartupPoint", resourceCulture);
             }
         }
         
@@ -1290,6 +1362,15 @@ namespace Warehouse.Core.Properties {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zoom.
+        /// </summary>
+        public static string Zoom {
+            get {
+                return ResourceManager.GetString("Zoom", resourceCulture);
             }
         }
     }

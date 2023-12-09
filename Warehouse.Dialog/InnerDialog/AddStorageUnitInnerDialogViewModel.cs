@@ -1,115 +1,59 @@
-﻿using Warehouse.Service.Interface;
-using Warehouse.Core.Interface;
+﻿using Warehouse.Core.Interface;
 using Warehouse.Models;
-using System.ComponentModel.DataAnnotations;
+using Warehouse.ViewModel.Pages;
 
 namespace Warehouse.InnerDialog;
 
 public class AddStorageUnitInnerDialogViewModel : BaseInnerDialogViewModel<StorageUnit>
 {
-    #region Private properties
+	#region Private properties
 
-    private readonly IStorageUnitService _service;
-    public string? _name;
-    public uint _lp;
-    public double _maxWeight;
-    public double _maxWidth;
-    public double _maxHeight;
-    public double _maxDepth;
+	public StorageUnitViewModel _item;
 
-    #endregion
+	#endregion
 
-    #region Public properties
+	#region Public properties
 
-    [Required(ErrorMessage = "Name is required.")]
-    public string? Name
+	public StorageUnitViewModel Item
+	{
+		get => _item;
+		set => SetProperty(ref _item, value);
+	}
+
+	#endregion
+
+	#region Constructors
+
+	/// <summary>
+	/// Default constructor
+	/// </summary>
+	public AddStorageUnitInnerDialogViewModel(IApp app, IStorageUnitService service) : base(app)
     {
-        get => _name;
-        set { _name = value; OnPropertyChanged(nameof(Name)); }
+		Item = new StorageUnitViewModel(service, StorageUnit.Get(), app);
+		Result = null;
     }
 
-    public uint Lp
-    {
-        get => _lp;
-        set { _lp = value; OnPropertyChanged(nameof(Lp)); }
-    }
+	#endregion
 
-    public double MaxWeight
-    {
-        get => _maxWeight;
-        set { _maxWeight = value; OnPropertyChanged(nameof(MaxWeight)); }
-    }
+	#region Private Methods
 
-    public double MaxWidth
-    {
-        get => _maxWidth;
-        set { _maxWidth = value; OnPropertyChanged(nameof(MaxWidth)); }
-    }
+	protected override void Submit()
+	{
+		Result = null;
+		Message.Clear();
+		string? message = Item.Valid();
+		_CanValidate = true;
 
-    public double MaxHeight
-    {
-        get => _maxHeight;
-        set { _maxHeight = value; OnPropertyChanged(nameof(MaxHeight)); }
-    }
+		if (message != null)
+		{
+			Message.AddMessage(message);
+			return;
+		}
 
-    public double MaxDepth
-    {
-        get => _maxDepth;
-        set { _maxDepth = value; OnPropertyChanged(nameof(MaxDepth)); }
-    }
+		Result = Item.Get();
+		base.Submit();
+	}
 
-    #endregion
-
-    #region Constructors
-
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public AddStorageUnitInnerDialogViewModel(IApp app, IStorageUnitService service) : base(app)
-    {
-        _service = service;
-        Result = null;
-        Lp = 0;
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    protected string[] GetpropsNameToFireOnSave()
-    {
-        return new string[] {
-            nameof(Name),
-            nameof(Lp),
-        };
-    }
-    protected override void Submit()
-    {
-        Result = null;
-        string? message = null;
-        _CanValidate = true;
-        string[] props = GetpropsNameToFireOnSave();
-
-        foreach (string prop in props)
-        {
-            message = GettErrors(prop);
-            if (!string.IsNullOrWhiteSpace(message))
-            {
-                OnPropertyChanged(prop);
-                return;
-            }
-        }
-
-        Result = new  StorageUnit();
-        Result.Name = Name;
-        Result.Lp = Lp;
-        Result.MaxWeight = MaxWeight;
-        Result.MaxWidth =  MaxWidth ;
-        Result.MaxHeight = MaxHeight;
-        Result.MaxDepth = MaxDepth;
-        base.Submit();
-    }
-
-    #endregion
+	#endregion
 
 }

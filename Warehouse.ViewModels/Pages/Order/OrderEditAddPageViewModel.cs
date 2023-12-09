@@ -70,7 +70,7 @@ public class OrderEditAddPageViewModel : BasePageViewModel
     /// Default constructor
     /// </summary>
     /// <param name="app">Application service</param>
-    public OrderEditAddPageViewModel(IApp app, Order order, EOrderType type = EOrderType.WareHouse)
+    public OrderEditAddPageViewModel(IApp app, Order? order = null, EOrderType type = EOrderType.WareHouse)
         : base(app)
     {
         Page = Models.Page.EApplicationPage.EditAddOrder;

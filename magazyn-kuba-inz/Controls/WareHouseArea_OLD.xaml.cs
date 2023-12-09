@@ -21,9 +21,9 @@ using Warehouse.Theme;
 namespace Warehouse.Controls;
 
 /// <summary>
-/// Interaction logic for WareHouseArea.xaml
+/// Interaction logic for WareHouseArea_OLD.xaml
 /// </summary>
-public partial class WareHouseArea : UserControl
+public partial class WareHouseArea_OLD : UserControl
 {
     #region Private Fields
 
@@ -35,13 +35,15 @@ public partial class WareHouseArea : UserControl
 
     private Point mousePosition;
 
-    private FrameworkElement? _movingElement = null;
+    private FrameworkElement _movingElement = null;
 
-    private IBaseObject? _connectWidthPoint = null;
+    private IBaseObject _connectWidthPoint = null;
 
-    private WayPointObject? _selectedPoint = null;
+    private RackObject _rackToPoint = null;
 
-    private FrameworkElement? _selectedElement = null;
+    private WayPointObject _selectedPoint = null;
+
+    private FrameworkElement _selectedElement = null;
 
     private ObservableCollection<WayPointObject[]> _wayPointConnections = new ObservableCollection<WayPointObject[]>();
 
@@ -294,7 +296,7 @@ public partial class WareHouseArea : UserControl
 
     #region Constructor
 
-    public WareHouseArea()
+    public WareHouseArea_OLD()
     {
         InitializeComponent();
     }
@@ -493,12 +495,27 @@ public partial class WareHouseArea : UserControl
     {
         Point currentPoint = e.GetPosition(wareHouseArea);
 
+        if (CrossVisible)
+        {
+            // Aktualizacja pozycji linii poziomej
+            HorizontalCrossLine.Y1 = currentPoint.Y;
+            HorizontalCrossLine.Y2 = currentPoint.Y;
+
+            // Aktualizacja pozycji linii pionowej
+            VerticalCrossLine.X1 = currentPoint.X;
+            VerticalCrossLine.X2 = currentPoint.X;
+
+            CursorCrossText.Content = $"X:{currentPoint.X:F2} Y:{currentPoint.Y:F2}";
+            Canvas.SetLeft(CursorCrossText, currentPoint.X);
+            Canvas.SetTop(CursorCrossText, currentPoint.Y);
+        }
+
         if (_isDragging && _movingElement != null)
         {
             double offsetX = currentPoint.X - _startPoint.X;
             double offsetY = currentPoint.Y - _startPoint.Y;
 
-            IBaseObject? baseobj = _movingElement?.DataContext as IBaseObject;
+            IBaseObject baseobj = _movingElement?.DataContext as IBaseObject;
 
             if (baseobj == null)
             {

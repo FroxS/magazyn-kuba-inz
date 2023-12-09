@@ -39,7 +39,6 @@ public class ItemStateViewModel : BaseEntityViewModel<ItemState>
         }
     }
 
-
     #endregion
 
     #region Constructors
@@ -61,8 +60,8 @@ public class ItemStateViewModel : BaseEntityViewModel<ItemState>
             return message;
 
         var taks = _service.GetAll();
-        if (taks.Find(o => o.Name == Name && ID != o.ID) != null)
-            return $"Nazwa {Name} juz istnieje w bazie danych";
+        if (taks.Find(o => (o.State == State || o.Name == Name ) && ID != o.ID) != null)
+            return $"Stan {Name} ({State}) juz istnieje w bazie danych";
 
         return base.Valid();
     }

@@ -1,103 +1,57 @@
 ﻿using Warehouse.Models;
-using System.ComponentModel.DataAnnotations;
-using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
+using Warehouse.ViewModel.Pages;
 
 namespace Warehouse.InnerDialog;
-
-
 public class AddItemStateInnerDialogViewModel : BaseInnerDialogViewModel<ItemState>
 {
-    #region Private properties
+	#region Private properties
 
-    public string? _name;
-    public uint _lp = 0;
-    private readonly IItemStateService _service;
+	public ItemStateViewModel _item;
 
-    #endregion
+	#endregion
 
-    #region Public properties
+	#region Public properties
 
-    [Required(ErrorMessage = "Name is required.")]
-    public string? Name
+	public ItemStateViewModel Item
+	{
+		get => _item;
+		set => SetProperty(ref _item, value);
+	}
+
+	#endregion
+
+	#region Constructors
+
+	/// <summary>
+	/// Default constructor
+	/// </summary>
+	public AddItemStateInnerDialogViewModel(IApp app, IItemStateService service) : base(app)
     {
-        get => _name;
-        set
-        {
-            if (_name == value)
-                return;
-            _name = value;
-            OnPropertyChanged(nameof(Name));
-        }
-    }
-
-    public uint Lp
-    {
-        get => _lp;
-        set
-        {
-            if (_lp == value)
-                return;
-            _lp = value;
-            OnPropertyChanged(nameof(Lp));
-        }
-    }
-
-    #endregion
-
-    #region Constructors
-
-    /// <summary>
-    /// Default constructor
-    /// </summary>
-    public AddItemStateInnerDialogViewModel(IApp app, IItemStateService service) : base(app)
-    {
-        _service = service;
-        Result = null;
+		Item = new ItemStateViewModel(service, ItemState.Get(), app);
+		Result = null;
     }
 
     #endregion
 
     #region Private Methods
 
-    protected string[] GetpropsNameToFireOnSave()
-    {
-        return new string[] {
-            nameof(Name),
-            nameof(Lp),
-        };
-    }
     protected override void Submit()
     {
-        Result = null;
-        string? message = null;
-        _CanValidate = true;
-        string[] props = GetpropsNameToFireOnSave();
+		Result = null;
+		Message.Clear();
+		string? message = Item.Valid();
+		_CanValidate = true;
 
-        foreach (string prop in props)
-        {
-            message = GettErrors(prop);
-            if (!string.IsNullOrWhiteSpace(message))
-            {
-                OnPropertyChanged(prop);
-                return;
-            }
-        }
+		if (message != null)
+		{
+			Message.AddMessage(message);
+			return;
+		}
 
-        var taks = _service.GetAll();
-        if (taks.Find(o => o.Name == Name) != null)
-        {
-            CustomMessage.Add(nameof(Name), $"Nazwa {Name} juz istnieje w bazie danych");
-            OnPropertyChanged(nameof(Name));
-            return;
-        }
-
-        Result = ItemState.Get();
-        Result.Name = Name;
-        Result.Lp = Lp;
-        base.Submit();
-
-    }
+		Result = Item.Get();
+		base.Submit();
+	}
 
     #endregion
 

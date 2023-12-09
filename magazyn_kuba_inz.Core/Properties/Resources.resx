@@ -129,6 +129,15 @@
   <data name="Added" xml:space="preserve">
     <value>Added</value>
   </data>
+  <data name="AddPoint" xml:space="preserve">
+    <value>Add point</value>
+  </data>
+  <data name="AddRack" xml:space="preserve">
+    <value>Add rack</value>
+  </data>
+  <data name="AddRacks" xml:space="preserve">
+    <value>Add racks</value>
+  </data>
   <data name="AddToPackage" xml:space="preserve">
     <value>Add to package</value>
   </data>
@@ -188,6 +197,9 @@
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
+  </data>
+  <data name="ConnectWith" xml:space="preserve">
+    <value>Connect with</value>
   </data>
   <data name="Coppy" xml:space="preserve">
     <value>Coppy</value>
@@ -291,6 +303,9 @@
   <data name="GenerateMap" xml:space="preserve">
     <value>Generate map</value>
   </data>
+  <data name="GenerateWay" xml:space="preserve">
+    <value>Generate way</value>
+  </data>
   <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>
@@ -387,6 +402,9 @@
   <data name="PersonalData" xml:space="preserve">
     <value>Personal data</value>
   </data>
+  <data name="Point" xml:space="preserve">
+    <value>Point</value>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
   </data>
@@ -413,6 +431,9 @@
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="RemovedOrder" xml:space="preserve">
     <value>Removed order</value>
@@ -455,6 +476,9 @@
   </data>
   <data name="SetAsReceived" xml:space="preserve">
     <value>Set as received</value>
+  </data>
+  <data name="SetAsStartupPoint" xml:space="preserve">
+    <value>Set as startup point</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -527,5 +551,8 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
   </data>
 </root>

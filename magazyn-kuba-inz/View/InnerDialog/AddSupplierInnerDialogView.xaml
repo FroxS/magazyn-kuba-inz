@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Margin="10">
-            <pages:SupplierView/>
+            <pages:SupplierView DataContext="{Binding Item, UpdateSourceTrigger=PropertyChanged}"/>
         </ScrollViewer>
 
         <StackPanel Grid.Row="1">
