@@ -14,8 +14,7 @@
                          CanResize="CanResizeWithGrip"
                          Background="{StaticResource BackgroundColorBrush}"
                          d:DataContext="{d:DesignInstance Type=pageVM:WareHouseCreatorPageViewModel}"
-                         d:DesignHeight="500" d:DesignWidth="1000"
-                         >
+                         d:DesignHeight="500" d:DesignWidth="1000">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,9 +43,8 @@
               Grid.Row="1"
               Visibility="{Binding SelectedObject, Converter={conv:NullVisibleConventer}}">
             <ScrollViewer >
-                <Grid IsEnabled="{Binding CanEdit}">
-                    <ContentPresenter Content="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                  >
+                <Grid >
+                    <ContentPresenter Content="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ContentPresenter.Resources>
                             <DataTemplate DataType="{x:Type models:RackObject}">
                                 <local:RackObjectDetails/>

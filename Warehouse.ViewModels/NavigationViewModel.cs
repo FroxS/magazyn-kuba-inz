@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using Warehouse.ViewModels.Navigation;
 using Warehouse.Models.Interfaces;
 using Warehouse.Models;
-using System.Windows.Controls;
 
 namespace Warehouse.ViewModel;
 
@@ -81,6 +80,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
     public ICommand SetPageCommand { get; private set; }
     public ICommand PrevCommand { get; private set; }
     public ICommand NextCommand { get; private set; }
+    public ICommand OpenRackCommand { get; private set; }
 
     #endregion
 
@@ -91,6 +91,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
         SetPageCommand = new RelayCommand<EApplicationPage>(SetPage);
         PrevCommand = new RelayCommand(SetPrevPage, () => CanSetPrevPage);
         NextCommand = new RelayCommand(SetNextPage, () => CanSetNextPage);
+        OpenRackCommand = new RelayCommand<Guid>((o) => OpenRack(o));
     }
 
     public NavigationViewModel(IApp app) : base()
@@ -434,7 +435,6 @@ public class NavigationViewModel : BaseViewModel, INavigation
             ChangePage(opend);
     }
 
-
     public void OpenNewTabPage(ISingleCardPage page)
     {
         
@@ -448,6 +448,19 @@ public class NavigationViewModel : BaseViewModel, INavigation
         }
         else
             ChangePage(opend);
+    }
+
+    public void OpenRack(Guid id)
+    {
+        try
+        {
+            if (id != Guid.Empty && _app.GetService<IRackService>().GetById(id) != null)
+                OpenNewTabPage(new RackEditViewModel(id, _app));
+        }
+        catch(Exception ex)
+        {
+            _app.CatchExeption(ex);
+        }
     }
 
     #endregion

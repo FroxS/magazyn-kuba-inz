@@ -2,10 +2,7 @@
 using Warehouse.Core.Models;
 using Warehouse.ViewModel.Service;
 using System.Windows.Input;
-using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
-using Newtonsoft.Json.Bson;
-using Newtonsoft.Json;
 using Warehouse.Models;
 using System.Collections.ObjectModel;
 
@@ -30,7 +27,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public HallObject Hall
     {
         get => _hall;
-        set { SetProperty(ref _hall, value, nameof(Hall)); }
+        set => SetProperty(ref _hall, value); 
     }
 
     public IBaseObject SelectedObject
@@ -43,6 +40,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
                 {
                     ro.Items = new ObservableCollection<StorageItem>(_rackService.GetAllPackages(ro.ID).SelectMany(x => x.Items));
                 }
+                _selectedObject.CanEdit = CanEdit;
             }
             ); 
         }
@@ -51,19 +49,19 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public Func<RackObject, bool> CanDeleteRack
     {
         get => _canDeleteRack;
-        set { SetProperty(ref _canDeleteRack, value, nameof(CanDeleteRack)); }
+        set => SetProperty(ref _canDeleteRack, value); 
     }
 
     public bool CanEdit
     {
         get => _canEdit;
-        set { SetProperty(ref _canEdit, value, nameof(CanEdit)); }
+        set => SetProperty(ref _canEdit, value); 
     }
 
     public bool ToSave
     {
         get => _toSave;
-        set { SetProperty(ref _toSave, value, nameof(ToSave)); }
+        set => SetProperty(ref _toSave, value); 
     }
 
     #endregion
@@ -77,6 +75,8 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
     public ICommand EditHallCommand { get; protected set; }
 
     public ICommand EditCommand { get; protected set; }
+
+    public ICommand EditRackCommand { get; protected set; }
 
     #endregion
 
@@ -96,6 +96,21 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
             return flag;
         };
+
+        EditCommand = new RelayCommand(() => EditRack(), () => SelectedObject is RackObject);
+    }
+
+    private void EditRack()
+    {
+        try
+        {
+            if(SelectedObject is RackObject rack)
+                Application.Navigation.OpenNewTabPage(new RackEditViewModel(rack.ID, Application));
+        }
+        catch(Exception ex)
+        {
+            Application.CatchExeption(ex);
+        }
     }
 
     #endregion

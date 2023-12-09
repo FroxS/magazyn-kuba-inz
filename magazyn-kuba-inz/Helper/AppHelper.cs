@@ -35,6 +35,7 @@ public class AppHelper
     /// </summary>
     public static IMessageService MessageService => App.AppHost.Services.GetRequiredService<IMessageService>();
 
+
     #endregion
 }
 

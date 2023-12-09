@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
+using Warehouse.Core.Helpers;
 using Warehouse.Core.Interface;
 using Warehouse.Models;
 
@@ -25,6 +27,9 @@ public class RackObject : Rack, IBaseObject
 
     [JsonIgnore]
     protected ObservableCollection<StorageItem> _items = new ObservableCollection<StorageItem>();
+
+    [JsonIgnore]
+    protected bool _canEdit = true;
 
     #endregion
 
@@ -77,19 +82,26 @@ public class RackObject : Rack, IBaseObject
     public double X
     {
         get => _x;
-        set { SetProperty(ref _x, value, nameof(X)); }
+        set { SetProperty(ref _x, value); }
     }
 
     public bool IsSelected
     {
         get => _isSelected;
-        set { SetProperty(ref _isSelected, value, nameof(IsSelected)); }
+        set { SetProperty(ref _isSelected, value); }
+    }
+
+    [JsonIgnore]
+    public bool CanEdit
+    {
+        get => _canEdit;
+        set { SetProperty(ref _canEdit, value); }
     }
 
     public double Y
     {
         get => _y;
-        set { SetProperty(ref _y, value, nameof(Y)); }
+        set { SetProperty(ref _y, value); }
     }
 
     [JsonIgnore]
@@ -98,6 +110,9 @@ public class RackObject : Rack, IBaseObject
         get => _items;
         set { SetProperty(ref _items, value, nameof(Items)); }
     }
+
+    [JsonIgnore]
+    public ICommand OpenRackCommand { get; private set; }
 
     #endregion
 
@@ -114,6 +129,15 @@ public class RackObject : Rack, IBaseObject
             Width = 50;
         if (Heigth == 0)
             Heigth = 50;
+        OpenRackCommand = new RelayCommand(OpenRack);
+    }
+
+    private void OpenRack()
+    {
+        IApp app = WareHouseApp.App;
+        if (app == null)
+            return;
+        app.Navigation.OpenRack(ID);
     }
 
     /// <summary>

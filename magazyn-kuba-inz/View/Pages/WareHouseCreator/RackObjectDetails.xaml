@@ -9,12 +9,13 @@
              xmlns:models="clr-namespace:Warehouse.Core.Models;assembly=Warehouse.Core"
              xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             xmlns:helpers="clr-namespace:Warehouse.Helper"
              xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
              mc:Ignorable="d" 
              Background="{StaticResource BackgroundColorBrush}"
              d:DataContext="{d:DesignInstance models:RackObject}"
-             d:DesignHeight="450" d:DesignWidth="400">
+             d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
             <ObjectDataProvider MethodName="GetValues"
@@ -24,23 +25,38 @@
                     <x:Type TypeName="enum:EDir" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
-
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid >
-
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-               FontSize="14"
-               Grid.Row="0"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=Rack}"
+                   FontSize="14"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+
+            <controls:ButtonPath IconPath="{StaticResource Edit}"
+                                 Grid.Column="1"
+                                 Command="{Binding OpenRackCommand, 
+                                                   UpdateSourceTrigger=PropertyChanged}"
+                                 CommandParameter="{Binding ID, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+        </Grid>
+        
 
         <Grid Grid.IsSharedSizeScope="True"
+              IsEnabled="{Binding CanEdit, UpdateSourceTrigger=PropertyChanged}"
               Grid.Row="1"
               Margin="10"
               VerticalAlignment="Top">

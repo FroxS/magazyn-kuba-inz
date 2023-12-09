@@ -19,6 +19,7 @@ public class RackEditViewModel : BasePageViewModel, ISingleCardPage
     private StorageItem? _selectedAvailableItem = null;
     private ObservableCollection<StorageItem> _itemsInPackage = new ObservableCollection<StorageItem>();
     private ObservableCollection<StorageItem> _availableItems = new ObservableCollection<StorageItem>();
+    private ObservableCollection<StorageItemPackage> _itemsInRack = new ObservableCollection<StorageItemPackage>();
 
     #endregion
 
@@ -65,7 +66,18 @@ public class RackEditViewModel : BasePageViewModel, ISingleCardPage
     public Rack? Rack
     {
         get => _rack;
-        protected set => SetProperty(ref _rack, value);
+        protected set => SetProperty(ref _rack, value, onChanged:() => {
+            if (value != null)
+                ItemsInRack = new ObservableCollection<StorageItemPackage>(_rackService.GetAllPackages(value.ID) ?? new List<StorageItemPackage>());
+            else
+                ItemsInRack = new ObservableCollection<StorageItemPackage>();
+        });
+    }
+
+    public ObservableCollection<StorageItemPackage> ItemsInRack
+    {
+        get => _itemsInRack;
+        protected set { SetProperty(ref _itemsInRack, value); }
     }
 
     #endregion
@@ -85,7 +97,6 @@ public class RackEditViewModel : BasePageViewModel, ISingleCardPage
     #endregion
 
     #region Constructors
-
 
     public RackEditViewModel(IApp app) : this(Guid.Empty,app)
     {

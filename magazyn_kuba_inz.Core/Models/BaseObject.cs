@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Newtonsoft.Json;
+using System.Windows;
 using Warehouse.Core.Interface;
 using Warehouse.Models;
 
@@ -13,6 +14,9 @@ public class BaseObject : ObservableObject, IBaseObject
     protected double _y = 0;
 
     protected bool _isSelected = false;
+
+    [JsonIgnore]
+    protected bool _canEdit = true;
 
     #endregion
 
@@ -38,7 +42,13 @@ public class BaseObject : ObservableObject, IBaseObject
         set { SetProperty(ref _isSelected, value, nameof(IsSelected)); }
     }
 
-    
+    [JsonIgnore]
+    public bool CanEdit
+    {
+        get => _canEdit;
+        set { SetProperty(ref _canEdit, value); }
+    }
+
 
     #endregion
 

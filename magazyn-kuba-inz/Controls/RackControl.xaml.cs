@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Warehouse.Models;
 using System.Windows.Media;
 using System.Linq;
+using System;
 
 namespace Warehouse.Controls;
 
@@ -24,6 +25,12 @@ public partial class RackControl : UserControl
     {
         get { return (Rack)GetValue(RackProperty); }
         set { SetValue(RackProperty, value); }
+    }
+
+    public ObservableCollection<StorageItemPackage> Items
+    {
+        get { return (ObservableCollection<StorageItemPackage>)GetValue(ItemsProperty); }
+        set { SetValue(ItemsProperty, value); }
     }
 
     public StorageItemPackage SelectedPackage
@@ -62,6 +69,8 @@ public partial class RackControl : UserControl
     public static readonly DependencyProperty SelectedPackageProperty =
        DependencyProperty.Register(nameof(SelectedPackage), typeof(StorageItemPackage), typeof(RackControl), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty ItemsProperty =
+       DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<StorageItemPackage>), typeof(RackControl), new PropertyMetadata(null, ItemsChanged));
 
     #endregion
 
@@ -70,6 +79,7 @@ public partial class RackControl : UserControl
     public RackControl()
     {
         InitializeComponent();
+        UpdateRack(Rack);
     }
 
     #endregion
@@ -93,6 +103,13 @@ public partial class RackControl : UserControl
         return baseValue;
     }
 
+    private static void ItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is RackControl control && control.Rack != null)
+        {
+            control.UpdateRack(control.Rack);
+        }
+    }
 
     #endregion
 
@@ -120,13 +137,13 @@ public partial class RackControl : UserControl
                 flors.Add(flor);
             }
 
-            if (flors.Count > 0 && ro.StorageItems != null)
+            if (flors.Count > 0 && Items != null)
             {
-                foreach (StorageItemPackage item in ro.StorageItems)
+                foreach (StorageItemPackage item in Items)
                 {
                     int itemFlor = flors.Count - 1 - item.Flor;//  Math.Abs(item.Flor - flors.Count -1);
 
-                    SFlor flor = flors[flors.Count-1];
+                    SFlor flor = flors[flors.Count - 1];
                     if (flors.Count > itemFlor)
                         flor = flors[itemFlor];
 
@@ -134,7 +151,24 @@ public partial class RackControl : UserControl
                 }
             }
 
-            foreach(SFlor flor in flors)
+            //if (flors.Count > 0 && ro.StorageItems != null)
+            //{
+            //    foreach (StorageItemPackage item in ro.StorageItems)
+            //    {
+            //        int itemFlor = flors.Count - 1 - item.Flor;//  Math.Abs(item.Flor - flors.Count -1);
+
+            //        SFlor flor = flors[flors.Count - 1];
+            //        if (flors.Count > itemFlor)
+            //            flor = flors[itemFlor];
+
+            //        flor.Items.Add(new SPackage(item));
+            //    }
+            //}
+
+
+
+
+            foreach (SFlor flor in flors)
             {
                 flor.UpdateColumns();
             }

@@ -8,5 +8,6 @@ namespace Warehouse.Core.Interface
         Point Position { get; }
         double X { get; set; }
         double Y { get; set; }
+        bool CanEdit { get; set; }
     }
 }

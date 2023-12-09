@@ -65,5 +65,14 @@ internal class RackService : BaseServiceWithRepository<IRackRepository, Rack>, I
         return _repozitory.GetById(x => x.Include(x => x.StorageItems).ThenInclude(i => i.Items) ,id);
     }
 
+    public IEnumerable<StorageItem>? GetItems(Guid id)
+    {
+        Rack? rack = _repozitory.GetById(x => x.Include(x => x.StorageItems).ThenInclude(i => i.Items), id);
+        if (rack?.StorageItems == null )
+            return null;
+
+        return rack.StorageItems.Where(x => x.Items != null).SelectMany(x => x.Items);
+    }
+
     #endregion
 }

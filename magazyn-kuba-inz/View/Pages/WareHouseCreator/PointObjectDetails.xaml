@@ -34,6 +34,7 @@
         </StackPanel>
 
         <Grid Grid.IsSharedSizeScope="True"
+              IsEnabled="{Binding CanEdit, UpdateSourceTrigger=PropertyChanged}"
               Grid.Row="1"
               Margin="10"
               VerticalAlignment="Top">

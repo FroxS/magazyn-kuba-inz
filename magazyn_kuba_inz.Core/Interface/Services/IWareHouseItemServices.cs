@@ -91,6 +91,7 @@ public interface IRackService : IBaseService<Rack>
     List<Rack> GetAllWithItems();
     List<StorageItemPackage> GetAllPackages(Guid id);
     Rack GetWithItems(Guid id);
+    IEnumerable<StorageItem>? GetItems(Guid id);
 }
 
 public interface IStorageItemPackageService : IBaseService<StorageItemPackage> 

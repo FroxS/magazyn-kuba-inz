@@ -33,6 +33,7 @@
             
             
             <control:RackControl Rack="{Binding Rack, UpdateSourceTrigger=PropertyChanged}"
+                                 Items="{Binding ItemsInRack, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedPackage="{Binding SelectedPackage,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                  Margin="5"
                                  Grid.Row="1"/>

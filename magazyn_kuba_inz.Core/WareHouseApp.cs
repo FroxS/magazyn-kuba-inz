@@ -49,6 +49,8 @@ public class WareHouseApp : ObservableObject, IApp
 
     public static IDialogService Dialog => _services.GetRequiredService<IDialogService>();
 
+    public static IApp App => _services.GetRequiredService<IApp>();
+
     public Window? MainWindow { get; private set; }
 
     public virtual bool IsTaskRunning { get => isTaskRunning; set { isTaskRunning = value; OnPropertyChanged(nameof(IsTaskRunning)); } }
