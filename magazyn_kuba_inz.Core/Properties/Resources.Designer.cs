@@ -790,6 +790,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to.
+        /// </summary>
+        public static string MoveTo {
+            get {
+                return ResourceManager.GetString("MoveTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {

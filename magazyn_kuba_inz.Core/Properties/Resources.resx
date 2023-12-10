@@ -360,6 +360,9 @@
   <data name="MessagePasswordChangedSuccessfully" xml:space="preserve">
     <value>Password changed successfully</value>
   </data>
+  <data name="MoveTo" xml:space="preserve">
+    <value>Move to</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>

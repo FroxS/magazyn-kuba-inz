@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,17 +19,19 @@ namespace Warehouse.Theme.Controls
 
         public ICollectionView Collection { get; set; }
 
+        public Dictionary<DataGridColumn, bool> GroupByDefinition { get; protected set; }
+
         public string SearchText
         {
             get { return (string)GetValue(SearchTextProperty); }
             set { SetValue(SearchTextProperty, value); }
         }
 
-        //public IEnumerable FilterItems
-        //{
-        //    get { return (IEnumerable)GetValue(FilterItemsProperty); }
-        //    set { SetValue(FilterItemsProperty, value); }
-        //}
+        public IEnumerable FilterItems
+        {
+            get { return (IEnumerable)GetValue(FilterItemsProperty); }
+            set { SetValue(FilterItemsProperty, value); }
+        }
 
         #endregion
 
@@ -35,8 +40,8 @@ namespace Warehouse.Theme.Controls
         public static readonly DependencyProperty SearchTextProperty =
             DependencyProperty.Register(nameof(SearchText), typeof(string), typeof(MyDataGrid), new PropertyMetadata(null, SeachChanged));
 
-        //public static readonly DependencyProperty FilterItemsProperty =
-        //    DependencyProperty.Register(nameof(FilterItems), typeof(IEnumerable), typeof(MyDataGrid), new PropertyMetadata(null, ItemsHanged));
+        public static readonly DependencyProperty FilterItemsProperty =
+            DependencyProperty.Register(nameof(FilterItems), typeof(IEnumerable), typeof(MyDataGrid), new PropertyMetadata(null, ItemsHanged));
 
         private static void ItemsHanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -51,12 +56,20 @@ namespace Warehouse.Theme.Controls
         }
 
 
+
         #endregion
 
         #region Constructor
 
         public MyDataGrid()
         {
+            ContextMenu = GetContextMenu();
+            ContextMenuOpening += MyDataGrid_ContextMenuOpening;
+        }
+
+        private void MyDataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            ContextMenu = GetContextMenu();
         }
 
         #endregion
@@ -88,27 +101,85 @@ namespace Warehouse.Theme.Controls
             }
         }
 
+        private ContextMenu GetContextMenu()
+        {
+            ContextMenu menu = new ContextMenu();
+            MenuItem meniItemGroupBy = new MenuItem() { Header = "Group by", };
+            if (GroupByDefinition == null)
+                GroupByDefinition = new Dictionary<DataGridColumn, bool>();
+            foreach (DataGridColumn column in Columns) 
+            {
+                if (column is DataGridBoundColumn boundColumn)
+                {
+                    var binding = boundColumn.Binding as Binding;
+                    if (binding != null)
+                    {
+                        string bindingPath = binding.Path.Path;
+
+                    }
+                }
+                if (!GroupByDefinition.ContainsKey(column))
+                {
+                    GroupByDefinition.Add(column, false);
+                }
+                MenuItem mi = new MenuItem() { Header = column.Header, IsCheckable = true };
+                mi.IsChecked = GroupByDefinition[column];
+                mi.Checked += (x,y) => {
+                    if(x is MenuItem mi)
+                    {
+                        GroupByDefinition[column] = mi.IsChecked;
+                        UpdateCollectionGroup();
+                    }     
+                };
+                mi.Unchecked += (x, y) => {
+                    if (x is MenuItem mi)
+                    {
+                        GroupByDefinition[column] = mi.IsChecked;
+                        UpdateCollectionGroup();
+                    }
+                };
+
+                meniItemGroupBy.Items.Add(mi);
+            }
+            menu.Items.Add(meniItemGroupBy);
+            return menu;
+        }
+
+        private void UpdateCollectionGroup()
+        {
+            if(GroupByDefinition != null)
+            {
+                Collection.GroupDescriptions.Clear();
+
+                foreach(var groupby in GroupByDefinition.Where(x => x.Value))
+                {
+                    DataGridColumn column = groupby.Key;
+                    if (column is DataGridBoundColumn boundColumn)
+                    {
+                        var binding = boundColumn.Binding as Binding;
+
+                        if (binding != null)
+                        {
+                            string bindingPath = binding.Path.Path;
+                            Collection.GroupDescriptions.Add(new PropertyGroupDescription(bindingPath));
+                        }
+                    }  
+                }
+                //Collection.Refresh();
+            }
+        }
+
         #endregion
 
         #region Event
 
-        //protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
-        //{
-        //    SetCollection(ItemsSource);
-            
-        //}
-
-        protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
-        {
-            SetCollection(newValue);
-        }
 
         protected void SetCollection(IEnumerable items)
         {
             // Przechwyć oryginalny ItemsSource
             ICollectionView originalItemsSource = items as ICollectionView;
 
-            if (Collection != null)
+            if (Collection != null && Collection.Filter != null)
                 Collection.Filter -= Filter;
 
             // Utwórz nowy widok kolekcji
@@ -124,11 +195,31 @@ namespace Warehouse.Theme.Controls
             // Dodaj handler zdarzeń dla nowego ItemsSource
             ((INotifyCollectionChanged)Collection).CollectionChanged += ItemsSource_CollectionChanged;
 
+            if (GroupByDefinition != null)
+            {
+                Collection.GroupDescriptions.Clear();
+
+                foreach (var groupby in GroupByDefinition.Where(x => x.Value))
+                {
+                    DataGridColumn column = groupby.Key;
+                    if (column is DataGridBoundColumn boundColumn)
+                    {
+                        var binding = boundColumn.Binding as Binding;
+
+                        if (binding != null)
+                        {
+                            string bindingPath = binding.Path.Path;
+                            Collection.GroupDescriptions.Add(new PropertyGroupDescription(bindingPath));
+                        }
+                    }
+                }
+            }
 
             Collection.Filter += Filter;
             SetBinding(this, ItemsSourceProperty, this, nameof(Collection));
 
         }
+
         private void ItemsSource_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             
