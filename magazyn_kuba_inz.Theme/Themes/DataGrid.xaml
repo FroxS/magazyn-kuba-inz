@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:attat="clr-namespace:Warehouse.Theme.AttachedProperty"
                     xmlns:conv="clr-namespace:Warehouse.Theme.Conventers"
+                    xmlns:controls="clr-namespace:Warehouse.Theme.Controls"
                     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
 
@@ -38,6 +39,54 @@
     <Style x:Key="gridRemoveButton" TargetType="{x:Type Button}" BasedOn="{StaticResource gridEditButton}">
         <Setter Property="Background" Value="{DynamicResource WrongColorBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource WrongColorBrush}"/>
+    </Style>
+
+    <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupItem}">
+                    <Expander x:Name="expander"
+                            IsExpanded="True"
+                            Background="{DynamicResource ButtonBackgroundColorBrush}"
+                            Foreground="{DynamicResource FontColorBrush}"
+                            BorderBrush="{DynamicResource BorderColorBrush}"
+                            BorderThickness="1.75"
+                            Margin="0,5"
+                                  >
+                        <Expander.Header>
+                            <TextBlock Text="{Binding Name}"/>
+                        </Expander.Header>
+                        <ItemsPresenter/>
+                    </Expander>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type controls:MyDataGrid}" >
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="Margin" Value="0 10 0 0"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="ColumnWidth" Value="*"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="RowStyle" Value="{DynamicResource DataGridRowStyle1}"/>
+        <Setter Property="CellStyle" Value="{DynamicResource DataGridCellStyle1}"/>
+        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridColumnHeaderStyle1}"/>
+        <Setter Property="Template" Value="{DynamicResource DataGridTemplate1}"/>
     </Style>
 
     <Style TargetType="{x:Type DataGrid}" >
@@ -238,7 +287,9 @@
                         </theme:DataGridHeaderBorder>
                         <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}" />
                         <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+                        
                     </Grid>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -246,7 +297,7 @@
 
     <ControlTemplate x:Key="DataGridTemplate1" TargetType="{x:Type DataGrid}">
         <Border Background="{TemplateBinding Background}" 
-                BorderBrush="{DynamicResource Bor}" 
+                BorderBrush="{DynamicResource BorderColorBrush}" 
                 BorderThickness="1" 
                 Padding="{TemplateBinding Padding}" 
                 SnapsToDevicePixels="True">
@@ -285,8 +336,11 @@
                     </ControlTemplate>
                 </ScrollViewer.Template>
                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                
             </ScrollViewer>
+            
         </Border>
+        
     </ControlTemplate>
 
 </ResourceDictionary>

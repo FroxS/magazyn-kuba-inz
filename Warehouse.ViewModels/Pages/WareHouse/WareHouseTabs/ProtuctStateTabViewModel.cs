@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Warehouse.Models.Enums;
 using Warehouse.Core.Interface;
+using Microsoft.VisualBasic;
 
 namespace Warehouse.ViewModel.Pages
 {
@@ -12,16 +13,17 @@ namespace Warehouse.ViewModel.Pages
     {
         #region Private properties
 
-        private readonly IWareHouseService _service;
-        private readonly IItemStateService _stateService;
-        private readonly IApp _app;
-        private readonly ItemState _state;
-        private ObservableCollection<ItemState> _statusesToMove;
-        private ObservableCollection<StorageItem> _items;
-        private StorageItem _selectedItem;
-        public bool _canMove = true;
-        public bool _canAddNew = true;
-        public bool _canChangeCount = true;
+        protected IWareHouseService _service => _app.GetService<IWareHouseService>();
+        protected IItemStateService _stateService => _app.GetService<IItemStateService>();
+        protected readonly IApp _app;
+        protected readonly ItemState _state;
+        protected ObservableCollection<ItemState> _statusesToMove;
+        protected ObservableCollection<StorageItem> _items;
+        protected StorageItem _selectedItem;
+        protected bool _canMove = true;
+        protected bool _canAddNew = true;
+        protected bool _canChangeCount = true;
+        protected string? _searchString;
 
         #endregion
 
@@ -30,13 +32,13 @@ namespace Warehouse.ViewModel.Pages
         public ObservableCollection<StorageItem> Items
         {
             get => _items;
-            private set { SetProperty(ref _items, value); }
+            protected set { SetProperty(ref _items, value); }
         }
 
         public ObservableCollection<ItemState> StatusesToMove
         {
             get => _statusesToMove;
-            private set { SetProperty(ref _statusesToMove, value); }
+            protected set { SetProperty(ref _statusesToMove, value); }
         }
 
         public StorageItem SelectedItem
@@ -57,15 +59,21 @@ namespace Warehouse.ViewModel.Pages
             set { SetProperty(ref _canAddNew, value); }
         }
 
+        public string? SearchString
+        {
+            get => _searchString;
+            set { SetProperty(ref _searchString, value); }
+        }
+
         #endregion
 
         #region Commands
 
-        public ICommand MoveToStateCommand { get; private set; }
+        public ICommand MoveToStateCommand { get; protected set; }
 
-        public ICommand AddNewCommand { get; private set; }
+        public ICommand AddNewCommand { get; protected set; }
 
-        public ICommand ChangeCountCommand { get; private set; }
+        public ICommand ChangeCountCommand { get; protected set; }
 
         #endregion
 
@@ -74,12 +82,10 @@ namespace Warehouse.ViewModel.Pages
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ProtuctStateTabViewModel(IWareHouseService service, IItemStateService stateService, IApp app, ItemState state)
+        public ProtuctStateTabViewModel(IApp app, ItemState state)
         {
-            Title = state?.Name ?? "";
-            _service = service;
-            _stateService = stateService;
             _app = app;
+            Title = state?.Name ?? "";
             StatusesToMove = new ObservableCollection<ItemState>(_stateService.GetAll());
             StatusesToMove.Remove(state);
             _state = state;
@@ -102,7 +108,7 @@ namespace Warehouse.ViewModel.Pages
 
         #region Command methods
 
-        private async Task AddItem()
+        protected virtual async Task AddItem()
         {
             if (!CanAddNew)
                 return;
@@ -114,14 +120,12 @@ namespace Warehouse.ViewModel.Pages
             if (count == null)
                 return;
 
-            if(_service.Add(p.ID,_state.State, (int)count) && _service.Save())
-                _app.ShowSilentMessage($"Udało się dodać produkt", EMessageType.Ok);
-            else
-                _app.ShowSilentMessage($"Nie udało sie dodac produktu", EMessageType.Error);
+            if(!_service.Add(p.ID,_state.State, (int)count) && _service.Save())
+                _app.ShowSilentMessage($"{Core.Properties.Resources.FailedToAddProduct}", EMessageType.Error);
             OnPageOpen();
         }
 
-        private void MoveToState(object[] elements)
+        protected virtual void MoveToState(object[] elements)
         {
             IEnumerable<StorageItem>? items = (elements[1] as System.Collections.IList)?.Cast<StorageItem>();
             if (!(elements[0] is EState state))

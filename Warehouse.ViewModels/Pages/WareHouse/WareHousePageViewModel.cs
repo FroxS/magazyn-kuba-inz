@@ -8,8 +8,8 @@ public class WareHousePageViewModel : BasePageViewModel
 {
     #region Private fields
 
-    protected readonly IWareHouseService _service;
-    protected readonly IItemStateService _itemStateService;
+    protected IWareHouseService _service => Application.GetService<IWareHouseService>();
+    protected IItemStateService _itemStateService => Application.GetService<IItemStateService>();
     protected ObservableCollection<ProtuctStateTabViewModel> _states;
     protected ProtuctStateTabViewModel? _selectedState;
 
@@ -37,11 +37,9 @@ public class WareHousePageViewModel : BasePageViewModel
 
     #region Constructors
 
-    public WareHousePageViewModel(IApp app, IItemStateService itemStateService, IWareHouseService service) : base(app)
+    public WareHousePageViewModel(IApp app) : base(app)
     {
         Page = Models.Page.EApplicationPage.WareHouseItems;
-        _itemStateService = itemStateService;
-        _service = service;
     }
 
     public WareHousePageViewModel() : base()
@@ -62,7 +60,7 @@ public class WareHousePageViewModel : BasePageViewModel
 
             States = new ObservableCollection<ProtuctStateTabViewModel>(_itemStateService.GetAll().OrderBy(x => x.State).Select(
                 s => 
-                new ProtuctStateTabViewModel(_service, _itemStateService, Application, s)
+                new ProtuctStateTabViewModel(Application, s)
                 ));
 
             SelectedState = States.FirstOrDefault();

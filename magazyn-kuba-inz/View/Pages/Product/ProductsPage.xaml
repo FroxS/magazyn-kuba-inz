@@ -13,7 +13,6 @@
                          CanResize="CanResizeWithGrip"
                          d:DataContext="{d:DesignInstance Type=pageVM:ProductsPageViewModel}"
                          d:DesignHeight="500" d:DesignWidth="1000">
-
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -42,6 +41,15 @@
                       CanUserDeleteRows="False"
                       SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True">
+                <DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nazwa" 
                                         Binding="{Binding Name}"
@@ -51,9 +59,9 @@
                                         Binding="{Binding Description}"
                                         Width="*"/>
                     
-                    <DataGridTextColumn Header="Grupa" 
+                    <!--<DataGridTextColumn Header="Grupa" 
                                         Binding="{Binding Group.Name}"
-                                        Width="*"/>
+                                        Width="*"/>-->
                     
                     <DataGridTextColumn Header="Dostawca" 
                                         Binding="{Binding Supplier.Name}"

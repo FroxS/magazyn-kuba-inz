@@ -2,11 +2,7 @@
 using Warehouse.Models;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows;
 using Warehouse.Core.Interface;
-using Warehouse.ViewModel.Service;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Windows.Input;
 using Warehouse.Core.Helpers;
 

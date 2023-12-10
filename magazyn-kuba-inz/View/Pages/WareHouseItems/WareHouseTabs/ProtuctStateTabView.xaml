@@ -7,18 +7,39 @@
              xmlns:vm="clr-namespace:Warehouse.ViewModel.Pages;assembly=Warehouse.ViewModels"
              xmlns:enum="clr-namespace:Warehouse.Models.Enums;assembly=Warehouse.Models"
              xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance vm:ProtuctStateTabViewModel}">
     <Grid>
-        <DataGrid IsSynchronizedWithCurrentItem="True"
-                  SelectionMode="Extended"
-                  ItemsSource="{Binding Items}"  
-                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False"
-                  CanUserDeleteRows="False"
-                  CanUserResizeColumns="True"
-                  IsReadOnly="True">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0 5 10 0" Grid.Row="0">
+            <controls:TextBoxImage Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1"
+                                   IconPath="{StaticResource Search}"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource FormTextBoxImage}"
+                                   Tag="{x:Static res:Resources.Search}"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <controls:MyDataGrid IsSynchronizedWithCurrentItem="True"
+                                 SelectionMode="Extended"
+                                 SearchText="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
+                                 ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                                 AutoGenerateColumns="False"
+                                 CanUserDeleteRows="False"
+                                 CanUserResizeColumns="True"
+                                 IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa produktu"
                                     MinWidth="200"
@@ -33,7 +54,9 @@
                             <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}" >
                                 <Setter Property="Header" Value="{Binding Name}"/>
                                 <Setter Property="Command" Value="{Binding DataContext.MoveToStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-                                <!--<Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>-->
+                                
+            <Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>
+            
                                 <Setter Property="CommandParameter">
                                     <Setter.Value>
                                         <MultiBinding Converter="{conv:MulitBindingParameterConventer}">
@@ -52,6 +75,19 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             
-        </DataGrid>
+        </controls:MyDataGrid>
+        </Grid>
+
+        <!--<controls:MyDataGrid ItemsSource="{Binding Items}"  
+                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}">
+            --><!--<controls:MyDataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa produktu"
+                                    MinWidth="200"
+                                    Width="*"
+                                    Binding="{Binding Product.Name}"/>
+            </controls:MyDataGrid.Columns>--><!--
+        </controls:MyDataGrid>-->
+
+        
     </Grid>
 </UserControl>

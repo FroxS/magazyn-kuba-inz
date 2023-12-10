@@ -3,8 +3,9 @@ using Warehouse.Models;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Warehouse.Service.Interface;
 using Warehouse.Core.Interface;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -16,9 +17,9 @@ public class ProductsPageViewModel :
 {
     #region Private fields
 
-    private readonly ISupplierService _supplierService;
-    private readonly IProductGroupService _productgroupService;
-    private readonly IProductStatusService _productStatusService;
+    private ISupplierService _supplierService => Application.GetService<ISupplierService>();
+    private IProductGroupService _productgroupService => Application.GetService<IProductGroupService>();
+    private IProductStatusService _productStatusService => Application.GetService<IProductStatusService>();
 
     #endregion
 
@@ -31,16 +32,10 @@ public class ProductsPageViewModel :
     /// <param name="service">Service of product group item</param>
     public ProductsPageViewModel(
         IApp app, 
-        IProductService service, 
-        ISupplierService supplierService,
-        IProductGroupService productgroupService,
-        IProductStatusService productStatusService) 
+        IProductService service) 
         : base(app, service)    
     {
         Page = Models.Page.EApplicationPage.Products;
-        _supplierService = supplierService;
-        _productgroupService = productgroupService;
-        _productStatusService = productStatusService;
     }
 
     #endregion
@@ -53,6 +48,14 @@ public class ProductsPageViewModel :
             return true;
         else
             return false;
+    }
+
+    protected override IEnumerable<GroupDescription>? GroupBy()
+    {
+        List<GroupDescription> groups = new List<GroupDescription>();
+        groups.Add(new PropertyGroupDescription($"{nameof(Product.Group)}.{nameof(Product.Group.Name)}"));
+        groups.Add(new PropertyGroupDescription($"{nameof(Product.Supplier)}.{nameof(Product.Supplier.Name)}"));
+        return groups;
     }
 
     #endregion

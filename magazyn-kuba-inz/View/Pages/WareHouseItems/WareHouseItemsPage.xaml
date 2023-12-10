@@ -30,9 +30,8 @@
 
             <TabControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type tab:ITab}">
-                    <TextBlock  >
+                    <TextBlock>
                             <Run Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-
                     </TextBlock>
                 </DataTemplate>
             </TabControl.ItemTemplate>

@@ -34,6 +34,12 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
                     if(Collection != null)
                         Collection.Filter -= FilterCollection;
                     Collection = CollectionViewSource.GetDefaultView(value);
+                    IEnumerable<GroupDescription> groupsBy = GroupBy();
+                    if(groupsBy != null)
+                    {
+                        foreach (GroupDescription groupBy in groupsBy)
+                            Collection.GroupDescriptions.Add(groupBy);
+                    }
                     Collection.Filter += FilterCollection;
                 }
             );
@@ -96,7 +102,7 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
 
     #region Private methods
 
-    private bool FilterCollection(object value)
+    protected bool FilterCollection(object value)
     {
         if (value is Item item && item != null && !string.IsNullOrEmpty(SearchString))
             return Filter(item,SearchString);
@@ -131,6 +137,11 @@ public class BasePageSearchItemsViewModel<Item> : BasePageViewModel
 
     protected virtual void OnItemChanged(Item? oldItem, Item? newItem) { }
     
+    protected virtual IEnumerable<GroupDescription>? GroupBy()
+    {
+        return null;
+    }
+
     #endregion
 
 }

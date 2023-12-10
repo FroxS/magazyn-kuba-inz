@@ -547,6 +547,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FailedToAddProduct.
+        /// </summary>
+        public static string FailedToAddProduct {
+            get {
+                return ResourceManager.GetString("FailedToAddProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to generate way.
         /// </summary>
         public static string FailedToGenerateWay {

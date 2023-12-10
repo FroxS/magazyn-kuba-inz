@@ -18,13 +18,11 @@ namespace Warehouse;
 public class WareHouseApp : ObservableObject, IApp
 {
     #region Private Properties
-
     private INavigation nav => GetService<INavigation>();
 
     private readonly System.Windows.Application app;
 
     private static IServiceProvider _services;
-
     private IUserService userService => _services.GetRequiredService<IUserService>();
 
     private bool isTaskRunning = false;
