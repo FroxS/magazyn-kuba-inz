@@ -1,6 +1,7 @@
 ﻿using Warehouse.ViewModel.Service;
 using System.Collections.ObjectModel;
 using Warehouse.Core.Interface;
+using Warehouse.Models;
 
 namespace Warehouse.ViewModel.Pages;
 
@@ -58,11 +59,19 @@ public class WareHousePageViewModel : BasePageViewModel
             CanChangePage = false;
             Application.IsTaskRunning = true;
 
-            States = new ObservableCollection<ProtuctStateTabViewModel>(_itemStateService.GetAll().OrderBy(x => x.State).Select(
-                s => 
-                new ProtuctStateTabViewModel(Application, s)
-                ));
+            States = new ObservableCollection<ProtuctStateTabViewModel>();
 
+			foreach (ItemState state in _itemStateService.GetAll().OrderBy(x => x.State))
+            {
+                if(state.State == Models.Enums.EState.Reserved)
+                {
+					States.Add(new ProtuctStateWithOrderTabViewModel(Application, state));
+				}
+                else
+                {
+					States.Add(new ProtuctStateTabViewModel(Application, state));
+				}
+			}
             SelectedState = States.FirstOrDefault();
             CanChangePage = true;
         }

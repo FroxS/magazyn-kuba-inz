@@ -498,6 +498,9 @@
   <data name="StorageUnits" xml:space="preserve">
     <value>Storage units</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Style" xml:space="preserve">
     <value>Style</value>
   </data>

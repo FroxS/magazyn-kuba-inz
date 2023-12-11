@@ -10,6 +10,8 @@
         <ResourceDictionary Source="Themes/ModalControl.xaml" />
         <ResourceDictionary Source="Themes/Scroll.xaml" />
         <ResourceDictionary Source="Themes/DataGrid.xaml" />
+        <ResourceDictionary Source="Themes/MyDataGrid.xaml" />
+        
         <ResourceDictionary Source="Themes/BaseControls.xaml"/>
         <ResourceDictionary Source="Themes/FormsControls.xaml"/>
         <ResourceDictionary Source="Themes/TabStyle.xaml"/>

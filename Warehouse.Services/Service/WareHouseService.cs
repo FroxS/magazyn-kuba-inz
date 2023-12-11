@@ -141,7 +141,14 @@ internal class WareHouseService : IWareHouseService
             .ToList();
     }
 
-    private string CheckMovingItem(StorageItem item, EState targetStateType)
+	public List<StorageItem> GetProductsByStateWithOrders(EState state)
+	{
+		return _storageItemRepo.GetAll(x => x.Include(i => i.State).Include(i => i.Product).Include(i => i.OrderItem).ThenInclude(i => i.Order))
+			.Where(x => (x.State?.State & state) == x.State?.State)
+			.ToList();
+	}
+
+	private string CheckMovingItem(StorageItem item, EState targetStateType)
     {
         ItemState targetState = _stateRepo.GetByState(targetStateType);
         if (targetStateType >= EState.Available && targetStateType < EState.TransportReady)

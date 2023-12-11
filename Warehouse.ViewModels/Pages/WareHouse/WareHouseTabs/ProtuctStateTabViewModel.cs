@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Warehouse.Models.Enums;
 using Warehouse.Core.Interface;
-using Microsoft.VisualBasic;
 
 namespace Warehouse.ViewModel.Pages
 {
@@ -24,12 +23,13 @@ namespace Warehouse.ViewModel.Pages
         protected bool _canAddNew = true;
         protected bool _canChangeCount = true;
         protected string? _searchString;
+        protected ObservableCollection<string> _defaultGroupBy = new ObservableCollection<string>();
 
-        #endregion
+		#endregion
 
-        #region Public properties
+		#region Public properties
 
-        public ObservableCollection<StorageItem> Items
+		public ObservableCollection<StorageItem> Items
         {
             get => _items;
             protected set { SetProperty(ref _items, value); }
@@ -65,11 +65,17 @@ namespace Warehouse.ViewModel.Pages
             set { SetProperty(ref _searchString, value); }
         }
 
-        #endregion
+		public ObservableCollection<string> DefaultGroupBy
+		{
+			get => _defaultGroupBy;
+			set { SetProperty(ref _defaultGroupBy, value); }
+		}
 
-        #region Commands
+		#endregion
 
-        public ICommand MoveToStateCommand { get; protected set; }
+		#region Commands
+
+		public ICommand MoveToStateCommand { get; protected set; }
 
         public ICommand AddNewCommand { get; protected set; }
 
@@ -169,8 +175,10 @@ namespace Warehouse.ViewModel.Pages
             if (_state == null)
                 throw new ArgumentException("State is null");
 
-            Items = new ObservableCollection<StorageItem>(_service.GetProductsByState(_state.State));
-            int count = Items.Count();
+            if(_service != null)
+                Items = new ObservableCollection<StorageItem>(_service.GetProductsByState(_state.State));
+
+			int count = Items?.Count() ?? 0;
             Title = $"{_state.Name} ({count})";
             SelectedItem = null;
         }

@@ -34,6 +34,7 @@
             <controls:MyDataGrid SearchText="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
                                  FilterItems="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                                 GroupBy="{Binding DefaultGroupBy, UpdateSourceTrigger=PropertyChanged}"
                                  AutoGenerateColumns="False"
                                  CanUserDeleteRows="False"
                                  CanUserResizeColumns="True"

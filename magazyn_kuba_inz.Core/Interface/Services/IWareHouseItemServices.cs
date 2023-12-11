@@ -58,6 +58,7 @@ public interface IWareHouseService
     List<StorageItem>? GetItemsByPackage(Guid id);
     void Reload();
     bool AddFromSupplierOrder(Order order);
+    List<StorageItem> GetProductsByStateWithOrders(EState state);
 }
 
 public interface IImageService : IBaseService<WareHouseImage> { }
