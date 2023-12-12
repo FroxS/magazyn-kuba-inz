@@ -63,7 +63,7 @@ public class WareHousePageViewModel : BasePageViewModel
 
 			foreach (ItemState state in _itemStateService.GetAll().OrderBy(x => x.State))
             {
-                if(state.State == Models.Enums.EState.Reserved)
+                if(state.State >= Models.Enums.EState.Reserved)
                 {
 					States.Add(new ProtuctStateWithOrderTabViewModel(Application, state));
 				}

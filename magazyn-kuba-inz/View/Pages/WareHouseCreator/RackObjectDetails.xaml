@@ -218,7 +218,7 @@
             </Grid>
 
             <Grid Grid.Row="8">
-                <DataGrid ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
+                <DataGrid ItemsSource="{Binding RackItems, UpdateSourceTrigger=PropertyChanged}"
                           SelectionMode="Extended"
                           AutoGenerateColumns="False"
                           CanUserDeleteRows="False"

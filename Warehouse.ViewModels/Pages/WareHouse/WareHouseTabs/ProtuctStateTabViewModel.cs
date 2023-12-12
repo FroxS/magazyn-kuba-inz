@@ -133,37 +133,45 @@ namespace Warehouse.ViewModel.Pages
 
         protected virtual void MoveToState(object[] elements)
         {
-            IEnumerable<StorageItem>? items = (elements[1] as System.Collections.IList)?.Cast<StorageItem>();
-            if (!(elements[0] is EState state))
-                return;
-
-            if (items == null)
-                return;
-            EState actualState = _state.State;
-
-            if (actualState == state)
-                return;
-
-            ItemState targetState = _stateService.GetByState(state);
-
-            if (targetState == null)
-                return;
-
-            string? message = null;
-
-            foreach(var item in items)
+            try
             {
-                message = _service.MoveProductToState(targetState.State, item);
-                if (message != null)
-                    break;
-                item.State = targetState;
-                item.ID_State = targetState.ID;
+				IEnumerable<StorageItem>? items = (elements[1] as System.Collections.IList)?.Cast<StorageItem>();
+				if (!(elements[0] is EState state))
+					return;
+
+				if (items == null)
+					return;
+				EState actualState = _state.State;
+
+				if (actualState == state)
+					return;
+
+				ItemState targetState = _stateService.GetByState(state);
+
+				if (targetState == null)
+					return;
+
+				string? message = null;
+
+				foreach (var item in items)
+				{
+					message = _service.MoveProductToState(targetState.State, item);
+					if (message != null)
+						break;
+					item.State = targetState;
+					item.ID_State = targetState.ID;
+				}
+				if (message == null)
+					_service.Save();
+				else
+					_app.ShowSilentMessage(message);
+				OnPageOpen();
+			}
+			catch (Exception ex)
+            {
+                _app.CatchExeption(ex);
             }
-            if (message == null)
-                _service.Save();
-            else
-                _app.ShowSilentMessage(message);
-            OnPageOpen();
+            
         }
 
         #endregion

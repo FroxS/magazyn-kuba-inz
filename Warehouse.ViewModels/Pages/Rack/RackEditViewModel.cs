@@ -165,7 +165,9 @@ public class RackEditViewModel : BasePageViewModel, ISingleCardPage
         _wareHouseItemService = Application.GetService<IWareHouseService>();
         _storageItemPackageService = Application.GetService<IStorageItemPackageService>();
         _rackService = Application.GetService<IRackService>();
-        ReloadRack();
+		AvailableItems?.Clear();
+        ItemsInPackage?.Clear();
+		ReloadRack();
         LoadItems();
     }
 

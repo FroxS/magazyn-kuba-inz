@@ -97,7 +97,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
             return flag;
         };
 
-        EditCommand = new RelayCommand(() => EditRack(), () => SelectedObject is RackObject);
+		EditRackCommand = new RelayCommand(() => EditRack(), () => SelectedObject is RackObject);
     }
 
     private void EditRack()

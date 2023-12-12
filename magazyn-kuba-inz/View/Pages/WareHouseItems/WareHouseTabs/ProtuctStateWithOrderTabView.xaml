@@ -27,7 +27,6 @@
                                    HorizontalAlignment="Left"
                                    Style="{StaticResource FormTextBoxImage}"
                                    Tag="{x:Static res:Resources.Search}"/>
-
         </Grid>
 
         <Grid Grid.Row="1">
@@ -50,7 +49,7 @@
                                         <ControlTemplate TargetType="{x:Type GroupItem}">
                                             <Expander x:Name="expander"
                                                       HorizontalAlignment="Stretch"
-                                                      IsExpanded="True"
+                                                      IsExpanded="False"
                                                       Background="{DynamicResource ButtonBackgroundColorBrush}"
                                                       Foreground="{DynamicResource FontColorBrush}"
                                                       BorderBrush="{DynamicResource BorderColorBrush}"
@@ -65,9 +64,7 @@
                                                             <StackPanel Orientation="Horizontal">
                                                                 <CheckBox Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" />
                                                                 <TextBlock >
-<Run Text="["/>
-<Run Text="{Binding Path=ItemCount, Mode=OneWay}"/>
-<Run Text="]"/>
+                                                                    <Run Text="  ["/><Run Text="{Binding Path=ItemCount, Mode=OneWay}"/> <Run Text="]  "/>
                                                                 </TextBlock>
                                                                 <TextBlock Text="{Binding Name}" />
                                                             </StackPanel>
@@ -101,8 +98,6 @@
                                         Width="*"
                                         Binding="{ Binding OrderItem.Order.Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-
-
                 </controls:MyDataGrid.Columns>
 
                 <DataGrid.ContextMenu>
@@ -112,9 +107,7 @@
                                 <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}" >
                                     <Setter Property="Header" Value="{Binding Name}"/>
                                     <Setter Property="Command" Value="{Binding DataContext.MoveToStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"/>
-
                                     <Setter Property="CommandParameter" Value="{Binding State, UpdateSourceTrigger=PropertyChanged}"/>
-
                                     <Setter Property="CommandParameter">
                                         <Setter.Value>
                                             <MultiBinding Converter="{conv:MulitBindingParameterConventer}">
@@ -126,13 +119,8 @@
                                 </Style>
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
-
-                        <MenuItem Header="{x:Static res:Resources.Add}" IsEnabled="{Binding CanAddNew}"
-                              Command="{Binding AddNewCommand}"
-                              />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
-
             </controls:MyDataGrid>
         </Grid>
     </Grid>
