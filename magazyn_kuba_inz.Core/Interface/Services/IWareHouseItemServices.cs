@@ -11,7 +11,7 @@ namespace Warehouse.Core.Interface;
 public interface IUserService : IBaseService<User>
 {
     User GetUser(RegisterResource resource);
-    Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
+    Task<User> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken));
     Task<List<User>> GetUsers(CancellationToken cancellationToken = default);
     bool ChangePassword(ChangePassworldResource resource);

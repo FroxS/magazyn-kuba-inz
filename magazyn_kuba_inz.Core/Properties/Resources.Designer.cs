@@ -1321,6 +1321,16 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WareHouseImage {
+            get {
+                object obj = ResourceManager.GetObject("WareHouseImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warehouse item.
         /// </summary>
         public static string WarehouseItem {

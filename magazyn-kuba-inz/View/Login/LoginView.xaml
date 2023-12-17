@@ -9,6 +9,7 @@
         xmlns:attat="clr-namespace:Warehouse.AttachedProperty"
         xmlns:controls="clr-namespace:Warehouse.Controls"
         xmlns:controls2="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+        xmlns:conv="clr-namespace:Warehouse.Conventers"
         d:DataContext="{x:Static vm:DesignLoginViewModel.Instance}"
         mc:Ignorable="d"
         Title="Login"
@@ -22,7 +23,7 @@
         Background="Transparent">
     <Border >
         <Border.Background>
-            <ImageBrush ImageSource="/Images/warehoudebg.png"
+            <ImageBrush ImageSource="{Binding Source={x:Static res:Resources.WareHouseImage}, Converter={conv:BitmapToImageSourceConventer}}"
                         Stretch="UniformToFill"/>
         </Border.Background>
         <Border Opacity="1">

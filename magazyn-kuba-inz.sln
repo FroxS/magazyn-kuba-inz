@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Service", "Wareho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.Dialog", "Warehouse.Dialog\Warehouse.Dialog.csproj", "{F92E54F6-3538-47A3-A5D4-5C5E07085DD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorytmDijkstry", "AlgorytmDijkstry\AlgorytmDijkstry.csproj", "{DD88C676-84E1-4916-8DBD-25CF95D66694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorytmDijkstry", "AlgorytmDijkstry\AlgorytmDijkstry.csproj", "{DD88C676-84E1-4916-8DBD-25CF95D66694}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.Creator", "Warehouse.Creator\Warehouse.Creator.csproj", "{A56B2527-66B8-4033-B121-B9C957F07AFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{DD88C676-84E1-4916-8DBD-25CF95D66694}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD88C676-84E1-4916-8DBD-25CF95D66694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD88C676-84E1-4916-8DBD-25CF95D66694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56B2527-66B8-4033-B121-B9C957F07AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56B2527-66B8-4033-B121-B9C957F07AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56B2527-66B8-4033-B121-B9C957F07AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56B2527-66B8-4033-B121-B9C957F07AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

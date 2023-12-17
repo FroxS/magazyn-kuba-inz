@@ -16,10 +16,6 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
 
     #endregion
 
-    #region Public properties
-
-    #endregion
-
     #region Constructors
 
     /// <summary>
@@ -56,7 +52,7 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
         if (!PassValid(resource.Password))
             throw new DataException("Invalid passworld", resource, nameof(resource.Password));
 
-        var user = new User
+		User user = new User
         {
             ID = Guid.NewGuid(),
             Login = resource.Login,
@@ -71,13 +67,21 @@ internal class UserService :  BaseServiceWithRepository<IUserRepository, User>, 
 
     }
 
-    public async Task<UserResource> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task<User> Register(RegisterResource resource, CancellationToken cancellationToken = default(CancellationToken))
     {
         User user = GetUser(resource);
 
-        await _repozitory.AddAsync(user, cancellationToken);
+        if(GetAll().Count == 0) // First User shoud to be admin
+        {
+            user.Active = true;
+            user.Type = Models.Enums.EUserType.Admin;
+        }    
 
-        return new UserResource(user.ID, user.Login, user.Email);
+        user = await _repozitory.AddAsync(user, cancellationToken);
+        if (user == null)
+            throw new RegisterExeption("User not created");
+
+        return user;
     }
 
     public async Task<User> Login(LoginResource resource, CancellationToken cancellationToken = default(CancellationToken))

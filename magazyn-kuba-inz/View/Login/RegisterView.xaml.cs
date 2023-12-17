@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Warehouse.Core.Interface;
+using Warehouse.Models.Interfaces;
 using Warehouse.ViewModel.Login;
 
 namespace Warehouse.View.Login
@@ -10,8 +12,13 @@ namespace Warehouse.View.Login
     /// </summary>
     public partial class RegisterView : Window, IRegisterWindow
     {
-        public RegisterView(RegisterViewModel vm)
+        private RegisterViewModel vm => (DataContext as RegisterViewModel);
+		public bool ExitOnSuccesfulRegister { get => vm.ExitOnSuccesfulRegister; set => vm.ExitOnSuccesfulRegister = value; }
+		public bool LoginOnSuccefulRegister { get => vm.LoginOnSuccefulRegister; set => vm.LoginOnSuccefulRegister = value; }
+
+		public RegisterView(RegisterViewModel vm)
         {
+            vm.Window = this;
             DataContext = vm;
             InitializeComponent();
         }
@@ -33,5 +40,10 @@ namespace Warehouse.View.Login
             if (this.DataContext != null)
             { ((dynamic)this.DataContext).SecurePasswordConfirm = ((PasswordBox)sender).SecurePassword; }
         }
-    }
+
+		public IUser? GetUser()
+		{
+            return vm?.User;
+		}
+	}
 }

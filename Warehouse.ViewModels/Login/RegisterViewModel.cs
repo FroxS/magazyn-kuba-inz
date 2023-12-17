@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Input;
 using Warehouse.Core.Interface;
+using Warehouse.Models;
 
 namespace Warehouse.ViewModel.Login;
 
@@ -29,7 +30,7 @@ public class RegisterViewModel : BaseViewModel
 
     #region Public Properties
 
-    public IUser? User { get; private set; }
+    public User? User { get; private set; }
 
     [Required(ErrorMessageResourceName = "LoginIsRequired", ErrorMessageResourceType = typeof(Core.Properties.Resources))]
     [MinLength(5, ErrorMessage = "Name is to short (5)")]
@@ -51,11 +52,16 @@ public class RegisterViewModel : BaseViewModel
     [MaxLength(150, ErrorMessage = "Minimum length is 150")]
     public string? PasswordConfirm { get => passwordConfirm; set { passwordConfirm = value; OnPropertyChanged(nameof(PasswordConfirm)); } }
 
-    #endregion
+    public bool ExitOnSuccesfulRegister { get; set; } = false;
+	public bool LoginOnSuccefulRegister { get; set; } = false;
 
-    #region Public Commands
+	public IWindow Window { get; set; }
 
-    public ICommand MinimizeCommand { get; private set; }
+	#endregion
+
+	#region Public Commands
+
+	public ICommand MinimizeCommand { get; private set; }
     public ICommand ExitCommand { get; private set; }
     public ICommand RegisterCommand { get; private set; }
 
@@ -66,8 +72,8 @@ public class RegisterViewModel : BaseViewModel
     public RegisterViewModel(IApp app) : base()
     {
         RegisterCommand = new AsyncRelayCommand<IWindow>(register);
-        MinimizeCommand = new RelayCommand<IWindow>(minimize);
-        ExitCommand = new RelayCommand<IWindow>(exit);
+        MinimizeCommand = new RelayCommand(minimize);
+        ExitCommand = new RelayCommand(() => exit(false));
         this.app = app;
     }
 
@@ -80,6 +86,7 @@ public class RegisterViewModel : BaseViewModel
     {
         _CanValidate = true;
         NotifyPropChanged(nameof(Login), nameof(Email), nameof(Password), nameof(PasswordConfirm));
+        User = null;
         if ((Password != PasswordConfirm)
             || string.IsNullOrEmpty(Password)
             || string.IsNullOrEmpty(Login)
@@ -90,11 +97,25 @@ public class RegisterViewModel : BaseViewModel
         try
         {
             IsTaskRunning = true;
-            await app.Register(new RegisterResource(Login, Email, Password, Login));
-            
+            User = (User)await app.Register(new RegisterResource(Login, Email, Password, Login));
+
+            if (LoginOnSuccefulRegister)
+            {
+                IUserService userService = app.GetService<IUserService>();
+				User.Active = true;
+				userService.Update(User);
+				userService.Save();
+				await app.LoginAsync(new LoginResource(Login, Password));
+			}
+                
+
 			IsTaskRunning = false;
+
+            if (ExitOnSuccesfulRegister)
+                exit(true);
 			app.GetDialogService().ShowAlert(Core.Properties.Resources.SuccessfulCreatedUser);
-        }
+			
+		}
         catch (DataException ex)
         {
 			IsTaskRunning = false;
@@ -108,14 +129,14 @@ public class RegisterViewModel : BaseViewModel
         finally { IsTaskRunning = false; }
     }
 
-    private void minimize(IWindow window)
+    private void minimize()
     {
-        window.WindowState = WindowState.Minimized;
+        Window.WindowState = WindowState.Minimized;
     }
 
-    private void exit(IWindow obj)
+    private void exit(bool flag = false)
     {
-        obj.DialogResult = false;
+		Window.DialogResult = flag;
     }
 
     #endregion

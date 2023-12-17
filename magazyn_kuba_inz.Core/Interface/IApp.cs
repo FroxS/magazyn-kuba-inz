@@ -28,8 +28,8 @@ public interface IApp
     IDialogService GetDialogService();
     IInnerDialogService GetInnerDialogService();
     Task<IUser> LoginAsync(LoginResource user);
-    Task Register(RegisterResource user);
-    void Exit();
+    Task<IUser> Register(RegisterResource user);
+	void Exit();
     Dispatcher GetDispather();
     S GetService<S, T>() where T : BaseEntity where S : IBaseService<T>;
 

@@ -18,18 +18,18 @@ namespace Warehouse;
 public class WareHouseApp : ObservableObject, IApp
 {
     #region Private Properties
-    private INavigation nav => GetService<INavigation>();
-
-    private readonly System.Windows.Application app;
-
-    private static IServiceProvider _services;
-    private IUserService userService => _services.GetRequiredService<IUserService>();
-
-    private bool isTaskRunning = false;
-
-    private DbContext _database;
-
-    private IDbContextFactory<WarehouseDbContext> _databaseFactory;
+    protected INavigation nav => GetService<INavigation>();
+    
+    protected readonly System.Windows.Application app;
+    
+    protected static IServiceProvider _services;
+    protected IUserService userService => _services.GetRequiredService<IUserService>();
+    
+    protected bool isTaskRunning = false;
+    
+    protected DbContext _database;
+    
+    protected IDbContextFactory<WarehouseDbContext> _databaseFactory;
 
     public ISplashScreen _splashScreen;
 
@@ -37,7 +37,7 @@ public class WareHouseApp : ObservableObject, IApp
 
     #region Public Properties
 
-    public User? User { get; private set; }
+    public User? User { get; protected set; }
 
     public bool IsAdmin => User?.Type == EUserType.Admin;
 
@@ -49,13 +49,13 @@ public class WareHouseApp : ObservableObject, IApp
 
     public static IApp App => _services.GetRequiredService<IApp>();
 
-    public Window? MainWindow { get; private set; }
+    public Window? MainWindow { get; protected set; }
 
     public virtual bool IsTaskRunning { get => isTaskRunning; set { isTaskRunning = value; OnPropertyChanged(nameof(IsTaskRunning)); } }
 
     public DbContext Database => _database;
 
-    public bool CanEditData { get; private set; }
+    public bool CanEditData { get; protected set; }
 
     #endregion
 
@@ -84,7 +84,7 @@ public class WareHouseApp : ObservableObject, IApp
 
     public Dispatcher GetDispather() => _services.GetRequiredService<Dispatcher>();
 
-    public async Task Run()
+    public virtual async Task Run()
     {
         SetTheme(GetUserSettings()?.ColorScheme ?? ColorScheme.Dark);
         bool? flag = false;
@@ -94,7 +94,6 @@ public class WareHouseApp : ObservableObject, IApp
             flag = true;
             await LoginAsync(new LoginResource("admin", "admin"));
         }
-
 
         if (!IsUserLogin())
         {
@@ -131,7 +130,7 @@ public class WareHouseApp : ObservableObject, IApp
         }
     }
 
-    public void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning)
+	public void ShowSilentMessage(string message, EMessageType type = EMessageType.Warning)
     {
         _services.GetRequiredService<IMessageService>().AddMessage(message, type);
     }
@@ -180,7 +179,7 @@ public class WareHouseApp : ObservableObject, IApp
         return User;
     }
 
-    public async Task Register(RegisterResource user)
+    public async Task<IUser> Register(RegisterResource user)
     {
         if (user == null)
             throw new ArgumentException(Core.Properties.Resources.UserIsEmpty);
@@ -191,8 +190,9 @@ public class WareHouseApp : ObservableObject, IApp
         if (!UserHelper.IsValidEmail(user?.Email ?? ""))
             throw new DataException(Core.Properties.Resources.EmailisIncorrect, user, nameof(User.Email));
 
-        await userService.Register(user);
+        User userCreated = await userService.Register(user);
         await userService.SaveAsync();
+        return userCreated;
     }
 
     public void CatchExeption(Exception ex, bool showMessage = true)
@@ -221,7 +221,7 @@ public class WareHouseApp : ObservableObject, IApp
 
     }
 
-    private void CloseSplashForm()
+    protected void CloseSplashForm()
     {
         if (_splashScreen != null)
         {
