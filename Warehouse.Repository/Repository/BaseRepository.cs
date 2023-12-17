@@ -184,6 +184,7 @@ internal abstract class BaseRepository<T, C> : IBaseRepository<T> where T : Base
     public async virtual Task<T> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
     {
         var ent = _context.Set<T>();
+        entity.CreatedAt = entity.Modified = DateTime.Now;
         var res = await ent.AddAsync(entity, cancellationToken);
 
         return res.Entity;

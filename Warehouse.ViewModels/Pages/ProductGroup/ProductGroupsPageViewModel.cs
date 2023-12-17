@@ -108,7 +108,11 @@ public class ProductGroupsPageViewModel :
 
                 var newvm =  await _service.AddAsync(o);
                 await _service.SaveAsync();
-                Application.GetDispather().Invoke(() => { Items.Add(o); });
+                Application.GetDispather().Invoke(() => {
+                    if (Items == null)
+                        Items = new ObservableCollection<ProductGroup>();
+                    Items.Add(o); 
+                });
                 SelectedItem = o;
                 OnPropertyChanged(nameof(SelectedItemViewModel));
                 Application.ShowSilentMessage($"Udało się dodać grupę {_selectedItemViewModel.Name}", EMessageType.Ok);

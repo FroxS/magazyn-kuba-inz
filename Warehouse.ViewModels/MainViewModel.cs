@@ -12,33 +12,35 @@ public class MainViewModel : BaseViewModel
 {
     #region Private Properties
 
-    private INavigation _nav => _app.GetService<INavigation>();
+    protected INavigation _nav => _app.GetService<INavigation>();
 
-    private readonly IApp _app;
+    protected readonly IApp _app;
 
-    private bool flag = false;
+    protected bool flag = false;
 
     #endregion
 
     #region Public Properties
 
+    public IApp Application=> _app;
+
     #endregion
 
     #region Command
 
-    public ICommand NextPageCommand { get; private set; }
+    public ICommand NextPageCommand { get; protected set; }
 
-    public ICommand ChangeThemeCommand { get; private set; }
+    public ICommand ChangeThemeCommand { get; protected set; }
 
-    public ICommand HelpCommand { get; private set; }
+    public ICommand HelpCommand { get; protected set; }
 
-    public ICommand MinimizeCommand { get; private set; }
+    public ICommand MinimizeCommand { get; protected set; }
 
-    public ICommand MaximizeCommand { get; private set; }
+    public ICommand MaximizeCommand { get; protected set; }
 
-    public ICommand CloseCommand { get; private set; }
+    public ICommand CloseCommand { get; protected set; }
 
-    public ICommand EditUserCommand { get; private set; }
+    public ICommand EditUserCommand { get; protected set; }
 
     #endregion
 

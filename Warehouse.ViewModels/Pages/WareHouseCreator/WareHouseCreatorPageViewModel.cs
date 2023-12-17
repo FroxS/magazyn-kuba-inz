@@ -12,13 +12,13 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 {
     #region Private fields
 
-    private IHallService _hallService;
-    private IRackService _rackService;
-    private HallObject _hall;
-    private bool _canEdit = false;
-    private bool _toSave = false;
-    private IBaseObject _selectedObject;
-    private Func<RackObject,bool> _canDeleteRack;
+    protected IHallService _hallService;
+    protected IRackService _rackService;
+    protected HallObject _hall;
+    protected bool _canEdit = false;
+    protected bool _toSave = false;
+    protected IBaseObject _selectedObject;
+    protected Func<RackObject,bool> _canDeleteRack;
 
     #endregion
 
@@ -64,6 +64,7 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
         set => SetProperty(ref _toSave, value); 
     }
 
+
     #endregion
 
     #region Commands
@@ -82,15 +83,15 @@ public class WareHouseCreatorPageViewModel : BasePageViewModel
 
     #region Constructors
 
-    public WareHouseCreatorPageViewModel(IApp app, IHallService hallService, IRackService rackService) : base(app)
+    public WareHouseCreatorPageViewModel(IApp app) : base(app)
     {
         Page = Models.Page.EApplicationPage.WareHouseCreator;
-        _hallService = hallService;
-        _rackService = rackService;
+        _hallService = app.GetService<IHallService>();
+        _rackService = app.GetService<IRackService>();
         EditHallCommand = new AsyncRelayCommand(() => EditHall(), (o) => CanEdit);
         EditCommand = new RelayCommand(() => { CanEdit = true; ToSave = true; }, () => !CanEdit) ;
         CanDeleteRack = (rack) => {
-            bool flag = rackService.CanDeleteRack(rack.ID);
+            bool flag = _rackService.CanDeleteRack(rack.ID);
             if (!flag)
                 Application.ShowSilentMessage("Nie można usunąć stojaka, Prawdopodobnie posiada jakieś elementy");
 

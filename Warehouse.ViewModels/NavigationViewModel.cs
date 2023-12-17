@@ -94,7 +94,7 @@ public class NavigationViewModel : BaseViewModel, INavigation
         OpenRackCommand = new RelayCommand<Guid>((o) => OpenRack(o));
     }
 
-    public NavigationViewModel(IApp app) : base()
+    public NavigationViewModel(IApp app) : this()
     {
         _app = app;
         LoadMenu(); 

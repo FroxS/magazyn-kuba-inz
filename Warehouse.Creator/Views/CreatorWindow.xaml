@@ -1,0 +1,240 @@
+﻿<Window x:Class="Warehouse.Creator.View.CreatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Warehouse.Creator.View"
+        xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+        xmlns:controls1="clr-namespace:Warehouse.Controls;assembly=Warehouse"
+        xmlns:conv="clr-namespace:Warehouse.Conventers;assembly=Warehouse"
+        xmlns:helpers="clr-namespace:Warehouse.Core.Helpers;assembly=Warehouse.Core"
+        xmlns:service="clr-namespace:Warehouse.Creator.Service"
+        xmlns:vm="clr-namespace:Warehouse.Creator.ViewModel"
+        xmlns:innermessage="clr-namespace:Warehouse.View.InnerDialog;assembly=Warehouse"
+        xmlns:custom="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Width="1200"
+        Height="800"
+        ResizeMode="CanResizeWithGrip"
+        Background="{DynamicResource BackgroundColorBrush}"
+        Foreground="{DynamicResource FontColorBrush}"
+        d:DataContext="{d:DesignInstance Type=vm:CreatorWindowViewModel}"
+        BorderThickness="0"
+        WindowStyle="None"
+        x:Name="mainw"
+        AllowsTransparency="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls1:TopBar Application="{Binding Application, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" MainWindow="{Binding ElementName=mainw}" ShowNavigationButtons="False"/>
+
+        <Grid Grid.Row="1">
+
+            <custom:ModalControl x:Name="Modal" Panel.ZIndex="10" 
+                                 Grid.Row="1"
+                                 DataContext="{Binding InnerDialog.InnerDialogVM,
+                                                       Source={x:Static service:CreatorHelper.Instance}, 
+                                                       UpdateSourceTrigger=PropertyChanged}"
+                                 IsOpen="{Binding InnerDialog.IsInnerDialogOpen,
+                                                  Source={x:Static service:CreatorHelper.Instance}, 
+                                                  UpdateSourceTrigger=PropertyChanged}">
+                <custom:ModalControl.Background>
+                    <SolidColorBrush Color="Gray" Opacity=".5"/>
+                </custom:ModalControl.Background>
+                <innermessage:InnerDialogBaseControl/>
+            </custom:ModalControl>
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Background="{DynamicResource SecondBackgroundColorBrush}"
+                  Width="220"
+                  Grid.Column="0"
+                  x:Name="nav_pnl"
+                  HorizontalAlignment="Left">
+                    <Grid.Resources>
+                        <Style TargetType="ToolTip" x:Key="tt_style">
+                            <Setter Property="Placement" Value="Right"/>
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Margin" Value="20,0,0,0"/>
+                            <Setter Property="Background" Value="{DynamicResource SecondBackgroundColorBrush}"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="PlacementRectangle" Value="60,0,0,0"/>
+                            <Setter Property="HorizontalOffset" Value="15"/>
+                            <Setter Property="VerticalOffset" Value="6"/>
+                            <Setter Property="HasDropShadow" Value="True"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style x:Key="font_style" TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Foreground" Value="{DynamicResource FontColorBrush}"/>
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
+                        <Style x:Key="tb_style" TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="border"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}"
+                                        SnapsToDevicePixels="True">
+                                            <Path Stretch="Uniform" 
+                                          x:Name="icon"
+                                          Fill="{DynamicResource FontColorBrush}" 
+                                          Height="25"
+                                          Width="25"
+                                          Style="{StaticResource Menu}"
+                                          Margin="0,2,0,0"
+                                          VerticalAlignment="Top"/>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+
+                                            <Trigger Property="IsChecked" Value="true">
+                                                <Setter Property="Fill" TargetName="icon" Value="{DynamicResource PrimaryColorBrush}"/>
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+
+                                </Setter.Value>
+
+                            </Setter>
+
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid  Grid.Row="0">
+                        <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Margin="72,-20,0,0"
+                               Text="M E N U"
+                               Foreground="{DynamicResource FontColorBrush}"
+                               FontSize="22"
+                               Background="Transparent"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center">
+                        </TextBlock>
+                        <ToggleButton x:Name="Tg_Btn"
+                                  Grid.Column="0"
+                                  IsChecked="True"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  Margin="18,-20,0,0"
+                                  Height="30"
+                                  Width="30"
+                                  BorderThickness="0"
+                                  Background="{DynamicResource SecondBackgroundColorBrush}"
+                                  Style="{StaticResource tb_style}">
+                        </ToggleButton>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                        <controls:ItemMenuButton IconPath="{DynamicResource ConfigurationStart}"
+                                             ContainsSubMenu="False"
+                                             IsMenuSelected="False"
+                                             Header="Start"/>
+                    </ScrollViewer>
+
+                </Grid>
+
+                <Grid Grid.Column="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" 
+                      Visibility="{Binding MessageService.Message,
+                                           Source={x:Static service:CreatorHelper.Instance}, 
+                                           UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource NullToVisible}, FallbackValue=True}">
+
+                        <Border Background="{Binding MessageService.Type,
+                                             Source={x:Static service:CreatorHelper.Instance}, 
+                                             UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, Converter={StaticResource MessageTypeToColor}}"
+                            Panel.ZIndex="-2"
+                            Opacity=".7"/>
+
+                        <TextBlock VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               Padding="10,2"
+                               Text="{Binding MessageService.Message,
+                                              Source={x:Static service:CreatorHelper.Instance}, 
+                                              UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True, 
+                                              FallbackValue=Testowa wiadomość}"/>
+
+                        <controls:ButtonPath IconPath="{StaticResource Exit}"
+                                         Width="20"
+                                         Height="20"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Right"
+                                         Command="{Binding MessageService.HideMessageCommand,
+                                                           Source={x:Static service:CreatorHelper.Instance}, 
+                                                           UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1" Background="{DynamicResource SecondBackgroundColorBrush}"
+                  Margin="-30 100 50 100">
+
+                        <Grid.Resources>
+                            <DataTemplate DataType="{x:Type vm:Step1ViewModel}">
+                                <local:Step1View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step2ViewModel}">
+                                <local:Step2View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step3ViewModel}">
+                                <local:Step3View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step4ViewModel}">
+                                <local:Step4View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step5ViewModel}">
+                                <local:Step5View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step6ViewModel}">
+                                <local:Step6View/>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:Step7ViewModel}">
+                                <local:Step7View/>
+                            </DataTemplate>
+                        </Grid.Resources>
+                        <ContentControl  Margin="5" Content="{Binding Application.Navigation.Page, UpdateSourceTrigger=PropertyChanged}">
+
+                        </ContentControl>
+                    </Grid>
+
+                </Grid>
+
+                
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+    
+</Window>

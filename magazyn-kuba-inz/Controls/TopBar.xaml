@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="Warehouse.Controls.TopBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Warehouse.Controls"
+             xmlns:conv="clr-namespace:Warehouse.Conventers"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:help="clr-namespace:Warehouse.Helper"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="800">
+    <Grid Background="{DynamicResource SecondBackgroundColorBrush}">
+        <Border BorderThickness="1"  >
+            <!--Title header-->
+            <Grid Grid.Row="0" Background="{DynamicResource SecondBackgroundColorBrush}"  
+                  MouseDown="Grid_MouseDown" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+
+                </Grid.RowDefinitions>
+
+                <!--Title section-->
+                <StackPanel Grid.Column="0" 
+                            Orientation="Horizontal"
+                            Margin="10,0,0,0">
+                    <Path Data="{StaticResource WareHouse}"
+                          Width="30"
+                          Stretch="Uniform"
+                          Margin="10,0,10,0"
+                          Fill="{DynamicResource PrimaryColorBrush}"/>
+
+                    <controls:ButtonPath IconPath="{StaticResource Prev}"
+                                         Visibility="{Binding ShowNavigationButtons, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                                         Margin="2" Height="40"
+                                         Command="{Binding Application.Navigation.PrevCommand, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged}"
+                                         ToolTip="{x:Static res:Resources.NextPage}"/>
+
+                    <controls:ButtonPath IconPath="{StaticResource Next}"
+                                         Visibility="{Binding ShowNavigationButtons, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                                         Margin="2" Height="40"
+                                         Command="{Binding Application.Navigation.NextCommand, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged}"
+                                         ToolTip="{x:Static res:Resources.PrevPage}"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Visibility="{Binding ShowNavigationButtons, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            ToolTip="{x:Static res:Resources.Search}">
+
+                    <controls:TextBoxImage Width="250"
+                                           Tag="{x:Static res:Resources.Search}"
+                                           Padding="5,0"
+                                           Radius="15"/>
+                    <controls:ButtonPath IconPath="{StaticResource Search}"
+                                         Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <!--Control windows buttons-->
+                <StackPanel Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+
+                    <!--User-->
+                    <StackPanel Margin="0 5 20 0"
+                                Background="{DynamicResource SecondBackgroundColorBrush}"
+                                Orientation="Horizontal"
+                                Visibility="{Binding Application.User, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged, Converter={conv:NullVisibleConventer} }">
+                        <TextBlock Text="{Binding Application.User.Name, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged }"
+                                   VerticalAlignment="Center"
+                                   Margin="10"/>
+
+                        <Border Margin="10,5"
+                                BorderThickness="1"
+                                x:Name="border"
+                                BorderBrush="{DynamicResource BorderColorBrush}"
+                                CornerRadius="20">
+                            <Image Source="{Binding Application.User.Image, RelativeSource={RelativeSource AncestorType=local:TopBar}, UpdateSourceTrigger=PropertyChanged,
+                                                       Converter={conv:ArrayByteToImageConventer}}"
+                                                       Stretch="Uniform"/>
+                        </Border>
+
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Background" Value="{DynamicResource HoverBackgroundColorBrush}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <StackPanel.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditUserCommand}"/>
+                        </StackPanel.InputBindings>
+
+                    </StackPanel>
+
+
+                    <controls:ButtonPath IconPath="{StaticResource Theme}" 
+                                         Command="{Binding ChangeThemeCommand}"
+                                         ToolTip="Tryb ciemny"/>
+                    <controls:ButtonPath IconPath="{StaticResource Minimize}"  
+                                         Command="{Binding MinimizeCommand}"
+                                         PathPadding="5 14 5 5"
+                                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <controls:ButtonPath IconPath="{Binding WindowState,RelativeSource={RelativeSource AncestorType=Window},Converter={conv:WindowStateToIconConventer}}" 
+                                         Command="{Binding MaximizeCommand}"
+                                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <controls:ButtonPath IconPath="{StaticResource Exit }" 
+                                         Command="{Binding CloseCommand}"
+                                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+
+                    </controls:ButtonPath>
+
+                </StackPanel>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

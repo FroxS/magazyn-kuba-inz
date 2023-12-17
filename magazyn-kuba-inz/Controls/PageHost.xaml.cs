@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Warehouse.Core.Interface;
+using System;
 
 namespace Warehouse.Controls
 {
@@ -22,6 +23,15 @@ namespace Warehouse.Controls
         }
 
         /// <summary>
+        /// The current page to show in the page host
+        /// </summary>
+        public IServiceProvider ServiceProvider
+        {
+            get => (IServiceProvider)GetValue(ServiceProviderProperty);
+            set => SetValue(ServiceProviderProperty, value);
+        }
+
+        /// <summary>
         /// Registers <see cref="CurrentPage"/> as a dependency property
         /// </summary>
         public static readonly DependencyProperty CurrentPageProperty =
@@ -34,6 +44,13 @@ namespace Warehouse.Controls
                     null, 
                     CurrentPagePropertyChanged)
                 );
+
+        public static readonly DependencyProperty ServiceProviderProperty =
+            DependencyProperty.Register(
+                nameof(ServiceProvider),
+                typeof(IServiceProvider),
+                typeof(PageHost),
+                new UIPropertyMetadata(null));
 
         #endregion
 
@@ -55,7 +72,7 @@ namespace Warehouse.Controls
         /// <param name="e"></param>
         private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
-            if(value is IBasePageViewModel page)
+            if(value is IBasePageViewModel page )
             {
                 Frame? newPageFrame = (d as PageHost)?.NewPage;
                 var oldPageContent = newPageFrame.Content;
@@ -63,9 +80,14 @@ namespace Warehouse.Controls
                 // Remove current page from new page frame
                 newPageFrame.Content = null;
 
-                if (App.AppHost?.Services != null)
+
+                IServiceProvider provider = (d as PageHost)?.ServiceProvider;
+                if (provider == null)
+                    provider = App.AppHost?.Services;
+
+                if (provider != null)
                 {
-                    var pageVIew = page.ToBasePage(App.AppHost.Services);
+                    var pageVIew = page.ToBasePage(provider);
                     //(d as PageHost).CurrentPageViewModel = pageVIew.ViewModelObject as BasePageViewModel;
                     //App.AppHost.Services.GetService<INavigation>().UpdateViewModel(pageVIew.ViewModelObject as BasePageViewModel);
                     newPageFrame.Content = pageVIew;
