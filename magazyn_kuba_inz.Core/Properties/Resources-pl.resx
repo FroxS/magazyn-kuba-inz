@@ -118,451 +118,451 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Accept" xml:space="preserve">
-    <value>Accept</value>
+    <value>Akceptuj</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>Active</value>
+    <value>Aktywny</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="Added" xml:space="preserve">
-    <value>Added</value>
+    <value>Dodane</value>
   </data>
   <data name="AddPoint" xml:space="preserve">
-    <value>Add point</value>
+    <value>Dodaj punkt</value>
   </data>
   <data name="AddRack" xml:space="preserve">
-    <value>Add rack</value>
+    <value>Dodaj regał</value>
   </data>
   <data name="AddRacks" xml:space="preserve">
-    <value>Add racks</value>
+    <value>Dodaj regały</value>
   </data>
   <data name="AddToPackage" xml:space="preserve">
-    <value>Add to package</value>
+    <value>Dodaj do paczki</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>Application</value>
+    <value>Aplikacja</value>
   </data>
   <data name="ApplicationError" xml:space="preserve">
-    <value>Application error</value>
+    <value>Błąd aplikacji</value>
   </data>
   <data name="ApplicationErrorMessage" xml:space="preserve">
-    <value>An application error has occurred</value>
+    <value>Wystąpił błąd aplikacji</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Are you sure</value>
+    <value>Czy na pewno</value>
   </data>
   <data name="AreYouSureToDelete" xml:space="preserve">
-    <value>Are you sure to delete</value>
+    <value>Czy na pewno chcesz usunąć</value>
   </data>
   <data name="AskAddOrder" xml:space="preserve">
-    <value>Add an order</value>
+    <value>Dodaj zamówienie</value>
   </data>
   <data name="AskRemoveOrder" xml:space="preserve">
-    <value>Remove the order</value>
+    <value>Usuń zamówienie</value>
   </data>
   <data name="AskRemoveProduct" xml:space="preserve">
-    <value>Remove the product</value>
+    <value>Usuń produkt</value>
   </data>
   <data name="AvailableProducts" xml:space="preserve">
-    <value>Available products</value>
+    <value>Dostępne produkty</value>
   </data>
   <data name="CannotRemovedPackageProductProbablyInOffer" xml:space="preserve">
-    <value>Cannot be removed from the package, this product is probably already in offer</value>
+    <value>Nie można usunąć produktu z paczki, produkt prawdopodobnie już jest w ofercie</value>
   </data>
   <data name="ChangeFlor" xml:space="preserve">
-    <value>Change flor</value>
+    <value>Zmień piętro</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>Change password</value>
+    <value>Zmień hasło</value>
   </data>
   <data name="CheckData" xml:space="preserve">
-    <value>Check data</value>
+    <value>Sprawdź dane</value>
   </data>
   <data name="Color" xml:space="preserve">
-    <value>Color</value>
+    <value>Kolor</value>
   </data>
   <data name="CompletionDate" xml:space="preserve">
-    <value>Completion date</value>
+    <value>Data zakończenia</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Potwierdź</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>Potwierdź hasło</value>
   </data>
   <data name="ConfirmPasswordIsRequired" xml:space="preserve">
-    <value>Confirm password is required</value>
+    <value>Potwierdzenie hasła jest wymagane</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>Połączenia</value>
   </data>
   <data name="ConnectWith" xml:space="preserve">
-    <value>Connect with</value>
+    <value>Połącz z</value>
   </data>
   <data name="Coppy" xml:space="preserve">
-    <value>Coppy</value>
+    <value>Kopiuj</value>
   </data>
   <data name="Corridor" xml:space="preserve">
-    <value>Corridor</value>
+    <value>Korytarz</value>
   </data>
   <data name="Count" xml:space="preserve">
-    <value>Count</value>
+    <value>Ilość</value>
   </data>
   <data name="Created" xml:space="preserve">
-    <value>Created</value>
+    <value>Utworzone</value>
   </data>
   <data name="CreatePackage" xml:space="preserve">
-    <value>Create package</value>
+    <value>Utwórz paczkę</value>
   </data>
   <data name="Creator" xml:space="preserve">
-    <value>Creator</value>
+    <value>Kreator</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Pulpit</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Data</value>
+    <value>Dane</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Usuń</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Opis</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>Kierunek</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edytuj</value>
   </data>
   <data name="Elements" xml:space="preserve">
-    <value>Elements</value>
+    <value>Elementy</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="EmailisIncorrect" xml:space="preserve">
-    <value>Email is incorrect</value>
+    <value>Nieprawidłowy adres email</value>
   </data>
   <data name="EmailIsRequired" xml:space="preserve">
-    <value>Email is required</value>
+    <value>Adres email jest wymagany</value>
   </data>
   <data name="ErrorDuringMovingItems" xml:space="preserve">
-    <value>Error during moving items</value>
+    <value>Błąd podczas przenoszenia elementów</value>
   </data>
   <data name="ErrorLoginWindowNotExist" xml:space="preserve">
-    <value>Login window not exist</value>
+    <value>Okno logowania nie istnieje</value>
   </data>
   <data name="ErrorMainWindowNotExist" xml:space="preserve">
-    <value>Main window not exist</value>
+    <value>Główne okno nie istnieje</value>
   </data>
   <data name="ErrorMaxLength" xml:space="preserve">
-    <value>Maximum length is </value>
+    <value>Maksymalna długość to</value>
   </data>
   <data name="ErrorPasswordsAreNotTheSame" xml:space="preserve">
-    <value>The passwords are not the same</value>
+    <value>Hasła nie są identyczne</value>
   </data>
   <data name="ErrorUserIsNotActive" xml:space="preserve">
-    <value>User is not active</value>
+    <value>Użytkownik nie jest aktywny</value>
   </data>
   <data name="ErrorWhileAssigningProductsToRack" xml:space="preserve">
-    <value>Error while assigning products to the rack</value>
+    <value>Błąd podczas przypisywania produktów do regału</value>
   </data>
   <data name="ErrorWhileSaving" xml:space="preserve">
-    <value>Error while saving</value>
+    <value>Błąd podczas zapisywania</value>
   </data>
   <data name="ExistInDatabase" xml:space="preserve">
-    <value>Exist in database</value>
+    <value>Istnieje w bazie danych</value>
   </data>
   <data name="FailedToAddOrder" xml:space="preserve">
-    <value>Failed to add order</value>
+    <value>Nie udało się dodać zamówienia</value>
   </data>
   <data name="FailedToAddProduct" xml:space="preserve">
-    <value>FailedToAddProduct</value>
+    <value>Nie udało się dodać produktu</value>
   </data>
   <data name="FailedToGenerateWay" xml:space="preserve">
-    <value>Failed to generate way</value>
+    <value>Nie udało się wygenerować trasy</value>
   </data>
   <data name="FailedToPrepared" xml:space="preserve">
-    <value>Failed to prepared</value>
+    <value>Nie udało się przygotować</value>
   </data>
   <data name="FailedToRemove" xml:space="preserve">
-    <value>Failed to remove</value>
+    <value>Nie udało się usunąć</value>
   </data>
   <data name="FailedToReserved" xml:space="preserve">
-    <value>Failed to reserved</value>
+    <value>Nie udało się zarezerwować</value>
   </data>
   <data name="FailedToSave" xml:space="preserve">
-    <value>Failed to save</value>
+    <value>Nie udało się zapisać</value>
   </data>
   <data name="Flor" xml:space="preserve">
-    <value>Flor</value>
+    <value>Piętro</value>
   </data>
   <data name="Flors" xml:space="preserve">
-    <value>Flors</value>
+    <value>Piętra</value>
   </data>
   <data name="GenerateMap" xml:space="preserve">
-    <value>Generate map</value>
+    <value>Generuj mapę</value>
   </data>
   <data name="GenerateWay" xml:space="preserve">
-    <value>Generate way</value>
+    <value>Generuj trasę</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Group</value>
+    <value>Grupa</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Wysokość</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Home</value>
+    <value>Strona główna</value>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>Obraz</value>
   </data>
   <data name="ItemState" xml:space="preserve">
-    <value>Item state</value>
+    <value>Stan przedmiotu</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Język</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="LoginIsRequired" xml:space="preserve">
-    <value>Login is required</value>
+    <value>Login jest wymagany</value>
   </data>
   <data name="Log_in" xml:space="preserve">
-    <value>Log in</value>
+    <value>Zaloguj się</value>
   </data>
   <data name="Lp" xml:space="preserve">
     <value>Lp</value>
   </data>
   <data name="MainSettings" xml:space="preserve">
-    <value>Main settings</value>
+    <value>Ustawienia główne</value>
   </data>
   <data name="Margin" xml:space="preserve">
-    <value>Margin</value>
+    <value>Margines</value>
   </data>
   <data name="MaxDepth" xml:space="preserve">
-    <value>Max depth</value>
+    <value>Maksymalna głębokość</value>
   </data>
   <data name="MaxHeight" xml:space="preserve">
-    <value>Max height</value>
+    <value>Maksymalna wysokość</value>
   </data>
   <data name="MaxWeight" xml:space="preserve">
-    <value>Max weight</value>
+    <value>Maksymalna waga</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>Max width</value>
+    <value>Maksymalna szerokość</value>
   </data>
   <data name="MessagePasswordChangedSuccessfully" xml:space="preserve">
-    <value>Password changed successfully</value>
+    <value>Hasło zostało pomyślnie zmienione</value>
   </data>
   <data name="MoveTo" xml:space="preserve">
-    <value>Move to</value>
+    <value>Przenieś do</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nazwa</value>
   </data>
   <data name="NameIsRequired" xml:space="preserve">
-    <value>Name is required</value>
+    <value>Nazwa jest wymagana</value>
   </data>
   <data name="NewOrder" xml:space="preserve">
-    <value>New order</value>
+    <value>Nowe zamówienie</value>
   </data>
   <data name="NextPage" xml:space="preserve">
-    <value>Next page</value>
+    <value>Następna strona</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Nie</value>
   </data>
   <data name="Order" xml:space="preserve">
-    <value>Order</value>
+    <value>Zamówienie</value>
   </data>
   <data name="OrderIsOpened" xml:space="preserve">
-    <value>Order is opened</value>
+    <value>Zamówienie jest otwarte</value>
   </data>
   <data name="Orders" xml:space="preserve">
-    <value>Orders</value>
+    <value>Zamówienia</value>
   </data>
   <data name="OrdersFromSupplier" xml:space="preserve">
-    <value>Orders from supplier</value>
+    <value>Zamówienia od dostawcy</value>
   </data>
   <data name="OrdersToRealizationInGivenMonth" xml:space="preserve">
-    <value>Orders to realization in a given month</value>
+    <value>Zamówienia do zrealizowania w danym miesiącu</value>
   </data>
   <data name="PackageContainsProductsRemoveThemFromRack" xml:space="preserve">
-    <value>The package contains products, remove them from the rack</value>
+    <value>Paczka zawiera produkty, usuń je z regału</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Hasło</value>
   </data>
   <data name="PasswordIsRequired" xml:space="preserve">
-    <value>Password is required</value>
+    <value>Hasło jest wymagane</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Wklej</value>
   </data>
   <data name="PersonalData" xml:space="preserve">
-    <value>Personal data</value>
+    <value>Dane osobowe</value>
   </data>
   <data name="Point" xml:space="preserve">
-    <value>Point</value>
+    <value>Punkt</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>Position</value>
+    <value>Pozycja</value>
   </data>
   <data name="PrevPage" xml:space="preserve">
-    <value>Prev page</value>
+    <value>Poprzednia strona</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Price</value>
+    <value>Cena</value>
   </data>
   <data name="Products" xml:space="preserve">
-    <value>Products</value>
+    <value>Produkty</value>
   </data>
   <data name="ProductStates" xml:space="preserve">
-    <value>Product states</value>
+    <value>Stany produktów</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>Question</value>
+    <value>Pytanie</value>
   </data>
   <data name="Racks" xml:space="preserve">
-    <value>Racks</value>
+    <value>Regały</value>
   </data>
   <data name="RealizationDate" xml:space="preserve">
-    <value>Realization date</value>
+    <value>Data realizacji</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>Zarejestruj się</value>
   </data>
   <data name="Remove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Usuń</value>
   </data>
   <data name="RemovedOrder" xml:space="preserve">
-    <value>Removed order</value>
+    <value>Usunięte zamówienie</value>
   </data>
   <data name="RemovedProduct" xml:space="preserve">
-    <value>Removed product</value>
+    <value>Usunięty produkt</value>
   </data>
   <data name="RemovePackage" xml:space="preserve">
-    <value>Remove package</value>
+    <value>Usuń paczkę</value>
   </data>
   <data name="Removing" xml:space="preserve">
-    <value>Removing</value>
+    <value>Usuwanie</value>
   </data>
   <data name="ReserveProducts" xml:space="preserve">
-    <value>Reserve products</value>
+    <value>Zarezerwuj produkty</value>
   </data>
   <data name="Role" xml:space="preserve">
-    <value>Role</value>
+    <value>Rola</value>
   </data>
   <data name="Roles" xml:space="preserve">
-    <value>Roles</value>
+    <value>Role</value>
   </data>
   <data name="Row" xml:space="preserve">
-    <value>Row</value>
+    <value>Wiersz</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Zapisz</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Szukaj</value>
   </data>
   <data name="SearchProduct" xml:space="preserve">
-    <value>Search product</value>
+    <value>Wyszukaj produkt</value>
   </data>
   <data name="SelectUnit" xml:space="preserve">
-    <value>Select unit</value>
+    <value>Wybierz jednostkę</value>
   </data>
   <data name="SetAsDone" xml:space="preserve">
-    <value>Set as done</value>
+    <value>Oznacz jako wykonane</value>
   </data>
   <data name="SetAsReceived" xml:space="preserve">
-    <value>Set as received</value>
+    <value>Oznacz jako odebrane</value>
   </data>
   <data name="SetAsStartupPoint" xml:space="preserve">
-    <value>Set as startup point</value>
+    <value>Ustaw jako punkt początkowy</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>State</value>
+    <value>Stan</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="StorageUnits" xml:space="preserve">
-    <value>Storage units</value>
+    <value>Jednostki magazynowe</value>
   </data>
   <data name="Style" xml:space="preserve">
-    <value>Style</value>
+    <value>Styl</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Wyślij</value>
   </data>
   <data name="SuccesfullPrepared" xml:space="preserve">
-    <value>Succesfull prepared</value>
+    <value>Pomyślnie przygotowane</value>
   </data>
   <data name="SuccesfullReserved" xml:space="preserve">
-    <value>Succesfull reserved</value>
+    <value>Pomyślnie zarezerwowane</value>
   </data>
   <data name="SuccessfulCreatedUser" xml:space="preserve">
-    <value>Successful created user</value>
+    <value>Użytkownik pomyślnie utworzony</value>
   </data>
   <data name="SuccessfulRemoved" xml:space="preserve">
-    <value>Successful removed</value>
+    <value>Pomyślnie usunięte</value>
   </data>
   <data name="Supplier" xml:space="preserve">
-    <value>Supplier</value>
+    <value>Dostawca</value>
   </data>
   <data name="Suppliers" xml:space="preserve">
-    <value>Suppliers</value>
+    <value>Dostawcy</value>
   </data>
   <data name="UserIsEmpty" xml:space="preserve">
-    <value>User is empty</value>
+    <value>Użytkownik jest pusty</value>
   </data>
   <data name="Users" xml:space="preserve">
-    <value>Users</value>
+    <value>Użytkownicy</value>
   </data>
   <data name="UserSettings" xml:space="preserve">
-    <value>User settings</value>
+    <value>Ustawienia użytkownika</value>
   </data>
   <data name="WareHouse" xml:space="preserve">
-    <value>Ware house</value>
+    <value>Magazyn</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="WareHouseImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warehoudebg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WarehouseItem" xml:space="preserve">
-    <value>Warehouse item</value>
+    <value>Przedmiot magazynowy</value>
   </data>
   <data name="WareHouseItems" xml:space="preserve">
-    <value>WareHouse items</value>
+    <value>Przedmioty magazynowe</value>
   </data>
   <data name="Way" xml:space="preserve">
-    <value>Way</value>
+    <value>Trasa</value>
   </data>
   <data name="Wayfinding" xml:space="preserve">
-    <value>Wayfinding</value>
+    <value>Nawigacja</value>
   </data>
   <data name="WeightDiscrepancy" xml:space="preserve">
-    <value>Weight discrepancy</value>
+    <value>Różnica wagi</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Width</value>
+    <value>Szerokość</value>
   </data>
   <data name="WrongEmail" xml:space="preserve">
-    <value>Wrong email</value>
+    <value>Nieprawidłowy email</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Tak</value>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Przybliż</value>
   </data>
 </root>

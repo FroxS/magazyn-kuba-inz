@@ -22,14 +22,14 @@ namespace Warehouse.Core.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    public class Resources_pl {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Resources_pl() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Warehouse.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Warehouse.Core.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Warehouse.Core.Properties.Resources-pl", typeof(Resources_pl).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accept.
+        ///   Looks up a localized string similar to Akceptuj.
         /// </summary>
         public static string Accept {
             get {
@@ -70,7 +70,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active.
+        ///   Looks up a localized string similar to Aktywny.
         /// </summary>
         public static string Active {
             get {
@@ -79,7 +79,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Dodaj.
         /// </summary>
         public static string Add {
             get {
@@ -88,7 +88,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added.
+        ///   Looks up a localized string similar to Dodane.
         /// </summary>
         public static string Added {
             get {
@@ -97,7 +97,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add point.
+        ///   Looks up a localized string similar to Dodaj punkt.
         /// </summary>
         public static string AddPoint {
             get {
@@ -106,7 +106,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add rack.
+        ///   Looks up a localized string similar to Dodaj regał.
         /// </summary>
         public static string AddRack {
             get {
@@ -115,7 +115,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add racks.
+        ///   Looks up a localized string similar to Dodaj regały.
         /// </summary>
         public static string AddRacks {
             get {
@@ -124,7 +124,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to package.
+        ///   Looks up a localized string similar to Dodaj do paczki.
         /// </summary>
         public static string AddToPackage {
             get {
@@ -133,7 +133,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application.
+        ///   Looks up a localized string similar to Aplikacja.
         /// </summary>
         public static string Application {
             get {
@@ -142,7 +142,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application error.
+        ///   Looks up a localized string similar to Błąd aplikacji.
         /// </summary>
         public static string ApplicationError {
             get {
@@ -151,7 +151,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An application error has occurred.
+        ///   Looks up a localized string similar to Wystąpił błąd aplikacji.
         /// </summary>
         public static string ApplicationErrorMessage {
             get {
@@ -160,7 +160,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure.
+        ///   Looks up a localized string similar to Czy na pewno.
         /// </summary>
         public static string AreYouSure {
             get {
@@ -169,7 +169,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to delete.
+        ///   Looks up a localized string similar to Czy na pewno chcesz usunąć.
         /// </summary>
         public static string AreYouSureToDelete {
             get {
@@ -178,7 +178,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add an order.
+        ///   Looks up a localized string similar to Dodaj zamówienie.
         /// </summary>
         public static string AskAddOrder {
             get {
@@ -187,7 +187,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove the order.
+        ///   Looks up a localized string similar to Usuń zamówienie.
         /// </summary>
         public static string AskRemoveOrder {
             get {
@@ -196,7 +196,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove the product.
+        ///   Looks up a localized string similar to Usuń produkt.
         /// </summary>
         public static string AskRemoveProduct {
             get {
@@ -205,7 +205,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Available products.
+        ///   Looks up a localized string similar to Dostępne produkty.
         /// </summary>
         public static string AvailableProducts {
             get {
@@ -214,7 +214,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot be removed from the package, this product is probably already in offer.
+        ///   Looks up a localized string similar to Nie można usunąć produktu z paczki, produkt prawdopodobnie już jest w ofercie.
         /// </summary>
         public static string CannotRemovedPackageProductProbablyInOffer {
             get {
@@ -223,7 +223,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change flor.
+        ///   Looks up a localized string similar to Zmień piętro.
         /// </summary>
         public static string ChangeFlor {
             get {
@@ -232,7 +232,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change password.
+        ///   Looks up a localized string similar to Zmień hasło.
         /// </summary>
         public static string ChangePassword {
             get {
@@ -241,7 +241,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check data.
+        ///   Looks up a localized string similar to Sprawdź dane.
         /// </summary>
         public static string CheckData {
             get {
@@ -250,7 +250,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color.
+        ///   Looks up a localized string similar to Kolor.
         /// </summary>
         public static string Color {
             get {
@@ -259,7 +259,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Completion date.
+        ///   Looks up a localized string similar to Data zakończenia.
         /// </summary>
         public static string CompletionDate {
             get {
@@ -268,7 +268,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm.
+        ///   Looks up a localized string similar to Potwierdź.
         /// </summary>
         public static string Confirm {
             get {
@@ -277,7 +277,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm password.
+        ///   Looks up a localized string similar to Potwierdź hasło.
         /// </summary>
         public static string ConfirmPassword {
             get {
@@ -286,7 +286,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm password is required.
+        ///   Looks up a localized string similar to Potwierdzenie hasła jest wymagane.
         /// </summary>
         public static string ConfirmPasswordIsRequired {
             get {
@@ -295,7 +295,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connections.
+        ///   Looks up a localized string similar to Połączenia.
         /// </summary>
         public static string Connections {
             get {
@@ -304,7 +304,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect with.
+        ///   Looks up a localized string similar to Połącz z.
         /// </summary>
         public static string ConnectWith {
             get {
@@ -313,7 +313,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Coppy.
+        ///   Looks up a localized string similar to Kopiuj.
         /// </summary>
         public static string Coppy {
             get {
@@ -322,7 +322,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Corridor.
+        ///   Looks up a localized string similar to Korytarz.
         /// </summary>
         public static string Corridor {
             get {
@@ -331,7 +331,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Count.
+        ///   Looks up a localized string similar to Ilość.
         /// </summary>
         public static string Count {
             get {
@@ -340,7 +340,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created.
+        ///   Looks up a localized string similar to Utworzone.
         /// </summary>
         public static string Created {
             get {
@@ -349,7 +349,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create package.
+        ///   Looks up a localized string similar to Utwórz paczkę.
         /// </summary>
         public static string CreatePackage {
             get {
@@ -358,7 +358,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creator.
+        ///   Looks up a localized string similar to Kreator.
         /// </summary>
         public static string Creator {
             get {
@@ -367,7 +367,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to Pulpit.
         /// </summary>
         public static string Dashboard {
             get {
@@ -376,7 +376,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data.
+        ///   Looks up a localized string similar to Dane.
         /// </summary>
         public static string Data {
             get {
@@ -385,7 +385,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to Usuń.
         /// </summary>
         public static string Delete {
             get {
@@ -394,7 +394,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Opis.
         /// </summary>
         public static string Description {
             get {
@@ -403,7 +403,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Direction.
+        ///   Looks up a localized string similar to Kierunek.
         /// </summary>
         public static string Direction {
             get {
@@ -412,7 +412,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Edytuj.
         /// </summary>
         public static string Edit {
             get {
@@ -421,7 +421,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elements.
+        ///   Looks up a localized string similar to Elementy.
         /// </summary>
         public static string Elements {
             get {
@@ -439,7 +439,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email is incorrect.
+        ///   Looks up a localized string similar to Nieprawidłowy adres email.
         /// </summary>
         public static string EmailisIncorrect {
             get {
@@ -448,7 +448,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email is required.
+        ///   Looks up a localized string similar to Adres email jest wymagany.
         /// </summary>
         public static string EmailIsRequired {
             get {
@@ -457,7 +457,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error during moving items.
+        ///   Looks up a localized string similar to Błąd podczas przenoszenia elementów.
         /// </summary>
         public static string ErrorDuringMovingItems {
             get {
@@ -466,7 +466,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login window not exist.
+        ///   Looks up a localized string similar to Okno logowania nie istnieje.
         /// </summary>
         public static string ErrorLoginWindowNotExist {
             get {
@@ -475,7 +475,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main window not exist.
+        ///   Looks up a localized string similar to Główne okno nie istnieje.
         /// </summary>
         public static string ErrorMainWindowNotExist {
             get {
@@ -484,7 +484,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum length is .
+        ///   Looks up a localized string similar to Maksymalna długość to.
         /// </summary>
         public static string ErrorMaxLength {
             get {
@@ -493,7 +493,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The passwords are not the same.
+        ///   Looks up a localized string similar to Hasła nie są identyczne.
         /// </summary>
         public static string ErrorPasswordsAreNotTheSame {
             get {
@@ -502,7 +502,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User is not active.
+        ///   Looks up a localized string similar to Użytkownik nie jest aktywny.
         /// </summary>
         public static string ErrorUserIsNotActive {
             get {
@@ -511,7 +511,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while assigning products to the rack.
+        ///   Looks up a localized string similar to Błąd podczas przypisywania produktów do regału.
         /// </summary>
         public static string ErrorWhileAssigningProductsToRack {
             get {
@@ -520,7 +520,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while saving.
+        ///   Looks up a localized string similar to Błąd podczas zapisywania.
         /// </summary>
         public static string ErrorWhileSaving {
             get {
@@ -529,7 +529,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exist in database.
+        ///   Looks up a localized string similar to Istnieje w bazie danych.
         /// </summary>
         public static string ExistInDatabase {
             get {
@@ -538,7 +538,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to add order.
+        ///   Looks up a localized string similar to Nie udało się dodać zamówienia.
         /// </summary>
         public static string FailedToAddOrder {
             get {
@@ -547,7 +547,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FailedToAddProduct.
+        ///   Looks up a localized string similar to Nie udało się dodać produktu.
         /// </summary>
         public static string FailedToAddProduct {
             get {
@@ -556,7 +556,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to generate way.
+        ///   Looks up a localized string similar to Nie udało się wygenerować trasy.
         /// </summary>
         public static string FailedToGenerateWay {
             get {
@@ -565,7 +565,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to prepared.
+        ///   Looks up a localized string similar to Nie udało się przygotować.
         /// </summary>
         public static string FailedToPrepared {
             get {
@@ -574,7 +574,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to remove.
+        ///   Looks up a localized string similar to Nie udało się usunąć.
         /// </summary>
         public static string FailedToRemove {
             get {
@@ -583,7 +583,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to reserved.
+        ///   Looks up a localized string similar to Nie udało się zarezerwować.
         /// </summary>
         public static string FailedToReserved {
             get {
@@ -592,7 +592,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to save.
+        ///   Looks up a localized string similar to Nie udało się zapisać.
         /// </summary>
         public static string FailedToSave {
             get {
@@ -601,7 +601,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flor.
+        ///   Looks up a localized string similar to Piętro.
         /// </summary>
         public static string Flor {
             get {
@@ -610,7 +610,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flors.
+        ///   Looks up a localized string similar to Piętra.
         /// </summary>
         public static string Flors {
             get {
@@ -619,7 +619,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate map.
+        ///   Looks up a localized string similar to Generuj mapę.
         /// </summary>
         public static string GenerateMap {
             get {
@@ -628,7 +628,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate way.
+        ///   Looks up a localized string similar to Generuj trasę.
         /// </summary>
         public static string GenerateWay {
             get {
@@ -637,7 +637,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group.
+        ///   Looks up a localized string similar to Grupa.
         /// </summary>
         public static string Group {
             get {
@@ -646,7 +646,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Height.
+        ///   Looks up a localized string similar to Wysokość.
         /// </summary>
         public static string Height {
             get {
@@ -655,7 +655,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Strona główna.
         /// </summary>
         public static string Home {
             get {
@@ -664,7 +664,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image.
+        ///   Looks up a localized string similar to Obraz.
         /// </summary>
         public static string Image {
             get {
@@ -673,7 +673,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item state.
+        ///   Looks up a localized string similar to Stan przedmiotu.
         /// </summary>
         public static string ItemState {
             get {
@@ -682,7 +682,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Looks up a localized string similar to Język.
         /// </summary>
         public static string Language {
             get {
@@ -691,7 +691,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log in.
+        ///   Looks up a localized string similar to Zaloguj się.
         /// </summary>
         public static string Log_in {
             get {
@@ -709,7 +709,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login is required.
+        ///   Looks up a localized string similar to Login jest wymagany.
         /// </summary>
         public static string LoginIsRequired {
             get {
@@ -727,7 +727,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main settings.
+        ///   Looks up a localized string similar to Ustawienia główne.
         /// </summary>
         public static string MainSettings {
             get {
@@ -736,7 +736,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Margin.
+        ///   Looks up a localized string similar to Margines.
         /// </summary>
         public static string Margin {
             get {
@@ -745,7 +745,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max depth.
+        ///   Looks up a localized string similar to Maksymalna głębokość.
         /// </summary>
         public static string MaxDepth {
             get {
@@ -754,7 +754,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max height.
+        ///   Looks up a localized string similar to Maksymalna wysokość.
         /// </summary>
         public static string MaxHeight {
             get {
@@ -763,7 +763,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max weight.
+        ///   Looks up a localized string similar to Maksymalna waga.
         /// </summary>
         public static string MaxWeight {
             get {
@@ -772,7 +772,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max width.
+        ///   Looks up a localized string similar to Maksymalna szerokość.
         /// </summary>
         public static string MaxWidth {
             get {
@@ -781,7 +781,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password changed successfully.
+        ///   Looks up a localized string similar to Hasło zostało pomyślnie zmienione.
         /// </summary>
         public static string MessagePasswordChangedSuccessfully {
             get {
@@ -790,7 +790,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move to.
+        ///   Looks up a localized string similar to Przenieś do.
         /// </summary>
         public static string MoveTo {
             get {
@@ -799,7 +799,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Nazwa.
         /// </summary>
         public static string Name {
             get {
@@ -808,7 +808,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name is required.
+        ///   Looks up a localized string similar to Nazwa jest wymagana.
         /// </summary>
         public static string NameIsRequired {
             get {
@@ -817,7 +817,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New order.
+        ///   Looks up a localized string similar to Nowe zamówienie.
         /// </summary>
         public static string NewOrder {
             get {
@@ -826,7 +826,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next page.
+        ///   Looks up a localized string similar to Następna strona.
         /// </summary>
         public static string NextPage {
             get {
@@ -835,7 +835,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Looks up a localized string similar to Nie.
         /// </summary>
         public static string No {
             get {
@@ -844,7 +844,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order.
+        ///   Looks up a localized string similar to Zamówienie.
         /// </summary>
         public static string Order {
             get {
@@ -853,7 +853,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order is opened.
+        ///   Looks up a localized string similar to Zamówienie jest otwarte.
         /// </summary>
         public static string OrderIsOpened {
             get {
@@ -862,7 +862,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Orders.
+        ///   Looks up a localized string similar to Zamówienia.
         /// </summary>
         public static string Orders {
             get {
@@ -871,7 +871,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Orders from supplier.
+        ///   Looks up a localized string similar to Zamówienia od dostawcy.
         /// </summary>
         public static string OrdersFromSupplier {
             get {
@@ -880,7 +880,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Orders to realization in a given month.
+        ///   Looks up a localized string similar to Zamówienia do zrealizowania w danym miesiącu.
         /// </summary>
         public static string OrdersToRealizationInGivenMonth {
             get {
@@ -889,7 +889,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The package contains products, remove them from the rack.
+        ///   Looks up a localized string similar to Paczka zawiera produkty, usuń je z regału.
         /// </summary>
         public static string PackageContainsProductsRemoveThemFromRack {
             get {
@@ -898,7 +898,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to Hasło.
         /// </summary>
         public static string Password {
             get {
@@ -907,7 +907,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password is required.
+        ///   Looks up a localized string similar to Hasło jest wymagane.
         /// </summary>
         public static string PasswordIsRequired {
             get {
@@ -916,7 +916,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paste.
+        ///   Looks up a localized string similar to Wklej.
         /// </summary>
         public static string Paste {
             get {
@@ -925,7 +925,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Personal data.
+        ///   Looks up a localized string similar to Dane osobowe.
         /// </summary>
         public static string PersonalData {
             get {
@@ -934,7 +934,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Point.
+        ///   Looks up a localized string similar to Punkt.
         /// </summary>
         public static string Point {
             get {
@@ -943,7 +943,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position.
+        ///   Looks up a localized string similar to Pozycja.
         /// </summary>
         public static string Position {
             get {
@@ -952,7 +952,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prev page.
+        ///   Looks up a localized string similar to Poprzednia strona.
         /// </summary>
         public static string PrevPage {
             get {
@@ -961,7 +961,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Price.
+        ///   Looks up a localized string similar to Cena.
         /// </summary>
         public static string Price {
             get {
@@ -970,7 +970,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Products.
+        ///   Looks up a localized string similar to Produkty.
         /// </summary>
         public static string Products {
             get {
@@ -979,7 +979,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product states.
+        ///   Looks up a localized string similar to Stany produktów.
         /// </summary>
         public static string ProductStates {
             get {
@@ -988,7 +988,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question.
+        ///   Looks up a localized string similar to Pytanie.
         /// </summary>
         public static string Question {
             get {
@@ -997,7 +997,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Racks.
+        ///   Looks up a localized string similar to Regały.
         /// </summary>
         public static string Racks {
             get {
@@ -1006,7 +1006,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Realization date.
+        ///   Looks up a localized string similar to Data realizacji.
         /// </summary>
         public static string RealizationDate {
             get {
@@ -1015,7 +1015,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register.
+        ///   Looks up a localized string similar to Zarejestruj się.
         /// </summary>
         public static string Register {
             get {
@@ -1024,7 +1024,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove.
+        ///   Looks up a localized string similar to Usuń.
         /// </summary>
         public static string Remove {
             get {
@@ -1033,7 +1033,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removed order.
+        ///   Looks up a localized string similar to Usunięte zamówienie.
         /// </summary>
         public static string RemovedOrder {
             get {
@@ -1042,7 +1042,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removed product.
+        ///   Looks up a localized string similar to Usunięty produkt.
         /// </summary>
         public static string RemovedProduct {
             get {
@@ -1051,7 +1051,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove package.
+        ///   Looks up a localized string similar to Usuń paczkę.
         /// </summary>
         public static string RemovePackage {
             get {
@@ -1060,7 +1060,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing.
+        ///   Looks up a localized string similar to Usuwanie.
         /// </summary>
         public static string Removing {
             get {
@@ -1069,7 +1069,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reserve products.
+        ///   Looks up a localized string similar to Zarezerwuj produkty.
         /// </summary>
         public static string ReserveProducts {
             get {
@@ -1078,7 +1078,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Rola.
         /// </summary>
         public static string Role {
             get {
@@ -1087,7 +1087,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roles.
+        ///   Looks up a localized string similar to Role.
         /// </summary>
         public static string Roles {
             get {
@@ -1096,7 +1096,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Row.
+        ///   Looks up a localized string similar to Wiersz.
         /// </summary>
         public static string Row {
             get {
@@ -1105,7 +1105,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Zapisz.
         /// </summary>
         public static string Save {
             get {
@@ -1114,7 +1114,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search.
+        ///   Looks up a localized string similar to Szukaj.
         /// </summary>
         public static string Search {
             get {
@@ -1123,7 +1123,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search product.
+        ///   Looks up a localized string similar to Wyszukaj produkt.
         /// </summary>
         public static string SearchProduct {
             get {
@@ -1132,7 +1132,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select unit.
+        ///   Looks up a localized string similar to Wybierz jednostkę.
         /// </summary>
         public static string SelectUnit {
             get {
@@ -1141,7 +1141,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as done.
+        ///   Looks up a localized string similar to Oznacz jako wykonane.
         /// </summary>
         public static string SetAsDone {
             get {
@@ -1150,7 +1150,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as received.
+        ///   Looks up a localized string similar to Oznacz jako odebrane.
         /// </summary>
         public static string SetAsReceived {
             get {
@@ -1159,7 +1159,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set as startup point.
+        ///   Looks up a localized string similar to Ustaw jako punkt początkowy.
         /// </summary>
         public static string SetAsStartupPoint {
             get {
@@ -1168,7 +1168,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Ustawienia.
         /// </summary>
         public static string Settings {
             get {
@@ -1177,7 +1177,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to State.
+        ///   Looks up a localized string similar to Stan.
         /// </summary>
         public static string State {
             get {
@@ -1195,7 +1195,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Storage units.
+        ///   Looks up a localized string similar to Jednostki magazynowe.
         /// </summary>
         public static string StorageUnits {
             get {
@@ -1204,7 +1204,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Style.
+        ///   Looks up a localized string similar to Styl.
         /// </summary>
         public static string Style {
             get {
@@ -1213,7 +1213,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Wyślij.
         /// </summary>
         public static string Submit {
             get {
@@ -1222,7 +1222,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Succesfull prepared.
+        ///   Looks up a localized string similar to Pomyślnie przygotowane.
         /// </summary>
         public static string SuccesfullPrepared {
             get {
@@ -1231,7 +1231,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Succesfull reserved.
+        ///   Looks up a localized string similar to Pomyślnie zarezerwowane.
         /// </summary>
         public static string SuccesfullReserved {
             get {
@@ -1240,7 +1240,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successful created user.
+        ///   Looks up a localized string similar to Użytkownik pomyślnie utworzony.
         /// </summary>
         public static string SuccessfulCreatedUser {
             get {
@@ -1249,7 +1249,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successful removed.
+        ///   Looks up a localized string similar to Pomyślnie usunięte.
         /// </summary>
         public static string SuccessfulRemoved {
             get {
@@ -1258,7 +1258,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Supplier.
+        ///   Looks up a localized string similar to Dostawca.
         /// </summary>
         public static string Supplier {
             get {
@@ -1267,7 +1267,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suppliers.
+        ///   Looks up a localized string similar to Dostawcy.
         /// </summary>
         public static string Suppliers {
             get {
@@ -1276,7 +1276,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User is empty.
+        ///   Looks up a localized string similar to Użytkownik jest pusty.
         /// </summary>
         public static string UserIsEmpty {
             get {
@@ -1285,7 +1285,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
+        ///   Looks up a localized string similar to Użytkownicy.
         /// </summary>
         public static string Users {
             get {
@@ -1294,7 +1294,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User settings.
+        ///   Looks up a localized string similar to Ustawienia użytkownika.
         /// </summary>
         public static string UserSettings {
             get {
@@ -1303,7 +1303,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ware house.
+        ///   Looks up a localized string similar to Magazyn.
         /// </summary>
         public static string WareHouse {
             get {
@@ -1322,7 +1322,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warehouse item.
+        ///   Looks up a localized string similar to Przedmiot magazynowy.
         /// </summary>
         public static string WarehouseItem {
             get {
@@ -1331,7 +1331,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WareHouse items.
+        ///   Looks up a localized string similar to Przedmioty magazynowe.
         /// </summary>
         public static string WareHouseItems {
             get {
@@ -1340,7 +1340,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Way.
+        ///   Looks up a localized string similar to Trasa.
         /// </summary>
         public static string Way {
             get {
@@ -1349,7 +1349,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wayfinding.
+        ///   Looks up a localized string similar to Nawigacja.
         /// </summary>
         public static string Wayfinding {
             get {
@@ -1358,7 +1358,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weight discrepancy.
+        ///   Looks up a localized string similar to Różnica wagi.
         /// </summary>
         public static string WeightDiscrepancy {
             get {
@@ -1367,7 +1367,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Width.
+        ///   Looks up a localized string similar to Szerokość.
         /// </summary>
         public static string Width {
             get {
@@ -1376,7 +1376,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrong email.
+        ///   Looks up a localized string similar to Nieprawidłowy email.
         /// </summary>
         public static string WrongEmail {
             get {
@@ -1385,7 +1385,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to Tak.
         /// </summary>
         public static string Yes {
             get {
@@ -1394,7 +1394,7 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zoom.
+        ///   Looks up a localized string similar to Przybliż.
         /// </summary>
         public static string Zoom {
             get {

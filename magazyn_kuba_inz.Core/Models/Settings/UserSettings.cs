@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Reflection;
-using Warehouse.Models.Attribute;
 using Warehouse.Theme;
-using Warehouse.Core.Helpers;
 
 namespace Warehouse.Core.Models.Settings;
 
@@ -88,7 +83,14 @@ public class UserSettings : BaseSettings
         UserSettings? obj = GetData<UserSettings>(File.ReadAllText(filePath) );
         if (obj == null)
             return;
-        CopyProperties(obj);
+
+        if(Language != null)
+        {
+			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+			Thread.CurrentThread.CurrentUICulture = Language;
+		}
+		CopyProperties(obj);
+
     }
 
     #endregion

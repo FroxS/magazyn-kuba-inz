@@ -54,10 +54,22 @@ public class SettingsPageViewModel : BasePageViewModel
 
     private void UserSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(UserSettings.ColorScheme) && sender is UserSettings us)
+		if ( sender is UserSettings us)
         {
-            Application.SetTheme(us.ColorScheme);
-        }
+			if (e.PropertyName == nameof(UserSettings.ColorScheme))
+			{
+				Application.SetTheme(us.ColorScheme);
+			}
+
+			if (e.PropertyName == nameof(UserSettings.Language))
+			{
+                if(us.Language != null)
+                {
+                    Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+					Thread.CurrentThread.CurrentUICulture = us.Language;
+				}
+			}
+		}	
     }
 
     #endregion
