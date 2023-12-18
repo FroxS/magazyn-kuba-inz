@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using Warehouse.Core.Interface;
+using Warehouse.Creator.ViewModel;
 
-namespace Warehouse.Creator
+namespace Warehouse.Creator.View
 {
     /// <summary>
     /// Interaction logic for CreatorWindow.xaml

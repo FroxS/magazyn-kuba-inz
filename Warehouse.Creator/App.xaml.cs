@@ -1,6 +1,5 @@
 ﻿using Warehouse.Repository;
 using Warehouse.EF;
-using Warehouse.View;
 using Warehouse.View.Login;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,17 +8,18 @@ using System.Windows;
 using Warehouse.Service;
 using Warehouse.Core.Interface;
 using Warehouse.Dialog;
-using Warehouse.ViewModel;
-using Warehouse.ViewModel.Pages;
-using Warehouse.ViewModel.Login;
 using Warehouse.Core.Models.Settings;
+using Warehouse.Creator.Service;
+using Warehouse.Creator.View;
+using Warehouse.ViewModel.Pages;
+using Warehouse.Creator.ViewModel;
 
 namespace Warehouse.Creator
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
 	{
 		public static IHost? AppHost { get; private set; }
 
@@ -62,8 +62,6 @@ namespace Warehouse.Creator
 
 			services.AddSingleton<IDialogService, DialogService>();
 			services.AddTransient((o) => { return Dispatcher; });
-
-			/// Settings
 			services.AddSingleton<UserSettings>();
 			services.AddSingleton<GlobalSettings>();
 		}
@@ -72,13 +70,15 @@ namespace Warehouse.Creator
 		{
 			services.AddSingleton<System.Windows.Application>((o) => { return this; });
 			services.AddSingleton<IApp, WarehouseCreator>();
-		}
+            services.AddSingleton<INavigation, CreatorNavigation>();
+            services.AddSingleton<IInnerDialogService, InnerDialogService>();
+        }
 
 		private void PrepareViews(IServiceCollection services)
 		{
 			services.AddTransient<IMainWindow, CreatorWindow>();
 			services.AddTransient<IRegisterWindow, RegisterView>();
-			services.AddTransient<ISplashScreen, View.Login.SplashScreen>();
+			services.AddTransient<ISplashScreen, Warehouse.View.Login.SplashScreen>();
 		}
 
 		private void PrepareViewModels(IServiceCollection services)
@@ -87,15 +87,15 @@ namespace Warehouse.Creator
 			//services.AddSingleton<LoginViewModel>();
 			//services.AddSingleton<RegisterViewModel>();
 			//services.AddSingleton<DashBoardPageViewModel>();
-			//services.AddSingleton<ProductsPageViewModel>();
-			//services.AddSingleton<ProductGroupsPageViewModel>();
-			//services.AddSingleton<ProductStatusesPageViewModel>();
-			//services.AddSingleton<SuppliersPageViewModel>();
-			//services.AddSingleton<ItemStatesPageViewModel>();
+			services.AddSingleton<ProductsPageViewModel>();
+			services.AddSingleton<ProductGroupsPageViewModel>();
+			services.AddSingleton<ProductStatusesPageViewModel>();
+			services.AddSingleton<SuppliersPageViewModel>();
+			services.AddSingleton<ItemStatesPageViewModel>();
 			//services.AddSingleton<SettingsPageViewModel>();
 			//services.AddSingleton<WareHousePageViewModel>();
 			//services.AddSingleton<StorageUnitsPageViewModel>();
-			//services.AddSingleton<WareHouseCreatorPageViewModel>();
+			//services.AddSingleton<WareHouseCreatorViewModel>();
 			//services.AddSingleton<RacksPageViewModel>();
 			//services.AddSingleton<UserPageViewModel>();
 			//services.AddSingleton<UsersPageViewModel>();

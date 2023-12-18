@@ -6,18 +6,26 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <BaseOutputPath>..\Build</BaseOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controls\WareHouseArea_OLD.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Images\cancel-icon.svg" />
-    <None Remove="Images\confirm-icon.svg" />
-    <None Remove="Images\warehoudebg.png" />
-    <None Remove="Images\warehouse.jpg" />
-    <None Remove="Images\warehouse_BG.png" />
+    <None Remove="View\Images\cancel-icon.svg" />
+    <None Remove="View\Images\confirm-icon.svg" />
+    <None Remove="View\Images\warehoudebg.png" />
+    <None Remove="View\Images\warehouse.jpg" />
+    <None Remove="View\Images\warehouse_BG.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,15 +56,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\cancel-icon.svg" />
-    <Resource Include="Images\confirm-icon.svg" />
-    <Resource Include="Images\warehoudebg.png" />
-    <Resource Include="Images\warehouse.jpg" />
-    <Resource Include="Images\warehouse_BG.png" />
+    <Resource Include="View\Images\cancel-icon.svg" />
+    <Resource Include="View\Images\confirm-icon.svg" />
+    <Resource Include="View\Images\warehoudebg.png" />
+    <Resource Include="View\Images\warehouse.jpg" />
+    <Resource Include="View\Images\warehouse_BG.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Controls\ImagePicker.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TopBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\TopTileControl.xaml.cs">

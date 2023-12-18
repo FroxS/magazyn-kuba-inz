@@ -97,11 +97,38 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add group for product.
+        /// </summary>
+        public static string AddGroupForProduct {
+            get {
+                return ResourceManager.GetString("AddGroupForProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add items states.
+        /// </summary>
+        public static string AddItemsStates {
+            get {
+                return ResourceManager.GetString("AddItemsStates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add point.
         /// </summary>
         public static string AddPoint {
             get {
                 return ResourceManager.GetString("AddPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add products.
+        /// </summary>
+        public static string AddProducts {
+            get {
+                return ResourceManager.GetString("AddProducts", resourceCulture);
             }
         }
         
@@ -124,11 +151,38 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add statuses for product.
+        /// </summary>
+        public static string AddStatusesForProduct {
+            get {
+                return ResourceManager.GetString("AddStatusesForProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add suppliers.
+        /// </summary>
+        public static string AddSuppliers {
+            get {
+                return ResourceManager.GetString("AddSuppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to package.
         /// </summary>
         public static string AddToPackage {
             get {
                 return ResourceManager.GetString("AddToPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        public static string Admin {
+            get {
+                return ResourceManager.GetString("Admin", resourceCulture);
             }
         }
         
@@ -210,6 +264,15 @@ namespace Warehouse.Core.Properties {
         public static string AvailableProducts {
             get {
                 return ResourceManager.GetString("AvailableProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic data.
+        /// </summary>
+        public static string BasicData {
+            get {
+                return ResourceManager.GetString("BasicData", resourceCulture);
             }
         }
         
@@ -381,6 +444,15 @@ namespace Warehouse.Core.Properties {
         public static string Data {
             get {
                 return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database.
+        /// </summary>
+        public static string Database {
+            get {
+                return ResourceManager.GetString("Database", resourceCulture);
             }
         }
         
@@ -601,6 +673,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        public static string Finish {
+            get {
+                return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flor.
         /// </summary>
         public static string Flor {
@@ -817,6 +898,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database name.
+        /// </summary>
+        public static string NameOfDatabase {
+            get {
+                return ResourceManager.GetString("NameOfDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New order.
         /// </summary>
         public static string NewOrder {
@@ -831,6 +921,15 @@ namespace Warehouse.Core.Properties {
         public static string NextPage {
             get {
                 return ResourceManager.GetString("NextPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next step.
+        /// </summary>
+        public static string NextStep {
+            get {
+                return ResourceManager.GetString("NextStep", resourceCulture);
             }
         }
         
@@ -1141,6 +1240,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set as done.
         /// </summary>
         public static string SetAsDone {
@@ -1191,6 +1299,15 @@ namespace Warehouse.Core.Properties {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step2.
+        /// </summary>
+        public static string Step2 {
+            get {
+                return ResourceManager.GetString("Step2", resourceCulture);
             }
         }
         
@@ -1272,6 +1389,15 @@ namespace Warehouse.Core.Properties {
         public static string Suppliers {
             get {
                 return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         
@@ -1372,6 +1498,15 @@ namespace Warehouse.Core.Properties {
         public static string Width {
             get {
                 return ResourceManager.GetString("Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows authorization.
+        /// </summary>
+        public static string WindowsAuthorization {
+            get {
+                return ResourceManager.GetString("WindowsAuthorization", resourceCulture);
             }
         }
         

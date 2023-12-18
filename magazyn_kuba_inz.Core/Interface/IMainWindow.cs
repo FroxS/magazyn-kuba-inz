@@ -2,4 +2,5 @@
 
 public interface IMainWindow: IWindow
 {
+    object DataContext { get; set; }
 }

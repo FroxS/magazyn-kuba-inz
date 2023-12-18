@@ -14,9 +14,13 @@ public interface INavigation
     ObservableCollection<IBasePageViewModel> Pages { get; }
     bool CanSetNextPage { get; }
     bool CanSetPrevPage { get; }
+
+    ICommand PrevCommand { get; }
+    ICommand NextCommand { get; }
     IBasePageViewModel ActivePage { get; set; }
     event PageChanged PageChanged;
     void SetPage(EApplicationPage page);
+    void SetPage(IBasePageViewModel pageVM);
     void SetNextPage();
     void SetPrevPage();
     void AddPage(IBasePageViewModel pag);

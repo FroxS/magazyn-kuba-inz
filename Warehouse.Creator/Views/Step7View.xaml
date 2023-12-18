@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Warehouse.Creator.View.Step7View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Warehouse.Creator.View"
+             xmlns:controls="clr-namespace:Warehouse.Theme.Controls;assembly=Warehouse.Theme"
+             xmlns:controls1="clr-namespace:Warehouse.Controls;assembly=Warehouse"
+             xmlns:conv="clr-namespace:Warehouse.Conventers;assembly=Warehouse"
+             xmlns:helpers="clr-namespace:Warehouse.Core.Helpers;assembly=Warehouse.Core"
+             xmlns:vm="clr-namespace:Warehouse.Creator.ViewModel"
+             xmlns:serv="clr-namespace:Warehouse.Creator.Service"
+             xmlns:res="clr-namespace:Warehouse.Core.Properties;assembly=Warehouse.Core"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="1000"
+             Background="{DynamicResource BackgroundColorBrush}"
+             Foreground="{DynamicResource FontColorBrush}"
+             d:DataContext="{d:DesignInstance Type=vm:Step7ViewModel}"
+             BorderThickness="0"
+             x:Name="mainw">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Creator" Margin="10 5" FontSize="16" FontWeight="Bold"/>
+            <local:WareHouseCreatorPageView Grid.Row="1" DataContext="{Binding GroupVM, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+
+        <Grid Grid.Row="1" Margin="50 5"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Stretch">
+
+            <controls:ButtonPath IconPath="{StaticResource Save}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Right"
+                                 Text="{x:Static res:Resources.Finish}"
+                                 Command="{Binding NextStepCommand}"
+                                 Margin="2" Height="40"
+                                 ToolTip="{x:Static res:Resources.Finish}"/>
+        </Grid>
+
+    </Grid>
+    
+</UserControl>

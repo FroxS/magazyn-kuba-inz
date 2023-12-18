@@ -22,9 +22,21 @@
         Background="{DynamicResource BackgroundColorBrush}"
         Foreground="{DynamicResource FontColorBrush}"
         BorderThickness="0"
-        Style="{StaticResource CustomWindowsStyle}">
+        WindowStyle="None"
+        x:Name="mainw"
+        AllowsTransparency="True">
     <Grid x:Name="parent" >
-        <custom:ModalControl x:Name="Modal" Panel.ZIndex="10"
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:TopBar MainWindow="{Binding ElementName=mainw}" 
+                         Application="{Binding Application, Source={x:Static helpers:AppHelper.Instance},UpdateSourceTrigger=PropertyChanged}" />
+
+        <custom:ModalControl x:Name="Modal" Panel.ZIndex="10" 
+                             Grid.Row="1"
                              DataContext="{Binding InnerDialog.InnerDialogVM,
                                                    Source={x:Static helpers:AppHelper.Instance}, 
                                                    UpdateSourceTrigger=PropertyChanged}"
@@ -37,7 +49,7 @@
             <innermessage:InnerDialogBaseControl/>
         </custom:ModalControl>
 
-        <Border >
+        <Border Grid.Row="1" >
             <Border.Effect>
                 <BlurEffect Radius="0" KernelType="Gaussian"/>
             </Border.Effect>

@@ -23,7 +23,7 @@
         Background="Transparent">
     <Border CornerRadius="10">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/warehouse.jpg"
+            <ImageBrush ImageSource="{Binding Source={x:Static res:Resources.WareHouseImage}, Converter={conv:BitmapToImageSourceConventer}}"
                         Stretch="UniformToFill"/>
         </Border.Background>
         <Grid >

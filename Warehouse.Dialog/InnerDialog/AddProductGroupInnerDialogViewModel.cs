@@ -36,6 +36,7 @@ public class AddProductGroupInnerDialogViewModel : BaseInnerDialogViewModel<Prod
         : base(app)
     {
         Item = new ProductGroupViewModel(service, ProductGroup.Get(), app);
+        
         Result = null;
     }
 

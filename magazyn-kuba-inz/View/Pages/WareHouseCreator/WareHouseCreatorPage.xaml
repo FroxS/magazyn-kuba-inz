@@ -27,7 +27,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0"
-              Grid.Column="0"
+                    Grid.Column="0"
                     Orientation="Horizontal">
             <Button Command="{Binding EditCommand}"
                     IsDefault="True"
