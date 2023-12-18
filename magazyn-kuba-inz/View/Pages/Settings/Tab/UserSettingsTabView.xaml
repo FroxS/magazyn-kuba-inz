@@ -70,7 +70,7 @@
                     <Label Grid.Column="0" Content="{x:Static res:Resources.Language}" Style="{DynamicResource FormLabel}"/>
 
                     <ComboBox ItemsSource="{Binding Languages, UpdateSourceTrigger=PropertyChanged}"
-                              DisplayMemberPath="Name"
+                              DisplayMemberPath="NativeName"
                               SelectedItem="{Binding UserSettings.Language}"
                               IsSynchronizedWithCurrentItem="True"
                               Style="{StaticResource FormComboBox}"

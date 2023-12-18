@@ -45,7 +45,7 @@ public class SettingsPageViewModel : BasePageViewModel
     public SettingsPageViewModel(IApp app) : base(app)
     {
         Page = Models.Page.EApplicationPage.Settings;
-        Languages = new ObservableCollection<CultureInfo>(CultureInfo.GetCultures(CultureTypes.NeutralCultures));
+        Languages = new ObservableCollection<CultureInfo>(CultureInfo.GetCultures(CultureTypes.NeutralCultures).OrderBy(x => x.NativeName));
     }
 
     #endregion
@@ -65,10 +65,12 @@ public class SettingsPageViewModel : BasePageViewModel
 			{
                 if(us.Language != null)
                 {
-                    Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+					Application.ShowSilentMessage(Core.Properties.Resources.ChangeLanguageRestartApplication);
+					Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 					Thread.CurrentThread.CurrentUICulture = us.Language;
 				}
 			}
+			us.Save();
 		}	
     }
 

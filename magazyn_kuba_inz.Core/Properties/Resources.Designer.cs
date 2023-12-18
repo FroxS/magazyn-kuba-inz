@@ -295,6 +295,15 @@ namespace Warehouse.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After changed language restart application.
+        /// </summary>
+        public static string ChangeLanguageRestartApplication {
+            get {
+                return ResourceManager.GetString("ChangeLanguageRestartApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change password.
         /// </summary>
         public static string ChangePassword {

@@ -83,12 +83,6 @@ public class UserSettings : BaseSettings
         UserSettings? obj = GetData<UserSettings>(File.ReadAllText(filePath) );
         if (obj == null)
             return;
-
-        if(Language != null)
-        {
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-			Thread.CurrentThread.CurrentUICulture = Language;
-		}
 		CopyProperties(obj);
 
     }

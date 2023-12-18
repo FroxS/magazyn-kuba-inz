@@ -68,7 +68,6 @@ public class WareHouseApp : ObservableObject, IApp
         _databaseFactory = services.GetRequiredService<IDbContextFactory<WarehouseDbContext>>();
         ReloadDatabase();
         RelayCommand.DefaultActionOnError = (ex) => CatchExeption(ex);
-
     }
 
     #endregion
@@ -87,7 +86,15 @@ public class WareHouseApp : ObservableObject, IApp
     public virtual async Task Run()
     {
         SetTheme(GetUserSettings()?.ColorScheme ?? ColorScheme.Dark);
-        bool? flag = false;
+
+		UserSettings settings = GetUserSettings();
+        if(settings.Language != null)
+        {
+			Thread.CurrentThread.CurrentUICulture = settings.Language;
+			Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+		}
+
+		bool? flag = false;
         bool test = true;
         if (System.Diagnostics.Debugger.IsAttached && test)
         {

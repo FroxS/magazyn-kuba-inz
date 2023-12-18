@@ -195,6 +195,9 @@
   <data name="ChangeFlor" xml:space="preserve">
     <value>Change flor</value>
   </data>
+  <data name="ChangeLanguageRestartApplication" xml:space="preserve">
+    <value>After changed language restart application</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Change password</value>
   </data>

@@ -14,6 +14,8 @@ using Warehouse.ViewModel;
 using Warehouse.ViewModel.Pages;
 using Warehouse.ViewModel.Login;
 using Warehouse.Core.Models.Settings;
+using System.Threading;
+using System.Globalization;
 
 namespace Warehouse;
 
@@ -27,7 +29,9 @@ public partial class App : System.Windows.Application
     public IConfiguration Configuration { get; private set; }
     public App()
     {
-        AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+		CultureInfo.DefaultThreadCurrentUICulture = new System.Globalization.CultureInfo("en");
+		AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
         {
             PrepareDatabase(services);
             PrepareService(services);
